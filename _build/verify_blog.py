@@ -14,6 +14,8 @@ Geprueft wird:
   * jeder Beitrag erscheint genau einmal in der Blog-Uebersicht
   * jeder Beitrag erscheint in mindestens einem Kategoriearchiv
   * Feed und die vier Sitemaps sind vollstaendig *und* wohlgeformtes XML
+  * jede Adresse in einer Sitemap wird auch ausgeliefert, und keine
+    eingestellte Adresse steht darin
 
 Aufruf:  python3 -E -s _build/verify_blog.py
 """
@@ -181,6 +183,34 @@ def main():
     if index != 3:
         fehler.append('sitemap_index verweist auf %d statt 3 Sitemaps'
                       % index)
+
+    # Jede Adresse in einer Sitemap muss ausgeliefert werden, und keine
+    # eingestellte darf darin stehen. Eine wohlgeformte Sitemap, die auf
+    # 410 zeigt, meldet einer Suchmaschine Seiten an, die es nicht gibt.
+    NS = '{http://www.sitemaps.org/schemas/sitemap/0.9}'
+    ohne_seite, eingestellt = [], []
+    for datei in ('post-sitemap.xml', 'page-sitemap.xml',
+                  'category-sitemap.xml'):
+        ort = os.path.join(GEBAUT, datei)
+        if not os.path.isfile(ort):
+            continue
+        for eintrag in ET.parse(ort).getroot().findall(NS + 'url'):
+            loc = eintrag.find(NS + 'loc').text
+            pfad = re.sub(r'^https?://(www\.)?datamate\.org', '', loc) or '/'
+            if not pfad.endswith('/'):
+                pfad += '/'
+            if w.faellt_fort(pfad) or any(
+                    pfad.strip('/') == b for b in w.FORT_BEITRAEGE):
+                eingestellt.append(loc)
+            elif pfad not in echte:
+                ohne_seite.append(loc)
+    print('Sitemap-Adressen ohne ausgelieferte Seite: %d   '
+          'eingestellte Adressen in einer Sitemap: %d'
+          % (len(ohne_seite), len(eingestellt)))
+    for loc in ohne_seite:
+        fehler.append('in einer Sitemap, aber nicht ausgeliefert: %s' % loc)
+    for loc in eingestellt:
+        fehler.append('eingestellte Adresse steht in einer Sitemap: %s' % loc)
 
     print()
     if fehler:
