@@ -13,13 +13,14 @@ Geprueft wird:
   * jedes og:image zeigt auf eine ausgelieferte Datei
   * jeder Beitrag erscheint genau einmal in der Blog-Uebersicht
   * jeder Beitrag erscheint in mindestens einem Kategoriearchiv
-  * Feed und die vier Sitemaps sind vollstaendig
+  * Feed und die vier Sitemaps sind vollstaendig *und* wohlgeformtes XML
 
 Aufruf:  python3 -E -s _build/verify_blog.py
 """
 import os
 import re
 import sys
+import xml.etree.ElementTree as ET
 
 import wpdata as w
 
@@ -145,6 +146,22 @@ def main():
             return -1
         with open(pfad, encoding='utf-8') as f:
             return len(re.findall(muster, f.read()))
+
+    # Wohlgeformtheit zaehlt zuerst. Die Fassung 2026-10-21 lieferte drei
+    # Sitemaps aus, die mit &lt;?xml anfingen - Hugo fuehrte das Partial
+    # als HTML-Vorlage aus und maskierte die XML-Deklaration. Gezaehlte
+    # <loc>-Vorkommen sahen dabei richtig aus; erst ein Parser zeigt es.
+    for datei in ('feed/index.xml', 'sitemap_index.xml', 'post-sitemap.xml',
+                  'page-sitemap.xml', 'category-sitemap.xml'):
+        ort = os.path.join(GEBAUT, datei)
+        if not os.path.isfile(ort):
+            fehler.append('%s fehlt' % datei)
+            continue
+        try:
+            ET.parse(ort)
+        except ET.ParseError as e:
+            fehler.append('%s ist kein wohlgeformtes XML: %s' % (datei, e))
+    print('XML wohlgeformt: Feed und vier Sitemaps geprueft')
 
     feed = zaehle('feed/index.xml', r'<item>')
     post = zaehle('post-sitemap.xml', r'<loc>')

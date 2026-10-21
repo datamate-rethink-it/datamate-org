@@ -1,6 +1,16 @@
 {{- /* Rumpf einer Sitemap in der Form, die Yoast SEO erzeugt hat.
-       Aufruf: partial "urlset.html" (slice von Seiten) */ -}}
-<?xml version="1.0" encoding="UTF-8"?>
+       Aufruf: partial "urlset.xml" (slice von Seiten)
+
+       Die XML-Deklaration steht mit Absicht NICHT hier, sondern in den
+       drei aufrufenden Vorlagen: Hugo fuehrt dieses Partial als
+       HTML-Vorlage aus, auch mit der Endung .xml, und Gos html/template
+       maskiert <?xml ... ?> zu &lt;?xml ... ?> - es haelt die
+       Verarbeitungsanweisung fuer einen fehlerhaften Kommentar. Die Datei
+       faengt dann mit Text vor dem Wurzelelement an und ist kein
+       gueltiges XML mehr. Genau so war die Fassung 2026-10-21
+       ausgeliefert; gefunden hat es der Abgleich gegen die Live-Seite,
+       nicht der Bau. _build/verify_blog.py parst die Dateien deshalb
+       jetzt. */ -}}
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {{- range . }}
 	<url>

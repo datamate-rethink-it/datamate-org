@@ -1,1 +1,2 @@
-{{- partial "urlset.html" (where site.RegularPages "Section" "blog") -}}
+<?xml version="1.0" encoding="UTF-8"?>
+{{ partial "urlset.xml" (where site.RegularPages "Section" "blog") -}}

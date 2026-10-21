@@ -31,6 +31,7 @@ Inhaltsdateien: 190   gebaute Seiten: 210   Blaetterseiten: 20
   og:image ohne Ziel: 0
 Blog-Uebersicht: 136 Beitraege auf 14 Seiten
 Kategoriearchive: 136 Beitraege erreichbar
+XML wohlgeformt: Feed und vier Sitemaps geprueft
 Feed: 20 Eintraege   Sitemaps: post 136, page 33, category 20, Index 3
 alles in Ordnung
 
@@ -63,7 +64,8 @@ gelten muss: dass jede Inhaltsdatei zu einer Seite wird, jede Seite Titel,
 Canonical und Robots-Angabe trägt, der Canonical auf die eigene Adresse
 zeigt, jedes `og:image` auf eine ausgelieferte Datei zeigt, jeder Beitrag
 genau einmal in der Blog-Übersicht und mindestens einmal in einem
-Kategoriearchiv erscheint, und Feed und Sitemaps vollständig sind. Diese
+Kategoriearchiv erscheint, und Feed und Sitemaps vollständig **und
+wohlgeformtes XML** sind. Diese
 Prüfung begleitet den Betrieb; ein Byte-Vergleich wäre dort ein
 Fehlalarmgenerator, sobald jemand einen Artikel schreibt.
 
@@ -183,6 +185,7 @@ nginx-Konfiguration, Zertifikatspfade prüfen.
 | OIDC-, SAML- und miniOrange-Login installiert | weg – kein geschützter Bereich auf der Seite |
 | `/blog/page/8/` bis `/blog/page/15/` lieferten eine leere Seite mit Status 200 | `/blog/page/8/` bis `/blog/page/14/` haben Inhalt, `/blog/page/15/` liefert 404 |
 | `/seafile/seamate/` lieferte HTTP 500 | 410 Gone, der Bereich ist eingestellt |
+| `/sitemap.xml` lieferte 301 auf `/sitemap_index.xml` | unverändert |
 | 14 422 Dateien, 1,9 GB | 969 Dateien, 100 MB. Image 306 MB, davon 92 MB Bilder in einer eigenen Schicht |
 
 ### Der Fehler in der Blog-Übersicht
@@ -399,3 +402,12 @@ als zusätzlich übertragbar erwiesen hat:
 * **Hugos Vorlagenmotor entfernt HTML-Kommentare** aus Layouts
   (`html/template` tut das). Ein Vergleich, der einen Kommentar als Marke
   benutzt, geht daran kaputt.
+* **Erzeugtes XML durch einen Parser schicken, nicht Vorkommen zählen.**
+  Hugo führt ein Partial als HTML-Vorlage aus, auch wenn es `.xml` heißt.
+  `html/template` hält `<?xml … ?>` für einen fehlerhaften Kommentar und
+  maskiert es zu `&lt;?xml … ?>`; die Datei beginnt dann mit Text vor dem
+  Wurzelelement und ist kein gültiges XML mehr. Die `<loc>`-Einträge sahen
+  dabei vollständig und richtig aus, und der Bau lief grün durch – die
+  Fassung 2026-10-21 war so drei Stunden online. Die XML-Deklaration
+  gehört in die aufrufende `.xml`-Vorlage, nicht ins Partial, und
+  `verify_blog.py` parst die fünf Dateien jetzt.
