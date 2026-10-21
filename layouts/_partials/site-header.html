@@ -1,0 +1,29 @@
+{{- /*
+  Kopfleiste. Zeichengetreu aus dem alten Theme uebernommen; dynamisch sind
+  nur die Zustandsklassen der Menuepunkte, die WordPress je nach aufgerufener
+  Adresse gesetzt hat. Der Menuepunkt 3CX ist entfallen.
+*/ -}}
+{{- $seafile := "menu-item menu-item-type-post_type menu-item-object-page menu-item-3054" -}}
+{{- if eq .RelPermalink "/seafile/" -}}
+  {{- $seafile = "menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2736 current_page_item menu-item-3054 active" -}}
+{{- else if hasPrefix .RelPermalink "/seafile/" -}}
+  {{- $seafile = "menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor menu-item-3054" -}}
+{{- end -}}
+{{- $blog := "menu-item menu-item-type-custom menu-item-object-custom menu-item-137" -}}
+{{- if eq .RelPermalink "/blog/" -}}
+  {{- $blog = "menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-137 active" -}}
+{{- end -}}
+		<header id="header" class="transparent-header ">
+			<div id="header-wrap">
+				<div class="container clearfix">
+					<div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
+					<div id="logo">
+						<a href="/" class="standard-logo" title="Datamate Home" data-dark-logo="/wp-content/uploads/2017/05/logo-100x100.png"><img title="Datamate Logo" src="/wp-content/uploads/2017/05/logo-100x100.png" alt="datamate"></a>
+						<a href="/" class="retina-logo" title="Datamate Home" data-dark-logo="/wp-content/uploads/2017/05/logo-100x100.png"><img title="Datamate Logo" src="/wp-content/uploads/2017/05/logo-100x100.png" alt="datamate"></a>
+					</div>
+
+					<nav id="primary-menu" class="menu-primary-container"><ul id="menu-primary" class="norightborder"><li id="menu-item-3054" class="{{ $seafile }}"><a title="Seafile" href="/seafile/">Seafile</a></li>
+<li id="menu-item-137" class="{{ $blog }}"><a title="Blog" href="/blog/">Blog</a></li>
+</ul></nav>				</div>
+			</div>
+		</header>

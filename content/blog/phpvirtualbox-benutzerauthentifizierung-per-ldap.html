@@ -1,0 +1,125 @@
++++
+title = "phpVirtualBox Benutzerauthentifizierung per LDAP"
+titel_html = "phpVirtualBox Benutzerauthentifizierung per LDAP | datamate"
+ueberschrift = "phpVirtualBox Benutzerauthentifizierung per LDAP"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/04/ldap-struktur.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/phpvirtualbox-benutzerauthentifizierung-per-ldap/"
+canonical = "https://www.datamate.org/phpvirtualbox-benutzerauthentifizierung-per-ldap/"
+veroeffentlicht = "2015-11-07T00:31:48+00:00"
+geaendert = "2025-02-21T08:10:54+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "4 Minuten"
+bild_breite = 905
+bild_hoehe = 470
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "phpVirtualBox Benutzerauthentifizierung per LDAP", item = ""}]
+wortzahl = 642
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["uncategorized"]
+schlagwoerter = []
+wp_id = 4456
+slug = "phpvirtualbox-benutzerauthentifizierung-per-ldap"
+url = "/phpvirtualbox-benutzerauthentifizierung-per-ldap/"
+date = "2015-11-07T01:31:48"
+lastmod = "2025-02-21T09:10:54"
+datum_utc = "2015-11-07T00:31:48+00:00"
+geaendert_utc = "2025-02-21T08:10:54+00:00"
+lightbox = true
++++
+						<p>phpVirtualBox ist eine fantastische Software zum Steuern von virtuelle Maschinen per Webbrowser. Dies ist z.B dann sehr hilfreich, wenn auf dem Server keine grafische Benutzeroberfläche installiert ist weil der Server sowieso unzugänglich im dunklen Serverraum steht. Die Administration der virtuellen Maschinen per Kommandozeile ist zwar möglich, jedoch unbequem und nicht wirklich intuitiv. Auf einem Server System mit virtuellen Maschinen sollte somit phpVirtualBox unter keinen Umständen fehlen, wobei man die Absicherung dieser Weboberfläche nicht auf die vernachlässigen sollte. Ein Login mit Standardwerten ist keine wirkungsvolle Absicherung. </p>
+
+<p>Obwohl phpVirtualBox konstant weiterentwickelt wird, werden die verschiedenen Authentifizierungsmethoden nur stiefmütterlich behandelt. Die Dokumentation zur LDAP Authentifizierung besteht aus gerade mal zwei Sätzen und sechs Zeilen Code ohne aussagekräftige Dokumentation. Eine Berechtigungssteuerung per Gruppenmitgliedschaft fehlt vollständig. Sobald ein LDAP-Benutzer in der Datenbank enthalten ist, hat er vollen Zugriff auf phpVirtualBox. </p>
+
+<p>Dies muss aber nicht sein. In diesem Artikel zeige ich, wie man beim Login von phpVirtualBox die zentrale LDAP-Benutzerauthentifizierung nutzen kann und welche Code-Ergänzungen notwendig sind um auch eine &#8220;Gruppenauthorisierung&#8221; zu ermöglichen.</p>
+
+<span id="more-4456"></span>
+
+
+<p>Aufmerksame Leser dieses Blogs wissen, dass wir begeisterte Nutzer von phpVirtualBox sind und die Software auf dem ionas-Server Small Business nutzen um darin eine VoIP-Telefonanlage und ein Odoo-CRM laufen zu lassen. Darüber hinaus haben wir in der Vergangenheit bereits mehrere Artikel über Virtualbox oder phpVirtualBox geschrieben.</p>
+
+<ul>
+<li><a href='/tutorial-virtualbox-auf-einem-ubuntu-server-14-04-installieren-und-per-browser-ueber-das-netzwerk-steuern/'>Tutorial: VirtualBox auf einem Ubuntu Server 14.04 installieren und per Browser über das Netzwerk steuern</a></li>
+<li><a href='/blog/vm-invalid-status-wiederbeleben/'>VM mit invalid status wiederbeleben</a></li>
+</ul>
+
+<p>phpVirtualBox bietet zwar eine experimentelle LDAP-Anbindung an, die wir bisher aufgrund einer fehlenden Berechtigungsprüfung gegen eine Gruppenzugehörigkeit nicht genutzt haben. Stattdessen nutzt man einen eigenen Nutzer mit Passwort, was natürlich dem Gedanken einer zentralen Benutzerauthentifizierung widerspricht. Um nun phpVirtualVox und LDAP zu verheiraten, müssen lediglich drei Dinge geschehen:</p>
+
+<ol>
+<li>die OpenLDAP Struktur anlegen</li>
+<li>die LDAP Authentifizierung in phpVirtualBox ergänzen</li>
+<li>phpVirtualBox konfigurieren &#8211; Aktivierung der Gruppenvalidierung</li>
+</ol>
+
+<p>Worauf warten wir also. Lassen Sie uns anfangen &#8211; umso früher sind wir fertig!</p>
+
+<h2>Die OpenLDAP Struktur anlegen</h2>
+
+<p>Wie anfangs erwähnt, wollen wir zwei Dinge beim Login abklären. Ist der sich anmeldende User in der LDAP-Datenbank enthalten und hat dieser die Berechtigung phpVirtualBox zu nutzen. Deshalb gehe ich im folgenden von einer zweigeteilten LDAP Struktur aus. Jeder Anwender ist als Benutzer unter <strong>users</strong> angelegt. Weiterhin gibt es eine Berechtigungsgruppe <strong>virtualbox</strong>, der die Benutzer zugeordnet werden können.</p>
+
+<a href="/wp-content/uploads/2018/04/ldap-struktur.png" data-slb-active="1" data-slb-asset="383417971" data-slb-internal="0" data-slb-group="4456"><img decoding="async" src="/wp-content/uploads/2018/04/ldap-struktur.png" alt="Um phpVirtualBox mit LDAP-Authentifizierung zu ermöglichen, muss die folgende Struktur angelegt werden" width="905" height="470" class="size-full wp-image-391" /></a>
+<p class="wp-caption-text">Die LDAP Struktur für phpVirtualBox</p>
+
+<p>Die Logik ist einfach. Wenn ein Benutzer der Gruppe virtualbox angehört, darf er sich bei phpVirtualBox einloggen und die virtuellen Maschinen verwalten. Wenn er kein Mitglied der Gruppe ist, wird der Login verweigert.</p>
+
+<h2>Die LDAP Authentifizierung von phpVirtualBox erweitern</h2>
+
+<p>Die LDAP-Authentifierung findet man z.B bei phpVirtualbox 4.3 in der Datei &#8220;/virtualbox/lib/auth/LDAP.php&#8221;. Die LDAP Authentifizierung kann im Standard nach der Installation nur prüfen, ob ein LDAP User existiert. Dafür erfolgt eine simple Abfrage des Benutzernamens und des Passworts gegen den angegebenen LDAP-Bind. Die Kommentare dienen nur der Verdeutlichung.</p>
+
+<pre>
+// wenn Authentifizierung nicht erfolgreich ist, liefere false zurück.
+if(!@ldap_bind($auth, sprintf($this->config['bind_dn'], $username), $password))
+    return false;
+
+// wenn erfolgreich, darf der Benutzer phpVirtualBox nutzen
+$_SESSION['valid'] = true;
+</pre>
+
+<p>Um nun zukünftig auch die LDAP-Gruppenzugehörigkeit zu prüfen, ergänzen wir den Code um den folgenden Block.</p>
+
+<pre>
+if(!@ldap_bind($auth, sprintf($this->config['bind_dn'], $username), $password))
+    return false;
+
+if($this->config['ldap_admin_group'] != ""){
+    $_SESSION['valid'] = false;
+    $dn = "ou=groups,dc=ionas,dc=lan";
+    $filter="(&(cn=".$this->config['ldap_admin_group'].")(objectClass=groupOfNames))";
+    $justthese = array();
+    $sr=ldap_search($auth, $dn, $filter, $justthese);
+    $info = ldap_get_entries($auth, $sr);
+    foreach($info[0]['member'] as $member){
+        $member = str_replace("cn=","",$member);
+    	$member = str_replace(",ou=users,dc=ionas,dc=lan","",$member);
+    	if($member == $username){
+	    $_SESSION['valid'] = true;
+        }
+    }
+}
+else{
+    $_SESSION['valid'] = true;
+}
+</pre>
+
+<p>Diese neue Prüfung wird nur aktiv, wenn &#8220;ldap_admin_group&#8221; mit einem Wert gefüllt ist. Diese Erweiterung für eine Gruppenvalidierung ist somit optional und nicht verpflichtend und muss über die Konfigurationsdatei von phpVirtualBox aktiviert werden.</p>
+
+<h2>phpVirtualBox konfigurieren &#8211; Aktivierung der Gruppenvalidierung</h2>
+
+<p>In der config.php von phpVirtuaBox muss nun als letztes die Gruppenvalidierung hinzugefügt werden. Dafür fügt man den folgenden Codeblock an beliebiger Stelle zwischen den geschweiften Klammern ein.</p>
+
+<pre>
+var $authLib = 'LDAP';
+var $authConfig = array(
+  'host' => '127.0.0.1',
+  'ldap_admin_group' => 'virtualbox',
+  'bind_dn' => 'cn=%s, ou=users,dc=ionas,dc=lan',
+  'adminUser' => ''
+);
+</pre>
+
+<p>Wenn die Webseite nun neu aufgerufen wird, erfolgt die Benutzerauthentifizierung durch LDAP und prüft dabei die Gruppenzugehörigkeit.
+
+Diese Ergänzung der LDAP-Authentifizierung mag quick-und-dirty sein, erfüllt jedoch seinen Zweck. phpVirtualbox ist zuverlässig abgesichert und der Administrator des Servers muss sich ein Passwort weniger merken.</p>

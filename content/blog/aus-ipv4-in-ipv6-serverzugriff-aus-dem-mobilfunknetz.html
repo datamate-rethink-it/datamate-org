@@ -1,0 +1,90 @@
++++
+title = "Aus einem IPv4 in ein IPv6-Netzwerk – Serverzugriff aus dem Mobilfunknetz"
+titel_html = "Aus einem IPv4 in ein IPv6-Netzwerk - Serverzugriff aus dem Mobilfunknetz | datamate"
+ueberschrift = "Aus einem IPv4 in ein IPv6-Netzwerk &#8211; Serverzugriff aus dem Mobilfunknetz"
+beschreibung = "3G/4G-Nutze nutzen meist noch das IPv4-Protokoll, DSL- und Kabelanschlüsse jedoch häufig schon IPv6. Mittels Portmapper kommen Sie dennoch auf Ihren Server."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2019/10/20191029-RDB-IPv6Capable_APNIC.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/aus-ipv4-in-ipv6-serverzugriff-aus-dem-mobilfunknetz/"
+canonical = "https://www.datamate.org/aus-ipv4-in-ipv6-serverzugriff-aus-dem-mobilfunknetz/"
+veroeffentlicht = "2019-10-27T15:12:08+00:00"
+geaendert = "2025-02-21T08:10:03+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Ralf Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "10 Minuten"
+bild_breite = 816
+bild_hoehe = 583
+bild_beschriftung = "APNIC Statistik: IPv6 capable"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Aus einem IPv4 in ein IPv6-Netzwerk &#8211; Serverzugriff aus dem Mobilfunknetz", item = ""}]
+wortzahl = 2034
+autor = "Ralf Dyllick-Brenzinger"
+autor_kurz = "rdb"
+kategorien = ["anleitungen", "seafile", "software"]
+schlagwoerter = ["IPv4", "IPv6", "Portmapper", "Proxy", "Zugriff"]
+wp_id = 4963
+slug = "aus-ipv4-in-ipv6-serverzugriff-aus-dem-mobilfunknetz"
+url = "/aus-ipv4-in-ipv6-serverzugriff-aus-dem-mobilfunknetz/"
+date = "2019-10-27T16:12:08"
+lastmod = "2025-02-21T09:10:03"
+datum_utc = "2019-10-27T15:12:08+00:00"
+geaendert_utc = "2025-02-21T08:10:03+00:00"
++++
+						<p>Neue Internetanschlüsse &#8211; teure Geschäftskundenanschlüsse ausgenommen &#8211; bieten nur noch selten eine routbare IPv4-Adresse. Bei DS-Lite Anschlüssen (und logischerweise auch bei IPv6-only Anschlüssen) können Zugriffe über das Internet auf einen Server im eigenen Netzwerk nur über die IPv6-Adresse laufen. Soweit im Grunde auch kein Problem, wenn denn alle anderen Internetzugänge IPv6 unterstützen würden. Gerade Mobilfunknetze unterstützen den neuen Standard des Internet Protokolls jedoch noch nicht. Trotz 3G/4G-Verbindung kommt man dann von unterwegs nicht ins eigene Netzwerk &#8211; zumindest nicht ohne weiteres. Wir erklären, wie es mit Hilfe eines HTTP-Proxies und Portmappers von feste-ip.net doch funktioniert.</p>
+
+<span id="more-4963"></span>
+<h2>Umstellung von IPv4 auf IPv6</h2>
+<p>Bereits im Jahr 1998 wurde das Internet Protocol Version 6 (IPv6) von der Internet Engineering Task Force (IETF) als zukünftiges Protokoll für die Übertragung von Daten im Internet standardisiert. Seitdem läuft die Umstellung vom heute noch dominierenden IPv4-Protokoll auf IPv6. Die Geschwindigkeit der Umstellung auf den neuen Standard erfolgt im Internet als Netz der Netze wenig überraschend nicht mit uniformer, sondern mit unterschiedlichen Geschwindigkeiten.</p>
+<p>Obwohl nicht als Vorreiter der Digitalisierung bekannt, steht <i>Deutschland</i> hinsichtlich IPv6-Einführung im europäischen Vergleich nicht schlecht da. Im DSL- und Kabelnetz ist die Umstellung schon weit vorangeschritten. Die meisten neuen Internetanschlüsse von Telekom, Vodafone, Unitymedia und anderer Anbieter bieten vom Start weg IPv6-Unterstützung. Viele Bestandsanschlüsse wurden auch schon auf IPv6 umgestellt. Weniger erfreulich sieht es in den Mobilfunknetzen aus. Nur im Mobilfunknetz der Deutschen Telekom ist IPv6 schon seit Jahren eingeführt. Bei Vodafone und Telefonica, dem Unternehmen hinter O2, ist man vom Regelbetrieb noch weit entfernt.</p>
+<img decoding="async" src="/wp-content/uploads/2019/10/20191029-RDB-IPv6Capable_APNIC.png" alt="APNIC Statistik: IPv6 capable" width="816" style="float:left; margin-right: 2%;"/>
+<p>In den deutschsprachigen Nachbarländern <i>Österreich</i> und der <i>Schweiz</i> ist die Umstellung noch nicht ganz so weit voran geschritten (siehe Abbildung). Ähnlich ist die Situation gegenüber Deutschland aber insoweit, dass auch in den Mobilfunknetzten der Alpenrepubliken die IPv6-Einführung hinterherhinkt. (Im Artikel <a href="/status-der-ipv6-implementierung-in-mobilfunknetzen-in-dach/">Status der IPv6-Implementierung in Mobilfunknetzen in DACH</a> berichten wir &#8211; fortlaufend aktualisiert &#8211; über die Ausbausituation in Deutschland, Österreich und der Schweiz.)</p>
+
+<h2>Problem beim Zugriff auf Server an DS-Lite oder IPv6-only Anschlüssen</h2>
+<p>Zwar klingen IPv4 und IPv6 ähnlich, aber kompatibel sind die Protokolle nicht. Datenpakete können nicht &#8216;einfach so&#8217; zwischen Geräten in einem IPv4-basierten und solchen in einem IPv6-basierten Netzwerk ausgetauscht werden. Ein Vergleich mit natürlichen Sprachen, z.B. Deutsch und Englisch, drängt sich auf: Die Sprachen haben viele Gemeinsamkeit und eine gemeinsame Entwicklung, das heißt aber nicht, dass Deutsche problemlos mit Engländern parlieren können. Diese Inkompatibilität schafft, wie man sich leicht vorstellen kann, Probleme.</p>
+<p>Ist Ihr Internetanschluss ein Dual Stack Lite (DS-Lite) oder ein IPv6-only Anschluss, dann werden Sie nicht ohne weiteres aus dem IPv4-nutzenden Vodafone und O2 Mobilfunknetz auf Ihren Server im eigenen Netzwerk kommen. Die in IPv4-Paketen verpackten Anfragen und können nicht an einen IPv6-Anschluss zugestellt werden. Ein Dual Stack-Lite (DS-Lite) Anschluss verfügt zwar über eine IPv4-Adresse, diese wird aber von mehreren Internetanschlüssen geteilt und ist als nicht eindeutige Adresse nicht routbar. (Mehr zu DS-Lite in <a href="/zugriff-ins-lan-trotz-ipv6-und-dual-stack-lite">diesem Artikel</a>.)</p>
+<p>Solange die Parallelität der IPv4- und IPv6-Welt anhält, kommt man nicht umhin, einen Übersetzungsdienst zu verwenden, der zwischen diesen Welten vermittelt. Einen solchen Dienst stellt die Firma COSIMO aus dem sächsischen Frohburg über die <a href="https://www.feste-ip.net/">Webseite feste-ip.net</a> zur Verfügung. HTTP(S)-Proxy bzw. Portmapper sind die Stichworte. In den folgenden Erläuterungen werden wir diese Produkte verwenden, um den Serverzugriff von einem IPv4-Netzwerk an einem DS-Lite/IPv6-only Internetanschluss einzurichten.</p>
+
+<h2>Einrichtung Proxy und Portmapper</h2>
+<p>Das Vorgehen für den Zugriff aus einem IPv4-(Mobilfunk)Netzwerk auf eine Ressource in einem IPv6-Netzwerk bzw. an einem Internetanschluss ohne routbare IPv4-Adresse ist in der Grafik dargestellt. Zur Einrichtung arbeitet man sich von hinten nach vorne vor. Auf diese Weise lässt sich nach jedem Schritt prüfen, ob man eine Verbindung zum Server aufbauen kann.</p>
+
+<h3>Einrichtung von DynDNS</h3>
+<b>Schritt 1a: Registrierung eines DynDNS-Hosts</b>
+<p>Bei Internetanschlüssen für Geschäftskunden ist der Präfix der IPv6-Adresse und damit die IPv6-Adresse eines Servers statisch. Bei Privatkundenanschlüssen hingegen ändert sich aus Datenschutzgründen der Prafix in Abständen. Geschieht dies, ändert sich auch die gesamte IP-Adresse, unter der der Server erreichbar ist. Um zu vermeiden, dass man den Kontakt zum Server verliert, wenn man 3.000km vom Server entfernt ist, bietet sich DynDNS an. (Mehr zu DynDNS in <a href="nat-loopback-oder-wie-dyndns-fuers-interne-netzwerk-fit-gemacht-werden-kann/">diesem Artikel in diesem Blog</a>.)</p>
+<p>DynDNS-Hosts gibt es bei unterschiedlichen Anbietern. Wir haben gute Erfahrung mit spDYN von Securepoint aus Lüneburg gemacht; man kann aber auch jeden anderen Anbieter verwenden. Essentiell für die Funktion ist nicht der Anbieter, sondern die korrekte Registrierung des DynDNS-Hosts als IPv6-Host.</p>
+
+<b>Schritt 1b: Einrichtung DynDNS-Updaters</b>
+<p>Ein DynDNS-Updater hält den DynDNS-Host über die aktuelle IPv6-Adresse des Servers auf dem Laufenden. Ein solcher muss nun auf dem Server eingerichtet werden. Es gibt zahlreiche Software-Lösungen, die den Job der IP-Adressenaktualisierung übernehmen. Besonders komplex ist die Aufgabe nicht, drum lohnt eine umfangreiche Evaluation kaum. Hier unsere Empfehlungen.</p>
+<p>Für <i>Windows</i> und <i>Mac</i> bietet sich der <a href="https://dyn.com/updater-windows/">kostenlose DynDNS Updater von Oracle</a> an. Dieser ist unter der LGPL Lizenz veröffentlicht und damit freie Software. Die Installation erfolgt auf der Windows Maschine über ein knapp 18MB großes MSI-Paket.</p> 
+<p>Den DynDNS Updater von Oracle gibt es auch für <i>Linux</i>, dort ist aber der superschlanke ddclient die wohl unmittelbarere Wahl. ddclient lässt sich &#8211; zumindest bei Debian-basierten Distributionen &#8211; per Kommandozeile über die Paketquellen per <code>sudo apt-get install ddclient</code> installieren und einfach konfigurieren. Eine knappe, aber <a href="https://wiki.ubuntuusers.de/DDNS-Clients/">gute deutschsprachige Anleitung für ddclient</a> gibt es bei Ubuntuusers.</p>
+<p>Auf <a href="/homie">Homie</a> und <a href="/fellow">Fellow</a>, dem Home und Small Business Server aus dem Hause datamate, ist ddclient bereits vorinstalliert und lässt sich bequem über das Cockpit konfigurieren. Out-of-the-box unterstützt das datamate Cockpit den DynDNS Anbieter spDYN und NO-IP. Einfach den Namen des DynDNS-Hosts eintragen, das Passwort dazu, die Netzwerkschnittstelle auswählen und schon übernimmt ddclient das Update des DynDNS-Hosts.</p>
+
+<h3>Schritt 2: Einrichtung eines Portmappers</h3>
+<p>Der Portmapper ist der Übersetzer zwischen der IPv4- und IPv6-Welt. Legen Sie sich ein Kundenkonto bei feste-ip.net an, loggen Sie sich mit diesem ein und klicken Sie auf <i>Universelle Portmapper</i> auf der linken Seite. Es öffnet sich das Fenster unten.</p>
+<img decoding="async" src="/wp-content/uploads/2019/10/Portmapper_Einrichtung-1024x648.png" alt="Einrichtung eines Portmappers in feste-ip.net" width="1024"/>
+
+<p>Tragen Sie dort die relevanten Informationen ein. Pflichtangaben sind einerseits der in Schritt 1a angelegte DynDNS-Host im Feld <i>DNS oder IPv6-Ziel</i> sowie die <i>Ports</i>, die Sie für den Zugriff auf den Server benötigen. In den meisten Fällen sind das Port 80 und 443 für HTTP und HTTPS. Für unsere Homies und Fellows tragen wir dort normalerweise auch noch den Port 1194 für OpenVPN ein. Die anderen Einstellungen können Sie unverändert lassen. Klicken Sie zum Abschluss auf <i>System eintragen und Portmappings erstellen</i>.</p>
+<p>Die Abbildung unten zeigt die gespeicherten Einstellungen beispielhaft für den DynDNS-Host cloud.noip.com. Den Mapping-Server können Sie auch schon mal notieren. Der wird später noch gebraucht.</p>
+<img decoding="async" src="/wp-content/uploads/2019/10/Portmapper_Einrichtung_Abschluss-1024x611.png" alt="Eingerichteter Portmapper in feste-ip.net" width="1024" />
+<p>Über die in der Übersicht der Portmapper angezeigten Mapping-Adressen und die dazugehörigen Ports kann man nun schon aus einem IPv4-Netzwerk auf den Server zugreifen. Praktisch und schön ist das aber nicht. Daher richten wir nun noch den HTTP(S)-Proxy ein.</p>
+
+<h3>Schritt 3: Einrichtung eines HTTP(S)-Proxies</h3>
+<p>Der HTTP(S)-Proxy sorgt dafür, dass Sie zum Aufruf Ihres Servers keinen Port mehr eingeben müssen. Wechseln Sie in Ihrem feste-ip.net Konto in den Menüpunkt <i>HTTP(s) Proxy</i>. Die unten dargestellte Auswahlmaske erscheint.</p>
+<p>Klicken Sie auf das Dropdown-Feld für <i>Ziel</i> und wählen Sie den Portmapper für den Port aus, denn Sie direkt über eine URL ansprechen wollen. (Wenn Sie mehrere Ports per URL ansprechen wollen, dann müssen Sie das Vorgehen einfach wiederholen.)</p>
+<p>Nach der Auswahl des Ziels erscheinen weitere Auswahlmöglichkeiten für die Proxyadresse. Klicken Sie auf den Radio-Button neben <i>ihr-wunschname</i>, wählen Sie aus dem Dropdown-Menü eine TLD aus und geben Sie im Textfeld links davon einen Namen ein. (Wenn Sie per Subdomain auf Ihren Server zugreifen wollen, dass sind die an dieser Stelle vorgenommenen Einstellungen provisorischer Natur und werden in Schritt 5 wieder geändert. In dem Fall sind die Angaben nur für Testzwecke bedeutend.) Nach Abschluss klicken Sie unten auf <i>Proxy erstellen</i>. Sollte Ihre Proxyadresse vergeben sein, dann erhalten Sie eine Fehlermeldung. Ansonsten wird der Proxy angelegt. In der Abbildung unten ist dargestellt, wie ein Proxy für den Port 443 für die den DynDNS-Host cloud.noip.com aussieht.</p> 
+<img decoding="async" src="/wp-content/uploads/2019/10/HTTPProxy_Einrichtung_Proxyadresse_festeipnet-1024x637.png" alt="Eingerichteter Portmapper in feste-ip.net" width="1024"  />
+<p>Rufen Sie zum Test nun aus einem IPv4-Netzwerk die Proxyadresse auf. Sie werden auf Ihrem Server landen. Die Eingabe des Portmapper-Ports ist nicht mehr nötig. Der Proxyserver macht es möglich! Wenn Sie die Proxyadresse aus einem IPv4-Netzwerk anpingen, dann wird die aber nicht auf die IPv6-Adresse des Servers aufgelöst, sondern auf die IPv4-Adresse des Mappingservers (z.B. de3.portmap64.net). Dies ist kein Fehler!</p>
+<p>Wer mit diesem Zugriff zufrieden ist, kann hier aufhören. Andererseits: Haben Sie eine eigene Domain? Dann sind Sie mit der erreichten Lösung wohl noch nicht ganz zufrieden. Der Zugriff über die eigene Domain ist schöner als über eine von feste-ip.net. Darum kümmern wir uns in den Schritten 4 und 5.</p>
+
+<h3>Schritt 4: Einrichtung eines CNAME-Eintrags </h3>
+<p>Loggen Sie sich mit Ihrem Benutzerkonto bei Ihrem Domainverwalter ein. Ob dies Strato, Domainfactory, HostEurope oder ein anderer ist, spielt keine Rolle. Die DNS-Einstellungen, die wir hier vornehmen müssen, unterstützt jeder uns bekannte Domain Hoster. Da die Benutzeroberflächen von Anbieter zu Anbieter verschieden sind, verzichten wir auf Screenshots.</p>
+<p>Legen Sie die Subdomain an, über die der Zugriff auf den Server erfolgen soll. Für diese Subdomain erstellen Sie dann über die DNS-Einstellungen einen CNAME-Eintrag, der auf den in Schritt 2 ausgewählten Mapping-Server verweist. Falls Sie diesen in Schritt 2 nicht notiert haben, gehen Sie in Ihr feste-ip.net Konto und wählen Sie den Portmapper aus. Dort wird der Name des Mapping Servers angezeigt. In diesem Beispiel ist es de3.portmap64.net.</p>
+<p>Nun heißt es etwas abwarten, bis der erstellte DNS-Eintrag auch im Domain Name System angekommen ist. Das kann von wenigen Augenblicken bis einige Stunden dauern. Wie wissen Sie, wann Sie weitermachen können? Pingen Sie einfach über die Konsole die erstellte Subdomain an. Sobald der Ping auf die aus Schritt 3 bekannte IPv4-Adresse des Mapping-Servers auflöst, kann&#8217;s weiter gehen.</p>
+
+<h3>Schritt 5: Anpassung des HTTP(S)-Proxies</h3>
+<p>Letzter Schritt! Gehen Sie zurück in Ihr feste-ip.net Konto und erstellen Sie einen neuen Proxyserver. Wählen Sie erneut als Ziel den Portmapper mit der passenden Portnummer aus. Im nun erscheinenen Abschnitt <i>Proxyadresse</i> geben Sie im Feld <i>Eigener Domainname mit CNAME</i> die erstellte Subdomain als FQDN ein (z.B. cloud.beispiel.de). Bei der Eingabe erfolgt die Prüfung, ob der CNAME-Eintrag auch richtig gesetzt wurde, d.h. auf den Mapping-Server verweist. Ist dies der Fall, wird der neue Proxy gesetzt und Sie können nun per Subdomain auf Ihren Server zugreifen &#8211; die Übersetzung von IPv4 auf IPv6 übernimmt der Portmapper. Den alten Proxy können Sie löschen.</p>
+<img decoding="async" src="/wp-content/uploads/2019/10/HTTPProxy_Einrichtung_Proxyadresse_Subdomain-1024x595.png" alt="Eingerichteter HTTP-Proxy mit eigner Subdomain" width="1024" />
+
+<h2>Funktionierende Lösung &#8800; gute Lösung</h2>
+<p>Trotz eines DS-Lite / IPv6-only Internetanschlusses haben Sie nun aus einem IPv4-Netzwerk Zugriff auf Ihren Server im eigenen Netzwerk. Die lahme Implementierung von IPv6 in vielen Mobilfunknetzen führt nicht mehr zu Funktionseinschränkungen. Ziel erreicht!</p>
+<p>Dennoch: Es gibt auch zwei Aber! Da sind zum einen die Kosten für Portmapper und Proxy. Neben diesen geringen Gebühren, die die Firma Cosimo für Ihre Dienste verlangt, gibt es aber einen noch viel gewichtigeren Nachteil: Was eigentlich ein gewöhnliches Routing Problem in einem IP-Netz sein sollte, ist nun ein Konstrukt mit mehreren Komponenten und Abhängigkeit von einem zusätzlichen externen Anbieter. Anders gesagt: Wir haben zusätzliche Komplexität aufgebaut. Diese Komplexität stört nicht, solange alles gut läuft. Im Falle von Probleme ist das Troubleshooting aber aufwändiger. Wenn der Internetanbieter eine routbare IPv4-Adresse als zubuchbare Option oder als Inklusivleistung bei einem höherwertigeren Internetanschluss anbietet, dann sind die Mehrkosten im Interesse einfacher Handhabbarkeit meist gut angelegt.</p>

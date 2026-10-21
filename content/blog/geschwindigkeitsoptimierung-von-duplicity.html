@@ -1,0 +1,106 @@
++++
+title = "Geschwindigkeitsoptimierung von duplicity"
+titel_html = "Geschwindigkeitsoptimierung von duplicity | datamate"
+ueberschrift = "Geschwindigkeitsoptimierung von duplicity"
+beschreibung = "duplicity/duply hat den Ruf eines grundsoliden, aber gemächlichen Backup-Tools. Einsatzspezifische Konfiguration können duplicity massiv beschleunigen."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2019/04/duplicity-optimierung.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/geschwindigkeitsoptimierung-von-duplicity/"
+canonical = "https://www.datamate.org/geschwindigkeitsoptimierung-von-duplicity/"
+og_bild_breite = "1920"
+og_bild_hoehe = "1280"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2019-04-14T07:00:31+00:00"
+geaendert = "2025-02-21T08:10:05+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "3 Minuten"
+beitragsbild = "/wp-content/uploads/2019/04/duplicity-optimierung.jpg"
+bild_breite = 1920
+bild_hoehe = 1280
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Geschwindigkeitsoptimierung von duplicity", item = ""}]
+wortzahl = 576
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["praktische-anwendungsfaelle", "software", "software-tests", "unsere-produkte"]
+schlagwoerter = ["Backup", "Duplicity", "duply", "Fellow", "Homie", "inkrementelles Backup"]
+wp_id = 5872
+slug = "geschwindigkeitsoptimierung-von-duplicity"
+url = "/geschwindigkeitsoptimierung-von-duplicity/"
+date = "2019-04-14T09:00:31"
+lastmod = "2025-02-21T09:10:05"
+datum_utc = "2019-04-14T07:00:31+00:00"
+geaendert_utc = "2025-02-21T08:10:05+00:00"
++++
+						<p>duplicity in Kombination mit duply ist eine weit verbreitete Backuplösung aus der Linux Welt. duplicity/duply punkten mit einem großen Funktionsumfang und gelten als absolut zuverlässig. Kritik wird jedoch an ihrer Geschwindigkeit geäussert. In Zeiten von Terabyte Datenträgern kann es durchaus vorkommen, dass ein duplicity Vollbackup oder dessen Restore viele Stunden, wenn nicht sogar Tage läuft. Neuartige Lösungen wie Restic, Attic oder Duplicacy sollen deutlich schneller arbeiten. Zeit für uns, die Geschwindigkeit von duplicity genauer unter die Lupe zu nehmen und Optimierungspotentiale zu prüfen. (Die Arbeitsweise und die Bedienung von duplicity/duply haben wir im Artikel <a href="/duplicity-duply-datensicherung-auf-die-verlass-ist/">duplicity/duply: Datensicherung auf die Verlass ist</a> vorgestellt.) </p>
+
+<span id="more-5872"></span>
+
+<h2>Getestete Parameter</h2>
+<p>Eine Stärke von duplicity ist seine Fähigkeit, sich auf vielfältige Weise individuell konfigurieren zu lassen. Davon bieten sich insbesondere drei Option für die Optimierung der Backupgeschwindigkeit an:</p>
+<ol style="padding-left: 20px;">
+	<li>Größe der Volumes</li>
+	<li>Verschlüsselung</li>
+	<li>Kompression</li>
+</ol>
+
+<!--<p>Mit der <strong>Datenübertragungsrate</strong> ist die maximale Bandbreite zwischen der Backupquelle und dem Backupziel gemeint. Hier gibt es wenig zu optimieren, solange diese nicht den Flaschenhals darstellt. Wenn man ein lokales Backup auf eine USB-Festplatte macht, sollte man sicherstellen, dass es sich um eine USB 3.0-Festplatte handelt und diese an einen USB 3.0-Anschluß angesteckt ist. Wenn man eine Sicherung auf einen Cloud-Speicher schreibt, sollte man dies nicht über eine schwache Datenleitung probieren, sondern dafür sorgen, dass die Leitungskapazität ausreichend ist. Sollte tagsüber die Datenleitung durch andere Nutzer ausgelastet sein, empfiehlt sich die Speicherung in der Nacht.</p>-->
+
+<p>duplicity speichert die Backup-Daten nicht in einer großen Datei, sondern teilt diese in mehrere kleine Dateien, sogenannte Volumes, auf. Mit <i>VOLSIZE</i> kann man die <strong>Größe der Volumes</strong> in Megabyte festlegen. Der Vorteil kleinerer Volumens besteht darin, dass bei einem Übertragungsfehler oder einer Unterbrechung nicht so viele Daten erneut übertragen werden müssen. Kleinere Volumes bedeuten aber auch mehr Overhead, was per se mit einer längeren Laufzeit bestraft wird. </p>
+
+<p>duplicity/duply verschlüsseln Backupdaten grundsätzlich vor der Übertragung mit Hilfe von GPG. Die <strong>Verschlüsselung</strong> lässt sich mit dem Parameter <i>&#8211;disable-encryption </i> deaktivieren &#8211; mit einer deutlichen Verbesserung Laufzeit als Konsequenz für die, die auf die Verschlüsselung verzichten können. (Ein Verzicht auf die Verschlüsselung sollte man aber nur dann in Betracht gezogen werden, wenn man das Backupziel vollständig unter Kontrolle hat.) </p>
+
+<p>Neben der Verschlüsselung bietet duplicity/duply auch standardmäßig eine <strong>Kompression</strong> der Backup-Volumes mit GZip. Der Preis für den geringen Speicherbedarf auf dem Backupziel ist eine längere Laufzeit des Backupjobs. Die Kompression lässt sich mit dem Parameter <i>&#8211;no-compression</i> deaktivieren.</p>
+
+<p>Soweit zur Theorie. Was sind aber die messbaren Auswirkungen der drei Optionen auf die Backupgeschwindigkeit? Was sind deren Wechselwirkungen? Wir wollten es genau wissen und haben nachgemessen! Unser Messergebnisse stellen wir im nächsten Abschnitt vor.</p>
+
+<h2>Testergebnisse</h2>
+<p>Testobjekt war ein 2 GB großes Datenverzeichnis. Die Sicherung erfolgte mit duplicity/duply über das lokale Netzwerk auf ein SMB-Share; der Restore nahm den gleichen Weg zurück auf den Terra MiniServer. Die Ergebnisse sind nicht unter streng kontrollierten Bedinungen zu Stande gekommen, bietet aber eine ausreichende Präzision für die Ableitung klarer Handlungsempfehlungen hinsichtlich ihres Laufzeiteffekts.</p>
+<p>Die folgenden Laufzeiten haben wir für das Backup (erste Zeitangabe) und Restore (zweite Zeitangabe) in Abhängigkeit dreier unterschiedlicher Volumegrößen und deaktivierter Verschlüsselung (- Enc.)  bzw. deaktivierter Kompression (- Comp.) gemessen:</p>
+
+<table class="table">
+	<tr>
+		<th></th>
+		<th>1 MB Volsize</th>
+		<th>200 MB Volsize</th>
+		<th>400 MB Volsize</th>
+	</tr>
+	<tr>
+		<th>+ Enc. / + Comp.</th>
+		<td>178 s. / 129 s. </td>
+		<td>142 s. / 102 s.</td>
+		<td>139 s. / 96 s.</td>
+	</tr>
+	<tr>
+		<th>+ Enc. / &#8211; Comp.</th>
+		<td>136 s. / 48 s.</td>
+		<td>114 s. / 35 s.</td>
+		<td>116 s. / 33 s.</td>
+	</tr>
+	<tr>
+		<th>&#8211; Enc. / + Comp.</th>
+		<td>156 s. / 55 s.</td>
+		<td>131 s. / 39 s.</td>
+		<td>125 s. / 39 s.</td>
+	</tr>
+	<tr>
+		<th>&#8211; End. / &#8211; Comp.</th>
+		<td>59 s. / 36 s.</td>
+		<td>43 s. / 26 s.</td>
+		<td>43 s. / 25 s.</td>
+	</tr>
+</table>
+
+<p>Entsprechend der generellen Erwartung reduzieren größere Volumes die Laufzeit von Backup und Restore. Jenseits der Standardgröße von 200 Megabyte ist der Laufzeiteffekt jedoch nur noch gering.</p>
+
+<p>Einen deutlichen, positiven Laufzeiteffekt hat die Deaktivierung der Kompression. Beim Backup ist der Geschwindigkeitsvorteil rund 20 % und mehr oder weniger unabhängig von der gewählten Volumegröße. Mit aktivierter Kompression lag die Backupgröße bei ca. 1.9 GB. Die geringe Kompressionsrate (<10 %) erklärt sich aus dem Typ der dem Datenpaket zugrundeliegenden Dateien, die bereits ein komprimiertes Format darstellen. Ohne Kompression wuchs das Backupvolumen durch den Overhead auf 2.1 GB an.</p>
+
+<p>Die Deaktivierung der Verschlüsselung bietet ebenfalls einen großen, positiven Geschwindigkeitsvorteil gegenüber den Standardeinstellungen. Backup und Restore beschleunigen um ca. 10-15%.  Interessanterweise ist der Vorteil damit weniger deutlich als bei der Deaktivierung der Kompression.</p>
+
+<p>Die Deaktivierung von Verschlüsselung und Kompression bietet &#8211; erwartungsgemäß &#8211; die deutlichste Geschwindigkeitsverbesserung. Interessanterweise ist der Effekt  nicht additiv (1+1=2), sondern deutlich mehr als additiv (1+1=3). Ohne Kompression und ohne Verschlüsselung benötigt das Backup 70% weniger Zeit als in den Standardeinstellungen. Das bedeutet, dass ein Backup, das vorher länger als 24 Stunden lief, in wenigen Stunden weggeschrieben ist. Der Restore benötigt sogar 75% weniger Zeit.</p>
+
+<h2>duplicity/duply: zuverlässig, flexibel und &#8211; wenn gewollt &#8211; auch flott</h2>
+<p>duplicity/duply generell ob Ihrer geringen Geschwindigkeit zu kritisieren, geht an den Fakten vorbei. Wer von den Standardeinstellungen abweichen kann, kann die Geschwindigkeit seines duplicity Backups deutlich beschleunigen. In der schnellsten getesteten Konfiguration wurde unser Testbackup mit Transferraten von knapp unter 50MB/s geschrieben, der Restore erfolgt sogar mit guten 75MB/s. In den Standardeinstellungen waren es nur rund 15 bzw. 20 MB/s.</p>
+<p>Mit Blick auf die gesteteten Parameter stechen vor allem die Verschlüsselung und die Kompression heraus. Wenn über einen ausreichend großen Backupspeicher verfügt, der kann die Kompression deaktivieren und dadurch deutlich Zeit sparen. Dies gilt umso mehr, desto weniger komprimierbar das zu sichernde Datenmaterial ist. Gerade im Falle von komprimierten Bild- oder Audioformaten lässt sich durch die GZip-Kompression von duplicity nicht viel Speicherplatz einsparen. Eine Deaktivierung der Verschlüsselung können all die in Betracht ziehen, die den Backupspeicher unter der eigenen Kontrolle haben (und die Sicherung im lokalen Netzwerk erfolgt oder der Transportweg verschlüsselt ist). Ein Backup auf ein lokales NAS lässt sich so deutlich beschleunigen. Flügel können all die duplicity/duply verpassen, die ihre Sicherung unkomprimiert und unverschlüsselt auf einen lokalen Datenträger oder Netzwerkspeicher ausführen. Was die Volumegröße angeht, so ist unsere Empfehlung, den Standardwert von 200 Megabyte aufgrund seines geringen Laufzeiteffekts nicht zu verändern. </p>

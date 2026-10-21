@@ -1,0 +1,100 @@
++++
+title = "ownCloud vs Seafile – Performance"
+titel_html = "ownCloud vs Seafile - Performance | datamate"
+ueberschrift = "ownCloud vs Seafile &#8211; Performance"
+beschreibung = "In diesem Artikel testen wir die Performance und Übertragungsgeschwindigkeiten von Seafile 4 und owncloud 7 im lokalen Netzwerk mit einem Raspberry Pi B+."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2015/02/owncloud-internal-error.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/owncloud-vs-seafile-performance/"
+canonical = "https://www.datamate.org/owncloud-vs-seafile-performance/"
+veroeffentlicht = "2015-02-02T14:10:05+00:00"
+geaendert = "2025-02-21T08:10:58+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "6 Minuten"
+bild_breite = 800
+bild_hoehe = 387
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "ownCloud vs Seafile &#8211; Performance", item = ""}]
+wortzahl = 1115
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["seafile"]
+schlagwoerter = ["owncloud", "performance", "seafile", "Übertragungsraten LAN"]
+wp_id = 2881
+slug = "owncloud-vs-seafile-performance"
+url = "/owncloud-vs-seafile-performance/"
+date = "2015-02-02T15:10:05"
+lastmod = "2025-02-21T09:10:58"
+datum_utc = "2015-02-02T14:10:05+00:00"
+geaendert_utc = "2025-02-21T08:10:58+00:00"
++++
+						<p>ownCloud ist seit Jahren der unangefochtene Favorit sobald es um das Thema &#8220;private cloud&#8221; geht. ownCloud bietet neben der Dateisynchronisation noch einen Termin- und Kontaktabgleich per Caldav und Carddav und lässt sich über vielfältige Addons erweitern. Auch auf dem bekannten Minirechner Raspberry Pi kann es ohne große Mühe installiert werden. Trotzdem gibt es immer wieder auch kritische Stimmen. Es wird die Performance von ownCloud kritisiert, der große Hardwarehunger, die Dateisynchronisation soll nicht stabil laufen und es soll immer wieder Probleme mit den Updates geben. </p>
+
+<p>Auch persönlich habe ich ownCloud 4 und ownCloud 5 ausprobiert und habe beide Male frustriert nach ein paar Wochen den Versuch abgebrochen. Bei ownCloud 4 war die Synchronisationsgeschwindigkeit einfach unterirdisch und bei ownCloud 5 hat die Synchronisation regelmäßig Dateikonflikte produziert, obwohl nichts an den Dateien verändert wurde. Dementsprechend skeptisch bin ich ownCloud gegenüber eingestellt. Nun wollte ich ownCloud 7 aber eine neue Chance geben und es mit dem Konkurrenten <a href='/seafile'>Seafile</a> vergleichen. Da ich keine Webseite mit Informationen zur Performance von ownCloud und Seafile gefunden habe, haben wir von ionas &#8211; Ihr Online Assistent uns selbst daran gemacht und haben ownCloud mit Seafile verglichen. Primär ging es uns darum zu prüfen, mit welchen Übertragungsraten im LAN man bei einem Raspbery Pi B+ rechnen kann und ob die Tools unseren Praxistest überstehen.</p>
+
+<span id="more-2881"></span>
+
+<h2>Versuchsaufbau</h2>
+
+<p>Um ownCloud und Seafile sinnvoll und realistisch vergleichen zu können, haben wir beide Tools auf einem Raspberry Pi B+ mit einer Class 10 SD Karte installiert. Bei Seafile haben wir die Version 4.0.1 und bei ownCloud die Version 7.0.4 installiert. Als Webserver nutzen wir den ressourcensparenden nginx mit einem selbst erzeugten HTTPS Zertifikat. Für den Performancetest der beiden Systeme synchronisieren wir zum einen die ISO-Datei von crunchbang Linux (775 MB) und zum anderen 228 Fotos mit 529 Megabyte. Übertragen werden die Daten über ein kabelgebundenes Gigabit Netzwerk von einem Ubuntu Linux Notebook. Neben der reinen Übertragungsgeschwindigkeit interessierte uns natürlich auch die CPU- und RAM-Auslastung des Raspberry PI.</p>
+
+<p>Folgende Tests haben wir durchgeführt:</p>
+<ol>
+<li>Upload- und Downloadgeschwindigkeit von ownCloud bei 228 Fotos mit 529 MB</li>
+<li>Upload- und Downloadgeschwindigkeit von Seafile bei 228 Fotos mit 529 MB</li>
+<li>Upload- und Downloadgeschwindigkeit von ownCloud bei einer 775 MB großen ISO Datei</li>
+<li>Upload- und Downloadgeschwindigkeit von Seafile bei einer 775 MB großen ISO Datei</li>
+</ol>
+
+<p>Natürlich ist uns bewußt, dass der Raspberry Pi B+ keine performante Hardware besitzt. Der LAN Anschluß wird intern über USB angeschlossen, so dass man hier maximal 5-6 MB pro Sekunde erreichen kann. Um dem 700 Mhz Prozessor noch etwas mehr Leistung zu entlocken nutzen wir die eingebaute Übertackungsfunktion von raspi-config. Wir wählen die Einstellung &#8220;Medium&#8221; um die CPU mit 900 Mhz zu tacken.</p>
+
+<h2>ownCloud Performance Test: Fotos</h2>
+
+<p>Unser erster Eindruck: ownCloud lässt sich Zeit. Die Synchronisation von 228 Fotos vom Notebook zum Raspberry Pi dauert 17 Minuten und 56 Sek. Das sind in Summe 1076 Sekunden und entsprechen einer effektiven Übertragungsrate von 0,5 MB pro Sekunde.
+Wir kopieren anschließend die Ordner mit den Fotos auf dem Raspberry Pi in ein neues Verzeichnis und stoßen die Synchronisation erneut an. Der Download zurück zum Notebook dauert unwesentlich kürzer und ist in 17 Minuten und 10 Sekunden erledigt. Auch das entspricht einer effektiven Übertragungsgeschwindigkeit von 0,5 MB/sec.
+Was uns persönlich sehr verwundert ist die Tatsache, dass das Aktivitätenprotokoll bei vielen Dateien einen &#8220;Internal Server Error&#8221; ausgibt. Die Dateien kommen jedoch auf dem Server an und können auch über die Weboberfläche von ownCloud angezeigt und runtergeladen werden. Dementsprechend haben wir nicht weiter geforscht, ob dieses Verhalten Auswirkung auf die Performance hat. </p>
+
+<img decoding="async" src="/wp-content/uploads/2015/02/owncloud-internal-error.png" alt="ownCloud Performance" width="800" height="387" class="alignleft bottommargin-sm" />
+
+<h2>Seafile Performance Test: Fotos</h2>
+
+<p>Seafile geizt mit den gelieferten Informationen. Die Applikation auf unserem Notebook zeigt uns zwar, dass gerade synchronisiert wird, jedoch zeigt der prozentuale Downloadfortschritt nicht den Gesamtfortschritt sondern jeweils nur aktuell synchronisierte Datei. Trotzdem sind wir positiv überrascht, dass nach 3 Minuten und 28 Sekunden der Upload auf den Server abgeschlossen ist. Dies entspricht einer Geschwindigkeit von 2,5 MB/sek.
+Wir kopieren über die Weboberfläche von Seafile den Ordner und synchronisieren die Dateien zurück zum Notebook. Nach 175 Sekunden liegen die Bilder in doppelter Ausführung auf unserem Notebook. Durchschnittlich sind das 3 MB/sek. Da die Vorschaubilder sofort angezeigt werden, verzichten wir auf weitere Qualitätsprüfungen. </p>
+
+<h2>ownCloud Performance Test: ISO-Datei</h2>
+
+<p>ownCloud begint fleißig mit dem Upload der 775 MB großen ISO Datei. Derweil holen wir uns uns einen frischen Kaffee und verfolgen dann gebannt wie die Prozentzahlen ansteigen. Dann nach 15 Minuten die große Überraschung. Die Synchronisation springt plötzlich auf 100% und präsentiert uns einen &#8220;server timeout&#8221; in der Aktivitätenübersicht. Mit dem Linux Befehl &#8220;md5sum&#8221; prüfen wir, ob die Datei richtig übertragen wurde und stellen fest, dass die Datei nicht vollständig übertragen wurde. Die Größe stimmt, aber die Checksumme hat sich verändert. Wir brechen die Synchronisation ab und ersparen uns den Download der ISO-Datei um die Downloadgeschwindigkeit zu messen.</p>
+
+<h2>Seafile Performance Test: ISO-Datei</h2>
+
+<p>Die Synchronisation der ISO-Datei verläuft bei Seafile ohne große Aufregung. Der Upload ist in 6 Min. 10 Sekunden erledigt. Der Download dauert 4 Min. und 18 Sekunden. Dies entspricht einem Upload von 2,1 MB/sek. und einem Download von 3 MB/sek. Per &#8220;md5sum&#8221; Befehl auf dem Linux Notebook prüfen wir, ob die Prüfsummen identisch sind. Die Prüfsummen sind identisch und somit der Test erfolgreich.</p>
+
+<h2>Fazit</h2>
+
+<p>Ehrlich gesagt verstehen wir den Hype um ownCloud nicht. Auch in der Version 7 habe ich den Eindruck, dass ownCloud auf einem Raspberry Pi nicht rund läuft und die Performance einfach nicht stimmt. Die Übertragungsraten sind deutlich geringer als bei Seafile, es werden Fehler in der Aktivitenübersicht angezeigt, obwohl die Fotos richtig übertragen werden. Die große ISO Datei konnte nicht erfolgreich gespeichert werden. Das Log der Weboberfläche hilft leider nicht weiter. </p>
+
+<h2>Performance ownCloud vs Seafile</h2>
+
+<table class="table">
+<tr>
+<th>Aktivität</th><th>ownCloud</th><th>Seafile</th>
+</tr>
+<tr>
+<th>Fotos Upload</th><td>0,5 MB/sec.</td><td>2,5 MB/sec.</td>
+</tr>
+<tr>
+<th>Fotos Download</th><td>0,5 MB/sec.</td><td>3,0 MB/sec.</td>
+</tr>
+<tr>
+<th>ISO Upload</th><td>fehlgeschlagen</td><td>2,1 MB/sec.</td>
+</tr>
+<tr>
+<th>ISO Download</th><td>nicht getestet</td><td>3,0 MB/sec.</td>
+</tr>
+</table>
+
+<p>ownCloud ist im lokalen Netzwerk nicht so performant wie Seafile. Trotzdem ist die durchschnittliche CPU Auslastung bei ownCloud deutlich höher. ownCloud erzeugt mit mehreren &#8220;php-fpm&#8221; Prozessen fast durchgehend 70-80% CPU-Auslastung, wohingegen Seafile mit einem Prozess auf 30-60% CPU-Auslastung kommt. Dies wäre alles zu verschmerzen, wenn die Synchronisation sauber arbeiten würde. Bei uns entsteht jedoch eher der Eindruck, dass ownCloud mehr Wert darauf legt neue Features zu entwickeln anstatt die Basisfähigkeiten und die Performance konsequent zu verbessern.</p>
+
+<p>Dieser Test wurde zwar nicht unter Laborbedingungen durchgeführt, ist jedoch mit Sicherheit sehr nah an den tagtäglichen Bedürfnissen der Anwender. Uns bestärkt dieser Test, dass wir beim <a href='https://www.datamate.org'>ionas-Server</a>, der ersten privaten Cloud für Jedermann auf Seafile und Radicale (Termin- und Kontaktsynchronisation) gesetzt haben und der ionas-Server somit die perfekte <a href='/dropbox-alternative/'>Dropbox-Alternative</a> ist.</p>

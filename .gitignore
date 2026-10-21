@@ -1,0 +1,14 @@
+/public/
+/resources/
+/.hugo_build.lock
+/datamate-org.tar.gz
+
+# Der entpackte WordPress-Dateibestand. Quelle fuer _build/gen_static.py,
+# 533 MB, und enthaelt wp-config.php mit Datenbank-Zugangsdaten - gehoert
+# nicht ins Repo. Neu anlegen: siehe README, Abschnitt "Neu aufsetzen".
+/_build/wporig/
+
+# Berichte der Pruefskripte
+/_build/verify-diff.txt
+/_build/linkcheck-report.txt
+/_build/__pycache__/

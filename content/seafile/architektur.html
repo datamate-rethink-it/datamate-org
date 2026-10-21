@@ -1,0 +1,106 @@
++++
+title = "Architektur"
+titel_html = "Seafile Client-Server-Architektur | datamate rethink IT"
+beschreibung = "Seafile basiert wie die bekannten Public Cloud File Sharing Dienste auf einer Client-Server-Architektur. Die Nutzerdaten werden auf einem zentralen Server gespeichert und können von dort mit einem Client abgerufen werden. Der Server kann auch mehrere Anfragen gleichzeitig beantworten."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/10/seahub-architektur-seafile-sync-client.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/seafile/architektur/"
+canonical = "https://www.datamate.org/seafile/architektur/"
+geaendert = "2020-09-21T12:48:47+00:00"
+twitter_label1 = "Geschätzte Lesezeit"
+twitter_data1 = "2 Minuten"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Seafile", item = "https://www.datamate.org/seafile/"}, {name = "Architektur", item = ""}]
+wp_id = 2807
+date = "2017-10-26T13:22:18"
+lastmod = "2020-09-21T14:48:47"
+datum_utc = "2017-10-26T11:22:18+00:00"
+geaendert_utc = "2020-09-21T12:48:47+00:00"
++++
+<section id="slider" class="slider-parallax full-screen" style="background: url('/wp-content/uploads/2017/10/seafile-clouds.png') center center no-repeat; background-size: cover">
+	<div class="slider-parallax-inner">
+		<div class="container vertical-middle clearfix">
+			<div class="heading-block title-center nobottomborder">
+				<h1 style="text-shadow: 1px 1px 2px #fff;">Wie arbeitet Seafile?</h1><br/>
+				<span style="font-size: 32px; text-shadow: 1px 1px 2px #fff;">Seafile arbeitet in einer klassischen Client-Server-Architektur.</span>
+			</div>
+		</div>
+	</div>
+	<a href="#" data-scrollto="#content" data-offset="0" class="one-page-arrow" style="z-index: 10;"><i class="icon-angle-down infinite animated fadeInDown"></i></a>
+</section>
+
+<style>
+.accordion.accordion-border .acctitle, .accordion.accordion-border .acctitlec {
+    line-height: 20px !important;
+    padding: 10px 15px 10px 36px;
+}
+.accordion.accordion-border .acctitle i {
+    line-height: 40px;
+}
+.accordion.accordion-border .acc_content {
+    padding: 20px 15px 15px 36px;
+}
+.acctitle {
+	font-size: 16px;
+}
+.widget_links li a {
+	background: url('/wp-content/themes/datamate-theme/images/icons/widget-link.png') left top no-repeat;
+}
+</style>
+
+<section id="content">
+<div class="content-wrap nopadding nobottommargin">
+
+<div class="section notopmargin">
+	<div class="container clearfix">
+		<div class="row">
+			
+			<div class="col-sm-7 topmargin-sm bottommargin-lg">
+
+				<h2>Die Architektur von Seafile</h2>
+				<p style='font-size: 16px;'>Seafile basiert wie die bekannten Public Cloud File Sharing Dienste <a href="/seafile/unterschiede-seafile-dropbox/" title="Seafile vs. Dropbox">Dropbox und OneDrive</a> ebenso wie <a href="/seafile/unterschiede-seafile-owncloud/" title="Seafile vs. ownCloud">ownCloud</a> auf einer <a href="https://de.wikipedia.org/wiki/Client-Server-Modell">Client-Server-Architektur</a>. Die Nutzerdaten werden auf einem zentralen Server gespeichert und können von dort mit einem Client, d.h. einem Programm, das über das Netzwerk Anfragen bzw. Aufforderungen an den Server stellt, abgerufen werden bzw. Daten können hochgeladen werden. Alternativ kann man auch über die Weboberfläche des Servers mittels Browser direkt auf die Daten auf dem Seafile Server zugreifen.</p>
+
+				<p style='font-size: 16px;'>Der Seafile Server ist also die Verteilstation im Geräteverbund, der Anfragen aus dem Netzwerk beantwortet und bearbeitet. Der Server ist somit für mehrere angeschlossene Geräte „verantwortlich“ und kann auch mehrere Anfragen gleichzeitig beantworten.</p>
+
+				<p style='font-size: 16px;'>Wird auf einem synchronisierten Gerät eine neue Datei anlegt oder verändert, dann wird diese von dort auf den Server hochgeladen und von dort an alle anderen Geräte weiterverteilt. Wenn eine Datei an eine dritte Person freigegeben und über einen Downloadlink abgerufen wird, dann prüft der Server die Anfrage, fragt ggf. das vergebene Passwort ab und sendet die freigegebenen Daten an den Empfänger.</p>
+
+				<p style='font-size: 16px;'>Ursprünglich war Seafile als Peer-to-Peer File Sharing Lösung konzipiert. Die Entwickler entschieden aber im Laufe der Entwicklung den eingeschlagenen Weg aufzugeben und auf eine traditionelle Client-Server-Architektur zu setzen.</p>
+			</div>
+
+			<div class="col-sm-4 col-sm-offset-1 topmargin-sm bottommargin col_last">
+							
+				<img decoding="async" src="/wp-content/uploads/2017/10/seahub-architektur-seafile-sync-client.png" title="Client-Server-Architektur von Seafile" alt="Client-Server-Architektur von Seafile">
+				<div class="divider divider-center"><i class="icon-cloud"></i></div>
+				
+				<div class="widget widget_links clearfix">
+					<h3>Seafile FAQs</h3>
+					<ul>
+						<li><a href="/seafile/architektur" title="Wie arbeitet Seafile?"> Wie arbeitet Seafile?</a></li>
+						<li><a href="/seafile/open-source" title="Ist Seafile freie bzw. Open Source Software?"> Ist Seafile freie bzw. Open Source Software?</a></li>
+						<li><a href="/seafile/zugriffsarten" title="Wie komme ich an die Server-Daten ran?">Wie komme ich an die Server-Daten ran?</a></li>
+						<li><a href="/seafile/client-plattformen" title="Seafile Client Plattformen"> Für welche Plattformen gibt es Seafile Clients?</a></li>
+						<li><a href="/seafile/server-plattformen" title="Seafile Server Plattformen"> Für welche Plattformen gibt es den Seafile Server?</a></li>
+						<li><a href="/seafile/unterschiede-seafile-dropbox" title="Seafile Unterschied zu Dropbox, OneDrive und Google Drive"> Was ist der Unterschied zwischen Seafile und Dropbox, OneDrive und Google Drive?</a></li>
+						<li><a href="/seafile/unterschiede-seafile-owncloud" title="Seafile Unterschied zu ownCloud"> Was ist der Unterschied zwischen Seafile und ownCloud?</a></li>
+						<li><a href="/seafile/preise" title="Seafile Professional Preise"> Was kostet die Professional Edition des Seafile Servers?</a></li>
+						<li><a href="/seafile/enterprise-infrastrukturen" title="Seafile und enterprise Infrastrukturen"> Lässt sich Seafile in bestehende Enterprise-Infrastrukturen integrieren?</a></li>
+						<li><a href="/seafile/customizing" title="Seafile und Cooper" title="Seafile Customizing">Läßt sich das Design von Seafile anpassen?</a></li>
+						<li><a href="/seafile/wechsel-community-professional-edition" title="">Ist ein Wechsel zwischen Community und Professional Edition möglich?</a></li>
+					</ul>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+	
+<div class="promo promo-light promo-full bottommargin-lg header-stick notopborder nobottommargin">
+	<div class="container clearfix">
+		<h2>Brauchen Sie Support oder Hilfe mit Seafile?</h2><h3><span>datamate ist offizieller deutscher Seafile Support Partner!</span></h3>
+		<span>Wir bieten Installationen, Customizing, Support, Debugging<br/>
+		und individuelle Entwicklungen. Rufen Sie uns an unter +49 (0)6131 3270777.</span>
+		<a href="mailto:seafile@datamate.org" class="button button-dark button-xlarge button-rounded">Schreiben Sie uns</a>
+	</div>
+</div>
+
+ </div></section>

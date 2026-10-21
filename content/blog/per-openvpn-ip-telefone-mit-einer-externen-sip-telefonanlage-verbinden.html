@@ -1,0 +1,147 @@
++++
+title = "IP-Telefone mit einer externen SIP-Telefonanlage per OpenVPN verbinden"
+titel_html = "IP-Telefone mit einer externen SIP-Telefonanlage per OpenVPN verbinden | datamate"
+ueberschrift = "IP-Telefone mit einer externen SIP-Telefonanlage per OpenVPN verbinden"
+beschreibung = "Dieser Beitrag enthält eine Schritt-für-Schritt Anleitung, um IP-Telefone über eine OpenVPN-Verbindung mit einer eigenen Telefonanlage zu verbinden."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/08/VPN-mit-Yealink.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/per-openvpn-ip-telefone-mit-einer-externen-sip-telefonanlage-verbinden/"
+canonical = "https://www.datamate.org/per-openvpn-ip-telefone-mit-einer-externen-sip-telefonanlage-verbinden/"
+og_bild_breite = "1024"
+og_bild_hoehe = "681"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2017-08-14T08:42:53+00:00"
+geaendert = "2025-02-21T08:10:14+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Ralf Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "9 Minuten"
+beitragsbild = "/wp-content/uploads/2017/08/VPN-mit-Yealink.jpg"
+bild_breite = 1024
+bild_hoehe = 681
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "IP-Telefone mit einer externen SIP-Telefonanlage per OpenVPN verbinden", item = ""}]
+wortzahl = 1483
+autor = "Ralf Dyllick-Brenzinger"
+autor_kurz = "rdb"
+kategorien = ["hardware"]
+schlagwoerter = ["Askozia", "datamate", "OpenVPN", "Telefon", "Telefonanlage", "Yealink"]
+wp_id = 1431
+slug = "per-openvpn-ip-telefone-mit-einer-externen-sip-telefonanlage-verbinden"
+url = "/per-openvpn-ip-telefone-mit-einer-externen-sip-telefonanlage-verbinden/"
+date = "2017-08-14T10:42:53"
+lastmod = "2025-02-21T09:10:14"
+datum_utc = "2017-08-14T08:42:53+00:00"
+geaendert_utc = "2025-02-21T08:10:14+00:00"
++++
+						<p>datamate bietet seit dem Frühjahr 2023 keine Leistungen mehr zum Thema VoIP/3CX an. Bitte wenden Sie sich vertrauensvoll an unseren Nachfolger 
+<a href="https://www.3cx.de/benutzerhandbuch/webclient/" rel="noopener" target="_blank">systemwerk.</a></p>
+
+<p>Im Büroeinsatz oder im Home Office will man manchmal auf ein gutes altes Tischtelefon einfach nicht verzichten. Solange sich die Telefonanlage im gleichen Netzwerk befindet oder direkt über das Internet erreichbar ist, kann die Einrichtung des Telefons nach Schema F erfolgen. Wenn aber die Telefonanlage aus Sicherheitsgründen nur über eine VPN-Verbindung erreichbar ist &#8211; <a href="/sicherheitsrisiken-aufgrund-von-voip-telefonie">was wir sehr empfehlen</a> &#8211; dann ist die Einrichtung komplizierter &#8211; insbesondere bei einer Zweifaktorauthentifizierung. Mit diesem Beitrag wollen wir dabei Hilfestellung geben. Am Beispiel eines Yealink IP-Telefons der T4-Serie zeigen wir, wie man ein IP-Telefon über eine VPN-Verbindung mit der Askozia-Telefonanlage unseres <a href="/fellow">Small Business Servers Fellow</a> verbindet und so z.B. auch von zu Hause aus die Firmen-Telefonananlage nutzen kann.</p>
+
+<span id="more-1431"></span>
+** Update Mai 2018: Aufgrund der Einstellung der Askozia PBX-Software in Folge der Akquisition des Herstellers durch 3CX ist die Telefonanlage nicht mehr Bestandteil des Softwarepakets unsers Small Business Servers. Die generellen Aussagen des Artikels sind weiterhin gültig. **
+ 
+<h2>Augen auf beim IP-Telefon Kauf</h2>
+<p>Befinden sich IP-Telefon und Telefonanlage im gleichen Netzwerk oder ist die Telefonanlage direkt aus dem Internet per URL erreichbar (wie z.B. bei der <a href="https://www.sipgateteam.de/" target="_blank" rel="noopener">Cloud-Telefonanlage von Sipgate</a>), dann muss man beim Kauf der Telefoniegeräte wenig beachten. Der Aufbau einer solchen Verbindung ist eine Pflichtfunktionalität aller IP-Telefone. Anders sieht es aus, wenn sich die Telefonanlage hinter einer Firewall  befindet und die Kommunikation zwischen Telefon und Anlage eine VPN-Verbindung erfordert. Der Grund: VPN-Unterstützung und erst recht OpenVPN-Unterstützung bringt nicht jedes IP-Telefon mit.</p>
+
+<p>Wir bei datamate arbeiten gerne mit den hochwertigen <a href="http://yealink.com" target="_blank" rel="noopener">Yealink IP-Telefonen der T4-Serie</a>. Diese bieten ein sehr gutes Preis-Leistungsverhältnis und &#8211; für diesen Beitrag relevant &#8211; unterstützen von Hause aus OpenVPN. (OpenVPN ist der VPN-Standard, den wir auf unseren Servern verwenden.) Wacklige Adapterlösungen oder Firewall-zu-Firewall VPNs, wie man sie typischerweise bei der Anbindung von zwei Firmenstandorten nutzt, erspart man sich damit.</p>
+
+<h2>Direkte Verbindung zwischen Telefon und Telefonanlage über das Internet</h2>
+<p>In der Theorie ist das Vorgehen zum Verbinden des Telefons mit der Telefonanlage über das Internet per VPN ganz einfach: Man versorgt das Telefon mit einem VPN-Zertifikat, das SIP-Telefon baut mit diesem eine Verbindung ins Netzwerk der VoIP-Telefonanlage auf und meldet sich dann mit den Zugangsdaten an der Telefonanlage an. Schon kann man lostelefonieren. </p>
+	
+<p>In der Praxis ist es leider nicht ganz so einfach. Die Telefone bieten meist keine komfortable Benutzeroberfläche wie z.B. ein OpenVPN-Client für Windows &#038; Co, die Rückmeldung vom Telefon beschränkt sich in aller Regel auf &#8220;geht&#8221; oder &#8220;geht nicht&#8221; und auch die Dokumentation hat ihre Tücken. Bei den von uns für diesen Beitrag herangezogenen Yealink-Telefonen haben wir in den Anleitungen des Herstellers gleich mehrere Fehler gefunden. Manchmal stimmen die Dateipfade nicht, mal werden Dateinamen durcheinandergewirbelt oder auf wichtige Aspekte wird nicht hingewiesen. Jeder einzeln Fehler kann den Verbindungsaufbau behindern und zu viel Frust führen.</p>
+
+<p>Die folgende Beschreibung basiert auf einem eingerichteten datamate-Fellow mitsamt konfiguriertem OpenVPN-Dienst und Askozia-Telefonanlage. Wenn Du ein anderes System haben oder andere Softwarelösungen verwenden und Hilfe bei der Einrichtung benötigen, dann rufe uns an: +49 (0)6131 3270777. Wir helfen Dir gerne bei der Anbindung Deines Telefons per VPN.</p>
+
+<h3>Schritt 1: Firmware Update</h3>
+<p>Nicht zwangsläufig nötig, aber ein Firmware Update des Telefons verhindert manchmal ungewollte Probleme. Zum Zeitpunkt der Veröffentlichung dieses Textes war die Version 81 (36.81.0.110) aktuell, welche wir auch für unsere Tests mit dem T41P, T42G und T46G verwendet haben.</p>
+<p>Die jeweils aktuelle Firmware erhält man auf den Support-Seiten der Telefonhersteller. Für die populärsten Telefonmodelle der großen Hersteller Gigaset, Grandstream, Snom und Yealink haben wir hier die Download-Links zusammen gestellt.</p>
+
+<h3>Schritt 2: VPN-Zertifikat erstellen</h3>
+<p>Ist auf Fellow der VPN-Server konfiguriert, dann ist in den Benutzereinstellungen mit einem Knopfdruck ein VPN-Zertifikat erzeugt und mit einem weiteren aktiviert. Der Download des Zertifikats erfolgt über den persönlichen Bereich des Benutzers.</p> 
+
+<p>Damit ist das Zertifikat aber leider noch nicht abschliessend vorbereitet. Die Yealink Telefone können mit dem serverseitig erzeugten VPN-Zertifikat nicht umgehen. Das Zertifikat muss darum &#8220;zurechtmassiert&#8221; werden.</p>
+
+<h3>Schritt 3: VPN-Zertifikat modifizieren</h3>
+<p>Die Yealink-Telefone benötigen die vier Komponenten, die in jeder von Fellow erzeugten OVPN-Datei enthalten sind, in separaten Dateien. Diese Separation kann man natürlich manuell durchführen, einfacher ist es aber mit <a href="/downloads/ovpn-split.sh">diesem Bash-Skript</a> aus unserer Entwicklungsabteilung. Das Skript separiert, die vom Server erzeugte OVPN-Datei, feinsäuberlich in diese drei Dateien:</p>
+<ul>
+	<li>client.crt (Zertifikat des Clients)</li>
+	<li>ca.crt (Zertifikat der Certificate Authority)</li>
+	<li>client.key (privater Schlüssel des Zertifikats)</li>
+</ul>
+
+<img decoding="async" src="/wp-content/uploads/2017/08/Ausfuehrung_Bash-Skript.png" style="float:left; margin-right: 15px;" alt="Teilung der OVPN-Datei per Bash-Skript" width="560" class="alignnone size-full wp-image-1448" />
+
+<p>Zur Ausführung des Skripts benötigt man eine Bash-Konsole. Eine solche gibt es natürlich in jedem Linux-System; seit neuestem aber auch <a href="https://msdn.microsoft.com/de-de/commandline/wsl/install_guide" target="_blank" rel="noopener">nach entsprechender Aktivierung</a> unter Windows 10.</p>
+
+<p>Speichere die ovpn-split.sh Datei im gleichen Verzeichnis wie die heruntergeladene Zertifikatsdatei. Danach führe den folgenden Befehl aus:</p>
+
+<pre><code class="hljs">./ovpn-split.sh ./zertifikat.ovpn</code></pre>
+
+<p>Das Skript tut also nichts anderes, als die drei in der OVPN-Datei enthaltenen Zertifikate heraus zu lösen. Die Zertifikatsinfos müssen dann noch aus der ursprünglichen OVPN-Datei entfernt und als vpn.cnf abgespeichert werden. Am Ende sollte die Konfigurationsdatei so aussehen:</p>
+
+<pre><code class="hljs">client
+nobind
+proto tcp
+remote <strong>URL</strong> 1194
+dev tun
+comp-lzo
+verb 3
+resolv-retry infinite
+persist-key
+persist-tun
+ca /config/openvpn/keys/ca.crt
+cert /config/openvpn/keys/client.crt
+key /config/openvpn/keys/client.key
+</code></pre>
+
+<p>Wichtig: &#8220;URL&#8221; in Zeile 4 der vpn.cnf muss natürlich durch die öffentliche IP, die DynDNS-Adresse oder die URL des VPN-Servers ersetzt werden &#8211; jenachdem was relevant. (Wichtig: Die IP des VPN-Servers und der Telefonanlage ist bei Fellow unterschiedlich, da die Askozia in einer separaten Virtuellen Maschine läuft.) Gleiches gilt für den hier verwendenten Standard Port von VPN (1194) oder andere Konfigurationselemente, wenn diese von der Konfiguration des OpenVPN-Servers von Fellow abweichen.</p>
+
+<p>Wenn der VPN-Server auf Fellow mit Zwei-Faktorauthentifizierung konfiguriert ist und die Verbindung einen Benutzernamen und ein Passwort erwartet, dann muss in der vpn.cnf noch folgende Zeile ergänzt werden:</p>
+
+<pre><code class="hljs">auth-user-pass /config/openvpn/keys/auth.txt</code></pre>
+
+<p>In einer separaten auth.txt sind dann Benutzername und Passwort anzugeben. Dies ist notwendig, da die Yealink Telefone keinen Prompt zur Eingabe des zweiten Authentifizierungsfaktors unterstützen.</p>
+
+<pre><code class="hljs">Benutzername steht in der ersten Zeile
+Das Passwort in der zweiten Zeile
+</code></pre>
+
+<p>Anschliessend sind alle vier Dateien (bei Zwei-Faktorauthentifizierung fünf Dateien) in ein TAR-Archiv zu verpacken. Dabei ist zwingend auf diese Struktur zu achten:</p>
+
+<pre><code class="hljs">    vpn.cnf
+    /keys/ca.crt
+    /keys/client.crt
+    /keys/client.key
+    /keys/auth.txt
+</code></pre>
+
+<img decoding="async" src="/wp-content/uploads/2017/08/Erstellung_TAR-Archiv.png" style="float:left; margin-right: 15px;" alt="Erzeugung des TAR-Archivs mit der VPN-Konfiguration in einer Bash-Konsolte" width="560" class="alignnone size-full wp-image-1445" srcset="/wp-content/uploads/2017/08/Erstellung_TAR-Archiv.png 826w, /wp-content/uploads/2017/08/Erstellung_TAR-Archiv-300x146.png 300w, /wp-content/uploads/2017/08/Erstellung_TAR-Archiv-768x374.png 768w" sizes="(max-width: 826px) 100vw, 826px" />
+
+<p>Um diese Struktur in der TAR-Datei abzubilden, erstellt man für dafür am besten einen separaten Ordner. In diesem legt man einen Unterordner &#8220;keys&#8221; an. Die TAR-Datei erstellt man dann unter Linux mit dem folgenden Befehl:</p>
+
+<pre><code class="hljs">tar -cvpf openvpn.tar ./*</code></pre>
+
+<p>Diese Struktur ist sehr wichtig, weil nur wenn diese eingehalten wird die Yealink Telefone die Zertifikats- und Konfigurationsdateien an die richtige Stelle auf dem Telefon kopieren.</p>
+
+<p>Unter Windows verwendet man übrigens am besten das <a href="http://www.7-zip.de/" target="_blank" rel="noopener">Komprimierungsprogramm 7-Zip</a>. Auch hier muss peinlichst auf die richtige Struktur der gepackten Dateien geachtet werden.</p>
+
+<p>Die VPN-Verbindung zwischen dem IP-Telefon und der Telefonanlage ist jetzt nur noch ein kleines Stückchen entfernt.</p>
+
+<h3>Schritt 4: Import der VPN-Konfiguration in das Telefon</h3>
+<p>Der Import der VPN-Konfiguration in Form der TAR-Datei erfolgt sehr einfach über das Webinterface. Rufe in einem beliebigen Browser die IP-Adresse des Telefons auf, logge Dich sich mit Benutzername und Passwort ein und lade in der Registerkarte &#8220;Network&#8221; die VPN-Datei hoch (siehe Abbildung). Als letztes noch den VPN-Dienst aktivieren und speichern. So einfach ist das.</p>
+	
+<img decoding="async" src="/wp-content/uploads/2017/08/Import_VPN_Zertifikat_Yealink_Series4-1024x503.png" style="float:left; margin: 15px;" alt="Import der OpenVPN-Konfiguration über das Webinterface eines Yealink Telefons der Serie T4" width="1024" class="alignnone size-large wp-image-1438" srcset="/wp-content/uploads/2017/08/Import_VPN_Zertifikat_Yealink_Series4-1024x503.png 1024w, /wp-content/uploads/2017/08/Import_VPN_Zertifikat_Yealink_Series4-300x147.png 300w, /wp-content/uploads/2017/08/Import_VPN_Zertifikat_Yealink_Series4-768x377.png 768w, /wp-content/uploads/2017/08/Import_VPN_Zertifikat_Yealink_Series4.png 1098w" sizes="(max-width: 1024px) 100vw, 1024px" />
+	
+<p>Was jetzt noch fehlt, ist ein Reboot des Telefons. Bei erfolgreichem Verbindungsaufbau der VPN-Verbindung leuchtet im Display des Telefons das VPN-Icon. Leuchtet das Icon nicht, heißt es Ursachenforschung betreiben. Besonders behilflich ist dabei das Log des VPN-Servers, das man bequem über das Cockpit von Fellow einsehen kann. Dort kann man z.B. feststellen, ob eine Verbindungsanfrage vom Telefon beim VPN-Server ankam. Gab es eine solche nicht, dann ist vermutlich die Ordnerstruktur der TAR-Datei fehlerhaft, die Zieladresse in Zeile 4 der vpn.cnf falsch oder eine Firewall blockiert den Verbindungsaufbau. Wenn es eine erfolglose Authentifizierungsanfrage gab, dann ist zu prüfen, ob das VPN-Zertifikat aktiviert ist und die Zertifikats-Dateien korrekt sind. Im Falle der Zwei-Faktorauthentifizierung kann es auch sein, dass der zweite Faktor nicht korrekt übergeben wird.</p>
+
+<h2>Verbindung zur Telefonanlage</h2>
+<p>Die Konfiguration des Telefons ist mit der Einrichtung der VPN-Verbindung noch nicht abgeschlossen. Öffne die Weboberfläche des Yealink-Telefons erneut und gebe im Reiter &#8220;Account&#8221; die Zugangsdaten ein. Dies sind die interne IP-Adresse der Telefonanlage, die Durchwahl des Benutzers als Benutzername und das eigene Passwort. Dabei muss man nichts besonderes beachten. Das zu Beginn erwähnte Schema F lässt grüßen. Ist die VPN-Verbindung vom Telefongerät aufgebaut, dann hat das Telefon Zugriff als ob es innerhalb des Netzwerks der Telefonanlage ist.</p>
+
+<p>Noch ein wichtiger Hinweis: Autoprovisionierung funktioniert über eine VPN-Verbindung leider nicht. An der manuellen Konfiguration führt leider kein Weg vorbei.</p>
+
+<h2>So geht IP-Telefonie über VPN</h2>
+<p>Gerade für die Anbindung eines Heimarbeitsplatzes an die Telefonanlage eines Unternehmens ist das hier beschriebene Vorgehen gut geeignet. Wir hoffen mit diesem Beitrag eine praktikable Anleitung zur Verbindung von IP-Telefonen mit einer VoIP-Telefonanlage über ein VPN-Verbindung geliefert zu haben.</p>
+
+<p>Wenn Du andere Telefone verwenden und Deine Erfahrungen mit anderen Nutzern teilen willst, dann schreibe uns bitte an <a href="mailto:info@datamate.org">info@datamate.org</a>. Wir fügen diese Informationen gerne hinzu.</p>

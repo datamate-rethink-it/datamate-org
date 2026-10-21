@@ -1,0 +1,270 @@
++++
+title = "MegaRAID HW-Controller mit Ubuntu überwachen"
+titel_html = "MegaRAID HW-Controller mit Ubuntu überwachen | datamate"
+ueberschrift = "MegaRAID HW-Controller mit Ubuntu überwachen"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/04/megaraid1-1.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/megaraid-hw-controller-mit-ubuntu-ueberwachen/"
+canonical = "https://www.datamate.org/megaraid-hw-controller-mit-ubuntu-ueberwachen/"
+veroeffentlicht = "2016-07-15T07:04:30+00:00"
+geaendert = "2025-02-21T08:10:51+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "8 Minuten"
+bild_breite = 1250
+bild_hoehe = 1056
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "MegaRAID HW-Controller mit Ubuntu überwachen", item = ""}]
+wortzahl = 1009
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["uncategorized"]
+schlagwoerter = []
+wp_id = 4485
+slug = "megaraid-hw-controller-mit-ubuntu-ueberwachen"
+url = "/megaraid-hw-controller-mit-ubuntu-ueberwachen/"
+date = "2016-07-15T09:04:30"
+lastmod = "2025-02-21T09:10:51"
+datum_utc = "2016-07-15T07:04:30+00:00"
+geaendert_utc = "2025-02-21T08:10:51+00:00"
+lightbox = true
++++
+						<p>Anstelle unserer Standard ionas-Server im Towergehäuse verlangen Kunden regelmäßig nach einem Server im Rack-Format. Um diesen Wunsch nach besserer oder leistungsfähigerer Hardware nachzukommen, kamen bei unseren Kunden bisher immer Terra-Server der 4000er oder 7000er Serie zur Anwendung. Bei diesen Kraftprotzen ist eine MegaRAID-Controller-Karte vom Typ SAS 9361 8i bereits verbaut. Natürlich wäre es Schwachsinn wie gewohnt die Festplatten per Software-Raid zu betreiben, wenn so ein feines Stück Hardware vorhanden ist.</p>
+
+<p>Eine Ubuntu-Server Standardinstallation kann zwar mit diesem Controller nicht sofort sprechen, aber an sich ist die Installation der Treiber und Überwachungssoftware denkbar einfach. Leider findet man im Internet dafür jedoch keine Anleitung. Wir zeigen Ihnen in diesem Artikel, wie Sie in wenigen Minuten den Hardware Raid Controller überwachen und monitoren können.</p>
+
+
+<span id="more-4485"></span>
+
+
+
+<h2>Schritt 1: Gerät eindeutig identifizieren</h2>
+
+<p>Als erstes muss man den Raid-Controller eindeutig identifizieren. Mit dem folgendem Kommando, welches Sie auf der Kommandozeile des Servers ausführen, erhalten Sie schnell die ersten Informationen zum gefunden Controller-Chip:</p>
+<pre>
+lspci | grep Mega
+</pre>
+
+<p>Der Befehl liefert Ihnen den erkannten Raid-Controller-Chip. In Falle der Terra-Server lautet die Ausgabe typischerweise so:</p>
+
+<pre>
+05:00.0 RAID bus controller: LSI Logic / Symbios Logic MegaRAID SAS-3 3108 [Invader] (rev 02)
+</pre>
+
+<p>Wenn Sie nach diesem Chipsatz auf Google suchen, landen Sie auf der Webseite von Avago. Sie finden zwar viele Informationen zum Chip, jedoch keine Treiber- und Software-Downloads &#8211; die findet man nämlich nicht beim Chipsatz sondern bei der konkreten Controllerkarte. Schauen Sie deshalb in der Produktbeschreibung Ihres Servers nach, um die genaue Bezeichnung Ihrer Raid-Controllerkarte zu erhalten. Alternativ können Sie einen Monitor an den Server anschließen und die genaue Beschreibung des Karte während des Boot-Vorgangs vom Bildschirm ablesen.</p>
+
+<p>Bei den Terra-Servern ist es die <strong>MegaRAID SAS 9361 8i</strong>, welche wir im folgenden Artikel unter der Servervariante von Ubuntu 14.04 installieren wollen. Zur Sicherheit kontrolliert Sie am Besten auf der Seite von Avago, dass der Chipsatz dieser Raid-Controller-Karte auf der ermittelten Karte verwendet wird.</p>
+
+<h2>Schritt 2: Treiber und Überwachungssoftware für MegaRAID SAS 9361 8i herunterladen</h2>
+
+<p>Als Erstes laden Sie die Treiber und die Überwachungssoftware für die MegaRAID herunter. Auf der <a href="http://www.avagotech.com/products/server-storage/raid-controllers/megaraid-sas-9361-8i#downloads" target="_blank" rel="noopener">Downloadseite von Avago Technologies</a> zeigt sich,  der hervorragende Treibersupport des Herstellers. </p>
+
+<p>Sie benötigen nun zwei Dateien:
+<ul>
+<li><strong>Driver -> MR_LINUX_DRIVER_6.11-06.811.02.00-3</strong></li>
+<li><strong>Management Software und Tools -> Latest MegaRAID StorCLI</strong></li>
+</ul></p>
+
+<a href="/wp-content/uploads/2018/04/megaraid1-1.png" data-slb-active="1" data-slb-asset="4162322454" data-slb-internal="0" data-slb-group="4485"><img decoding="async" src="/wp-content/uploads/2018/04/megaraid1-1.png" alt="Download der Treiber für die MegaRAID Controller-Karte." width="300" height="253" class="size-medium wp-image-913" style="float:left; padding: 10px;"/></a>
+
+
+<a href="/wp-content/uploads/2018/04/megaraid2-1.png" data-slb-active="1" data-slb-asset="995074255" data-slb-internal="0" data-slb-group="4485"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/megaraid2-1.png" alt="Download der Monitoring-Software storcli64." width="300" height="253" class="size-medium wp-image-914" style="float: left; padding: 10px;" /></a>
+
+
+<p>Leider befinden sich hinter den Download-Icons auf der Seite von Avago Technologies keine direkten Links, sondern nur Umleitungen auf die Dateien. Dies verhindert einen direkten Download per <i>wget</i> vom Server. Somit lädt man sich die Dateien auf den eigenen Rechner und überträgt die Dateien nach dem erfolgreichen Download per <i>SCP</i> oder per <i>Samba-Netzlaufwerk</i> auf den Server.</p>
+
+<h2>Schritt 3: Treiber und Raid-Controller-Software installieren</h2>
+
+
+<a href="/wp-content/uploads/2018/04/megaraid3.png" data-slb-active="1" data-slb-asset="2349514009" data-slb-internal="0" data-slb-group="4485"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/megaraid3.png" alt="megaraid3" width="300" height="86" class="alignleft size-medium wp-image-886" style='padding: 15px 20px 15px 0px;'/></a>
+
+<p>Als nächstes loggen Sie sich auf dem Server auf der Kommandozeile ein. Nun entpacken und installieren Sie zuerst den Treiber mit dem folgenden Befehl:
+<i>Hinweis:</i> die .tar-Datei entpackt sich direkt ins aktuelle Verzeichnis und legte viele neue Ordner an. Verschieben Sie deshalb die Dateien vorher in eine eigenes Verzeichnis.</p>
+
+<pre>
+mkdir avago
+mv MR_LINUX.* ./avago
+cd ./avago
+tar xvfz MR_LINUX.*
+cd ./ubuntu/rpms-2
+sudo dpkg -i megaraid_sas_06.811.02.00-2-ubuntu14.04_x86_64.deb 
+</pre>
+
+<p>Als Ergebnis sollten Sie dann die folgende Ausgabe erhalten:</p>
+
+<pre>post Install Done</pre>
+
+<p>Ihr Ubuntu hat nun die notwendigen Treiber für den Raid-Controller im System, jedoch fehlt es noch an einer Software, die detaillierte Statusinformationen des Raid-Controllers liefern kann. Deshalb kommt nun die Installation des <i>storcli Pakets</i> an die Reihe. <i>strocli</i> steht für Storage Command Line Tool und liefert später die gewünschten Statusinformationen von Ihrem Raidcontroller. </p>
+
+<p>Entpacken Sie die zip-Datei mit den folgenden Befehlen:</p>
+
+<pre>
+unzip 1.19.04_StorCLI.zip
+cd ./storcli_all_os/Ubuntu
+sudo dpkg -i storcli_1.19.04_all.deb
+</pre>
+
+<p>Das Ergebnis dieser Befehle sollte lauten:</p>
+
+<pre>"Setting up storcli (1.19.04) ..."</pre>
+
+
+<h2>Schritt 4: Die Ausgabe von storcli prüfen</h2>
+
+<p>Nun kontrollieren Sie, ob <i>storcli</i> richtig installiert wurde. Tippen Sie dafür den folgenden Befehl auf der Kommandozeile ein:</p>
+<pre>
+sudo /opt/MegaRAID/storcli/storcli64 version
+</pre>
+
+<p>Das Ergebnis sollte ungefähr so aussehen. Natürlich kann es Abweichungen bei der Version oder dem Datum geben:</p>
+
+<pre>
+root@ionas-server1:/home/ionas# /opt/MegaRAID/storcli/storcli64 version
+     Storage Command Line Tool  Ver 1.19.04 Feb 01, 2016
+
+     (c)Copyright 2015, AVAGO Corporation, All Rights Reserved.
+</pre>
+
+<p>Diese Ausgabe bestätigt Ihnen, dass das Tool <i>Storage Command Line</i> richtig installiert wurde. Nun sind alle Voraussetzungen erfüllt, dass Sie den Raid-Controller überwachen können. </p>
+
+<p>Um Ihnen ein Gefühl für die Mächtigkeit von storcli zu geben, tippen Sie bitte den folgenden Befehl auf der Kommandozeile ein. </p>
+
+<pre>
+"sudo /opt/MegaRAID/storcli/storcli64 /c0 show" 
+</pre>
+
+<p>Der Befehl liefert Ihnen eine riesige Fülle an Informationen zu Ihrem Raid-Controller. Hier die beispielhafte Ausgabe unseres Raid-Controllers.</p>
+
+<pre>
+Generating detailed summary of the adapter, it may take a while to complete.
+
+Controller = 0
+Status = Success
+Description = None
+
+Product Name = AVAGO MegaRAID SAS 9361-4i
+Serial Number = SK60501831
+SAS Address =  500605b000acfc60
+PCI Address = 00:05:00:00
+System Time = 07/11/2016 10:26:29
+Mfg. Date = 02/03/16
+Controller Time = 07/11/2016 08:26:26
+FW Package Build = 24.15.0-0016
+BIOS Version = 6.31.03.0_4.17.08.00_0x06140200
+FW Version = 4.650.00-6121
+Driver Name = megaraid_sas
+Driver Version = 06.803.01.00-rc1
+Vendor Id = 0x1000
+Device Id = 0x5D
+SubVendor Id = 0x1000
+SubDevice Id = 0x9363
+Host Interface = PCI-E
+Device Interface = SAS-12G
+Bus Number = 5
+Device Number = 0
+Function Number = 0
+Drive Groups = 1
+
+TOPOLOGY :
+========
+
+---------------------------------------------------------------------------
+DG Arr Row EID:Slot DID Type  State BT     Size PDC  PI SED DS3  FSpace TR 
+---------------------------------------------------------------------------
+ 0 -   -   -        -   RAID1 Optl  N  3.637 TB dflt N  N   dflt N      N  
+ 0 0   -   -        -   RAID1 Optl  N  3.637 TB dflt N  N   dflt N      N  
+ 0 0   0   252:0    4   DRIVE Onln  Y  1.818 TB dflt N  N   dflt -      N  
+ 0 0   1   252:1    7   DRIVE Onln  Y  1.818 TB dflt N  N   dflt -      N  
+ 0 0   2   252:2    5   DRIVE Onln  Y  1.818 TB dflt N  N   dflt -      N  
+ 0 0   3   252:3    6   DRIVE Onln  Y  1.818 TB dflt N  N   dflt -      N  
+---------------------------------------------------------------------------
+
+DG=Disk Group Index|Arr=Array Index|Row=Row Index|EID=Enclosure Device ID
+DID=Device ID|Type=Drive Type|Onln=Online|Rbld=Rebuild|Dgrd=Degraded
+Pdgd=Partially degraded|Offln=Offline|BT=Background Task Active
+PDC=PD Cache|PI=Protection Info|SED=Self Encrypting Drive|Frgn=Foreign
+DS3=Dimmer Switch 3|dflt=Default|Msng=Missing|FSpace=Free Space Present
+TR=Transport Ready
+
+Virtual Drives = 1
+
+VD LIST :
+=======
+
+-------------------------------------------------------------
+DG/VD TYPE  State Access Consist Cache Cac sCC     Size Name 
+-------------------------------------------------------------
+0/0   RAID1 Optl  RW     No      RWTD  -   ON  3.637 TB      
+-------------------------------------------------------------
+
+Cac=CacheCade|Rec=Recovery|OfLn=OffLine|Pdgd=Partially Degraded|dgrd=Degraded
+Optl=Optimal|RO=Read Only|RW=Read Write|HD=Hidden|TRANS=TransportReady|B=Blocked|
+Consist=ConsistentR=Read Ahead Always|NR=No Read Ahead|WB=WriteBack|
+AWB=Always WriteBack|WT=WriteThrough|C=Cached IO|D=Direct IO|sCC=Scheduled
+Check Consistency
+
+Physical Drives = 4
+
+PD LIST :
+=======
+
+-----------------------------------------------------------------------
+EID:Slt DID State DG     Size Intf Med SED PI SeSz Model            Sp 
+-----------------------------------------------------------------------
+252:0     4 Onln   0 1.818 TB SAS  HDD N   N  512B HUS724020ALS640  U  
+252:1     7 Onln   0 1.818 TB SAS  HDD N   N  512B HUS724020ALS640  U  
+252:2     5 Onln   0 1.818 TB SAS  HDD N   N  512B HUS724020ALS640  U  
+252:3     6 Onln   0 1.818 TB SAS  HDD N   N  512B HUS724020ALS640  U  
+-----------------------------------------------------------------------
+
+EID-Enclosure Device ID|Slt-Slot No.|DID-Device ID|DG-DriveGroup
+DHS-Dedicated Hot Spare|UGood-Unconfigured Good|GHS-Global Hotspare
+UBad-Unconfigured Bad|Onln-Online|Offln-Offline|Intf-Interface
+Med-Media Type|SED-Self Encryptive Drive|PI-Protection Info
+SeSz-Sector Size|Sp-Spun|U-Up|D-Down|T-Transition|F-Foreign
+UGUnsp-Unsupported|UGShld-UnConfigured shielded|HSPShld-Hotspare shielded
+CFShld-Configured shielded|Cpybck-CopyBack|CBShld-Copyback Shielded
+
+
+</pre>.
+
+<p>Natürlich lässt sich die Ausgabe durch die Angabe weitere Parameter auf ein besseres Maß reduzieren. So interessiert uns natürlich im ersten Schritt, ob das RAID zuverlassig funktioniert. Für diese Information genügt der folgende Befehl, der nur den Zustand des virtuellen Laufwerks anzeigt:</p>
+<pre>
+sudo /opt/MegaRAID/storcli/storcli64 /c0/v0 show
+</pre>
+
+<p>Im gezeigten Output ist entscheidend der Status, welcher umbedingt <strong>Optl</strong> sein muss. Jeder andere Wert bedeutet, dass das Raid nicht mehr den gewünschten Zustand hat. </p>
+
+<h2>Automatische Raidüberwachung</h2>
+
+<p>Nun stellt sich natürlich die Frage: &#8220;Was bringt ein RAID-System, wenn man nicht über einen Ausfall informiert wird?&#8221; Auf dem ionas-Server lassen wir das RAID täglich per Cronjob überwachen und verschicken eine Benachrichtigung, wenn der RAID-Status nicht mehr <strong>Optl</strong>. ist. Natürlich sind die Prüfungen auf dem ionas-Server etwas umfangreicher, aber in Summe ist es nicht mehr als ein Script, welches die Ausgabe von <i>storcli</i> nach dem Wort <i>Optl</i> durchsucht und eine Benachrichtigung verschickt, wenn es weniger als zwei Mal vorkommt. (Einmal in der Statusanzeige und einmal in der Legende.)</p>
+
+<p>Hier finden Sie eine beispielhafte Überwachung per Bash-Script:</p>
+<pre>
+#!/bin/bash
+
+OUTPUT=`/opt/MegaRAID/storcli/storcli64 /c0/v0 show`
+#echo $OUTPUT
+
+OPTL_COUNT=`echo $OUTPUT | grep -o "Optl" | wc -l`
+#echo $OPTL_COUNT
+
+if [[ $OPTL_COUNT -lt 2 ]]; then
+  echo "RAID-Status kritisch!"
+  echo "Jetzt müsste eine E-Mail verschickt werden !!!"
+else
+  echo "RAID-Status optimal!"
+  echo "Dann gehe ich mal wieder schlafen..."
+fi
+</pre>
+
+<h2>Fazit</h2>
+
+<p>Ein Festplatten-RAID kommt praktisch in jedem Serversystem vor. Leistungsfähige Server verfügen über einen eigenen Hardware-Raid-Controller, bei Einsteigerservern kommt häufiger ein Software-Raid zum Einsatz. </p>
+
+<p>Während man den Status eines Software-Raid mit &#8220;cat /proc/mdstat&#8221; ganz einfach abrufen kann, muss ein Hardware-Raid Controller anders überwacht werden. Doch auch die Überwachung von Hardware-Raids ist, wie Sie in diesem Artikel gesehen haben, kein Hexenwerk.</p>
+
+<p>Dabei sollten Sie die Überwachung des Raids nicht auf die leichte Schulter nehmen. Immer wieder finden wir bei unseren Kunden alte Serversysteme, bei denen schon vor Monaten eine Festplatte ausgefallen ist und niemand davon etwas mitgekriegt hat. Die Daten sind in diesem Moment in höchster Gefahr und man sollte sich fragen, wieso man Festplattenplatz für die redundante Speicherung verschwenden sollte, wenn man keine zusätzliche Sicherheit durch die Redundanz erhält. </p>
+
+<p>Wir hoffen, dass Ihnen dieser Artikel weitergeholfen hat und freuen uns, wenn Sie uns mit uns Ihre Erfahrungen teilen.</p>

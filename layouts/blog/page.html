@@ -1,0 +1,45 @@
+{{- /* Einzelner Blogbeitrag. Aufbau wie single.php des alten Themes. */ -}}
+{{ define "main" }}
+{{- with .Params.beitragsbild }}
+<div class="blog-header" style="background-image: url({{ . }}); height: 395px; background-position: center; background-size:cover; ">
+
+  <div class="blog-heading-middle">
+		<div class="container clearfix text-center dark" style="text-shadow: 1px 1px 2px black;">
+			<h1 style="font-size: 24px; text-transform: uppercase; font-weight: 400; margin: 0px;">{{ $.Params.ueberschrift | safeHTML }}</h1>
+		</div>
+	</div>
+
+</div>
+{{ end }}
+<div class="section" id="content">
+    <div>
+        <div class="container clearfix" id="blog">
+            <div class="row clearfix">
+
+                <div class="col-sm-8">
+			<div class="ipost clearfix">
+				<div class="entry-title">
+					<h1 style="font-size: 24px; text-transform: uppercase; font-weight: 400;">{{ .Params.ueberschrift | safeHTML }}</h1>
+					<ul class="entry-meta clearfix">
+                        <li><i class="icon-clock"></i> {{ partial "datum.html" (dict "datum" .Date "stil" "lang") }}</li>
+					</ul>
+					<div class="clear"></div>
+
+				</div>
+
+				<div class="entry clearfix">
+{{ .Content }}
+				</div>
+{{ partial "autorenbox.html" . }}
+		</div> <!-- ipost clearfix -->
+
+
+        </div>
+{{ partial "seitenleiste.html" . }}
+
+</div>
+
+</div>
+</div>
+</div>
+{{ end }}

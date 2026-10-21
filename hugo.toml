@@ -1,0 +1,102 @@
+# datamate.org als statische Seite.
+#
+# Die Adressen der alten WordPress-Installation sind die Vorgabe: jede
+# Adresse, die bleibt, muss hier dieselbe bleiben. Was wegfaellt, steht in
+# _build/wpdata.py und wird von deploy/Caddyfile.container mit 410
+# beantwortet - nicht hier.
+
+baseURL = 'https://www.datamate.org/'
+locale = 'de-de'
+title = 'datamate'
+defaultContentLanguage = 'de'
+
+# Die Kategorieseiten sind gewoehnliche Inhaltsseiten (content/category/),
+# weil ihre Adressen verschachtelt sind - /category/loesungen/seafile/ -
+# und Hugos Taxonomien keine Hierarchie kennen. Darum alle Taxonomie-Arten
+# aus. Feed und Sitemaps kommen aus eigenen Ausgabeformaten weiter unten,
+# weil sie die Adressen von Yoast SEO behalten muessen.
+disableKinds = ['taxonomy', 'term', 'rss', 'sitemap']
+
+# Umlaute und Grossschreibung in Adressen bleiben, wie sie waren.
+removePathAccents = false
+disablePathToLower = true
+titleCaseStyle = 'none'
+
+disableHugoGeneratorInject = true   # kein <meta name="generator">
+enableRobotsTXT = false             # robots.txt kommt aus webroot/
+
+# Alles, was unveraendert unter / ausgeliefert wird.
+# (Hugos Standardname static/ waere hier irrefuehrend - die Seite selbst
+# benutzt keinen Pfad /static/, aber /wp-content/ und /css/.)
+#
+#   webroot/        der uebernommene Dateibestand aus der alten
+#                   Installation. Wird von _build/gen_static.py erzeugt -
+#                   nichts hineinlegen, was man behalten will.
+#   webroot-eigen/  selbst geschriebene Dateien (lightbox.js, suche.js),
+#                   wird nie neu erzeugt. Hugo mischt beide Verzeichnisse.
+staticDir = ['webroot', 'webroot-eigen']
+
+# Die Beitraege liegen in content/blog/, ihre Adresse ist aber die Wurzel -
+# so war es im WordPress und so steht es in den indexierten Adressen.
+[permalinks]
+blog = '/:slug/'
+
+# Zehn Beitraege je Seite, Unterseiten als /blog/page/2/ - beides wie im
+# alten Theme. Dass dort nur 70 der 137 Beitraege erschienen, war ein
+# Fehler in blog-page.php (siehe README), kein Gestaltungswille.
+[pagination]
+pagerSize = 10
+path = 'page'
+
+# ------------------------------------------------------------- Ausgaben
+[outputs]
+home = ['html', 'feed', 'yoastindex', 'yoastpost', 'yoastpage',
+        'yoastcat']
+
+# RSS unter /feed/ - die Adresse steht in Feedreadern und war im
+# WordPress erreichbar. baseName index + path feed ergibt /feed/index.xml,
+# das der Webserver direkt unter /feed/ ausliefert.
+[outputFormats.feed]
+mediaType = 'application/rss+xml'
+path = 'feed'
+baseName = 'index'
+isPlainText = true
+notAlternative = true
+
+# Die vier Sitemaps, die bisher Yoast SEO erzeugt hat. sitemap_index.xml
+# ist in der Search Console eingetragen und behaelt seine Adresse.
+[outputFormats.yoastindex]
+mediaType = 'application/xml'
+baseName = 'sitemap_index'
+isPlainText = true
+notAlternative = true
+
+[outputFormats.yoastpost]
+mediaType = 'application/xml'
+baseName = 'post-sitemap'
+isPlainText = true
+notAlternative = true
+
+[outputFormats.yoastpage]
+mediaType = 'application/xml'
+baseName = 'page-sitemap'
+isPlainText = true
+notAlternative = true
+
+[outputFormats.yoastcat]
+mediaType = 'application/xml'
+baseName = 'category-sitemap'
+isPlainText = true
+notAlternative = true
+
+# Die Inhalte sind reine HTML-Dateien, direkt aus dem alten Theme
+# uebernommen, kein Markdown. Hugo sperrt text/html als Inhaltsformat seit
+# 0.16x per Default - hier unbedenklich, weil alle Inhalte aus diesem
+# Repository kommen und kein fremder Autor schreibt.
+[security]
+allowContent = ['^text/html$', '^text/markdown$']
+
+# Kein Verkleinern: das gaebe die Zeichengleichheit mit dem alten Stand
+# auf, die _build/verify.py nachweist.
+[minify]
+disableHTML = true

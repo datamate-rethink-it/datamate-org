@@ -1,0 +1,144 @@
++++
+title = "Let’s Encrypt Zertifikat in nginx auf dem Raspberry Pi"
+titel_html = "Let&#039;s Encrypt Zertifikat in nginx auf dem Raspberry Pi | datamate"
+ueberschrift = "Let&#8217;s Encrypt Zertifikat in nginx auf dem Raspberry Pi"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_typ = "article"
+og_url = "https://www.datamate.org/lets-encrypt-zertifikat-in-nginx-auf-dem-raspberry-pi/"
+canonical = "https://www.datamate.org/lets-encrypt-zertifikat-in-nginx-auf-dem-raspberry-pi/"
+veroeffentlicht = "2016-10-04T17:45:48+00:00"
+geaendert = "2025-02-21T08:10:48+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "8 Minuten"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Let&#8217;s Encrypt Zertifikat in nginx auf dem Raspberry Pi", item = ""}]
+wortzahl = 1443
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["uncategorized"]
+schlagwoerter = []
+wp_id = 4517
+slug = "lets-encrypt-zertifikat-in-nginx-auf-dem-raspberry-pi"
+url = "/lets-encrypt-zertifikat-in-nginx-auf-dem-raspberry-pi/"
+date = "2016-10-04T19:45:48"
+lastmod = "2025-02-21T09:10:48"
+datum_utc = "2016-10-04T17:45:48+00:00"
+geaendert_utc = "2025-02-21T08:10:48+00:00"
++++
+						<p>Let&#8217;s Encrypt hat sich in wenigen Monaten zu einer zuverlässigen, kostenlosen und weit verbreiteten Lösung für kostenlose SSL-Zertifikate gemausert. Wenn man auf einem Raspberry Pi einen Webserver betreibt, lohnt sich der geringe Aufwand für eine grüne HTTPS-URL.</p>
+
+<p>Obwohl dieser Artikel mit Sicherheit nicht der erste (und auch nicht der letzte) Artikel zu Let&#8217;s Encrypt auf dem Raspberry Pi ist, hat dieser Artikel durchaus seine Daseinsberechtigung. Ein Großteil der verfügbaren deutschen Artikel sind unvollständig, gehen auf gewisse Aspekte nicht ein oder gehen von dem reinen Standardfall &#8220;Apache mit Authentifizierung über den Port 80&#8221; aus. Ich beziehe mich in diesem Artikel auf einen Raspberry Pi mit dem alten, aber dennoch weit verbreiteten Raspbian-Wheezy. Gleichzeitig verwende ich nginx als Webserver und nutze für die Authentifizierung des ACME-Bots nicht den Port 80 sondern den Port 443. Dies macht aus meiner Sicht auch viel mehr Sinn, weil man will ja gerade den HTTPS-Port, also Port 443, absichern und gerade nicht dauerhaft den Port 80 geöffnet halten.</p>
+
+<p>Aber genug der Vorrede. Legen wir los.</p>
+
+<span id="more-4517"></span>
+
+<h2>Schritt 1: Grundsystem Raspbian Wheezy aktualisieren</h2>
+<p>Ausgangslage ist wie bereits gesagt ein Raspbian-Wheezy, wobei das System auf dem neuesten Stand sein sollte. Die notwendigen Befehle zur Aktualisierung sind:</p>
+<pre>
+apt-get update
+apt-get upgrade
+</pre>
+<p><strong>Wichtig:</strong> Diese und alle folgenden Befehle werden mit Root-Rechten ausgeführt.</p>
+
+<h2>Schritt 2: Voraussetzungen installieren</h2>
+<p>Als nächstes kommen die folgenden Befehle, die ich im Nachgang erklären werde:</p>
+<pre>
+gpg --keyserver pgpkeys.mit.edu --recv-key 8B48AD6246925553      
+gpg -a --export 8B48AD6246925553 | sudo apt-key add -
+gpg --keyserver pgpkeys.mit.edu --recv-key 7638D0442B90D010      
+gpg -a --export 7638D0442B90D010 | sudo apt-key add -
+apt-get install -y python python-dev gcc dialog libssl-dev libffi-dev ca-certificates augeas-lenses libaugeas0 python-virtualenv
+cd /usr/local/bin
+git clone https://github.com/certbot/certbot
+</pre>
+
+<p>Mit den ersten vier Zeilen fügt man die PGP-Schlüssel von zwei sogenannten Backports von Raspbian Jessy dem System hinzu. Konkret geht es um die zwei Pakete <strong>libaugeas0</strong> und <strong>augeas-lenses</strong>. Diese Pakete sind zwar in Raspbian Wheezy enthalten, liegen aber leider nicht in einer ausreichend neuen Version vor. Beim ersten Start des ACME-certbots versucht dieser, die passenden Pakete zu installieren und es kommt zum folgenden Fehler:</p>
+
+<pre>
+GPG-Fehler: http://http.debian.net wheezy-backports Release: Die folgenden Signaturen konnte nicht überprüft werden, weil ihr öffentlicher Schlüssel nicht verfügbar ist: NO_PUBKEY 8B48AD6246925553 NO_PUBKEY 7638D0442B90D010.
+To use the Apache Certbot plugin, augeas needs to be installed from wheezy-backports.
+</pre>
+
+<p>Diesem Fehler kann man mit den ersten vier Zeilen vorbeugen, indem man die zwei entsprechenden Server in die Liste der vertrauenswürdigen Server aufnimmt.</p>
+
+<p>Mit der fünften Code-Zeile installiert man ein paar Pakete, die für die Nutzung und die Installation des certbots notwendig sind. Der Parameter <strong>-y</strong> führt dazu, dass die Pakete nicht noch einmal extra bestätigt werden müssen und die Installation sofort startet.</p>
+
+<p>Als letztes holt man noch den certbot von Github. Diesen &#8220;clonen&#8221; wir in das Verzeichnis /usr/local/bin/certbot. Natürlich kann der certbot auch an eine andere Stelle kopiert werden, jedoch ist /usr/local/bin durchaus ein Verzeichnis, in dem man solche eigenen und lokalen Programme erwarten würde.</p>
+
+<h2>Schritt 3: Prüfen der Voraussetzungen</h2>
+<p>Um erfolgreich ein Let&#8217;s Encrypt Zertifikat zu beantragen, müssen ein paar Voraussetzungen erfüllt sein. Diese Voraussetzungen sollte man vorab sorgfältig prüfen, da nach fünf fehlgeschlagenen Anträgen eine Domain bzw. eine Subdomain für eine Woche von der Let&#8217;s Encrypt Authority gesperrt wird. Natürlich kann man zuerst mit einem Test-Server von Let&#8217;s Encrypt arbeiten, aber ich empfehle, dass man seine Hausaufgaben macht, bevor man irgendwie im Trial-And-Error Verfahren versucht, sich ein SSL-Zertifikat zu holen. Hier also die Voraussetzungen:</p>
+
+<ul>
+<li>es muss ein CNAME-Eintrag von der gewünschten Subdomain (z.B. cloud.ionas-server.com) auf die DynDNS-Adresse des eigenen Internetanschlusses zeigen,</li>
+<li>es muss eine Portweiterleitung im Router für den Port 443 auf den Zielserver eingerichtet sein,</li>
+<li>sollte eine eigene Firewall (z.B. iptables oder ufw) auf dem des Zielserver installiert sein, muss diese externe Zugriffe auf dem Port 443 erlauben.
+</ul>
+
+<p>Der erste Eintrag klingt erstmal kompliziert, sollte aber jemanden mit dem Wunsch nach einem eigenen Let&#8217;s Encrypt Zertifikat nicht abhalten. Was ist also zu tun? Ich gehe davon aus, dass ein Zertifikat für einen Raspberry Pi an einem Internetanschluß mit dynamischer IP-Adresse beantragt werden soll. Für diesen Fall empfehle ich einen kostenlosen Account bei <a href="http://www.spdyn.de">spdyn.de</a>. Dort kann man einen beliebigen Host wie zum Beispiel <i>ich-will-lets-encrypt.spdns.org</i> auf die IP-Adresse des eigenen Internetanschlusses legen. Natürlich sollte man beim Einsatz eines solchen DynDNS-Dienstes nicht vergessen, einen entsprechenden DynDNS-Client auf dem Raspberry Pi zu betreiben. Wir nutzen auf unseren ionas-Servern für diese Aufgabe die Software <a href="https://sourceforge.net/p/ddclient/wiki/Home/">ddclient</a>, damit diese Weiterleitung der spdyn-Adresse auf die eigene IP immer korrekt bleibt. </p>
+
+<p>Sobald man den eigenen spdns-Account hat, legt man einen CNAME Eintrag für die eigene Domain an. In den Voraussetzungen habe ich zum Beispiel cloud.ionas-server.com verwendet, welches nun auf ich-will-lets-encrypt.spdns.org zeigt. </p>
+
+<p>Diese Voraussetzung lässt sich nun ganz einfach prüfen. Man öffnet ein Terminal oder eine Shell und vergleicht das Ergebnis der folgenden beiden Befehle:</p>
+<pre>
+ping ich-will-lets-encrypt.spdns.org
+ping cloud.ionas-server.com
+</pre>
+
+<p>Es ist schon ziemlich offensichtlich, dass diese beiden Befehle das gleiche Ergebnis liefern sollten. Wenn Sie das nicht tun, dann braucht es vielleicht noch ein paar Minuten, bis der CNAME-Eintrag wirklich bei jedem NAME-Server im Internet angekommen ist. Wenn das nicht so ist, man hat vermutlich irgendwo entlang der Strecke einen Fehler gemacht. </p>
+
+<p>Die nächsten beiden Anforderungen sind selbsterklärend. Der Router muss eingehende Anfragen auf dem Port 443 zum Raspberry Pi weiterleiten. Dies macht man in der weit verbreiteten Fritzbox unter <strong>Internet -> Freigaben -> Portweiterleitungen</strong>. In anderen Routern lauten die Navigationspunkte ähnlich.</p>
+
+<p>Als letzte Anforderung muss eine ggf. installierte Firewall auf dem Raspberry Pi entsprechend geöffnet werden, damit Anfragen nicht von der Firewall direkt verworfen werden. </p>
+
+<h2>Schritt 4: Let&#8217;s Encrypt Zertifikat beantragen</h2>
+<p>Nun ist es wirklich nur noch ein Befehl, um das Let&#8217;s Encrypt Zertifikat zu beantragen. Dieser Befehl lautet:</p>
+<pre>
+/usr/local/bin/certbot/certbot-auto certonly --quiet --pre-hook "service nginx stop" --post-hook "service nginx start" --standalone -n --rsa-key-size 4096 --agree-tos -m email@example.com -d cloud.ionas-server.com --standalone-supported-challenges tls-sni-01
+</pre>
+
+<p>Natürlich muss die E-Mailadresse und die gewünschte Domain entsprechend angepasst werden. Hier nun die Erklärung zum Befehl:</p>
+<ul>
+<li><strong>certonly:</strong> es wird nur das Zertifikat beantragt und keine automatische Änderung am Webserver vorgenommen.</li>
+<li><strong>quiet:</strong> jeder Output bis auf Fehlermeldungen wird unterdrückt. Wenn man dieses Flag nicht setzt, wird man schier erdrückt an Rückmeldungen.</li>
+<li><strong>pre-hook und post-hook:</strong> bevor der Befehl ausgeführt wird, wird der nginx-Webserver gestoppt und danach wieder gestartet. Dies ist notwendig, damit der ACME-Bot auf dem Port 443 nach der Rückmeldung der Let&#8217;s Encrypt Authority horchen kann.</li>
+<li><strong>standalone:</strong> ich verwende bewußt standalone als Authentifizierungs-Plugin, da nur mit diesem die Authentifizierung über den Port 443 mit nginx möglich ist.</li>
+<li><strong>rsa-key-size:</strong> definiert die Länge des Schlüssels, wobei man definitiv nicht weniger als 2048 verwenden sollte. Ich empfehle lieber 4096.</li>
+<li><strong>agree-tos:</strong> es wird automatisch die ACME Subscriber Agreement akzeptiert.</li>
+<li><strong>-m EMAIL:</strong> an diese E-Mailadresse geht eine Benachrichtigung sollte das Let&#8217;s Encrypt Zertifikat kurz vor dem Ablaufdatum stehen. Soweit sollte es niemals kommen, trotzdem sollte hier eine gültige E-Mailadresse angegeben werden.</li>
+<li><strong>-d DOMAIN:</strong> für diese Domain wird ein Zertifikat angefordert und auf dieser Domain horcht auch der ACME-Bot.</li>
+<li><strong>standalone-supported-challenges tls-sni-01:</strong> sorgt für eine Anfrage auf dem Port 443.</li>
+</ul>
+
+<p>Eine vollständige Liste der Parameter findet man übrigens in der sehr guten Dokumentation von <a href="https://certbot.eff.org/docs/using.html">certbot.eff.org</a>.</p>
+
+<p>Sobald der Befehl eingetippt und bestätigt ist, fängt der ACME-Bot mit der Arbeit an. Der ganze Vorgang wird unter Raspbian Wheezy mindestens 15 Minuten dauern. Besonders wenn Sie die folgenden Ausgabe sehen, können Sie eine ausgiebige Kaffeepause einlegen:</p>
+<pre>
+creating virtual environment
+installing Python packages
+</pre>
+
+<p>Wenn der ganze Vorgang erfolgreich abgeschlossen wurde, werden Sie mit gültigen SSL-Zertifikaten unter <strong>/etc/letsencrypt/live/</strong> belohnt. Um nun die Zertifikate im nginx-Webserver einzubinden, passen Sie die entsprechende nginx-Datei unter /etc/nginx/sites-available/ an:</p>
+
+<pre>
+ssl on;
+ssl_certificate /etc/letsencrypt/live/cloud.ionas-server.com/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/cloud.ionas-server.com/privkey.pem;
+</pre>
+
+<h2>Schritt 5: Regelmäßige Aktualisierung des Zertifikats per Cronjob</h2>
+
+<p>Genauso wichtig wie die Beantragung des Let&#8217;s Encrypt Zertifikats ist die regelmäßige Aktualisierung. Let&#8217;s Encrypt Zertifikate sind immer nur drei Monate gültig und sollten gemäß Empfehlung der Let&#8217;s Encrypt Authority täglich aktualisiert werden. Der certbot erkennt nämlich automatisch wie lange das Zertifikat noch gültig ist und legt sich bei einer langen Gültigkeit einfach wieder schlafen. Nur wenn das Zertifikat innerhalb der nächsten 30 Tage abläuft, aktualisiert der acme-Bot das Zertifikat. Da sich der Dateiname des aktualisierten Zertifikats nicht ändert, müssen Sie an der Webserverkonfiguration nichts ändern.</p>
+
+<p>An dieser Stelle kommt nun der große Vorteil von einer Prüfung auf dem Port 443 ins Spiel. Das Zertifikat wurde ja bewusst beantragt, um abgesichertes HTTPS zu nutzen. Der Port 443 ist so oder so geöffnet. Der Standardport 80 für die Beantragung und Aktualisierung muss nicht geöffnet werden.</p>
+
+<p>Mit dem folgenden Cronjob wird täglich das Zertifikat überprüft und bei Bedarf erneuert. Die Prüfung wurde ganz bewußt auf 4 Uhr morgens gelegt, um die Auswirkungen eines kurzfristigen Stop des Webservers so gering wie möglich zu halten.</p>
+
+<pre>
+0 4 * * * /usr/local/bin/certbot/certbot-auto renew --standalone --pre-hook "service nginx stop" --post-hook "service nginx start" >> /var/log/letsencrypt/letsencrypt.log
+</pre>
+
+<p>Mit wenig Aufwand und der richtigen Vorbereitung lässt sich auch unter Raspbian Wheezy ein SSL-Zertifikat von Let&#8217;s Encrypt mit dem nginx-Webserver nutzen. Sollten Sie Fragen oder Probleme haben, dann zögern Sie nicht uns zu schreiben oder uns anzurufen.</p>
+
+<p>Natürlich freuen wir uns auch über einen Like auf unserer <a href="https://www.facebook.com/IhrOnlineAssistent">Facebook-Seite</a> oder ein paar nette Worte in <a href="https://www.google.de/search?q=ionas+mainz">Google Business</a>.</p>

@@ -1,0 +1,98 @@
++++
+title = "Installation RAID Ubuntu Server: Die Ausführung von >>grub install /dev/sda<< ist fehlgeschlagen"
+titel_html = "Installation RAID Ubuntu Server: Die Ausführung von &gt;&gt;grub install /dev/sda"
+ueberschrift = "Installation RAID Ubuntu Server: Die Ausführung von >>grub install /dev/sda<< ist fehlgeschlagen"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/04/raidproblem-1024x283.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/installation-raid-ubuntu-server-die-ausfuehrung-von-grub-install-dev-sda/"
+canonical = "https://www.datamate.org/installation-raid-ubuntu-server-die-ausfuehrung-von-grub-install-dev-sda/"
+veroeffentlicht = "2015-06-10T12:53:51+00:00"
+geaendert = "2025-02-21T08:10:55+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "4 Minuten"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Installation RAID Ubuntu Server: Die Ausführung von >>grub install /dev/sda", item = ""}]
+wortzahl = 692
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["uncategorized"]
+schlagwoerter = []
+wp_id = 4424
+slug = "installation-raid-ubuntu-server-die-ausfuehrung-von-grub-install-dev-sda"
+url = "/installation-raid-ubuntu-server-die-ausfuehrung-von-grub-install-dev-sda/"
+date = "2015-06-10T14:53:51"
+lastmod = "2025-02-21T09:10:55"
+datum_utc = "2015-06-10T12:53:51+00:00"
+geaendert_utc = "2025-02-21T08:10:55+00:00"
+lightbox = true
++++
+						<p>Um bei einem Serversystem schnelleren Datenzugriff und/oder eine erhöhte Verfügbarkeit des Systems im Falle eines Festplattendefekts zu erreichen, werden sogenannte RAID Systeme genutzt. Ein RAID (Redundant Array of Independent Disks) besteht aus mehreren physikalischen Festplatten, die zu einem oder mehreren logischen Laufwerken vereint wurden. Native Hardware-RAID-Controller sind in der Regel sehr teuer, weshalb immer häufiger auf die Möglichkeit zurück gegriffen wird, ein Software-RAID anzulegen. In diesem Wissensartikel zeigen wir, wie Sie unter Ubuntu Server 14.04 ein Software-Raid installieren. Dabei gehen wir auch auf einen seltenen Fehler ein, bei dem der Bootsektor in Grub nicht richtig geschrieben werden kann. Der Fehler lautet: <strong>Die Ausführung von >grub install /dev/sda< ist fehlgeschlagen</strong>. Für allgemeine Informationen zum Thema RAID empfehlen wir die Lektüre unseres Wissensartikels <a href='https://www.ionas.com/wissen/hohe-datenverfuegbarkeit-und-sicherheit-durch-raid/' target='_blank' rel="noopener">Hohe Datenverfügbarkeit und Sicherheit durch Raid</a> auf www.ionas.com.</p>
+
+<span id="more-4424"></span>
+
+<h2>Unterschiedliche RAID-Level</h2>
+<p>Ubuntu unterstützt von Haus aus 5 unterschiedliche RAID-Konfigurationen. Da dieser Artikel die Installation eines Raid1 behandelt, werden nur die wichtigen Unterschiede kurz erläutert.</p>
+
+<strong>RAID0: </strong>
+<p>Zwei oder mehr Festplatten werden zu einer großen Festplatte zusammengefasst. Daten werden blockweise abwechselnd auf verschiedene Festplatten geschrieben. </p>
+
+<strong>RAID1: </strong>
+<p>Zwei oder mehr Festplatten werden parallel mit den gleichen Daten beschrieben</p>
+
+<strong>RAID5: </strong>
+<p>Drei oder mehr Festplatten werden blockweise abwechselnd mit Daten beschrieben. Zur Wiederherstellung der Daten bei Verlust einer Festplatte werden Paritätsinformationen gleichmäßig auf den Festplatten verteilt.</p>
+
+<strong>RAID6:</strong>
+<p>Vier oder mehr Festplatten werden Blockweise abwechselnd mit Daten beschrieben. Paritätsinformationen zur Wiederherstellung von Daten werden immer auf zwei Platten gleichzeitig abgelegt. Es besteht eine größere Ausfallsicherheit als bei RAID5.</p>
+
+<strong>RAID10:</strong>
+<p>Vier oder mehr Festplatten werden zu mindestens zwei RAID1-Systemen verbunden, welche dann als RAID0 kombiniert werden. Daten werden abwechselnd auf die RAID1 geschrieben, wo sie dann gespiegelt werden</p>
+
+
+<h2>RAID1 im Detail</h2>
+<p>Raid1 spiegelt die gespeicherten Daten auf allen im RAID zusammengefassten Speichermedien. Sollte eine Festplatte ausfallen, so können die Daten immer noch von einer anderen wiederhergestellt werden. Alle Speichermedien in diesem Festplattenverbund sind exakt gleich.
+RAID1 bietet somit – entsprechende Hardwarecontroller vorausgesetzt – schnelleren Datendurchsatz und volle Redundanz. Die Funktion eines Backups bietet RAID1 jedoch nicht! </p>
+
+<p>Etwaige Datenfehler durch abgestürzte Programme, Benutzerverhalten oder Viren können nicht wiederhergestellt werden, weshalb sich der Einsatz einer Datensicherung empfiehlt, wie sie zum Beispiel unsere ionas-Server Home und Small Business bieten. </p>
+
+
+<h2>Installation eines Raid 1 unter Ubuntu Server &#8211; Standardverfahren</h2>
+<p>Ein RAID1 ist unter Ubuntu Linux mit wenigen Klicks eingerichtet. 
+In diesem Beispiel wird das Vorgehen für ein System mit 2 Festplatten beschrieben.
+Wichtig ist, zu beachten, dass alle Festplatten, die in den Verbund einbezogen werden sollen, exakt gleich partitioniert sind. </p>
+
+<p>Dazu geht man wie folgt vor: </p>
+<p>Nachdem die Installationsroutine  zunächst die Installationssprache und andere Informationen abgefragt hat, folgt schließlich der Teil der Installation in dem die Partitionierungsmethode der Festplatten erfragt wird. Bei neuen Festplatten werden diese noch ohne Partitionen angezeigt. 
+In diesem Fall wählt man die entsprechenden Festplatten aus und lässt eine neue Partitionstabelle erstellen. </p>
+
+<p>Nun legt man auf jeder Festplatte die gewünschten Partitionen (swap area, root- oder home-Verzeichnis) an. 
+Diese Partitionen müssen – wie bereits erwähnt – genau gleich groß sein, damit ein RAID angelegt werden kann. Die erstellten Partitionen werden alle als <strong>physikalisches Volume für RAID</strong> angelegt.</p>
+
+<p>Ist nun auf allen Festplatten die gleiche Konfiguration angelegt, wählt man aus dem Menü den Punkt <strong>Software-RAID- konfigurieren</strong> aus. Nach einer Sicherheitsabfrage werden dann alle soeben eingetragenen Änderungen auf den Festplatten vorgenommen. </p>
+
+<p>Als nächsten wählt man nun <strong>MD-Gerät erstellen</strong> im RAID-Menü aus, wählt anschließend RAID1 und dann die entsprechende Anzahl der aktiven Geräte für das Array. In diesem Beispiel sollen 2 Geräte ausreichen. Neben der Auswahl der aktiven Geräte besteht noch die Möglichkeit, Reservegeräte mit einzubinden. Diese werden dann aktiviert, sobald bei einer aktiven Festplatte Fehler auftreten. In unseren Fall werden keine Reservegeräte benötigt. 
+Im nächsten Schritt werden jeweils die zwei Partitionen ausgewählt, welche gespiegelt werden sollen. Mit <strong>weiter</strong> beendet man die Auswahl. </p>
+
+<p>Anschließend wird für jede weitere Partition erneut <strong>MD-Gerät erstellen</strong> ausgewählt und die gleiche Schleife erneut durchlaufen. 
+Wenn alle Partitionen ausgewählt wurden, wird die Einrichtung der Festplatten mit „Fertigstellen“ beendet. In der Partitionierungsübersicht werden nun die angelegten RAID-Partitionen angezeigt. Als letzter Schritt muss nun jeder Partitionen das entsprechende Dateisystem und der Einbindungspunkt zugewiesen werden. Hierzu wählt man die entsprechende Partition aus und weist ihr Swap, Ext4, oder ein beliebiges anderes Dateisystem nach Wunsch sowie den Einbindungspunkt zu.
+Sobald dies geschehen ist, kann man die Partitionierung beenden und die Änderungen auf die Festplatten schreiben.
+Die weitere Installation des Grundsystems verläuft danach wie gewohnt.</p>
+
+<h2>Installation eines Raid 1 unter Ubuntu Server &#8211; Bekannte Komplikationen: &#8220;die Ausführung von >>grub install /dev/sda<< ist fehlgeschlagen"</h2>
+
+<p>Gelegentlich scheitert die Installation des Bootloaders GRUB auf den Festplatten mit der folgenden Fehlermeldung:</p>
+
+<a href="/wp-content/uploads/2018/04/raidproblem-1024x283.png" data-slb-active="1" data-slb-asset="4031072881" data-slb-internal="0" data-slb-group="4424"><img decoding="async" src="/wp-content/uploads/2018/04/raidproblem-1024x283.png" alt="die Ausführung von >>grub install /dev/sda<< ist fehlgeschlagen" width="1024" height="283" class="alignnone size-large wp-image-196" /></a>
+
+<pre>
+GRUB konnte nicht auf /dev/sda installiert werden.
+Die Ausführung von >>grub install /dev/sda<< ist fehlgeschlagen. 
+Dies ist ein schwerwiegender Fehler.
+</pre>
+
+<p>In diesem Fall hilft es, wenn man auf allen Festplatten zunächst eine kleine primäre Partition von 2MB für den Bootsektor <strong>grub</strong>, welche direkt an den Anfang der HDD geschrieben wird, anlegt. Grundsätzlich würde hier 1 MB ausreichen. Aus verschiedenen Installationen zeigt sich jedoch, dass diese gelegentlich vom System verkleinert werden und dann unbrauchbar werden können.</p>
+
+<p>Das Installationsprogramm erwartet dann eine Angabe, wie die Partition genutzt werden soll. Hier ist „reservierter BIOS Boot-Bereich“ auszuwählen.
+Mit dieser Anpassung sollte dann die Installation des Bootloaders <strong>grub</strong> auch auf beiden Festplatten problemlos funktionieren.</p>

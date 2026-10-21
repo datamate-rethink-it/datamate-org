@@ -1,0 +1,7 @@
+{{ partial "kopf.html" . }}
+<body class="stretched">
+
+	<div id="wrapper" class="clearfix">
+{{- partial "site-header.html" . }}
+{{- block "main" . }}{{ end }}
+{{ partial "site-footer.html" . }}

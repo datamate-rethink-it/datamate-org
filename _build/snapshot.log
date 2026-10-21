@@ -1,0 +1,6 @@
+curl: (6) Could not resolve host: null
+/home/christoph/Dokumente/datamate-hugo/_build/snapshot.sh: Zeile 24: /home/christoph/Dokumente/datamate-hugo/_build/referencenull/index.html: Datei oder Verzeichnis nicht gefunden
+219 Adressen abgerufen
+  HTTP 000: 1
+  HTTP 200: 217
+  HTTP 500: 1

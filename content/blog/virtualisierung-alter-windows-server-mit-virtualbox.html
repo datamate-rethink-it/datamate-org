@@ -1,0 +1,149 @@
++++
+title = "Virtualisierung alter Windows Server mit Virtualbox"
+titel_html = "Virtualisierung alter Windows Server mit Virtualbox | datamate"
+ueberschrift = "Virtualisierung alter Windows Server mit Virtualbox"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/01/virtualisierung-windows-sbs.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/virtualisierung-alter-windows-server-mit-virtualbox/"
+canonical = "https://www.datamate.org/virtualisierung-alter-windows-server-mit-virtualbox/"
+og_bild_breite = "400"
+og_bild_hoehe = "208"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2017-01-25T08:56:03+00:00"
+geaendert = "2025-02-21T08:10:45+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "7 Minuten"
+beitragsbild = "/wp-content/uploads/2017/01/virtualisierung-windows-sbs.jpg"
+bild_breite = 400
+bild_hoehe = 208
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Virtualisierung alter Windows Server mit Virtualbox", item = ""}]
+wortzahl = 1354
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["anleitungen"]
+schlagwoerter = []
+wp_id = 4535
+slug = "virtualisierung-alter-windows-server-mit-virtualbox"
+url = "/virtualisierung-alter-windows-server-mit-virtualbox/"
+date = "2017-01-25T09:56:03"
+lastmod = "2025-02-21T09:10:45"
+datum_utc = "2017-01-25T08:56:03+00:00"
+geaendert_utc = "2025-02-21T08:10:45+00:00"
++++
+						
+
+<p>In 2014 wurde der Support von Windows XP und in 2015 für den beliebten Windows Small Business Server 2003 eingestellt. Trotzdem treffen wir immer wieder bei unseren Kunden auf diese veralteten Betriebssysteme. </p>
+
+<p>Und obwohl sich die Kunden dem Risiko bewusst sind, wollen oder können Sie auf die Systeme nicht verzichten. Manche Rechner und Server haben schon fast ein Jahrzehnt auf dem Buckel, doch eine Migration auf eine andere Hardware- oder Software wird nicht angegangen. Man vertraut darauf, dass die Systeme noch irgendwie weiterlaufen werden und ignoriert das Problem so lange, bis es dann zu spät ist.</p>
+
+<p>In diesem Artikel geht es um eine mögliche Lösung für ein solches Windows-Betriebssystem. Die Rede ist von einer Virtualisierung und einer damit verbunden Verlagerung dieser Systeme auf einen anderen Server. Mit Hilfe der kostenlosen Software Virtualbox können so alte Datenbanken oder nicht mehr unterstützte Softwareversionen am Leben erhalten und für die Zukunft konserviert werden. </p>
+
+<p>Mit Hilfe der Virtualisierung läuft man nicht die Gefahr, dass plötzlich die alte Hardware versagt. Viel eher ist es möglich die Systeme nur bei Bedarf anzuschalten oder diese vom restlichen Netzwerk und Internet zu separieren.</p>
+
+<p>Die Virtualisierung von solchen Systemen ist zeitaufwendig und hält ein paar Hürden bereit. Nach der Lektüre dieses Artikel sollten Sie jedoch wissen, wo die Fallstricke lauern und worauf man achten muss.</p>
+
+<span id="more-4535"></span>
+
+<h2>Der allgemeine Ablauf der Virtualisierung von alten Windows Systemen</h2>
+
+<p>Das Vorgehen der Virtualisierung von z.B. alten XP-Rechnern oder Windows Small Business Servern ist eigentlich denkbar einfach. In dem System, das virtualisiert werden soll, wird eine Software installiert, die den gesamten Computer/Server in eine virtuelle Festplatte überführt. Diese wird als Nächstes in ein passendes Format überführt und dann z.B. in Virtualbox einer neuen virtuellen Maschine (=VM) zugewiesen. Danach kann man die VM einfach starten und auf das altbekannte System und sämtliche Software zugreifen. </p>
+
+<p>Je nachdem, wie alt die ursprüngliche Hardware ist, kann als positiver Nebeneffekt der Virtualisierung die Software sogar beschleunigt und Strom gespart werden. </p>
+
+<h2>Windows-Rechner oder -Server konvertieren</h2>
+
+<p>Virtualbox bietet selbst keine Möglichkeit um ein Windows System in ein virtuelles Virtualbox-Image zu überführen. Es existieren zwar Anleitungen um Windows-Systeme in vdi-Dateien zu überführen, jedoch sind diese eher als &#8220;experimentell&#8221; zu bezeichnen.</p>
+
+<p>Glücklicherweise kann Virtualbox sehr gut mit VMware-Images umgehen und VMware bietet mit dem <a href="http://www.vmware.com/products/converter.html" target="_blank" rel="noopener">VMware vCenter Converter</a> eine kostenlose Software um laufende Systeme in ein VMware Image zu überführen.</p>
+
+<p>VMware verlangt vor dem Download des <i>VMware vCenter Converter</i> eine Registrierung. Nach der Bestätigung des E-Mails kann dann die 180 Megabyte große Installer-Datei auf dem zu virtualisierenden Windows-System heruntergeladen werden. Die Installation ist selbsterklärend und birgt keine Überraschungen.</p>
+
+<p>Nach dem ersten Start des Tools wählt man zuerst &#8220;Convert machine&#8221; um dann mehrere Einstellungen zu treffen, wie und wohin die aktuelle Maschine konvertiert werden soll.</p>
+
+
+<p>Hier die getroffenen Einstellungen nochmal in der Übersicht:</p>
+
+<h3>Empfohlene Konfigurationsparameter von VMware vServer Converter zur Migration eines Windows Betriebssystems</h3>
+
+<table>
+<tr><th colspan="2">Source System</th></tr>
+<tr><td>Select source type</td><td>Powered on;<br/>This local machine</td></tr>
+
+<tr><th colspan="2">Destination System</th></tr>
+<tr><td>Select destination type</td><td>VMware Workstation of other VMware virtual machine</td></tr>
+<tr><td>Select VMware product</td><td>VMware Player 6.x</td></tr>
+<tr><td>Name</td><td><i>kann beliebig gewählt werden</i></td></tr>
+<tr><td>Select a location for the virtual machine</td><td><i>beliebiges externes Speicherziel (z.B. USB-Stick, externe Festplatte oder Netzlaufwerk)</i></td></tr>
+
+<tr><th colspan="2">Options</th></tr>
+<tr><td colspan="2"><i>Hier können einzelne Parameter angepasst werden. Typischerweise muss nichts verändert werden</i></td></tr>
+
+<tr><th colspan="2">Summary</th></tr>
+<tr><td colspan="2"><i>Zusammenfassung des Virtualisierungsauftrages</i></td></tr>
+</table>
+
+<br/> &nbsp;
+
+<p>Sobald man mit <i>Finish</i> die Konfiguration abgeschlossen und den Auftrag angestoßen hat, beginnt der <i>VMware Converter</i> mit der Arbeit. Nun muss man sich Geduld üben, da die Konvertierung der Festplatten einen sehr langen Zeitraum in Anspruch nehmen kann. Die Geschwindigkeit wird natürlich von der Performance des Ursprungssystems und vom Speichermedium bestimmt, jedoch sollte man eher mit Stunden als mit Minuten rechnen.</p>
+
+<p>Sobald der Auftrag abgeschlossen ist, findet man eine vmx-Datei oder vmdk-Datei mit dem Windows-System auf dem ausgewählten Speichermedium.</p>
+
+<h2>Konvertierung ins Virtualbox-Format</h2>
+
+<p>Grundsätzlich kann Virtualbox mit dem vmx- und vmdk-Format umgehen. So kann die eben erzeugte Image-Datei in Virtualbox importiert werden und man kann sich über einen virtualisiertes Windows Server oder ein Windows-System freuen. </p>
+
+<p>Doch ein gravierender Nachteil der VMware-Images gegenüber dem vdi-Images von Virtualbox ist die fehlende Möglichkeit den Speicherplatz dynamisch zu verwalten bzw. zu verkleinern. Mit vmdk wird aus einer 100 GB großen Festplatte eine 100 GB große Image-Datei. Wenn die Festplatte des ursprünglichen Rechners nur zur Hälfte gefüllt war, dann bietet vdi die Möglichkeit das Image entsprechend zu verkleinern und bei Bedarf nachträglich dynamisch zu vergrößern.</p>
+
+<p>Aus diesem Grund konvertieren wir die vmdk-Datei in eine vdi-Datei. Dies geschieht am einfachsten über die Kommandozeile eines Linux- oder Windows-Rechners auf dem bereits Virtualbox installiert ist. Der entsprechende Befehl für die Konvertierung lautet:</p>
+
+<pre>
+VBoxManage clonehd --format vdi /path/to/original.vmdk /path/to/converted.vdi
+</pre>
+
+<p>Auch für diesen Schritt sollte man genügend Zeit einplanen.</p>
+
+<h2>Import der Image-Datei in Virtualbox</h2>
+
+<p>Nach der erfolgreichen Konvertierung kann man nun die neue vdi-Image Datei in Virtualbox importieren. Hierzu legt man eine neue virtuelle Maschine an und wählt das ursprüngliche Betriebssystem aus. Bei der Auswahl der zu verwendenden Festplatte wählt man dann &#8220;existierende Festplatte&#8221; und teilt Virtualbox mit, wo die vdi-Datei gefunden werden kann. Als letztes wählt man bei den Netzwerkeinstellungen &#8220;Netzwerkbrücke&#8221; und startet die neue virtuelle Maschine, so dass diese im Netzwerk verfügbar ist.</p>
+
+
+<h2>Wo lauern Fallstricke bei der Virtualisierung von Windows-Servern?</h2>
+
+<p>Die Virtualisierung von alten Windows-Servern oder z.B. Windows XP Systemen ist definitiv kein Hexenwerk. Mit ausreichender Zeit und etwas Geduld kann man schon bald die alte Hardware zum Elektroschrott geben. Bedenken Sie dabei, dass Sie die Festplatte fachgerecht entsorgen bzw. sicherstellen, dass die darauf enthaltenen Firmendaten wirkungsvoll gelöscht wurden.</p>
+
+<p>Trotzdem lauern auf dem Weg der Virtualisierung ein paar Fallstricke, die wir Ihnen nicht vorenthalten wollen. Sie sollten diesen Abschnitt auf keinen Fall überspringen, da jeder der folgenden Punkte das Potenzial hat Sie viel Zeit und Mühe zu kosten.</p>
+
+<h3>Kein geeignetes Speicherziel</h3>
+
+<p>Prüfen Sie vor dem Start der Virtualisierung die Größe der Festplatten des Ursprungssystems. Sie benötigen ein Speichermedium das mindestens so groß ist, wie die ursprüngliche Festplatte.</p>
+
+<h3>Kein USB-Support</h3>
+
+<p>Unterschätzen Sie nicht das Alter der Systeme. Heute ist es normal, dass jeder Rechner USB 2.0 oder vielleicht sogar USB 3.0 unterstützt. Vor 10 Jahren war nicht jeder Rechner mit USB-Buchsen ausgestattet bzw. externe Festplatten mit mehr als 2 TB werden von alten 32-bit Betriebssystemen nicht erkannt. Auch das Booten von USB war vor 10 Jahren kein Standardfeature.</p>
+
+<h3>Kein DHCP, dafür feste IP-Adresse</h3>
+
+<p>Prüfen Sie vor dem Start der Virtualisierung, dass in dem Rechner keine feste IP-Adresse eingetragen ist. Es ist deutlich einfacher einen Rechner mit aktiviertem DHCP unter einer anderen IP- Adresse in Betrieb zu nehmen.</p>
+
+<h3>Zugangsdaten prüfen</h3>
+
+<p>Auch das mag auf den ersten Blick trivial erscheinen. Doch uns sind schon Systeme untergekommen, für die keine Login-Daten vorlagen und die man deshalb auf keinen Fall neu starten durfte. Klären Sie solche Dinge, bevor Sie loslegen.</p>
+
+<h3>Sind alle Lizenzschlüssel und Aktivierungskeys vorhanden</h3>
+
+<p>Nicht nur Windows, sondern auch kommerzielle Software verlangen teilweise bei einer Veränderung der Hardware eine erneute Aktivierung. Stellen Sie sicher, dass Sie alle benötigten Lizenzen vorliegen haben bevor Sie mit der Virtualisierung beginnen</p>
+
+<h3>Auf Hardware-Dongel prüfen</h3>
+
+<p>Frühere Produkte aus dem Haus Adobe sind bekannt dafür, dass für die Nutzung ein Hardware-Dongel in Form eines USB-Sticks benötigt wird. Prüfen Sie, ob dieser Dongel fest mit der Hardware gekoppelt ist, oder ob dieser auch durch Virtualbox an das System durchgereicht werden kann. Unsere Erfahrung ist, dass solche Hardware-Dongel alle Pläne einer Virtualisierung wirkungsvoll vereiteln.</p>
+
+<h2>Fazit</h2>
+
+<p>Alten Windows Server oder Windows Systemen kann man mit Hilfe von Virtualbox neues Leben einhauchen. Die Virtualisierung ist nicht schwierig, erfordert aber Vorbereitungszeit, Geduld und ein bisschen Erfahrung.</p>
+
+<p>Wenn man diese Aufwand nicht scheut und die verschiedenen Fallstricke vermeidet, wird man am Ende mit einer zuverlässigen und schnellen virtuellen Windows-Maschine belohnt. Diese kann dann mit Hilfe von Snapshots gesichert werden oder per Firewall-Regel oder VLAN vom restlichen Netzwerk oder Internet getrennt werden. </p>
+
+<p>Haben Sie Fragen dazu, dann rufen Sie uns doch an. Wir beraten Sie gerne: +49 6131 3270777.</p>

@@ -1,0 +1,39 @@
+{{- /*
+  Ein Eintrag in einer Beitragsliste (Blog-Uebersicht, Kategoriearchiv).
+
+  Der Teaser ist der Text vor der <!--more-->-Marke, die im HTML als
+  <span id="more-NNN"></span> steht. Genau so hat WordPress ihn
+  abgeschnitten. Fehlt die Marke, bleibt der erste Absatz stehen.
+
+  Aufruf: partial "beitragsliste.html" (dict "seite" $s "stil" "kurz"
+                                             "einzug" "blog")
+*/ -}}
+{{- $s := .seite -}}
+{{- $roh := $s.RawContent -}}
+{{- $teaser := index (split $roh "<span id=\"more-") 0 -}}
+{{- if eq (len $teaser) (len $roh) -}}
+  {{- $absaetze := split $roh "</p>" -}}
+  {{- if gt (len $absaetze) 1 -}}
+    {{- $teaser = printf "%s</p>" (index $absaetze 0) -}}
+  {{- end -}}
+{{- end -}}
+{{- $t := $s.Params.ueberschrift | default $s.Title -}}
+<div class="ipost clearfix">
+                <div class="entry-title">
+                	<h2 style="font-size: 24px; text-transform: uppercase; font-weight: 400;"><a href="{{ $s.RelPermalink }}">{{ $t | safeHTML }}</a></h2>
+                	<ul class="entry-meta clearfix">
+                		<li><i class="icon-clock"></i> {{ partial "datum.html" (dict "datum" $s.Date "stil" .stil) }}</li>
+
+                	</ul>
+                	<div class="clear"></div>
+
+                </div>
+
+                <div class="entry clearfix">
+{{ with $s.Params.beitragsbild }}                	<div class="entry-image">
+                        <a href="{{ $s.RelPermalink }}" alt="{{ $s.Title }}">
+                        <img src="{{ . }}" alt="{{ $s.Title }}">
+                        </a>
+                	</div>
+{{ end }}{{ $teaser | safeHTML }}<p><a class="button button-3d button-mini button-rounded button-reveal" href="{{ $s.RelPermalink }}"><i class="icon-angle-right"> </i><span>Lese den ganzen Artikel</span> </a></p>                </div>
+			</div>

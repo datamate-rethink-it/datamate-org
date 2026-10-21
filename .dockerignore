@@ -1,0 +1,6 @@
+/_build/
+/public/
+/resources/
+/.git/
+/.hugo_build.lock
+/datamate-org.tar.gz

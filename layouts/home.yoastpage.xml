@@ -1,0 +1,18 @@
+{{- /* Alle Seiten ausser den Beitraegen und den Kategoriearchiven, die
+       ihre eigenen Sitemaps haben. Seiten mit noindex bleiben draussen -
+       die Suchseite gehoert nicht in eine Sitemap. Reihenfolge wie
+       bisher: Startseite zuerst, dann nach Adresse. */ -}}
+{{- $seiten := slice site.Home -}}
+{{- range (sort site.Pages "RelPermalink") -}}
+  {{- $ist_beitrag := and (eq .Section "blog") (eq .Kind "page") -}}
+  {{- $noindex := strings.Contains (.Params.robots | default "") "noindex" -}}
+  {{- if and
+        (ne .RelPermalink "/")
+        (ne .Type "kategorie")
+        (not $ist_beitrag)
+        (not $noindex)
+        (in (slice "page" "section") .Kind) -}}
+    {{- $seiten = $seiten | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- partial "urlset.html" $seiten -}}

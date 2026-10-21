@@ -1,0 +1,20 @@
+{{- /* Der Sitemap-Index, wie Yoast SEO ihn erzeugt hat. Die Adresse
+       /sitemap_index.xml steht in robots.txt und in der Search Console. */ -}}
+{{- $beitraege := where site.RegularPages "Section" "blog" -}}
+{{- $kategorien := where site.Pages "Type" "kategorie" -}}
+{{- $seiten := where (where site.Pages "Section" "ne" "blog") "Type" "ne" "kategorie" -}}
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<sitemap>
+		<loc>{{ "post-sitemap.xml" | absURL }}</loc>
+		<lastmod>{{ (index (sort $beitraege "Lastmod" "desc") 0).Lastmod.UTC.Format "2006-01-02T15:04:05+00:00" }}</lastmod>
+	</sitemap>
+	<sitemap>
+		<loc>{{ "page-sitemap.xml" | absURL }}</loc>
+		<lastmod>{{ (index (sort $seiten "Lastmod" "desc") 0).Lastmod.UTC.Format "2006-01-02T15:04:05+00:00" }}</lastmod>
+	</sitemap>
+	<sitemap>
+		<loc>{{ "category-sitemap.xml" | absURL }}</loc>
+		<lastmod>{{ (index (sort $beitraege "Lastmod" "desc") 0).Lastmod.UTC.Format "2006-01-02T15:04:05+00:00" }}</lastmod>
+	</sitemap>
+</sitemapindex>

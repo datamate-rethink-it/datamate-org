@@ -1,0 +1,140 @@
++++
+title = "Seafile à la carte: Farbgebung von Seahub individualisieren"
+titel_html = "Seafile à la carte: Farbgebung von Seahub individualisieren | datamate"
+ueberschrift = "Seafile à la carte: Farbgebung von Seahub individualisieren"
+beschreibung = "Ein individualisiertes Seafile-Webinterface macht beim File Sharing mit Dritten einen guten Eindruck. Wir erklären, wie Sie Seahub per Custom CSS anpassen."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/11/Customzing_Moeglichkeiten_Seafile.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/seafile-a-la-carte-farbgebung-von-seahub-individualisieren/"
+canonical = "https://www.datamate.org/seafile-a-la-carte-farbgebung-von-seahub-individualisieren/"
+veroeffentlicht = "2017-06-15T05:14:47+00:00"
+geaendert = "2025-02-21T08:10:42+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "4 Minuten"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Seafile à la carte: Farbgebung von Seahub individualisieren", item = ""}]
+wortzahl = 746
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["seafile", "software"]
+schlagwoerter = ["anleitung", "Customizing", "Fellow", "Homie", "private Cloud", "seafile"]
+wp_id = 3131
+slug = "seafile-a-la-carte-farbgebung-von-seahub-individualisieren"
+url = "/seafile-a-la-carte-farbgebung-von-seahub-individualisieren/"
+date = "2017-06-15T07:14:47"
+lastmod = "2025-02-21T09:10:42"
+datum_utc = "2017-06-15T05:14:47+00:00"
+geaendert_utc = "2025-02-21T08:10:42+00:00"
++++
+						<p>All diejenigen, die regelmäßig mit Seafile Daten austauschen, haben schnell den Wunsch, das <a href="/seafile">Seafile</a> Webinterface zu individualisieren. Für Unternehmen und Firmen ist es attraktiv, die Weboberfläche dem Corporate Design oder zumindest den Corporate Colors anzupassen. In unserem Artikel <a href="/blog/seafile-individuell-default-logo-durch-das-eigene-ersetzen/"><em>Seafile individuell: Default Logo durch das Eigene ersetzen</em></a> haben wir gezeigt, wie man das Seafile-Logo in der Weboberfläche von Seafile durch ein anderes ersetzt. In diesem Artikel gehen wir einen Schritt weiter und erklären, wie sich die Farbgebung von Seahub durch eine Seafile Custom-CSS ändern läßt.</p>
+
+<span id="more-3131"></span>
+
+<h2>Generelles Vorgehen zur Änderungen der Farbgebung in Seafile</h2>
+<p>Die Farbwahl des Seafile Webinterfaces ist in seinem sogenannten Default <a href="https://wiki.selfhtml.org/wiki/CSS">Cascading Style Sheet (CSS)</a> spezifiziert. Theoretisch könnte man direkt an dieser ansetzen, um das Aussehen an die inidividuellen Wünsche anzupassen. Wir gehen jedoch einen anderen Weg: An Stelle einer Manipulation der Original CSS legen wir eine eigene CSS-Datei an &#8211; nennen wir sie Custom-CSS oder custom.css &#8211; und definiren in dieser die gewünschten Farbwerte. Für alle dort nicht definierten Farbwerte greift Seafile auf die Standardwerten aus der Default CSS zurück. Natürlich kann man auch direkt in der CSS arbeiten und jeden anderen Dateinamen für die selbst angelegte CSS-Datei verwenden. Ein Richt-oder-Falsch gibt es hier nicht. Andererseits ist es gute Praxis, nicht in den Originaldateien &#8220;herumzupfuschen&#8221;. Und custom.css ist einfach ein sehr passender, weil deskritiver Name.</p>
+
+<h2>Schritt um Schritt zum individuellen Seafile per Custom CSS</h2>
+<p>Diese Schritt-für-Schritt Anleitung geht davon aus, dass der Seafile Server auf einer Linux Maschine oder eiem Raspi läuft. Bei einer Installation auf einem Windows Server ist das Vorgehen und die eigentliche Bearbeitung identisch, einzelne Befehle und Verzeichnispfade sind jedoch entsprechend anzupassen.</p>
+
+<h3>Custom-CSS anlegen und hochladen</h3>
+<p>Der erste Schritt ist die Erstellung der Seafile Custom-CSS und das darauffolgende Hochladen auf den Server. Dieser Schritt erfolgt von einem Windows Arbeitsplatz am besten mit dem Freeware Tool WinSCP. In Linux erfolgt der Upload mit folgendem Befehl, wobei die Elemente in %-Zeichen anzupassen sind:</p>
+
+<pre>scp custom.css %Benutzername%@%Server IP%:/home/seafile/seahub-data/custom</pre>
+
+<p>Der Upload setzt natürlich voraus, dass eine SSH-Verbindung mit dem Seafile-Server besteht. Eine SSH-Verbindung wird auch für die nachfolgenden Schritte benötigt.</p>
+
+<h3>Bearbeitung der Seafile Custom-CSS</h3>
+<p>Nach dem Upload liegt die Datei custom.css im Verzeichnis, in das wir Sie hochgeladen haben. Also konkret in:</p>
+
+<pre>/home/seafile/seahub-data/custom</pre>
+
+<p>Die Bearbeitung erfolgt am einfachsten mit dem schlichten Texteditor nano per Befehl</p>
+<pre>nano custom.css</pre>
+
+<p>Die custom.css ist natürlich erstmal leer. Die Bearbeitung gestaltet sich am einfachsten, wenn man den nachfolgenden CSS-Code komplett in die Custom-CSS kopiert. Der Code enthält bereits zahlreiche Elemente von Seahub, die geändert werden können, und ist in sinnvolle Gruppen aufgeteilt. Alles was dann zu tun bleibt, ist die individuelle Änderung der HTML-Farbcodes für jedes Element bzw. Gruppe. Der HTML-Farbcode bezieht sich jeweils auf die voranstehende Klasse bzw. Klassen. Welches Element sich hinter den einzelnen Klassen verbirgt, erklärt das voranstehende Kommentar in &#8220;/* &#8230; */&#8221;.</p>
+
+<p>Wer selten mit HTML-Farbcodes arbeitet, die das HEX-Format verwenden, findet auf der Webseite <a href="http://html-color-codes.info/webfarben_hexcodes/" target="_blank" rel="noopener">HTML Color Codes</a> wertvolle Hilfe.</p>
+
+<pre>/* Login: Anmeldebalken */
+.new-narrow-panel .hd {
+background: #9E0B0E;
+}
+
+/* Links */
+a {
+color: #837475;
+}
+a:focus, a:hover {
+color: #003C7B;
+}
+
+/* Seitennavigation - Überschriften */
+.side-tabnav h3.hd, .side-tabnav .hd h3 {
+color: #837475;
+}
+
+/* Seitennavigation - aktiver Navigationspunkt */
+.side-tabnav-tabs .tab-cur a, .side-tabnav-tabs .tab-cur a:hover {
+background-color: #837475;
+}
+.side-tabnav-tabs .tab a:hover {
+background-color: #D89D9E;
+}
+
+/* Dateiname - z.B. beim Verschieben */
+.op-target {
+color: #837475;
+}
+
+/* Icons - Freigabe, Löschen... */
+.op-icon.sf2-x, .op-icon.sf2-x:hover {
+color: #837475;
+}
+
+/* Freigabe-Fenster - Navbalken */
+.left-right-tabs-nav .ui-state-active a, .left-right-tabs-nav .ui-state-active a:hover {
+background: #837475;
+}
+
+/* Tabs auf der linken und rechten Seite */
+.left-right-tabs-nav a:hover {
+background: #D89D9E;
+}
+
+/* Dropdown-Menü */
+.dropdown-menu a:hover {
+background: #837475;
+}
+
+/* Freigaben verwalten -&gt; Links -&gt; Headline */
+.tabnav-tab-cur a, .tabnav-tab a:hover, .wiki-nav .cur-item .link, .wiki-nav .link:hover, #right-panel .hd .ui-state-active .a, #right-panel .hd .a:hover {
+color: #9E0B0E;
+border-bottom-color: #837475;
+}</pre>
+
+<h3>Verweis auf Custom-CSS in Seahub Settings</h3>
+<p>Abschliessend muss der Seafile Server noch von der Existenz der Custom-CSS in Kenntnis gesetzt werden. Dies geschieht in der Konfigurationsdatei <strong>seahub-settings.py</strong> durch einen entsprechenden Eintrag. Auch hier ist der Texteditor nano das Mittel der Wahl.</p>
+
+<pre>nano seahub-settings.py</pre>
+
+<p>Der relevante Eintrag in der Seahub-Settings ist BRANDING_CSS. Hier muss in Anführungszeichen der Pfad der angelegten CSS-Datei angegeben werden, in unserem Fall also der Datei custom.css. Wichtig: Linux macht bei Dateinamen einen Unterschied zwischen Groß- und Kleinschreibung.</p>
+
+<pre>...
+BRANDING_CSS = 'custom/custom.css'
+...</pre>
+
+<h3>Neustart des Dienstes</h3>
+<p>Nach all den Konfigurationsänderungen darf man zum Schluss nicht vergessen, den Seafile Server neu zu starten. Ansonsten werden die Änderungen nicht übernommen. Mit einem Befehl ist es aber schon soweit.</p>
+
+<pre>service seafile-server restart</pre>
+
+<h2>Customizing Seafile</h2>
+<p>Seahub, das Webinterface von Seafile, lässt sich auf vielerlei Art an die eigenen Bedürfnisse anpassen. Das fängt beim Logo an und geht über den Farbcode sowie Header und Footer bis zu den Benachrichtigungs-E-Mails.</p>
+
+<img decoding="async" src="/wp-content/uploads/2017/11/Customzing_Moeglichkeiten_Seafile.png" alt="Weitere Möglichkeiten zur individuellen Anpassung der Weboberfläche" />
+
+<p>In diesem Beitrag haben wir gezeigt, wie sich der Color Code von Seahub anpassen lässt. Bis Seahub genau den eigenen Wünschen entspricht, kann das schon ein wenig dauern. Die individuallisierte Seafile-Oberfläche zeigt man dann Freunden bzw. Geschäftspartnern aber auch gerne. Mit ein wenig Aufwand sieht man später gar nicht mehr, dass Seafile unter der Haube der Dateiaustauschplattform steckt.</p>
+
+<p>Wenn Sie Ihr Seafile anpassen lassen wollen oder Sie Seafile nutzen wollen, dann sprechen Sie uns an: +49 (0)6131 3270777. Wir machen Ihnen gerne ein Angebot.</p>

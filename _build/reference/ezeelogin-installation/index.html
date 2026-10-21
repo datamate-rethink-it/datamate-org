@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="de">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="datamate" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- minified by https://cssminifier.com/ -->
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/canvas.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/datamate-theme.css" type="text/css" />
+
+	<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+	<![endif]-->
+
+
+
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+
+
+	<link rel="icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500.png" type="image/png" sizes="64x64">
+    <meta name="format-detection" content="telephone=no">
+	<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v19.6.1 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>ezeelogin Installation unter Ubuntu 18.04 | datamate</title>
+	<meta name="description" content="ezeelogin ist eine sichere und komfortable on-premise Jump Server Lösung. Dieser Artikel führt durch die Installation unter Ubuntu 18.04." />
+	<link rel="canonical" href="https://www.datamate.org/ezeelogin-installation/" />
+	<meta property="og:locale" content="de_DE" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="ezeelogin Installation unter Ubuntu 18.04 | datamate" />
+	<meta property="og:description" content="ezeelogin ist eine sichere und komfortable on-premise Jump Server Lösung. Dieser Artikel führt durch die Installation unter Ubuntu 18.04." />
+	<meta property="og:url" content="https://www.datamate.org/ezeelogin-installation/" />
+	<meta property="og:site_name" content="datamate" />
+	<meta property="article:publisher" content="https://www.facebook.com/datamate.rethink.it" />
+	<meta property="article:published_time" content="2019-10-28T19:14:46+00:00" />
+	<meta property="article:modified_time" content="2025-02-21T08:10:02+00:00" />
+	<meta property="og:image" content="https://www.datamate.org/wp-content/uploads/2019/10/ezeelogin-install-ubuntu.jpg" />
+	<meta property="og:image:width" content="1800" />
+	<meta property="og:image:height" content="1200" />
+	<meta property="og:image:type" content="image/jpeg" />
+	<meta name="author" content="Christoph Dyllick-Brenzinger" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:label1" content="Verfasst von" />
+	<meta name="twitter:data1" content="Christoph Dyllick-Brenzinger" />
+	<meta name="twitter:label2" content="Geschätzte Lesezeit" />
+	<meta name="twitter:data2" content="13 Minuten" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Article","@id":"https://www.datamate.org/ezeelogin-installation/#article","isPartOf":{"@id":"https://www.datamate.org/ezeelogin-installation/"},"author":{"name":"Christoph Dyllick-Brenzinger","@id":"https://www.datamate.org/#/schema/person/871495303b4e9fc8efd66c3237355b20"},"headline":"ezeelogin Installation unter Ubuntu 18.04","datePublished":"2019-10-28T19:14:46+00:00","dateModified":"2025-02-21T08:10:02+00:00","mainEntityOfPage":{"@id":"https://www.datamate.org/ezeelogin-installation/"},"wordCount":2098,"publisher":{"@id":"https://www.datamate.org/#organization"},"image":{"@id":"https://www.datamate.org/ezeelogin-installation/#primaryimage"},"thumbnailUrl":"https://www.datamate.org/wp-content/uploads/2019/10/ezeelogin-install-ubuntu.jpg","keywords":["ezeelogin","jump server","Linux"],"articleSection":["PRAKTISCHE ANWENDUNGSFÄLLE","SOFTWARE"],"inLanguage":"de"},{"@type":"WebPage","@id":"https://www.datamate.org/ezeelogin-installation/","url":"https://www.datamate.org/ezeelogin-installation/","name":"ezeelogin Installation unter Ubuntu 18.04 | datamate","isPartOf":{"@id":"https://www.datamate.org/#website"},"primaryImageOfPage":{"@id":"https://www.datamate.org/ezeelogin-installation/#primaryimage"},"image":{"@id":"https://www.datamate.org/ezeelogin-installation/#primaryimage"},"thumbnailUrl":"https://www.datamate.org/wp-content/uploads/2019/10/ezeelogin-install-ubuntu.jpg","datePublished":"2019-10-28T19:14:46+00:00","dateModified":"2025-02-21T08:10:02+00:00","description":"ezeelogin ist eine sichere und komfortable on-premise Jump Server Lösung. Dieser Artikel führt durch die Installation unter Ubuntu 18.04.","breadcrumb":{"@id":"https://www.datamate.org/ezeelogin-installation/#breadcrumb"},"inLanguage":"de","potentialAction":[{"@type":"ReadAction","target":["https://www.datamate.org/ezeelogin-installation/"]}]},{"@type":"ImageObject","inLanguage":"de","@id":"https://www.datamate.org/ezeelogin-installation/#primaryimage","url":"https://www.datamate.org/wp-content/uploads/2019/10/ezeelogin-install-ubuntu.jpg","contentUrl":"https://www.datamate.org/wp-content/uploads/2019/10/ezeelogin-install-ubuntu.jpg","width":1800,"height":1200},{"@type":"BreadcrumbList","@id":"https://www.datamate.org/ezeelogin-installation/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Startseite","item":"https://www.datamate.org/"},{"@type":"ListItem","position":2,"name":"ezeelogin Installation unter Ubuntu 18.04"}]},{"@type":"WebSite","@id":"https://www.datamate.org/#website","url":"https://www.datamate.org/","name":"datamate","description":"","publisher":{"@id":"https://www.datamate.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.datamate.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"de"},{"@type":"Organization","@id":"https://www.datamate.org/#organization","name":"datamate GmbH & Co. KG","url":"https://www.datamate.org/","sameAs":["https://www.youtube.com/channel/UCnVWPO4V0n9aUGcG9q31b4g","https://www.facebook.com/datamate.rethink.it"],"logo":{"@type":"ImageObject","inLanguage":"de","@id":"https://www.datamate.org/#/schema/logo/image/","url":"https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png","contentUrl":"https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png","width":100,"height":100,"caption":"datamate GmbH & Co. KG"},"image":{"@id":"https://www.datamate.org/#/schema/logo/image/"}},{"@type":"Person","@id":"https://www.datamate.org/#/schema/person/871495303b4e9fc8efd66c3237355b20","name":"Christoph Dyllick-Brenzinger","description":"Christoph ist Gründer und Chefentwickler von datamate. Er ist ein absoluter Linux-Fan und hat schon früh seine Leidenschaft für Technik und Programmierung entdeckt. Seine langjährige Erfahrung als Unternehmensberater spürt man regelmäßig, wenn er nach optimalen Lösungen für die Kunden sucht. Wenn er nicht gerade den Tennisplatz unsicher macht oder bei Overwatch sein Liga-Ranking verbessert, verbringt Christoph seine Freizeit mit seiner Frau und seinen drei Kindern."}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<script type="text/javascript">
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.datamate.org\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.1.15"}};
+/*! This file is auto-generated */
+!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode,e=(p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0),i.toDataURL());return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(p&&p.fillText)switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([129777,127995,8205,129778,127999],[129777,127995,8203,129778,127999])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(e=t.source||{}).concatemoji?c(e.concatemoji):e.wpemoji&&e.twemoji&&(c(e.twemoji),c(e.wpemoji)))}(window,document,window._wpemojiSettings);
+</script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css' href='https://www.datamate.org/wp-includes/css/dist/block-library/style.min.css?ver=6.1.15' type='text/css' media='all' />
+<link rel='stylesheet' id='classic-theme-styles-css' href='https://www.datamate.org/wp-includes/css/classic-themes.min.css?ver=1' type='text/css' media='all' />
+<style id='global-styles-inline-css' type='text/css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;}:where(.is-layout-flex){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='slb_core-css' href='https://www.datamate.org/wp-content/plugins/simple-lightbox/client/css/app.css?ver=2.9.0' type='text/css' media='all' />
+<link rel="https://api.w.org/" href="https://www.datamate.org/wp-json/" /><link rel="alternate" type="application/json" href="https://www.datamate.org/wp-json/wp/v2/posts/6282" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.datamate.org/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.datamate.org/wp-includes/wlwmanifest.xml" />
+<meta name="generator" content="WordPress 6.1.15" />
+<link rel='shortlink' href='https://www.datamate.org/?p=6282' />
+<link rel="alternate" type="application/json+oembed" href="https://www.datamate.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.datamate.org%2Fezeelogin-installation%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.datamate.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.datamate.org%2Fezeelogin-installation%2F&#038;format=xml" />
+<!-- Analytics by WP Statistics v13.2.5 - https://wp-statistics.com/ -->
+<link rel="icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500-180x180.png" />
+<meta name="msapplication-TileImage" content="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500-270x270.png" />
+<link rel="icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500-150x150.png" sizes="64x64" />
+
+</head>
+
+
+<body class="stretched">
+
+	<div id="wrapper" class="clearfix">
+		<header id="header" class="transparent-header ">
+			<div id="header-wrap">
+				<div class="container clearfix">
+					<div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
+					<div id="logo">
+						<a href="/" class="standard-logo" title="Datamate Home" data-dark-logo="https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png"><img title="Datamate Logo" src="https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png" alt="datamate"></a>
+						<a href="/" class="retina-logo" title="Datamate Home" data-dark-logo="https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png"><img title="Datamate Logo" src="https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png" alt="datamate"></a>
+					</div>
+
+					<nav id="primary-menu" class="menu-primary-container"><ul id="menu-primary" class="norightborder"><li id="menu-item-3054" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3054"><a title="Seafile" href="https://www.datamate.org/seafile/">Seafile</a></li>
+<li id="menu-item-5246" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5246"><a title="3CX" href="https://www.datamate.org/3cx/">3CX</a></li>
+<li id="menu-item-137" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-137"><a title="Blog" href="/blog/">Blog</a></li>
+</ul></nav>				</div>
+			</div>
+		</header>
+<div class="blog-header" style="background-image: url(https://www.datamate.org/wp-content/uploads/2019/10/ezeelogin-install-ubuntu.jpg); height: 395px; background-position: center; background-size:cover; ">
+
+  <div class="blog-heading-middle">
+		<div class="container clearfix text-center dark" style="text-shadow: 1px 1px 2px black;">
+			<h1 style="font-size: 24px; text-transform: uppercase; font-weight: 400; margin: 0px;">ezeelogin Installation unter Ubuntu 18.04</h1>
+		</div>
+	</div>
+
+</div>
+
+<div class="section" id="content">
+    <div>
+        <div class="container clearfix" id="blog">
+            <div class="row clearfix">
+
+                <div class="col-sm-8">
+			<div class="ipost clearfix">
+				<div class="entry-title">
+					<h1 style="font-size: 24px; text-transform: uppercase; font-weight: 400;">ezeelogin Installation unter Ubuntu 18.04</h1>
+					<ul class="entry-meta clearfix">
+                        <li><i class="icon-clock"></i> 28. Oktober 2019</li>
+					</ul>
+					<div class="clear"></div>
+
+				</div>
+
+				<div class="entry clearfix">
+
+						<p>ezeelogin ist eine on-premises Jump Server Lösung, die die Zugriffsverwaltung für Windows und Linux Server sicher und komfortabel macht. Den Einsatz von ezeelogin bei datamate haben wir im Artikel <a href="https://www.datamate.org/servermanagement-per-ssh-jump-server/">Servermanagement per SSH-Jump Server</a> beschrieben. In diesem Beitrag führen wir durch die Installation von ezeelogin auf einem Ubuntu Server 18.04 und erläutern die Konfiguration der Zielhosts. Auch wenn die Installation nicht kompliziert ist, gibt es doch ein paar Fallstricke zu beachten, bevor man mit der Verwaltung der eigenen Server loslegen kann.</p>
+
+<span id="more-6282"></span>
+
+<p>ezeelogin verlangt einen Linux Server als Plattform und kommt mit geringen Hardware Ressourcen aus. Mindestanforderungen an den (virtuellen oder dedizierten) Linux Server sind 512 MB Arbeitsspeicher und CPU-Kern mit 1 Ghz. Eine gute Wahl sind aus unserer Sicht der virtuelle Servern des deutschen Anbieters netcup. Der <a href="https://www.netcup.de/vserver/vps.php" target="_blank" rel="noopener noreferrer">VPS 200 G8</a> kostet gerade mal 2,69 € im Monat und bringt ausreichend Ressourcen und seine eigene IPv4-Adresse mit. Natürlich ist aber auch eine on-premises Installation in Form einer virtuellen Maschine möglich.</p>
+
+<h2>Übersicht der notwendigen Installations- und Konfigurationsschritte</h2>
+
+<ul style="padding-left: 20px;">
+<li>Registration einer 30-Tage Testlizenz</li>
+<li>Installation von MySQL und PHP</li>
+<li>Installation des ionCube Encoders</li>
+<li>Beantragung eines Let&#8217;s Encrypt Zertifikats</li>
+<li>Installation von ezeelogin</li>
+<li>Erste Schritte mit ezeelogin</li>
+<li>Zusätzliche Absicherungen</li>
+<li>Backup &#038; Restore</li>
+</ul>
+
+
+<h2>Installation von ezeelogin</h2>
+
+<h3 name="testlizenz">Registration einer 30-Tage Testlizenz</h3>
+
+<p>Der erste Schritt der Installation führt uns nicht auf die Kommandozeile unseres Servers, sondern ins <a href="https://www.ezeelogin.com/login/" target="_blank" rel="noopener noreferrer">Customer Portal von ezeelogin</a>. Dort registriert man sich mit seiner E-Mail-Adresse und erhält umgehend einen temporären Registrierungscode zugeschickt. Durch Eingabe dieses Registrierungscodes und seines Passworts erhält man Zugang zum Customer Portal von ezeelogin.</p>
+
+<p>Im Customer Portal klickt man auf die grüne Schaltfläche <i>Get free trial</i>, um sich eine Serverlizenz zu erstellen. Wichtig ist, dass im Feld <i>Server IP</i> die IP-Adresse angegeben wird, unter der später der ezeelogin installiert wird. Wird ezeelogin in einem lokalen Netzwerk hinter einem NAT installiert, dann muss in diesem Feld nicht die lokale IP-Adresse, sondern die WAN-Adresse, d.h. die öffentlich IP-Adresse des Internetanschlusses, angegeben werden. Am einfachsten findet man dies auf dem zukünftigen ezeelogin Server heraus, wenn man den folgenden Befehl in die Kommandozeile eintippt:</p>
+
+<code style="padding: 0px;"><pre>curl https://api.datamate.org/checkip.php
+92.60.36.190</pre></code>
+
+
+		<style type="text/css">
+			#gallery-1 {
+				margin: auto;
+			}
+			#gallery-1 .gallery-item {
+				float: left;
+				margin-top: 10px;
+				text-align: center;
+				width: 33%;
+			}
+			#gallery-1 img {
+				border: 2px solid #cfcfcf;
+			}
+			#gallery-1 .gallery-caption {
+				margin-left: 0;
+			}
+			/* see gallery_shortcode() in wp-includes/media.php */
+		</style>
+		<div id='gallery-1' class='gallery galleryid-6282 gallery-columns-3 gallery-size-thumbnail'><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez2/" data-slb-active="1" data-slb-asset="1428784697" data-slb-internal="6391" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez2-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez4/" data-slb-active="1" data-slb-asset="2934424817" data-slb-internal="6390" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez4-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez5/" data-slb-active="1" data-slb-asset="2023032568" data-slb-internal="6389" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez5-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><br style="clear: both" />
+		</div>
+
+
+<h3 name="mysql-und-php">Installation von MySQL und PHP</h3>
+
+<p>Nun geht es auf der Kommandozeile des Linux Servers weiter. In einer root Shell installiert man als Erstes den Webserver nginx und die Script-Sprache PHP.</p>
+<code style="padding: 0px;"><pre>apt-get install -y nginx mysql-server php7.2 php7.2-fpm php7.2-xml php7.2-curl php7.2-mysql php7.2-ldap nodejs</pre></code>
+
+<p>Hinweis: ezeelogin benötigt zusätzlich das Paket <i>php7.2-mcrypt</i>, welches jedoch ab Ubuntu 18.04 nicht mehr in den offiziellen Paketquellen von php7.2 enthalten ist. Auch wenn die folgenden Befehle kompliziert erscheinen, geht es lediglich darum dieses Paket nachzuinstallieren. Nachfragen während der Installationsschritte können mit Enter bestätigt werden.</p>
+
+<code style="padding: 0px;"><pre>apt-get install -y php-dev libmcrypt-dev php-pear ; apt-get -y install gcc make autoconf libc-dev pkg-config
+apt-get -y install php7.2-dev ; apt-get -y install libmcrypt-dev
+sudo pecl install mcrypt-1.0.1
+echo "extension=mcrypt.so" >> /etc/php/7.2/fpm/php.ini
+echo "extension=mcrypt.so" >> /etc/php/7.2/cli/php.ini
+</pre></code>
+
+<h3>Installation des ionCube Encoders</h3>
+
+<p>Normalerweise ist der Quellcode von php-Applikationen frei einsehbar. Der ionCube Encoder ist proprietäre Software, die es den Entwicklern ermöglicht, ihren PHP Code zu schützen. Dies erfolgt durch die Umwandlung des php-Codes in unleserlichen Bytecode, welchen der ionCube Encoder fehlerfrei interpretieren kann. Im Folgenden wird die 64-bit Version des ioncube Encoders installiert. Sollte man ein 32 bit System haben, muss man die entspreche Datei unter dem folgenden Link entsprechend anpassen.</p>
+
+<code style="padding: 0px;"><pre>wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
+tar -zxf ioncube_loaders_lin_x86-64.tar.gz && mv ioncube /usr/local
+rm ioncube_loaders_lin_x86-64.tar.gz
+echo "zend_extension = /usr/local/ioncube/ioncube_loader_lin_7.2.so" >> /etc/php/7.2/fpm/php.ini
+echo "zend_extension = /usr/local/ioncube/ioncube_loader_lin_7.2.so" >> /etc/php/7.2/cli/php.ini
+systemctl restart nginx php7.2-fpm
+</pre></code>
+
+<h3>Beantragung eines Let&#8217;s Encrypt Zertifikats</h3>
+
+<p>Im Folgenden geht es darum, den Webserver mit einem gültigen Let&#8217;s Encrypt Zertifikat auszustatten. Dies geht natürlich nur, wenn eine eigene Domain oder Subdomain auf die IP-Adresse des Servers verweist und die Ports 80 und 443 nicht durch irgendwelche Router oder Firewalls geblockt werden. Im ersten Schritt schreiben wir eine minimale nginx-Konfiguration und ersetzen dafür den Inhalt der Datei <i>/etc/nginx/sites-available/default</i> mit dem folgenden Inhalt: (Die Konfiguration funktioniert für IPv4 genauso wie für IPv6.)</p>
+
+<code style="padding: 0px;"><pre>server {
+  listen 80 default_server;
+  listen [::]:80 default_server;
+  server_name _;
+  
+  # rewrite to https
+  location / {
+    rewrite ^ https://$http_host$request_uri? permanent;
+  }
+
+  # Let's Encrypt Challenge
+  location ^~ /.well-known/acme-challenge/ {
+    default_type "text/plain";
+    root         /var/www;
+  }
+  location = /.well-known/acme-challenge/ {
+    return 404;
+  }
+}
+</pre></code>
+
+<p>Anschließend kann man mit den folgenden Befehlen ein Zertifikat für die eigene Domain oder Subdomain beantragen. E-MAIL-ADRESSE und DOMAIN-URL müssen entsprechend ersetzt werden:</p>
+
+<code style="padding: 0px;"><pre>nginx -t
+systemctl restart nginx
+mkdir -p /var/www/.well-known/acme-challenge
+chown www-data: -R /var/www/.well-known
+add-apt-repository -y ppa:certbot/certbot
+apt-get update
+apt-get install -y certbot
+certbot certonly --standalone --dry-run -m E-MAIL-ADRESSE -n
+echo "max-log-backups = 0
+authenticator = webroot
+webroot-path = /var/www
+agree-tos = true
+non-interactive = true
+renew-hook = systemctl restart nginx" > /etc/letsencrypt/cli.ini
+certbot certonly -d DOMAIN-URL -m E-MAIL-ADRESSE
+</pre></code>
+
+<p>Das Ergebnis dieser Befehle sollte ein <i>Congratulations</i> sein. Dieses bestätigt, dass man ein Let&#8217;s Encrypt Zertifikat für die gewünschte eigene Domain erhalten hat. Nun kann die nginx-Konfigurationsdatei <i>/etc/nginx/sites-available/default</i> um den folgenden Teil zum HTTPS-Zugriff ergänzt werden:</p>
+
+<code style="padding: 0px;"><pre>server {
+  listen 443 default_server;
+  listen [::]:443 default_server;
+  server_name DOMAIN-URL;
+  root /var/www/html;
+  index index.php;
+
+  ssl on;
+  ssl_certificate /etc/letsencrypt/live/DOMAIN-URL/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/DOMAIN-URL/privkey.pem;
+  ssl_session_timeout 5m;
+
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers "HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES";
+  ssl_prefer_server_ciphers on;
+
+  location / {
+    try_files $uri $uri/ =404;
+  }
+
+  # General PHP Support
+  location ~ \.php$ {
+    fastcgi_split_path_info ^(.+\.php)(/.+)$;
+    fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+    fastcgi_param SCRIPT_FILENAME $request_filename;
+    fastcgi_index index.php;
+    include fastcgi_params;
+  }
+
+  # ezeelogin
+  if (!-f $request_filename) {
+    rewrite ^/(.*)$  /ezlogin/index.php?$1 last;
+  }
+}
+</pre></code>
+
+<a href="https://www.datamate.org/wp-content/uploads/2019/10/ez7.png" data-slb-active="1" data-slb-asset="2483869559" data-slb-internal="0" data-slb-group="6282"><img decoding="async" width="300" height="276" src="https://www.datamate.org/wp-content/uploads/2019/10/ez7-300x276.png" alt="ezeelogin mit ionCube Encoder" class="alignleft size-thumbnail wp-image-6393" style="float: left; padding-right: 20px;" srcset="https://www.datamate.org/wp-content/uploads/2019/10/ez7-300x276.png 300w, https://www.datamate.org/wp-content/uploads/2019/10/ez7-768x707.png 768w, https://www.datamate.org/wp-content/uploads/2019/10/ez7.png 955w" sizes="(max-width: 300px) 100vw, 300px" /></a>
+
+<p>Zum Abschluss folgt der ultimative Test, ob alle vorangegangen Befehle richtig funktioniert haben. Mit dem folgenden Befehl legt man eine PHP-Testseite an, die man dann per Browser über die eigene Domain erreichen kann. Die HTTPS-Verbindung sollte mit einem grünen Schloss versehen sein und auf der PHP-Informationsseite sollte man mit Hilfe der Suchfunktion des Browsers die Begriffe ionCube und mcrypt finden. </p>
+
+<code style="padding: 0px;"><pre>nginx -t
+systemctl restart nginx
+echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
+</pre></code>
+
+<p>Nach diesem Test kann die phpinfo.php wieder entfernt werden. Man kann aber sicher sein, dass alle notwendigen Voraussetzungen für die Installation von ezeelogin erfüllt sind. Die Installation der Datenbank, der PHP-Scriptsprache, des Webservers und des HTTPS-Zertifikats war erfolgreich.</p>
+
+<h3>Installation von ezeelogin</h3>
+
+<p>Bis hierher war somit alles nur reines Vorgeplänkel. Jetzt geht es an die tatsächliche Installation von ezeelogin. Im Customer Portal lädt man sich die aktuelle Version von ezeelogin für PHP 7.2 (bzw. 7.1) herunter und startet das Installationsscript.</p>
+
+<code style="padding: 0px;"><pre>wget https://downloads.ezeelogin.com/ezlogin_7.16.0_php71.bin
+sh ezlogin_7.16.0_php71.bin
+</pre></code>
+
+<p>Zuerst springt man mit mehrmaligem Drücker der ENTER-Taste ans Ende der Lizenzbedingungen und bestätigt diese mit dem englischen <i>I AGREE</i>. Wenn im Customer Center nicht die richtige IP-Adresse eingetragen wurde, kommt es jetzt zu einer Fehlermeldung. Ansonsten startet der automatische Installationsprozess, bei dem man sämtliche Fragen mit Enter bestätigen kann. Lediglich beim MySQL-Passwort wird ein Wert verlangt. Hier kann jedoch bei Ubuntu 18.04 irgendein beliebiger Wert eingetragen werden, da sich der root-User gegenüber der Datenbank nicht authentifizieren muss.</p>
+
+<p>Die Installation endet mit einer Übersicht sämtlicher Zugänge und Zugangsdaten. Diese Liste sollte man sorgfältig abspeichern, denn man wird sie noch benötigen.</p>
+
+<code style="padding: 0px;"><pre>Review settings:
+Install web panel files in                                : /var/www/html/ezlogin/
+Install web panel system files in                         : /var/www/ezlogin/
+URI path to access web panel                              : /ezlogin/
+MySQL server                                              : localhost
+MySQL port/socket                                         : 3306
+MySQL database                                            : ezlogin_thw
+MySQL user                                                : ezlogin_wakzq
+MySQL password                                            : Rs3B/C@.k6[P
+Force HTTPS for web panel?                                : yes
+Secure MySQL connection?                                  : no
+Admin user                                                : ezadm422
+Admin password                                            : dM{DM(USyzt8(*DNuwV!3Aye(
+Admin security code                                       : vpu5FZNX]HDzpP$dSX
+</pre></code>
+
+
+		<style type="text/css">
+			#gallery-2 {
+				margin: auto;
+			}
+			#gallery-2 .gallery-item {
+				float: left;
+				margin-top: 10px;
+				text-align: center;
+				width: 33%;
+			}
+			#gallery-2 img {
+				border: 2px solid #cfcfcf;
+			}
+			#gallery-2 .gallery-caption {
+				margin-left: 0;
+			}
+			/* see gallery_shortcode() in wp-includes/media.php */
+		</style>
+		<div id='gallery-2' class='gallery galleryid-6282 gallery-columns-3 gallery-size-thumbnail'><dl class='gallery-item'>
+			<dt class='gallery-icon portrait'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez9/" data-slb-active="1" data-slb-asset="2570015037" data-slb-internal="6398" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez9-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><dl class='gallery-item'>
+			<dt class='gallery-icon portrait'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez10/" data-slb-active="1" data-slb-asset="1634745307" data-slb-internal="6397" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez10-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><dl class='gallery-item'>
+			<dt class='gallery-icon portrait'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez12/" data-slb-active="1" data-slb-asset="2301121186" data-slb-internal="6396" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez12-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><br style="clear: both" />
+		</div>
+
+
+<h2>Konfiguration über die Weboberfläche von ezeelogin</h2>
+
+<h3>Erste Schritte mit ezeelogin</h3>
+
+<p>Nun kann man einen beliebigen Browser öffnen und die Login-Seite von ezeelogin aufrufen. Mit dem Admin-User und dem Admin-Passwort kann man sich nun an der Weboberfläche anmelden. Es lohnt sich zunächst die folgenden grundlegende Einstellungen vorzunehmen:
+
+<h4>Logo und Seitenname</h4>
+<p>Unter <i>Settings > Branding</i> kann man ein eigenes Logo hochladen und die Seitentitel an die eigenen Bedürfnisse anpassen.</p>
+
+<h4>2-Faktorauthentifizierung</h4>
+<p>Unter <i>Settings > General > Two Factor Authentification</i> empfehlen wir die folgenden beiden Einstellungen: <i>Enable Google Authenticator</i> und <i>Force Two Factor Auth</i>. Nach dem Speichern springt man zu <i>Account > Google Authenticator</i> und scannt auf dieser Seite den angezeigten Barcode mit der Google Authenticator App. So hat man das Webinterface ein ganzes Stück sicherer gemacht. Die App gibt es kostenlos für iOS und Android im jeweiligen App Store.</p>
+
+<h4>Ezsh Shell erlauben</h4>
+<p>Bevor man den ersten Host in ezeelogin hinzufügt, sollte man noch eine Gruppenberechtigung setzen. Diese ist notwendig, damit sich die Anwender später per SSH mit ezeelogin verbinden können. Sollte man dies nicht machen, verweigert ezeelogin später den Zugriff auf die Ezsh Sheell und beendet unmittelbar die aufgebaute SSH-Verbindung. Dafür setzt man unter <i>Access Control > UserGroup-Action > Admins > Servers</i> den Haken bei Ezsh Shell. Um diese Einstellung speichern zu können, muss man noch am Ende des Formulars das Zugangspasswort des Administrators eingeben.</p>
+
+
+		<style type="text/css">
+			#gallery-3 {
+				margin: auto;
+			}
+			#gallery-3 .gallery-item {
+				float: left;
+				margin-top: 10px;
+				text-align: center;
+				width: 16%;
+			}
+			#gallery-3 img {
+				border: 2px solid #cfcfcf;
+			}
+			#gallery-3 .gallery-caption {
+				margin-left: 0;
+			}
+			/* see gallery_shortcode() in wp-includes/media.php */
+		</style>
+		<div id='gallery-3' class='gallery galleryid-6282 gallery-columns-6 gallery-size-thumbnail'><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez13/" data-slb-active="1" data-slb-asset="3880013702" data-slb-internal="6405" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez13-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez20/" data-slb-active="1" data-slb-asset="3789862581" data-slb-internal="6404" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez20-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez21/" data-slb-active="1" data-slb-asset="2787170225" data-slb-internal="6403" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez21-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez22/" data-slb-active="1" data-slb-asset="4078490113" data-slb-internal="6402" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez22-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez23/" data-slb-active="1" data-slb-asset="1762825603" data-slb-internal="6401" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez23-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez24/" data-slb-active="1" data-slb-asset="3235458411" data-slb-internal="6400" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez24-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><br style="clear: both" />
+		</div>
+
+
+<h3>Anlage eines ersten Ziel-Hosts</h3>
+
+<p>Nun ist alles vorbereitet, um den ersten zu verwaltenden Server anzulegen. Zuerst klickt man auf <i>Servers > Server Groups</i> und legt über den kleinen Pfeil auf der rechten Seite eine neue Servergruppe an. Anschließend klickt man erneut auf <i>Servers</i> und dann auf den kleinen Pfeil auf der rechten Seite. Es genügen lediglich vier Werte, um einen ersten Host anzulegen: Hostname, IP-Adresse, Remote SSH-Login und SSH-Passwort.</p>
+
+<p>Nun fehlt noch ein Anwender, der sich per SSH mit ezeelogin verbinden kann, um von dort zum Zielsystem weiterzuspringen. Diesen Anwender erzeugt man durch einen Klick auf <i>Users</i> und dann wieder auf den kleinen Pfeil und das Plus auf der rechten Seite. Die Benutzeranlage beinhaltet viele Pflichtfelder, die es auszufüllen gilt. Es mag beim ersten Mal verwirrend sein, was genau der Unterschied zwischen Passwort, Security Code und <i>Authorization Password</i> ist, dies ist jedoch schnell erklärt. Das Authorization Password ist das Passwort des aktuell angemeldeten Administrators. Wie schon beim Setzen der Gruppenberechtigung muss der Administrator sich selbst authentifizieren. Das Passwort und der Security Code sind zwei verschiedene Authentifizierungsmittel eines Anwenders. Solange keine 2 Faktorauthentifizierung aktiviert ist, verlangt ezeelogin immer beides. Sobald ein zweiter Faktor, z.B. über den Google Authenticator, gesetzt ist, genügt das Passwort und der zweite Faktor. Trotzdem sollte sich jeder Anwender beide Passwörter gut notieren. Zuletzt noch ein kleiner Hinweis. Rote Warnfelder können einfach weggeklickt werden, indem man diese anklickt. Damit ist auch schon der erste ezeelogin Anwender angelegt.</p>
+
+<h3>Die Anmeldung des Anwenders</h3>
+
+<p>Nun kann es auf zweierlei Arten weitergehen. Wenn man den zweiten Faktor verpflichtend gemacht hat, muss sich der Anwender zuerst auf dem Webinterface von ezeelogin einloggen um diesen zweiten Faktor festzulegen. Erst dann kann er sich per SSH mit ezeelogin verbinden. Sollte kein zweiter Faktor notwendig sein, kann er sich auch direkt per ssh mit ezeelogin verbinden. Die Verbindung funktioniert wie gewohnt per Kommandozeile oder per Putty mit dem Benutzernamen und der URL/IP von ezeelogin. Natürlich bietet ezeelogin dem Anwender auch die Möglichkeit seinen Public Key zu hinterlegen. Dies geht durch einen Klick auf F2, sobald man per SSH mit ezeelogin verbunden ist.</p>
+
+<code style="padding: 0px;"><pre>ssh USERNAME@IP-VON-EZEELOGIN</pre></code>
+
+<p>Sobald die SSH-Verbindung hergestellt ist, muss der Anwender entweder den zweiten Faktor eingeben oder sich durch den Security Code ausweisen. Anschließend kann er zum Zielsystem weiterspringen.</p>
+
+
+		<style type="text/css">
+			#gallery-4 {
+				margin: auto;
+			}
+			#gallery-4 .gallery-item {
+				float: left;
+				margin-top: 10px;
+				text-align: center;
+				width: 20%;
+			}
+			#gallery-4 img {
+				border: 2px solid #cfcfcf;
+			}
+			#gallery-4 .gallery-caption {
+				margin-left: 0;
+			}
+			/* see gallery_shortcode() in wp-includes/media.php */
+		</style>
+		<div id='gallery-4' class='gallery galleryid-6282 gallery-columns-5 gallery-size-thumbnail'><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez26/" data-slb-active="1" data-slb-asset="4192985942" data-slb-internal="6412" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez26-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez27/" data-slb-active="1" data-slb-asset="3088683308" data-slb-internal="6411" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez27-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez28/" data-slb-active="1" data-slb-asset="3281101163" data-slb-internal="6410" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez28-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez29/" data-slb-active="1" data-slb-asset="554907858" data-slb-internal="6409" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez29-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="https://www.datamate.org/ezeelogin-installation/ez33/" data-slb-active="1" data-slb-asset="893602656" data-slb-internal="6408" data-slb-group="6282"><img width="150" height="150" src="https://www.datamate.org/wp-content/uploads/2019/10/ez33-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" /></a>
+			</dt></dl><br style="clear: both" />
+		</div>
+
+
+<h2>Zusätzliche Absicherung</h2>
+
+<p>ezeelogin ist aufgrund seiner Aufgabe als Jump Server für Hacker ein besonders lohnenswertes Ziel. Deshalb sollte man große Sorgfalt darauf legen, das System gut zu schützen und die Angriffsfläche zu minimieren. Deshalb möchten wir an dieser Stelle noch ein paar Empfehlungen geben, wie ezeelogin abgesichert werden kann.</p>
+
+<h3>Firewall und Schutz gegen Bruteforce-Angriffe</h3>
+<p>Zunächst sollte man sich nicht auf die 2-Faktorauthentifizierung von ezeelogin verlassen, sondern diesen Schutz durch die Installation des Brute-Force Schutzes <a href="/fail2ban-schutz-vor-brute-force-angriffen/">fail2ban</a> ergänzen. Zusätzlich würden wir noch die Firewall ufw installieren und sämtliche Ports bis auf 80, 443 und 22 schliesen.</p>
+
+
+<h3>Weboberfläche</h3>
+<p>Die Verwendung eines Let&#8217;s Encrypt Zertifikats zur Absicherung der Zugriffe auf der Webseite gehört zu den Pflichtübungen. Ebenfalls empfehlenswert ist die Absicherung des Logins durch einen reCaptcha. Zusätzlich ist es überlegenswert, Zugriffe auf die Weboberfläche von ezeelogin auf gewisse IP-Adressen einzuschränken. Dies kann entweder über die Firewall ufw oder über die Paramenter <i>allow</i> und <i>deny</i> innerhalb der nginx Konfiguration erfolgen. Ein noch höheres Schutzniveau ist möglich, wenn ezeelogin nur über einen VPN-Kanal erreichbar ist. Dadurch lassen sich sämtliche Ports bis auf den VPN-Port schließen und ein zusätzlicher Authentifizierungsfaktor einfügen.</p>
+
+<h3>Absicherung des SSH-Zugriffs</h3>
+
+<p>ezeelogin bietet zwei verschiedene SSH-Logins an. Zum einen gibt es den System-Administrator und die ezeelogin-User. Während die ezeelogin-User durch einen zweiten Faktor geschützt werden können, gilt dies nicht für den allgemeinen Ubuntu Administrator. Dieser kann sich weiterhin &#8220;nur&#8221; über seinen Benutzer und sein Passwort anmelden. Auch hier kann man die Möglichkeiten von SSH nutzen und diesen Zugriff für den user &#8220;sshadmin&#8221; auf das Pubkey-Verfahren umstellen. Im Folgenden ist eine beispielhafte Konfiguration der <i>/etc/sshd/sshd_config</i> aufgeführt.</p>
+
+<code style="padding: 0px;"><pre># Global:
+PasswordAuthentication no 
+PubkeyAuthentication no 
+PermitRootLogin no
+
+# Local root 
+Match Address 127.0.0.1
+  PasswordAuthentication yes
+  PubkeyAuthentication yes
+  PermitRootLogin yes
+
+# jump-server users
+Match Group ezuser
+  PasswordAuthentication yes
+  PubkeyAuthentication yes
+  PermitRootLogin no
+
+# sshadmin
+Match User sshadmin
+  PasswordAuthentication no
+  PubkeyAuthentication yes
+  PermitRootLogin no
+</pre></code>
+
+<h3>Aufbau eines Clusters</h3>
+
+<p>Umso mehr Server mit ezeelogin verwaltet werden, desto wichtiger wird die uneingeschränkte Erreichbarkeit des Systems. Hierfür bietet ezeelogin die Möglichkeit zwei Server zu einem Cluster zu verbinden. Sobald die Konfiguration dieser beiden Server abgeschlossen ist, werden alle Änderungen auf beiden Systemen gespeichert und der Verbindungsaufbau ist über beide Systeme möglich. Man sollte so einen Aufbau jedoch nicht auf die leichte Schulter nehmen. Der Aufbau eines ezeelogin Cluster hat einige zusätzliche, nicht ganz einface Voraussetzungen wie z.B. eine verschlüsselte Datebankkommunikation. (Die Einrichtung des Clusters wird hier nicht weiter erläutert.) </p>
+
+<h3>Backup anfertigen</h3>
+
+<p>Kein IT System ist vollständig ohne ein anständiges Backup. Glücklicherweise bietet auch hier ezeelogin gute Hilfsmittel, um schnell zum Ziel zu kommen. Der grundsätzliche Gedanke des Backupvorgehens von ezeelogin ist es, ein komplett eigenständiges Installationsskript zu erzeugen, was das System wieder vollständig herstellen kann. Dieses Backupskript erzeugt man lediglich durch die Eingabe eines Befehls.</p>
+
+<code style="padding: 0px;"><pre>/usr/local/sbin/backup_ezlogin.php</pre></code>
+
+<a href="https://www.datamate.org/wp-content/uploads/2019/10/ez50.png" data-slb-active="1" data-slb-asset="2424489779" data-slb-internal="0" data-slb-group="6282"><img decoding="async" loading="lazy" src="https://www.datamate.org/wp-content/uploads/2019/10/ez50-289x300.png" alt="Backup eines ezeelogin Systems" width="289" height="300" class="alignleft size-medium wp-image-6415" srcset="https://www.datamate.org/wp-content/uploads/2019/10/ez50-289x300.png 289w, https://www.datamate.org/wp-content/uploads/2019/10/ez50.png 732w" sizes="(max-width: 289px) 100vw, 289px" /></a>
+
+<p>Nach der Ausführung dieses Befehls erzeugt ezeelogin z.B. folgende ausführbare Datei <i>/var/ezlogin_backup_v7.16.0_ b5db3443a5f4dcc0db83e2ab5_Fri_Oct_25_2019_ 22_04_02_CEST.bin</i>.</p>
+<p>Dieses Script kann man anstelle des Installationsskriptes aus dem Customer Portal verwenden, um einfach ein Restore auf einem anderen System durchzuführen. Es enthält sämtliche Einstellungen inklusive Hosts, Anwendern und Gruppen.</p>
+
+<h3>Further reading</h3>
+
+<p>Mit dem Ende dieses Artikels sollten Sie einen voll einsatzfähigen und gut abgesicherten ezeelogin Jump Server haben. Natürlich stellt dies jedoch noch nicht das Ende der ezeelogin Reise dar. Aus diesem Grund empfehle ich Ihnen die folgenden Links als Start für weiterführende Information:</p>
+<ul style="padding-left: 20px;">
+<li><a href="https://www.ezeelogin.com/kb/" target="_blank" rel="noopener noreferrer">Knowledge base</a></li>
+<li><a href="https://www.youtube.com/channel/UCt1bAL-JekxSBt6a0OhPtJA" target="_blank" rel="noopener noreferrer">YouTube Kanal</a></li>
+</ul>
+					</div>
+                  <!-- Post Author Info	============================================= -->
+<div class="team team-list clearfix">
+	<div class="team-image" style="width: 96px;">
+			</div>
+	<div class="team-desc">
+		<div class="team-title"><span>geschrieben von</span><h4 class="nobottommargin">Christoph Dyllick-Brenzinger</h4></div>
+		<div class="team-content">Christoph ist Gründer und Chefentwickler von datamate. Er ist ein absoluter Linux-Fan und hat schon früh seine Leidenschaft für Technik und Programmierung entdeckt. Seine langjährige Erfahrung als Unternehmensberater spürt man regelmäßig, wenn er nach optimalen Lösungen für die Kunden sucht. Wenn er nicht gerade den Tennisplatz unsicher macht oder bei Overwatch sein Liga-Ranking verbessert, verbringt Christoph seine Freizeit mit seiner Frau und seinen drei Kindern.</div>
+	</div>
+</div>
+		</div> <!-- ipost clearfix -->
+
+
+
+
+
+
+        </div>
+<div class="col-sm-4 bottommargin-sm">
+
+    <div class="widget clearfix">
+        <div class="widget clearfix"><form role="search" method="get" class="search-form" action="https://www.datamate.org/">
+    <label>
+        <input class="typeahead sm-form-control tt-input" type="search" class="search-field"
+            placeholder="Suchen nach:"
+            value="" name="s"
+            title="Suchen nach:" />
+    </label>
+    <input type="submit" class="button button-3d button-rounded"
+        value="Suchen" />
+</form>
+</div><div class="widget clearfix"><h3>Kategorien</h3>
+			<ul>
+					<li class="cat-item cat-item-110"><a href="https://www.datamate.org/category/alles-ueber-die-cloud/">Alles über die Cloud</a> (5)
+</li>
+	<li class="cat-item cat-item-34"><a href="https://www.datamate.org/category/anleitungen/">ANLEITUNGEN</a> (47)
+<ul class='children'>
+	<li class="cat-item cat-item-36"><a href="https://www.datamate.org/category/anleitungen/hardware/">HARDWARE</a> (5)
+</li>
+	<li class="cat-item cat-item-35"><a href="https://www.datamate.org/category/anleitungen/software/">SOFTWARE</a> (37)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-31"><a href="https://www.datamate.org/category/datamate/">DATAMATE</a> (28)
+<ul class='children'>
+	<li class="cat-item cat-item-33"><a href="https://www.datamate.org/category/datamate/aus-dem-leben-eines-startups/">AUS DEM LEBEN EINES STARTUPS</a> (8)
+</li>
+	<li class="cat-item cat-item-32"><a href="https://www.datamate.org/category/datamate/unsere-produkte/">UNSERE PRODUKTE</a> (21)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-28"><a href="https://www.datamate.org/category/kunden/">KUNDEN</a> (17)
+<ul class='children'>
+	<li class="cat-item cat-item-29"><a href="https://www.datamate.org/category/kunden/erfolgsgeschichten/">ERFOLGSGESCHICHTEN</a> (3)
+</li>
+	<li class="cat-item cat-item-30"><a href="https://www.datamate.org/category/kunden/praktische-anwendungsfaelle/">PRAKTISCHE ANWENDUNGSFÄLLE</a> (14)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-56"><a href="https://www.datamate.org/category/loesungen/">LÖSUNGEN</a> (33)
+<ul class='children'>
+	<li class="cat-item cat-item-181"><a href="https://www.datamate.org/category/loesungen/3cx/">3CX</a> (3)
+</li>
+	<li class="cat-item cat-item-111"><a href="https://www.datamate.org/category/loesungen/friendica/">Friendica</a> (1)
+</li>
+	<li class="cat-item cat-item-83"><a href="https://www.datamate.org/category/loesungen/odoo/">ODOO</a> (4)
+</li>
+	<li class="cat-item cat-item-57"><a href="https://www.datamate.org/category/loesungen/seafile/">SEAFILE</a> (19)
+</li>
+	<li class="cat-item cat-item-112"><a href="https://www.datamate.org/category/loesungen/wordpress/">WORDPRESS</a> (1)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-94"><a href="https://www.datamate.org/category/tests/">TESTS</a> (6)
+<ul class='children'>
+	<li class="cat-item cat-item-95"><a href="https://www.datamate.org/category/tests/hardware-tests/">HARDWARE</a> (2)
+</li>
+	<li class="cat-item cat-item-96"><a href="https://www.datamate.org/category/tests/software-tests/">SOFTWARE</a> (3)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://www.datamate.org/category/uncategorized/">Uncategorized</a> (36)
+</li>
+			</ul>
+
+			</div>    </div>
+
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+	<footer id="footer" class="dark">
+		<div class="container clearfix">
+
+			<div class="footer-widgets-wrap">
+				<div class="col-sm-3">
+						<div class="widget clearfix"><h4>datamate &#8211; RETHINK IT</h4>			<div class="textwidget"><p>Wir sind ein Team von IT-Beratern und IT-Entwicklern. <br/>Wir entwickeln auf Basis von Open Source unsere <strong>eigenen Produkte</strong> und finden  <strong>IT-Lösungen</strong> für die Bedürfnisse unserer Kunden.  
+<hr/>
+<p><strong>datamate GmbH & Co. KG</strong><br>117er Ehrenhof 5<br>55118 Mainz</p></div>
+		</div>				</div>
+				<div class="col-sm-2">
+										</div>
+				<div class="col-sm-2">
+						<div class="widget widget_links clearfix"><h4>Produkte</h4>			<div class="textwidget"><ul>
+<li><a title="Buddy - Mini PC mit Windows und Linux" href="/buddy">Buddy</a></li>
+<li><a title="Homie - Private Cloud und Multimedia-Zentrale" href="/homie">Homie</a></li>
+<li><a title="Small Business Server" href="/fellow">Fellow</a></li>
+</ul>
+</div>
+		</div>				</div>
+				<div class="col-sm-2">
+						<div class="widget widget_links clearfix"><h4>Lösungen</h4>			<div class="textwidget"><ul>
+<li><a title="Seafile" href="/seafile">Seafile</a></li>
+<li><a title="3CX Telefonanlagen" href="/3cx">3CX</a></li>
+</ul></div>
+		</div>				</div>
+				<div class="col-sm-3">
+						<div class="widget widget_links clearfix"><h4>Datamate</h4>			<div class="textwidget"><ul>
+<li><a title="Über datamate" href="/unternehmensprofil">Über datamate</a></li>
+<li><a title="Presseinformationen" href="/presse">Presse</a></li>
+<li><a title="datamate wiki" href="/hilfe">Hilfe-Wiki</a></li>
+<li><a href="https://get.teamviewer.com/datamate" target="_blank" rel="noopener">Download TeamViewer</a></li>
+</ul></div>
+		</div>				</div>
+			</div>
+		</div>
+
+		<div id="copyrights">
+			<div class="container clearfix">
+				<div class="col_half">
+					datamate ist eine eingetragene Schutzmarke.<br>
+					<div class="copyright-links"><a href="https://www.datamate.org/impressum" title="Datamate Impressum">Impressum</a> / <a href="https://www.datamate.org/datenschutzerklaerung" title="Datenschutz von Datamate">Datenschutz</a> / <a href="https://www.datamate.org/downloads/Datamate-AGB.pdf" title="Datamate Allgemeine Geschäftsbedingungen">AGB</a></div>
+				</div>
+				<div class="col_half col_last tright">
+					<div class="fright clearfix">
+						<a href="https://www.facebook.com/datamate.rethink.it/" title="Datamate auf Facebook." class="social-icon si-small si-borderless si-facebook">
+							<i class="icon-facebook"></i>
+							<i class="icon-facebook"></i>
+						</a>
+						<a href="https://www.youtube.com/channel/UCnVWPO4V0n9aUGcG9q31b4g" title="Datamate auf Youtube." class="social-icon si-small si-borderless si-youtube">
+							<i class="icon-youtube"></i>
+							<i class="icon-youtube"></i>
+						</a>
+					</div>
+					<div class="clear"></div>
+					<i class="icon-envelope2"></i><a href="mailto:info@datamate.org" style="color: rgba(255,255,255,.25);"> info@datamate.org</a> <span class="middot">&middot;</span> <i class="icon-phone"></i> +49 (0)6131 3270777
+				</div>
+			</div>
+		</div>
+	</footer>
+</div> <!-- wrapper end -->
+
+<div id="gotoTop" class="icon-angle-up"></div>
+<!-- minified by https://javascript-minifier.com/ -->
+<script type="text/javascript" src="https://www.datamate.org/wp-content/themes/datamate-theme/js/canvas.js"></script>
+
+<script type="text/javascript" src="https://www.datamate.org/wp-content/themes/datamate-theme/datamate-theme.js"></script>
+
+<script type='text/javascript' src='https://www.datamate.org/wp-includes/js/jquery/jquery.min.js?ver=3.6.1' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-content/plugins/simple-lightbox/client/js/prod/lib.core.js?ver=2.9.0' id='slb_core-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-content/plugins/simple-lightbox/client/js/prod/lib.view.js?ver=2.9.0' id='slb_view-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-content/plugins/simple-lightbox/themes/baseline/js/prod/client.js?ver=2.9.0' id='slb-asset-slb_baseline-base-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-content/plugins/simple-lightbox/themes/default/js/prod/client.js?ver=2.9.0' id='slb-asset-slb_default-base-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-content/plugins/simple-lightbox/template-tags/item/js/prod/tag.item.js?ver=2.9.0' id='slb-asset-item-base-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-content/plugins/simple-lightbox/template-tags/ui/js/prod/tag.ui.js?ver=2.9.0' id='slb-asset-ui-base-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-content/plugins/simple-lightbox/content-handlers/image/js/prod/handler.image.js?ver=2.9.0' id='slb-asset-image-base-js'></script>
+<script type="text/javascript" id="slb_footer">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB && SLB.has_child('View.init') ) { SLB.View.init({"ui_autofit":true,"ui_animate":true,"slideshow_autostart":true,"slideshow_duration":"6","group_loop":true,"ui_overlay_opacity":"0.8","ui_title_default":false,"theme_default":"slb_default","ui_labels":{"loading":"Loading","close":"Close","nav_next":"Next","nav_prev":"Previous","slideshow_start":"Start slideshow","slideshow_stop":"Stop slideshow","group_status":"Item %current% of %total%"}}); }
+if ( !!window.SLB && SLB.has_child('View.assets') ) { {$.extend(SLB.View.assets, {"1428784697":{"id":6391,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez2.png","title":"ez2","caption":"","description":""},"2934424817":{"id":6390,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez4.png","title":"ez4","caption":"","description":""},"2023032568":{"id":6389,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez5.png","title":"ezeelogin Lizenz aus dem Customer Center","caption":"","description":""},"2483869559":{"id":6393,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez7.png","title":"ezeelogin mit ioncube support","caption":"","description":""},"2570015037":{"id":6398,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez9.png","title":"ez9","caption":"","description":""},"1634745307":{"id":6397,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez10.png","title":"ez10","caption":"","description":""},"2301121186":{"id":6396,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez12.png","title":"Konfiguration von ezeelogin","caption":"","description":""},"3880013702":{"id":6405,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez13.png","title":"ez13","caption":"","description":""},"3789862581":{"id":6404,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez20.png","title":"ez20","caption":"","description":""},"2787170225":{"id":6403,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez21.png","title":"ez21","caption":"","description":""},"4078490113":{"id":6402,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez22.png","title":"ez22","caption":"","description":""},"1762825603":{"id":6401,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez23.png","title":"ez23","caption":"","description":""},"3235458411":{"id":6400,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez24.png","title":"ezeelogin Webinterface","caption":"","description":""},"4192985942":{"id":6412,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez26.png","title":"ez26","caption":"","description":""},"3088683308":{"id":6411,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez27.png","title":"ez27","caption":"","description":""},"3281101163":{"id":6410,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez28.png","title":"ez28","caption":"","description":""},"554907858":{"id":6409,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez29.png","title":"ez29","caption":"","description":""},"893602656":{"id":6408,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez33.png","title":"Anmeldung per SSH an ezeelogin","caption":"","description":""},"2424489779":{"id":6415,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2019\/10\/ez50.png","title":"ezeelogin backup","caption":"","description":""}});} }
+/* THM */
+if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_baseline',{"name":"Grundlinie","parent":"","styles":[{"handle":"base","uri":"https:\/\/www.datamate.org\/wp-content\/plugins\/simple-lightbox\/themes\/baseline\/css\/style.css","deps":[]}],"layout_raw":"<div class=\"slb_container\"><div class=\"slb_content\">{{item.content}}<div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><div class=\"slb_controls\"><span class=\"slb_close\">{{ui.close}}<\/span><span class=\"slb_slideshow\">{{ui.slideshow_control}}<\/span><\/div><div class=\"slb_loading\">{{ui.loading}}<\/div><\/div><div class=\"slb_details\"><div class=\"inner\"><div class=\"slb_data\"><div class=\"slb_data_content\"><span class=\"slb_data_title\">{{item.title}}<\/span><span class=\"slb_group_status\">{{ui.group_status}}<\/span><div class=\"slb_data_desc\">{{item.description}}<\/div><\/div><\/div><div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><\/div><\/div><\/div>"}); }if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_default',{"name":"Standard (hell)","parent":"slb_baseline","styles":[{"handle":"base","uri":"https:\/\/www.datamate.org\/wp-content\/plugins\/simple-lightbox\/themes\/default\/css\/style.css","deps":[]}]}); }})})(jQuery);}/* ]]> */</script>
+<script type="text/javascript" id="slb_context">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB ) { {$.extend(SLB, {"context":["public","user_guest"]});} }})})(jQuery);}/* ]]> */</script>
+
+</body>
+</html>

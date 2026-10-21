@@ -1,0 +1,97 @@
++++
+title = "Ein gutes Backup kommt selten allein – Backupmethoden im Vergleich"
+titel_html = "Ein gutes Backup kommt selten allein - Backupmethoden im Vergleich | datamate"
+ueberschrift = "Ein gutes Backup kommt selten allein &#8211; Backupmethoden im Vergleich"
+beschreibung = "Vollbackup, differentielles Backup und inkrementelles Backup - in diesem Artikel werden die drei Backupmethoden mit ihren Vor- und Nachteilen vorgestellt."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/01/datensicherung-im-vergleich.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/backupmethoden-im-vergleich/"
+canonical = "https://www.datamate.org/backupmethoden-im-vergleich/"
+og_bild_breite = "1280"
+og_bild_hoehe = "492"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2018-01-30T12:09:10+00:00"
+geaendert = "2025-02-21T08:10:11+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Ralf Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "6 Minuten"
+beitragsbild = "/wp-content/uploads/2018/01/datensicherung-im-vergleich.jpg"
+bild_breite = 1280
+bild_hoehe = 492
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Ein gutes Backup kommt selten allein &#8211; Backupmethoden im Vergleich", item = ""}]
+wortzahl = 1278
+autor = "Ralf Dyllick-Brenzinger"
+autor_kurz = "rdb"
+kategorien = ["anleitungen", "software"]
+schlagwoerter = ["Backup", "Datensicherung", "Delta", "Duplicity"]
+wp_id = 3377
+slug = "backupmethoden-im-vergleich"
+url = "/backupmethoden-im-vergleich/"
+date = "2018-01-30T13:09:10"
+lastmod = "2025-02-21T09:10:11"
+datum_utc = "2018-01-30T12:09:10+00:00"
+geaendert_utc = "2025-02-21T08:10:11+00:00"
++++
+						<p>Datensicherungen aka Backups sind ein Muss! Eine Garantie gegen Datenverlust durch Ransomware, Hardware-Defekte und andere Gefahren gibt es auch bei bester Vorsorge nicht. Die Frage ist also nicht &#8220;ob&#8221;, sondern das &#8220;wie&#8221; man am besten sichert. In diesem Beitrag vergleichen wir drei unterschiedliche Backup-Methoden und stellen Vor- und Nachteile von inkrementellem, differentiellem und dem Vollbackup gegenüber.</p>
+
+<span id="more-3377"></span>
+
+<h2>Bewertungskriterien und -szenario</h2>
+
+<p>An ein Backup werden viele Anforderungen gestellt. Es soll möglichst platzsparend sein, um die Ressourcenbelastung gering zu halten. Es soll schnell bei Erstellung und bei Wiederherstellung sein, unabhängig davon ob viele oder wenige Daten geändert wurden. Auch soll es robust sein gegen mögliche Schäden auf dem Sicherungsdatenträger. Das Backup soll also noch funktionieren, wenn ein Teil verloren gegangen oder korrupt ist. Und mit diesen drei Kriterien ist der Anforderungskatalog nur oberflächlich abgedeckt.</p>
+
+<p>Würde eine Backup-Methode alle diese Kriterien in bestmöglicher Weise erfüllen, dann wäre die Wahl des &#8220;richtigen&#8221; Backups trivial. Leider macht es die Realität nicht so einfach. Zwischen den einzelnen Anforderungen besteht ein Zielkonflikt. Inkrementelles, differentielles und Vollbackup haben daher alle Ihre Existenzberechtigung. Sie erfüllen in unterschiedlichem Umfang die an sie gestellten Anforderungen. Was für einen Nutzer die richtige Backup-Methode ist, muss es nicht auch für einen anderen sein.</p>
+
+<p>Für den Vergleich der drei Backup-Methoden greifen wir auf folgendes, typisiertes Szenario zurück: Auf einem zu sichernden Laufwerk werden über 3 Wochen hinweg Dokumente abgelegt. Die durchschnittliche Größe jedes Dokuments beträgt 1 MB. Der Anfangsbestand an Dokumenten ist 800 Dateien und jeden Tag kommen 100 neue Dokumente hinzu. Es soll an jedem Tag ein Backup erstellt werden, so dass der Datenbestand jedes Tages wiederhergestellt werden kann. (Die Annahmen sind gegenüber einem realen Einsatz stark vereinfacht, genügen aber zur Illustration der prinzipiellen Unterschiede.)</p>
+
+<h2>Backup Methoden</h2>
+
+<h3>Vollbackup</h3>
+<p>Das Vollbackup ist die wohl bekannteste Form der Datensicherung. Bei jedem Backuplauf wird eine vollständige Kopie des Datensatzes angefertigt. Erfolgt die Sicherung ohne Kompression, dann hat das Backup auf dem Sicherungslaufwerk die gleiche Größe wie die zu sichernden Daten.</p> 
+
+<p>Unterschiede gibt es bei der Art der Anfertigung des Vollbackups. Diese können datei- oder blockbasiert erfolgen. Bei ersterem wird Datei für Datei vom Quell- auf das Ziellaufwerk geschrieben. Bei der blockbasierten Methode wird vom Dateisystem abstrahiert und ein Programm überträgt einen Block des Quell-Datenträgers nach dem anderen auf den Ziel-Datenträger. Ersteres Verfahren kommt beim <a href="https://www.ionas.com/wissen/bequeme-datensicherheit-mit-dem-windows-dateiversionsverlauf/">Windows Dateiversionsverlauf</a> zur Anwendung; letzteres zum Beispiel bei Acronis True Image.</p>
+	
+<p>Vorteil des Vollbackups ist seine einfache Handhabung. Für die Wiederherstellung des Backups wird lediglich die Datensicherung des gewünschten Zeitpunkts benötigt. Durch den Verzicht auf umständliche Rechenverfahren ist auch die Wiederherstellungszeit denkbar kurz &#8211; die Übertragungsrate vom Sicherungsdatenträger auf einen Produktivspeicher ist der Flaschenhals. Das Vollbackup spielt seine Vorteile auch bei der Integritätsprüfung aus. Bei keinem anderen Backup lässt sich so leicht prüfen, ob sich das Backup wiederherstellen lässt.
+
+<p>Der größte Nachteil des Vollbackups ergibt sich aus der Abbildung unten: Das Vollbackup ist nicht effizient, was die Nutzung des Speicherplatzes betrifft. Dateien und Dokumente liegen mehrfach auf dem Sicherungslaufwerk vor, was zu einer Verschwendung von Speicherplatz führt. Im Beispiel liegen am Ende der Betrachtungsperiode die Dokumente des Anfangsbestands ganze 21x in der Sicherung. </p>
+
+<img decoding="async" src="/wp-content/uploads/2018/01/Speicherbedarf_Vollbackup.png" alt="Verlaufsdarstellung des Speicherbedarfs eines Vollbackups" width="1725"/>
+
+<p>Nach 21 Tagen beträgt der durch Backups belegte Speicherplatz weit mehr als das Zehnfache des tatsächlichen Datensatzes, nämlich rund 41 Gigabyte. Durch den hohen Bedarf an Speicherplatz ist diese Form des Backups besonders kostenintensiv. Selbst bei kleinen Datensätzen wird über einen längeren Zeitraum viel Speicherplatz benötigt.</p>
+
+<h3>Differentielles Backup</h3>
+<p>Das differentielle und das inkrementelle Backupverfahren haben gemeinsam, dass auf ein initiales Vollbackup nur noch Teilbackups folgen. Unterschieden tun sich die beiden Verfahren im Umfang der Teilbackups.</p>
+
+<p>Beim differentiellen Backup werden nach einer ersten vollständigen Datensicherung in den darauf folgenden Backupläufen nur die Dateien gesichert, die <u>seit dem Vollbackup</u> hinzugekommen sind oder verändert wurden. Im Verlustfall genügen für eine vollständige Wiederherstellung des Datenbestands die Vollsicherung und der Datensatz des Tages, der wiederhergestellt werden soll. Die Wiederherstellung ist also recht einfach. Das gleiche gilt für die Integritätsprüfung des Backups.</p>
+
+<p>Das differentielle Backup leidet weniger als das Vollbackup unter dem Problem der Datenredundanz. Es benötigt deutlich weniger Speicherkapazität. Je nach Dynamik im zu sichernden Datenbestand kann der Effizienzgewinn erheblich sein. Im Beispiel erfordert das differentielle Backup einen Speicherplatz von 24GB gegenüber 41GB beim Vollbackup.</p>
+
+<img decoding="async" src="/wp-content/uploads/2018/01/Speicherbedarf_Differentielles_Backup.png" alt="Verlaufsdarstellung des Speicherbedarfs eines differentiellen Backups" width="1725"/>
+
+<p>Auch wenn das differentielle Backup effizienter mit dem Speicherplatz umgeht als das Vollbackup, so ist es an absoluten Maßstäben gemessen nicht effizient. 24 Gigabyte benötigter Speicherplatz stehen einem tatsächlichen Datenbestand auf dem zu sichernden Laufwerk von lediglich 2,8 Gigabyte gegenüber. Ein Faktor von 7 liegt zwischen Datenbestand und Backupvolumen.</p>
+
+<h3>Inkrementelles Backup</h3>
+<p>Beim inkrementellen Backup werden nur die Veränderungen aufgenommen, die <u>nach dem Zeitpunkt der letzten Sicherung</u> erfolgt sind, d.h. neue Dateien und geänderte Dateien. Der erste Backuplauf ist ebenfalls eine Sicherung des kompletten Datenbestands.</p>
+	
+<p>Neben dem sogenannten Forward Delta Verfahren, bei dem alle nachfolgenden Backups auf das initiale Vollbackup aufbauen, gibt es mit dem Reverse Delta Verfahren das logische Gegenstück. Bei letzterem werden die Inkremente in die Vollsicherung eingebaut und frühere Versionen separat  gespeichert. Somit steht beim Reverse Delta Verfahren immer eine einem Vollbackup äquivalente Datensicherung zur Verfügung. Der hohe Rechenbedarf macht das Reverse Verfahren eher selten in der Anwendung. Ein populäres Programm, das das Forward Verfahren nutzt, ist <a href="/blog/duplicity-duply-datensicherung-auf-die-verlass-ist">duplicity</a>. Es kommt auf <a href="/homie">Homie</a> und <a href="/fellow">Fellow</a> zum Einsatz.</p>
+	
+<p>Die inkrementelle Datensicherung geht am sparsamsten mit dem Speicherplatz um. Da jedes neue Backup auf den Datenbestand des vorherigen aufbaut, werden Dateien nicht doppelt gesichert und Datenredundanz wird vermieden.</p>
+
+<p>Der Speicherbedarf für ein inkrementelles Backup würde in dieser Variante innerhalb von drei Wochen den folgenden Verlauf nehmen:</p>
+
+<img decoding="async" src="/wp-content/uploads/2018/01/Speicherbedarf_Inkrementelles_Backup.png" alt="Verlaufsdarstellung des Speicherbedarfs eines inkrementellen Backups" width="1725" />
+
+<p>Tatsächlich überzeichnet diese Beispielrechnung das Effizienzpotential der inkrementellen Sicherung. Bei inkrementellen Backups entsteht ein gewisser Prozentsatz an zusätzlichen Daten (sogenannten Kontrolldaten), die für die Verwaltung der Backups benötigt werden. Aber selbst wenn man diesen mit rund 10% einberechnet, dann ist das Speichervolumen im Backup nach 21 Tagen bei vergleichsweise geringen 3,1GB. Mit diesem Ergebnis liegt das inkrementelle Backup bei weniger als einem Zehntel des Speicherbedarfs des Vollbackups und einem Siebtel des differentiellen Backups.<p>
+	
+<p>Der entscheidende Nachteile des (Forward Delta) Verfahrens ist unmittelbares Resultat des inkrementellen Vorgehens: Die Wiederherstellung ist deutlich komplizierter und auch problematischer. Da das Backup aus &#8211; zum Teil vielen &#8211; Inkrementen wieder zusammengesetzt werden muss, dauert die Wiederherstellung aus einem inkrementellen Backup deutlich länger als bei den anderen beiden Verfahren. Auch sind inkrementelle Backups anfällig gegen Teilverlust. Fehlt das initiale Vollbackup, fehlt ein Inkrement oder ist die Sicherungskette nicht mehr fehlerfrei nachvollziehbar, dann kann das Backup nicht wieder hergestellt werden.</p>
+
+<h2>Fazit</h2>
+<p>Der Vergleich zeigt deutliche Unterschiede bei den einzelnen Backup-Methoden. Die Tabelle fasst die Vor- und Nachteile der drei Verfahren summarisch zusammen.</p>
+
+<img decoding="async" src="/wp-content/uploads/2018/01/Vor-und-Nachteile-Backupmethoden.jpg" alt="Tabellarische Gegenüberstellung der Vor- und Nachteile von drei Backupmethoden" width="1792" />
+
+<p>Die intelligente Kombination von Voll- und Teilbackups nach dem differentiellen oder inkrementellen Verfahren ist in den meisten Anwendungsfällen die geeignetste Sicherungsstrategie. Auf diese lassen sich die Vorteile der Verfahren miteinander kombinieren, ohne den vollen Umfang der Nachteile in Kauf nehmen zu müssen.</p>
+
+<p>Auf den private Cloud Servern von datamate werden mit duplicity vollautomatisch in regelmäßigen Abständen Vollbackups und in den Tagen dazwischen inkrementelle Sicherungen erstellt. So wird der Speicherbedarf und die Erstellungszeit gegenüber einer Full Backup-only Strategie reduziert, die Resilienz und Wiederherstellungsgeschwindigkeit im Vergleich zu einem langlaufenden inkrementellen Backup erhöht. (Mehr Informationen zum Einsatz von duplicity auf Homie und Fellow gibt es im Blogbeitrag <a href="/blog/duplicity-duply-datensicherung-auf-die-verlass-ist">duplicity/duply: Datensicherung auf die Verlass ist</a> auf dieser Seite.</p>

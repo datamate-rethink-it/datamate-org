@@ -1,0 +1,98 @@
++++
+title = "Das datamate Cockpit 2.2 ist da!"
+titel_html = "Das datamate Cockpit 2.2 ist da! | datamate"
+ueberschrift = "Das datamate Cockpit 2.2 ist da!"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2020/12/datamate-cockpit-2-2.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/update-cockpit-2-2/"
+canonical = "https://www.datamate.org/update-cockpit-2-2/"
+og_bild_breite = "1280"
+og_bild_hoehe = "720"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2020-12-28T13:29:59+00:00"
+geaendert = "2025-02-21T08:09:57+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "3 Minuten"
+beitragsbild = "/wp-content/uploads/2020/12/datamate-cockpit-2-2.jpg"
+bild_breite = 1280
+bild_hoehe = 720
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Das datamate Cockpit 2.2 ist da!", item = ""}]
+wortzahl = 526
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["datamate", "unsere-produkte"]
+schlagwoerter = ["Cockpit", "Update"]
+wp_id = 7185
+slug = "update-cockpit-2-2"
+url = "/update-cockpit-2-2/"
+date = "2020-12-28T14:29:59"
+lastmod = "2025-02-21T09:09:57"
+datum_utc = "2020-12-28T13:29:59+00:00"
+geaendert_utc = "2025-02-21T08:09:57+00:00"
+lightbox = true
++++
+						<p>Die neue Version 2.2 des datamate Cockpits optimiert die Backupfähigkeiten mit Hilfe von externen USB-Festplatten und bringt neben diversen Detailverbesserungen die eingesetzte Software von Homie und Fellow auf den neuesten Stand. Die vollständigen Details zu den Neuerungen des Releases 2.2 sind in diesem Artikel beschrieben. Am Ende des Textes fasst ein Changelog die Änderungen zusammen.</p>
+
+<span id="more-7185"></span>
+
+<h2>Änderungen durch Thunderbird 78</h2>
+
+<p>Mit der Version 78 von Thunderbird ändert sich die Interaktion mit der Termin- und Kontaktsynchronisation von Homie und Fellow. Durch die feste <a href="https://linuxnews.de/2020/07/thunderbird-78-ein-grosser-wurf/" target="_blank" rel="noopener">Integration des Lightning-Plugins in Thunderbird</a> funktioniert nun die Terminsynchronisation ohne die Installation eines zusätzlichen Plugins. Die Adressbuchsychronisation erfordert weiterhin die Installation eines zusätzlichen Plugins in Thunderbird, gleichzeitig vereinfacht sich der Umgang mit mehreren Adressbüchern. Dementsprechend wurden die Anleitungen zur Termin- und Kontaktsynchronisation im Cockpit angepasst.</p>
+
+<a href="/wp-content/uploads/2020/12/thunderbird78-lightning.png" data-slb-active="1" data-slb-asset="1512234284" data-slb-internal="0" data-slb-group="7185"><img decoding="async" src="/wp-content/uploads/2020/12/thunderbird78-lightning.png" alt="Thunderbird 78 unterstützt nun ohne Plugin die Terminsynchronisation von Homie und Fellow" class="alignnone size-full" /></a>
+
+<h2>Verbessertes Backup mit externen USB-Festplatten</h2>
+
+<p>Durch eine Konfigurationsanpassung in Ubuntu funktionierte seit Kurzem das automatische Einbinden von externen Festplatten nicht mehr zuverlässig. Mit dem Update 2.2 wurde dieser Fehler behoben und nun lassen sich USB-Festplatten wieder zuverlässig im Dateisystem einbinden. Gleichzeitig wurde die Backup-Routine dahingehend verbessert, dass man nun mit mehrere USB-Festplatten nacheinander verwenden kann.</p>
+<p>Zusätzlich wird nun mit jedem Backuplauf geprüft, ob eine neue Restic-Version vorliegt und eine Liste der aktuell installierten Programme gesichert.</p>
+
+<h2>Mehr Speed durch PHP 7.3</h2>
+
+<p>Was mit Version 2.1 begann, wurde nun erfolgreich abgeschlossen. Sämtliche PHP-basierten Webdienste verwenden nun ausschließlich die Version 7.3 und konnten so deutlich beschleunigt werden. </p>
+
+<h2>Mailarchiv für Office365</h2>
+
+<p>Homie und Fellow bieten mit Benno-Mailarchiv eine leistungsfähige E-Mailarchivierung für Privat- und Gewerbekunden. Während bisher IMAP-Konten zuverlässig gesichert wurden, kam es immer wieder zu Problemen mit E-Mailkonten von Office365. Diese Probleme konnten nun identifiziert und behoben werden, so dass einer zuverlässigen Archivierung solchen Konten nichts mehr im Wege steht.</p>
+
+<h2>Kompatibilität für Ubuntu 20.04</h2>
+
+<p>Mit dem Ende des Lebenszyklus von <a href="https://ubuntu.com/about/release-cycle" target="_blank" rel="noopener">Ubuntu 16.04 im April 2021</a> wird dieses Betriebssystem nicht mehr offiziell unterstützt. Somit ist Ubuntu 18.04 LTS  nun die empfohlene Basis für Homie und Fellow. Gleichzeitig laufen bereits die Kompatibilitätstests für Ubuntu 20.04, welches mit der Cockpit Version 2.3 offiziell unterstützt werden wird.</p>
+
+<h2>Unterstützte Dienste</h2>
+
+<p>Das datamate Cockpit in der Version 2.2. wurde mit Ubuntu 18.04 LTS als Server-Betriebssystemen getestet. Zum Zeitpunkt der Veröffentlichung war der Ubuntu-Kernel 4.15.0-128 verfügbar.</p>
+
+<ul style="padding-left: 20px;">
+<li>Seafile (getestet mit CE 7.0.5 &#038; PE 7.0.11)</li>
+<li>sabre/dav (getestet mit 3.2)</li>
+<li>WordPress (getestet mit 5.5 &#038; 5.6)</li>
+<li>Benno (getestet mit 2.8.9)</li>
+<li>OpenVPN (getestet mit 2.4.4)</li>
+<li>ddclient (getestet mit 3.8.1)</li>
+<li>Fail2ban (getestet mit 0.10.2)</li>
+<li>Virtualbox inkl. Guest Additions (getestet mit 5.2.28)</li>
+<li>OpenLDAP (getestet mit 2.4.45)</li>
+<li>UFW (getestet mit 0.36)</li>
+<li>restic (getestet mit 0.11.0)</li>
+</ul>
+
+<h2 id="changelog">Changelog 2.2.0</h2>
+<ul style="padding-left: 20px;">
+<li>[new] E-Mailarchivierung mit Office365 Mailkonten</li>
+<li>[new] Zusätzliche Überwachungspunkte für Restic Backups</li>
+<li>[new] Unterstützung für Backups auf mehrere USB-Festplatten</li>
+<li>[new] Automatisches Update von Restic</li>
+<li>[new] Automatische Sicherung der aktuell installierten Pakete mit jedem Backuplauf</li>
+<li>[new] Logrotate für Benno Imapsync</li>
+<li>[new] Warnung im Cockpit, wenn Seafile mit 2FA Authentifizierung verwendet wird</li>
+<li>[new] Neuer Cockpit-Bereich zum Systemzustand für Kunden mit Wartungsvertrag</li>
+<li>[change] Anpassung der SabreDAV Anleitungen für Thunderbird</li>
+<li>[change] Vollständige Umstellung auf PHP7.3</li>
+<li>[fix] Einbinden von externen USB-Festplatten</li>
+<li>[delete] Entfernen der Möglichkeit zur Erzeugung eines eigenes Stammzertifikats</li>
+<li>[delete] Keine Unterstützung mehr von Ubuntu 16.04</li>
+<li>[delete] Entfernen der Paketquellen von duply und duplicity</li>
+</ul>

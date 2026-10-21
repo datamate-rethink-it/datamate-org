@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="de">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="datamate" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- minified by https://cssminifier.com/ -->
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/canvas.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/datamate-theme.css" type="text/css" />
+
+	<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+	<![endif]-->
+
+
+
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+
+
+	<link rel="icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500.png" type="image/png" sizes="64x64">
+    <meta name="format-detection" content="telephone=no">
+	<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v19.6.1 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Installation von Keycloak für SSO unter Ubuntu 18.04 | datamate</title>
+	<meta name="description" content="Wer für seine Applikationen wie z.B. Seafile eine Single-Sign-On Lösung sucht, sollte einen Blick auf Keycloak werfen. Wir zeigen, wie es installiert wird." />
+	<link rel="canonical" href="https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/" />
+	<meta property="og:locale" content="de_DE" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Installation von Keycloak für SSO unter Ubuntu 18.04 | datamate" />
+	<meta property="og:description" content="Wer für seine Applikationen wie z.B. Seafile eine Single-Sign-On Lösung sucht, sollte einen Blick auf Keycloak werfen. Wir zeigen, wie es installiert wird." />
+	<meta property="og:url" content="https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/" />
+	<meta property="og:site_name" content="datamate" />
+	<meta property="article:publisher" content="https://www.facebook.com/datamate.rethink.it" />
+	<meta property="article:published_time" content="2020-01-20T20:48:43+00:00" />
+	<meta property="article:modified_time" content="2025-02-21T08:10:01+00:00" />
+	<meta property="og:image" content="https://www.datamate.org/wp-content/uploads/2020/01/keycloak.jpg" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="784" />
+	<meta property="og:image:type" content="image/jpeg" />
+	<meta name="author" content="Christoph Dyllick-Brenzinger" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:label1" content="Verfasst von" />
+	<meta name="twitter:data1" content="Christoph Dyllick-Brenzinger" />
+	<meta name="twitter:label2" content="Geschätzte Lesezeit" />
+	<meta name="twitter:data2" content="14 Minuten" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Article","@id":"https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/#article","isPartOf":{"@id":"https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/"},"author":{"name":"Christoph Dyllick-Brenzinger","@id":"https://www.datamate.org/#/schema/person/871495303b4e9fc8efd66c3237355b20"},"headline":"Installation von Keycloak für SSO unter Ubuntu 18.04","datePublished":"2020-01-20T20:48:43+00:00","dateModified":"2025-02-21T08:10:01+00:00","mainEntityOfPage":{"@id":"https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/"},"wordCount":1775,"publisher":{"@id":"https://www.datamate.org/#organization"},"image":{"@id":"https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/#primaryimage"},"thumbnailUrl":"https://www.datamate.org/wp-content/uploads/2020/01/keycloak.jpg","keywords":["Fellow","Homie","keycloak","seafile","sso"],"articleSection":["PRAKTISCHE ANWENDUNGSFÄLLE","SOFTWARE"],"inLanguage":"de"},{"@type":"WebPage","@id":"https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/","url":"https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/","name":"Installation von Keycloak für SSO unter Ubuntu 18.04 | datamate","isPartOf":{"@id":"https://www.datamate.org/#website"},"primaryImageOfPage":{"@id":"https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/#primaryimage"},"image":{"@id":"https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/#primaryimage"},"thumbnailUrl":"https://www.datamate.org/wp-content/uploads/2020/01/keycloak.jpg","datePublished":"2020-01-20T20:48:43+00:00","dateModified":"2025-02-21T08:10:01+00:00","description":"Wer für seine Applikationen wie z.B. Seafile eine Single-Sign-On Lösung sucht, sollte einen Blick auf Keycloak werfen. Wir zeigen, wie es installiert wird.","breadcrumb":{"@id":"https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/#breadcrumb"},"inLanguage":"de","potentialAction":[{"@type":"ReadAction","target":["https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/"]}]},{"@type":"ImageObject","inLanguage":"de","@id":"https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/#primaryimage","url":"https://www.datamate.org/wp-content/uploads/2020/01/keycloak.jpg","contentUrl":"https://www.datamate.org/wp-content/uploads/2020/01/keycloak.jpg","width":1200,"height":784,"caption":"Identitätsdienst und SSO mit Keycloak"},{"@type":"BreadcrumbList","@id":"https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Startseite","item":"https://www.datamate.org/"},{"@type":"ListItem","position":2,"name":"Installation von Keycloak für SSO unter Ubuntu 18.04"}]},{"@type":"WebSite","@id":"https://www.datamate.org/#website","url":"https://www.datamate.org/","name":"datamate","description":"","publisher":{"@id":"https://www.datamate.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.datamate.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"de"},{"@type":"Organization","@id":"https://www.datamate.org/#organization","name":"datamate GmbH & Co. KG","url":"https://www.datamate.org/","sameAs":["https://www.youtube.com/channel/UCnVWPO4V0n9aUGcG9q31b4g","https://www.facebook.com/datamate.rethink.it"],"logo":{"@type":"ImageObject","inLanguage":"de","@id":"https://www.datamate.org/#/schema/logo/image/","url":"https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png","contentUrl":"https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png","width":100,"height":100,"caption":"datamate GmbH & Co. KG"},"image":{"@id":"https://www.datamate.org/#/schema/logo/image/"}},{"@type":"Person","@id":"https://www.datamate.org/#/schema/person/871495303b4e9fc8efd66c3237355b20","name":"Christoph Dyllick-Brenzinger","description":"Christoph ist Gründer und Chefentwickler von datamate. Er ist ein absoluter Linux-Fan und hat schon früh seine Leidenschaft für Technik und Programmierung entdeckt. Seine langjährige Erfahrung als Unternehmensberater spürt man regelmäßig, wenn er nach optimalen Lösungen für die Kunden sucht. Wenn er nicht gerade den Tennisplatz unsicher macht oder bei Overwatch sein Liga-Ranking verbessert, verbringt Christoph seine Freizeit mit seiner Frau und seinen drei Kindern."}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<script type="text/javascript">
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.datamate.org\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.1.15"}};
+/*! This file is auto-generated */
+!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode,e=(p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0),i.toDataURL());return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(p&&p.fillText)switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([129777,127995,8205,129778,127999],[129777,127995,8203,129778,127999])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(e=t.source||{}).concatemoji?c(e.concatemoji):e.wpemoji&&e.twemoji&&(c(e.twemoji),c(e.wpemoji)))}(window,document,window._wpemojiSettings);
+</script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css' href='https://www.datamate.org/wp-includes/css/dist/block-library/style.min.css?ver=6.1.15' type='text/css' media='all' />
+<link rel='stylesheet' id='classic-theme-styles-css' href='https://www.datamate.org/wp-includes/css/classic-themes.min.css?ver=1' type='text/css' media='all' />
+<style id='global-styles-inline-css' type='text/css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;}:where(.is-layout-flex){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='slb_core-css' href='https://www.datamate.org/wp-content/plugins/simple-lightbox/client/css/app.css?ver=2.9.0' type='text/css' media='all' />
+<link rel="https://api.w.org/" href="https://www.datamate.org/wp-json/" /><link rel="alternate" type="application/json" href="https://www.datamate.org/wp-json/wp/v2/posts/6510" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.datamate.org/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.datamate.org/wp-includes/wlwmanifest.xml" />
+<meta name="generator" content="WordPress 6.1.15" />
+<link rel='shortlink' href='https://www.datamate.org/?p=6510' />
+<link rel="alternate" type="application/json+oembed" href="https://www.datamate.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.datamate.org%2Finstallation-keycloak-sso-ubuntu-18-04%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.datamate.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.datamate.org%2Finstallation-keycloak-sso-ubuntu-18-04%2F&#038;format=xml" />
+<!-- Analytics by WP Statistics v13.2.5 - https://wp-statistics.com/ -->
+<link rel="icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500-180x180.png" />
+<meta name="msapplication-TileImage" content="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500-270x270.png" />
+<link rel="icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500-150x150.png" sizes="64x64" />
+
+</head>
+
+
+<body class="stretched">
+
+	<div id="wrapper" class="clearfix">
+		<header id="header" class="transparent-header ">
+			<div id="header-wrap">
+				<div class="container clearfix">
+					<div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
+					<div id="logo">
+						<a href="/" class="standard-logo" title="Datamate Home" data-dark-logo="https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png"><img title="Datamate Logo" src="https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png" alt="datamate"></a>
+						<a href="/" class="retina-logo" title="Datamate Home" data-dark-logo="https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png"><img title="Datamate Logo" src="https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png" alt="datamate"></a>
+					</div>
+
+					<nav id="primary-menu" class="menu-primary-container"><ul id="menu-primary" class="norightborder"><li id="menu-item-3054" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3054"><a title="Seafile" href="https://www.datamate.org/seafile/">Seafile</a></li>
+<li id="menu-item-5246" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5246"><a title="3CX" href="https://www.datamate.org/3cx/">3CX</a></li>
+<li id="menu-item-137" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-137"><a title="Blog" href="/blog/">Blog</a></li>
+</ul></nav>				</div>
+			</div>
+		</header>
+<div class="blog-header" style="background-image: url(https://www.datamate.org/wp-content/uploads/2020/01/keycloak.jpg); height: 395px; background-position: center; background-size:cover; ">
+
+  <div class="blog-heading-middle">
+		<div class="container clearfix text-center dark" style="text-shadow: 1px 1px 2px black;">
+			<h1 style="font-size: 24px; text-transform: uppercase; font-weight: 400; margin: 0px;">Installation von Keycloak für SSO unter Ubuntu 18.04</h1>
+		</div>
+	</div>
+
+</div>
+
+<div class="section" id="content">
+    <div>
+        <div class="container clearfix" id="blog">
+            <div class="row clearfix">
+
+                <div class="col-sm-8">
+			<div class="ipost clearfix">
+				<div class="entry-title">
+					<h1 style="font-size: 24px; text-transform: uppercase; font-weight: 400;">Installation von Keycloak für SSO unter Ubuntu 18.04</h1>
+					<ul class="entry-meta clearfix">
+                        <li><i class="icon-clock"></i> 20. Januar 2020</li>
+					</ul>
+					<div class="clear"></div>
+
+				</div>
+
+				<div class="entry clearfix">
+
+						<p>Keycloak ist eine Open Source Lösung für das Identitäts- und Zugriffsmanagement. Keycloak wird federführend von Red Hat entwickelt und zielt darauf ab, Anwendungen und Dienste ohne aufwändige Programmierarbeit sicherer zu machen. Zur Featurepalette von Keycloak gehören Single-Sign-on (SSO), Authentifizierung und Autorisierung, Anmeldung gegenüber sozialen Netzwerken, Anbindung an existierende LDAP- und Active Directory Server, Multifaktorauthentifizierung und eine zentralisierte Benutzerverwaltung. Dieser Artikel beschreibt die Installation eines Keycloak Servers unter Ubuntu 18.04 LTS.</p>
+
+<p><b>Update 7.8.2021:</b> Die Anleitung funktioniert mit einer Anpassung auch mit neueren Distributionen und Keycloak 15. Ein Dank an Stefan K. für den Hinweis.</p>
+
+<span id="more-6510"></span>
+
+<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2020/01/keycloak-startseite.png" alt="Keycloak Startseite" />
+
+<h2>1. Installation von Java</h2>
+
+<p>Für Keycloak ist Java 8 oder eine neuere Version erforderlich. Mit dem folgenden Befehl kann man überprüfen, ob Java installiert ist.</p>
+
+<pre>$ java -version</pre>
+
+<p>Sollte Java nicht installiert sein, wird &#8220;java: command not found&#8221; angezeigt. In diesem Fall wird Java mit folgenden Befehl installiert.</p>
+
+<pre>$ sudo apt-get update
+$ sudo apt-get install default-jre-headless -y</pre>
+
+<p>Abschließend überprüft man, ob Java (in diesem Fall Version 11) korrekt installiert wurde.</p>
+
+<pre>$ java -version
+openjdk version "1.8.0_232"
+OpenJDK Runtime Environment (build 1.8.0_232-8u232-b09-0ubuntu1~18.04.1-b09)
+OpenJDK 64-Bit Server VM (build 25.232-b09, mixed mode)</pre>
+
+<h2>2. Download und Entpacken von Keycloak</h2>
+
+<p>In diesem Artikel beschreiben wir die Installation mit Hilfe von Keycloak 8.0.1 &#8220;Standalone server distribution&#8221;. Mit großer Wahrscheinlichkeit gibt es mittlerweile eine neuere Version. Man sollte deshalb auf der <a href="https://www.keycloak.org/downloads.html" target="_blank" rel="noopener noreferrer">Keycloak-Downloadseite</a> prüfen, welches die aktuelle &#8220;stable&#8221;-Version ist. Diese sollte anstelle der Version 8.0.1 verwendet werden. Die Befehle zum Download und entpacken des Pakets müssen entsprechend angepasst werden.</p>
+
+<p>Wir werden Keycloak im Verzeichnis /opt installieren, weshalb wird das Keycloak-Paket direkt in dieses Verzeichnis herunterladen. Sämtliche Befehle werden als Root-User ausgeführt, solange es nicht explizit anders beschrieben wird.</p>
+
+<pre>$ sudo su
+cd /opt
+$ wget https://downloads.jboss.org/keycloak/8.0.1/keycloak-8.0.1.tar.gz</pre>
+
+<p>Als Erstes extrahiert man das tar-Paket und benennt das neu entstandene Verzeichnis in keycloak um. Durch diesen Speicherort wird keycloak sofort ausführbar und es müssen keine Systempfade angepasst werden.</p>
+
+<pre>$ tar -xvzf keycloak-8.0.1.tar.gz
+$ mv keycloak-8.0.1 /opt/keycloak</pre>
+
+<h2>3. User und Gruppe für Keycloak erzeugen</h2>
+
+<p>Aus Sicherheitsgründen sollte man Keycloak nicht als Root-Benutzer ausführen. Hierfür erstell man eine Gruppe <i>keycloak</i> und fügt dieser Gruppe den neuen User <i>keycloak</i> hinzu. Als Home-Verzeichnis dieses neuen Users verwendet man das Installationsverzeichnis von Keycloak.</p>
+
+<pre>$ groupadd keycloak
+$ useradd -r -g keycloak -d /opt/keycloak -s /sbin/nologin keycloak</pre>
+
+<h2>4. Anpassen der Berechtigungen für das Keycloak Installationsverzeichnis</h2>
+
+<p>Als Nächstes muss man den Besitz und die Berechtigung des Verzeichnisses /opt/keycloak anpassen. Da im Unterverzeichnis /opt/keycloak/bin auch ausführbare Scripte liegen, müssen auch hier Änderungen vorgenommen werden.</p>
+
+<pre>$ chown -R keycloak: /opt/keycloak
+$ chmod o+x /opt/keycloak/bin/</pre>
+
+<h2>5. Anlage von Konfigurations- und Systemd-Datei für Keycloak</h2>
+
+<p>Als Nächstes wird unter /etc ein Konfigurationsverzeichnis für Keycloak mit dem Namen keycloak angelegt.</p>
+
+<pre>$ cd /etc
+$ mkdir keycloak</pre>
+
+<p>Keycloak liefert bereits eine Konfigurationsdatei mit, welche man einfach kopieren kann.</p>
+
+<pre>$ cp /opt/keycloak/docs/contrib/scripts/systemd/wildfly.conf /etc/keycloak/keycloak.conf</pre>
+
+<p>Als nächstes kopiert man auch das mitgelieferte Keycloak-Startskript (launch.sh) nach /opt/keycloak/bin/ und passt die Berechtigungen entsprechend an damit das Script ausgeführt werden kann.</p>
+
+<pre>$ cp /opt/keycloak/docs/contrib/scripts/systemd/launch.sh /opt/keycloak/bin/
+$ chown keycloak: /opt/keycloak/bin/launch.sh</pre>
+
+<p>Als nächstes muss man den Keycloak-Installationspfad in launch.sh korrigieren. Hierzu öffnet man die launch.sh in einem Editor (z.B. nano) und aktualisiert den Keycloak-Installationspfad wie folgt:</p>
+
+<pre>#!/bin/bash
+
+if [ "x$WILDFLY_HOME"="x" ]; then
+    WILDFLY_HOME=<strong>"/opt/keycloak"</strong>
+fi
+
+if [[ "$1"=="domain" ]]; then
+    $WILDFLY_HOME/bin/domain.sh -c $2 -b $3
+else
+    $WILDFLY_HOME/bin/standalone.sh -c $2 -b $3
+fi
+</pre>
+
+<p>Speichern und schließen Sie die Datei.</p>
+
+<p>Als nächtes kopiert man die Systemd-Datei (wildfly.service) von /opt/keycloak/docs/contrib/scripts/systemd/ nach /etc/systemd/system/ und benennt diese in keycloak.service um.</p>
+
+<pre>$ cp /opt/keycloak/docs/contrib/scripts/systemd/wildfly.service /etc/systemd/system/keycloak.service</pre>
+
+<p>Nun öffnet man die keycloak.service in einem Editor wie nano und bearbeitet diese.</p>
+
+<pre>$ nano /etc/systemd/system/keycloak.service</pre>
+
+<p>Nehmen Sie die fett markierten Änderungen vor, oder kopieren Sie den unten stehenden Inhalt einfach so, wie er ist, und fügen Sie ihn ein.</p>
+
+<pre>[Unit]
+<strong>Description=The Keycloak Server</strong>
+After=syslog.target network.target
+Before=nginx.service
+
+[Service]
+Environment=LAUNCH_JBOSS_IN_BACKGROUND=1
+<strong>EnvironmentFile=/etc/keycloak/keycloak.conf
+User=keycloak
+Group=keycloak</strong>
+LimitNOFILE=102642
+<strong>PIDFile=/var/run/keycloak/keycloak.pid
+ExecStart=/opt/keycloak/bin/launch.sh $WILDFLY_MODE $WILDFLY_CONFIG $WILDFLY_BIND</strong>
+StandardOutput=null
+
+[Install]
+WantedBy=multi-user.target</pre>
+
+<p>Sobald die Änderungen vorgenommen wurden, speichert und schließt man diese Datei.</p>
+
+<h2>6. Aktivieren und starten von Keycloak</h2>
+
+<p>Die Systemd Manager-Konfiguration muss neu geladen und aktiviert werden. So stellt man sicher, dass der Keycloak-Dienst auch bei jedem Systemstart auch startet.</p>
+
+<pre>$ systemctl daemon-reload
+$ systemctl enable keycloak</pre>
+
+<p>Ab sofort kann man den Keycloak-Systemdienst mit dem folgenden Befehl starten.</p>
+
+<pre>$ systemctl start keycloak</pre>
+
+<p>Sobald der Dienst gestartet ist, kann der Status mit dem folgenden Befehl überprüft werden.</p>
+
+<pre>$ systemctl status keycloak</pre>
+
+<p>Wenn der Dienst erfolgreich gestartet wurde, sollte Folgendes angezeigt werden:</p>
+
+<pre>$ systemctl status keycloak
+● keycloak.service - The Keycloak Server
+   Loaded: loaded (/etc/systemd/system/keycloak.service; disabled; vendor preset
+   Active: active (running) since Fri 2020-01-20 18:10:45 CET; 24s ago
+ Main PID: 3510 (launch.sh)
+    Tasks: 125 (limit: 2317)
+   CGroup: /system.slice/keycloak.service
+           ├─3510 /bin/bash /opt/keycloak/bin/launch.sh standalone standalone.xml 0.0.0.0
+           ├─3511 /bin/sh /opt/keycloak/bin/standalone.sh -c standalone.xml -b 0.0.0.0
+           └─3611 java -D[Standalone] -server -Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m ...
+
+Jan 20 18:55:36 keycloak systemd[1]: Started The Keycloak Server.</pre>
+
+<p>Zusätzlich sollte man einen offenen Port 8080 mit Hilfe des netstat Befehls sehen können:</p>
+
+<pre>$ netstat -tulpn | grep 8080
+tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN      3611/java </pre>
+
+<p>Nun erreicht man den Keycloak Server über die URL http://&lt;server-ip&gt;:8080/auth. Sollte man die IP-Adresse des Servers nicht kennen, hilft die Eingabe des Befehls <i>ifconfig</i>.</p>
+
+<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2020/01/keycloak-need-local-access.png" alt="Keycloak funktioniert erstmal nur lokal." />
+
+<h2>7. Anlage des Keycloak Administrators</h2>
+
+<p>Auf der nun gezeigten Startseite von keycloak wird ersichtlich, dass das System ohne vorkonfiguriertes Administratorkonto ausgeliefert wurde. Ein solches benötigt man jedoch um Keycloak verwenden zu können. Ohne Administrator können keine neuen Realms, Benutzer oder Anwendungen angelegt werden.</p>
+
+<p>Sollte man über eine grafische Benutzeroberfläche verfügen, genügt ein Aufruf von localhost:8080 in einem Browser, um auf Keycloak zugreifen und um dort einen Administrator zu erstellen.</p>
+
+<p>Da auf einem Ubuntu Server typischerweise keine grafische Benutzeroberfläche installiert wird, muss man sich mit den mitgelieferten Bash-Skripten von Keycloak behelfen. Mit <i>add-user-keycloak.sh</i>, welches man unter /opt/keycloak/bin/ findet, kann ein entsprechendes Administratorkonto per Kommandozeile erstellen werden. Anschließend muss der Dienst neu gestartet werden.</p>
+
+<pre>$ /opt/keycloak/bin/add-user-keycloak.sh -r master -u <strong>&lt;username&gt;</strong> -p <strong>&lt;password&gt;</strong>
+$ systemctl restart keycloak</pre>
+
+<p>Wenn nun erneut die Keycloak Seite aufruft, sieht man, dass die Meldung verschwunden ist, die einen aufgefordert hat einen Administrator anzulegen. Stattdessen hat man nun die Möglichkeit sich mit der Administration Console zu verbinden.</p>
+
+<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2020/01/keycloak-administration-console.png" alt="Administration Console von Keycloak"/>
+
+<p>Wenn Keycloak zum ersten Mal gestartet wird, erstellt Keycloak einen vordefinierten Bereich, den sogenannten Master-Bereich (englisch Realm). Dieser Master-Bereich ist die höchste Ebene in der Hierarchie der Realms bzw. Bereiche. Administratorkonten in diesem Bereich verfügen über Berechtigungen zum Anzeigen und Verwalten aller anderen Bereiche, die auf der Serverinstanz erstellt wurden.</p>
+
+<p>Das initiale Administratorkonto ist automatisch dem Master-Realm zugeordnet. Die erste Anmeldung in der Administratorkonsole erfolgt somit auch zwangsläufig mit dem Master-Bereich.</p>
+
+<p>Doch leider ist es noch nicht so weit, denn eine weitere Schutzfunktion von Keycloak kann den Zugriff verhindern.</p>
+
+<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2020/01/keycloak-https-required.png" alt="Keycloak erfordert HTTPS"  />
+
+<p>Der obige Fehler wird angezeigt, wenn Keycloak auf einem V-Server oder einem Server in einer DMZ installiert wird. Keycloak akzeptiert nämlich standardmäßig nur sichere HTTPS-Verbindungen für alle externen IP-Adressen. Private IP-Adressen wie localhost, 127.0.0.1, 10.0.x.x, 192.168.x.x und 172.16.x.x könnten Keycloak auch ohne HTTPS verwenden. Wenn man Keycloak nur im lokalen Netzwerk benutzt und es sich um eine Testumgebung handelt, können die Schritte 8a und 8b übersprungen werden. Bei einem produktiven Einsatz sollte umbedingt HTTPS zum Einsatz kommen.</p>
+
+<p>Nun gibt es zwei Möglichkeiten mit dieser Situation umzugehen. Man kann entweder den Zugriff per HTTP über das Internet erlauben oder man konfiguriert einen Webserver wie z.B. nginx mit einem Let&#8217;s Encrypt Zertifikat. Beides wird in diesem Artikel gezeigt.</p>
+
+<h2>8a. Deaktivierung von SSL per Master-Konsole</h2>
+
+<p>Die Deaktivierung von SSL für den Master-Bereich ist vergleichsweise einfach, gleichzeitig jedoch nur für einen Testbetrieb empfohlen. Besser ist ein Zugriff per nginx-SSL-Proxy, wie im folgenden Abschnitt beschrieben.</p>
+
+<p>Zur Deaktivierung bedient man sich den mitgelieferten Admin-CLI-Skripten, die in der Keycloak Server-Distribution enthalten sind. Man findet diese Skripte im Verzeichnis /opt/keycloak/bin/.</p>
+
+<p>Das Linux-Skript heißt kcadm.sh. Die Admin-CLI sendet HTTP-Anforderungen an die Admin-REST-Schnittstelle und erlaubt uns die gewünschte Konfiguration. Die Zugriff auf die Rest-Schnittstelle ist geschützt und erfordert deshalb eine Authentifizierung.</p>
+
+<p>Man kann eine authentifizierte Sitzung starten, indem man man sich mit dem vorher angelegten Administrator anmeldet.</p>
+
+<pre>$ /opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user &lt;admin-username&gt; --password &lt;admin-password&gt;</pre>
+
+<p>Sobald man angemeldet ist, kann man beliebige Befehle an Keycloak übergeben. Um z.B. SSL auf dem Master-Realm zu deaktivieren, genügt die folgende Eingabe:</p>
+
+<pre>$ /opt/keycloak/bin/kcadm.sh update realms/master -s sslRequired=NONE</pre>
+
+<p>Keycloak muss anschließend nicht neu gestartet werden. Man aktualisiert einfach den Browser oder öffnet direkt die Seite http://&lt;server-ip&gt;:8080/auth/admin/.</p>
+
+<p>Dort kann man sich nun endlich mit dem <strong>admin-username</strong> und dem <strong>admin-passwort</strong> einloggen. Nun kann man je nach Bedarf neue Bereiche, Kunden, Rollen, Gruppen oder Benutzer erstellen.</p>
+
+<h2>8b. Zugriff per nginx und Let&#8217;s Encrypt Zertifikat</h2>
+
+<p>Wenn man Keycloak ernsthaft betreiben möchte, kommt die Deaktivierung von SSL nicht in Frage. Stattdessen sollte man einen Webserver wie nginx installieren und diesen mit einem gültigen HTTPS-Zertifikat versorgen. Hierfür bietet sich Let&#8217;s Encrypt an, welches ich auch bereits in vergangenen Blogeinträgen, wie z.B. bei der <a href="https://www.datamate.org/ezeelogin-installation/">Installation von Ezeelogin</a> verwendet habe. </p>
+
+<p>Als erstes installiert man den Webserver nginx.</p>
+
+<pre>$ apt install nginx</pre>
+
+<p>Als nächstes fügt man die folgende Konfiguration in nginx ein. Im folgenden verwende ich der Einfachheit halter die Konfigurationsdatei unter /etc/nginx/sites-available/default. <strong>&lt;domain&gt;</strong> muss natürlich entsprechend durch die eigene URL ersetzt werden.</p>
+
+<pre>server {
+  listen 443 ssl;
+  server_name <strong>&lt;domain&gt;</strong>;
+  index index.php;
+  allow all;
+
+  ssl_certificate /etc/letsencrypt/live/<strong>&lt;domain&gt;</strong>/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/<strong>&lt;domain&gt;</strong>/privkey.pem;
+  ssl_session_timeout 5m;
+
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers "HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES";
+  ssl_prefer_server_ciphers on;
+
+  location / {
+    proxy_pass          http://localhost:8080/;
+    proxy_set_header    Host               $host;
+    proxy_set_header    X-Real-IP          $remote_addr;
+    proxy_set_header    X-Forwarded-For    $proxy_add_x_forwarded_for;
+    proxy_set_header    X-Forwarded-Host   $host;
+    proxy_set_header    X-Forwarded-Server $host;
+    proxy_set_header    X-Forwarded-Port   443;
+    proxy_set_header    X-Forwarded-Proto  https;
+  }
+}
+</pre>
+
+<p>Anschließend kann nginx neu gestartet werden und Keycloak über https://&lt;domain aufgerufen werden.</p>
+
+<pre>systemctl restart nginx</pre>
+
+<p>Leider kann man aber immer noch nicht die Administration Console aufrufen, da Keycloak teilweise Inhalte über http: und manche über https: abruft. Es ist leider notwendig keycloak explizit darauf hinzuweisen, dass man nun HTTPS: verwenden will. Ich finde dieses Verhalten etwas befremdlich, weil Keycloak ja erst explizit HTTPS verlangt hat, aber na gut. Es ist nicht wirklich schwierig Keycloak davon abzuhalten http: zu verwenden. Man öffnet mit einem Editor die passende Konfigurationsdatei und nimmt die entsprechenden Änderungen vor:</p>
+
+<pre>$ nano /opt/keycloak/standalone/configuration/standalone.xml</pre>
+
+<p>In dieser Datei sucht man nach <i>socket-binding=&#8221;http&#8221;</i>. Diese Zeile muss man ersetzen:</p>
+
+<pre><strong>Ursprünglich:</strong>
+&lt;http-listener name="default" socket-binding="http" redirect-socket="https" enable-http2="true"/&gt;
+
+<strong>Neu</strong>
+&lt;http-listener name="default" socket-binding="http" proxy-address-forwarding="true" redirect-socket="proxy-https"/&gt;</pre>
+
+<p>In der gleichen Datei muss noch eine weitere Zeile hinzugefügt werden. Hierfür springt man bis ans Ende der Datei und fügt eine weitere <i>socket-binding</i> Zeile ein.
+
+<pre>&lt;socket-binding name="proxy-https" port="443"/&gt;</pre>
+
+<p>Anschließend fehlt nur noch ein Neustart von Keycloak und endlich kann man sich in die Administration Console einloggen.</p>
+
+<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2020/01/keycloak-login-successful.png" alt="keycloak login erfolgreich" />
+
+<h2>9. Konfiguration der Management Console</h2>
+
+<p>Neben der Administration Console bietet Keycloak noch einen Managementbereich, in dem man diverse Aspekte des Keycloak Servers konfigurieren kann. Auch dieser Bereich ist nach einer Installation besonders geschützt und deshalb nur von der gleichen Maschine &#8211; also 127.0.0.1 &#8211; erreichbar. Dies soll aber nicht weiter stören, da man ja gerade einen nginx Server eingerichtet hat und somit auch bequem per HTTPS darauf zugreifen kann. </p>
+
+<p>Die folgende Ergänzungen können in der nginx-Konfiguration hinzugefügt werden um direkt auf die Management Console zuzugreifen:</p>
+
+<pre>server {
+  listen 443 ssl;
+  server_name <strong>&lt;domain&gt;</strong>;
+  index index.php;
+  allow all;
+
+  ssl_certificate /etc/letsencrypt/live/<strong>&lt;domain&gt;</strong>/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/<strong>&lt;domain&gt;</strong>/privkey.pem;
+  ssl_session_timeout 5m;
+
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers "HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES";
+  ssl_prefer_server_ciphers on;
+
+  location / {
+    proxy_pass          http://localhost:8080/;
+    proxy_set_header    Host               $host;
+    proxy_set_header    X-Real-IP          $remote_addr;
+    proxy_set_header    X-Forwarded-For    $proxy_add_x_forwarded_for;
+    proxy_set_header    X-Forwarded-Host   $host;
+    proxy_set_header    X-Forwarded-Server $host;
+    proxy_set_header    X-Forwarded-Port   443;
+    proxy_set_header    X-Forwarded-Proto  https;
+  }
+
+  location /management {
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    add_header Front-End-Https on;
+    proxy_pass http://127.0.0.1:9990/management;
+  }
+
+  location /console {
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    add_header Front-End-Https on;
+    proxy_pass http://127.0.0.1:9990/console;
+  }
+
+  location /error {
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    add_header Front-End-Https on;
+    proxy_pass http://127.0.0.1:9990;
+  }
+
+  location /logout {
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    add_header Front-End-Https on;
+    proxy_pass http://127.0.0.1:9990/logout;
+  }
+}</pre>
+
+<p><b>Update 7.8.2021:</b> Wenn nach dem Login eine weiße Seite erscheint, dann müssen die beiden Location-Blöcke management und console wie folgt angepasst werden:</p>
+
+<pre>
+  location /management {
+    proxy_set_header Host $host:9990;
+    proxy_set_header Origin http://$host:9990;
+    proxy_pass_request_headers on;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    add_header Front-End-Https on;
+    proxy_pass http://127.0.0.1:9990/management;
+  }
+ 
+  location /console {
+    proxy_set_header Host $host:9990;
+    proxy_set_header Origin http://$host:9990;
+    proxy_pass_request_headers on;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    add_header Front-End-Https on;
+    proxy_pass http://127.0.0.1:9990/console;
+   }</pre>
+
+
+<p>Nun sollte man die Konfiguration von nginx überprüfen und dann den Webserver neu starten.</p>
+
+<pre>$ nginx -t
+$ nginx -s reload</pre>
+
+<p>Nun sollte man über die URL https://&lt;domain&gt;/console auf die Wildfly Management Console zugreifen können.</p>
+
+<p>Um diese nutzen zu können, muss noch ein entsprechender User angelegt werden, was bequem per add-user.sh Script erfolgt.</p>
+
+<pre>$ /opt/keycloak/bin/add-user.sh
+
+What type of user do you wish to add? 
+ a) Management User (mgmt-users.properties) 
+ b) Application User (application-users.properties)
+(a): a
+
+Enter the details of the new user to add.
+Using realm 'ManagementRealm' as discovered from the existing property files.
+Username : &lt;your-username&gt;
+Password recommendations are listed below. To modify these restrictions edit the add-user.properties configuration file.
+ - The password should be different from the username
+ - The password should not be one of the following restricted values {root, admin, administrator}
+ - The password should contain at least 8 characters, 1 alphabetic character(s), 1 digit(s), 1 non-alphanumeric symbol(s)
+Password : &lt;your-password&gt;
+Re-enter Password : &lt;your-password&gt;
+What groups do you want this user to belong to? (Please enter a comma separated list, or leave blank for none)[  ]: 
+About to add user '&lt;your-username>' for realm 'ManagementRealm'
+Is this correct yes/no? yes
+Added user '&lt;your-username&gt;' to file '/opt/keycloak/standalone/configuration/mgmt-users.properties'
+Added user '&lt;your-username&gt;' to file '/opt/keycloak/domain/configuration/mgmt-users.properties'
+Added user '&lt;your-username&gt;' with groups  to file '/opt/keycloak/standalone/configuration/mgmt-groups.properties'
+Added user '&lt;your-username&gt;' with groups  to file '/opt/keycloak/domain/configuration/mgmt-groups.properties'
+Is this new user going to be used for one AS process to connect to another AS process? 
+e.g. for a slave host controller connecting to the master or for a Remoting connection for server to server EJB calls.
+yes/no? yes
+</pre>
+
+<p>Nun muss der Keycloak-Server ein letztes Mal neu gestartet werden, damit der neue Benutzer während des Startvorgangs erkannt wird.</p>
+
+<pre>$ systemctl restart keycloak</pre>
+
+<p>Wenn man nun auf die Management-Konsole zugreift, wird man aufgefordert die Zugangsdaten des neuen Benutzers anzugeben. Nach der Eingabe landet man in der WildFly Management Console.</p>
+
+<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2020/01/wildfly-management-console.png" alt="wildfly management console" />
+
+<h2>Weitere hilfreiche Quellen</h2>
+
+<p>Mit diesen Schritten wurde der eigene Keycloak-Server installiert und der Zugriff auf die Administrations- und Managementkonsole per Webbrowser konfiguriert. Hiermit endet dieser Artikel zur Installation und beginnt die Reise mit dem eigenen Keycloak-Server. Für Interessierte habe ich ein paar hilfreiche Quellen (die meisten auf Englisch) zusammengestellt.</p>
+
+<ul style="padding-left: 20px;">
+<li><a href="https://m.heise.de/developer/artikel/Eine-Identitaet-fuer-alles-mit-Keycloak-3834525.html?seite=all" target="_blank" rel="noopener noreferrer">c&#8217;t Artikel: Eine Identität für alles mit Keycloak</a></li>
+<li><a href="https://www.keycloak.org/docs/latest/getting_started/index.html" target="_blank" rel="noopener noreferrer">Keycloak Getting Started Guide</a></li>
+<li><a href="https://www.keycloak.org/docs/latest/server_admin/" target="_blank" rel="noopener noreferrer">Keycloak Server Administration Guide</a></li>
+<li><a href="https://www.keycloak.org/docs-api/latest/rest-api/index.html" target="_blank" rel="noopener noreferrer">Keycloak Admin REST API Guide</a></li>
+<li><a href="https://www.keycloak.org/docs/latest/server_installation/" target="_blank" rel="noopener noreferrer">Keycloak Server Installation Guide</a></li>
+<li><a href="https://www.keycloak.org/downloads.html">Keycloak Downloads Homepage</a></li>
+</ul>					</div>
+                  <!-- Post Author Info	============================================= -->
+<div class="team team-list clearfix">
+	<div class="team-image" style="width: 96px;">
+			</div>
+	<div class="team-desc">
+		<div class="team-title"><span>geschrieben von</span><h4 class="nobottommargin">Christoph Dyllick-Brenzinger</h4></div>
+		<div class="team-content">Christoph ist Gründer und Chefentwickler von datamate. Er ist ein absoluter Linux-Fan und hat schon früh seine Leidenschaft für Technik und Programmierung entdeckt. Seine langjährige Erfahrung als Unternehmensberater spürt man regelmäßig, wenn er nach optimalen Lösungen für die Kunden sucht. Wenn er nicht gerade den Tennisplatz unsicher macht oder bei Overwatch sein Liga-Ranking verbessert, verbringt Christoph seine Freizeit mit seiner Frau und seinen drei Kindern.</div>
+	</div>
+</div>
+		</div> <!-- ipost clearfix -->
+
+
+
+
+
+
+        </div>
+<div class="col-sm-4 bottommargin-sm">
+
+    <div class="widget clearfix">
+        <div class="widget clearfix"><form role="search" method="get" class="search-form" action="https://www.datamate.org/">
+    <label>
+        <input class="typeahead sm-form-control tt-input" type="search" class="search-field"
+            placeholder="Suchen nach:"
+            value="" name="s"
+            title="Suchen nach:" />
+    </label>
+    <input type="submit" class="button button-3d button-rounded"
+        value="Suchen" />
+</form>
+</div><div class="widget clearfix"><h3>Kategorien</h3>
+			<ul>
+					<li class="cat-item cat-item-110"><a href="https://www.datamate.org/category/alles-ueber-die-cloud/">Alles über die Cloud</a> (5)
+</li>
+	<li class="cat-item cat-item-34"><a href="https://www.datamate.org/category/anleitungen/">ANLEITUNGEN</a> (47)
+<ul class='children'>
+	<li class="cat-item cat-item-36"><a href="https://www.datamate.org/category/anleitungen/hardware/">HARDWARE</a> (5)
+</li>
+	<li class="cat-item cat-item-35"><a href="https://www.datamate.org/category/anleitungen/software/">SOFTWARE</a> (37)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-31"><a href="https://www.datamate.org/category/datamate/">DATAMATE</a> (28)
+<ul class='children'>
+	<li class="cat-item cat-item-33"><a href="https://www.datamate.org/category/datamate/aus-dem-leben-eines-startups/">AUS DEM LEBEN EINES STARTUPS</a> (8)
+</li>
+	<li class="cat-item cat-item-32"><a href="https://www.datamate.org/category/datamate/unsere-produkte/">UNSERE PRODUKTE</a> (21)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-28"><a href="https://www.datamate.org/category/kunden/">KUNDEN</a> (17)
+<ul class='children'>
+	<li class="cat-item cat-item-29"><a href="https://www.datamate.org/category/kunden/erfolgsgeschichten/">ERFOLGSGESCHICHTEN</a> (3)
+</li>
+	<li class="cat-item cat-item-30"><a href="https://www.datamate.org/category/kunden/praktische-anwendungsfaelle/">PRAKTISCHE ANWENDUNGSFÄLLE</a> (14)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-56"><a href="https://www.datamate.org/category/loesungen/">LÖSUNGEN</a> (33)
+<ul class='children'>
+	<li class="cat-item cat-item-181"><a href="https://www.datamate.org/category/loesungen/3cx/">3CX</a> (3)
+</li>
+	<li class="cat-item cat-item-111"><a href="https://www.datamate.org/category/loesungen/friendica/">Friendica</a> (1)
+</li>
+	<li class="cat-item cat-item-83"><a href="https://www.datamate.org/category/loesungen/odoo/">ODOO</a> (4)
+</li>
+	<li class="cat-item cat-item-57"><a href="https://www.datamate.org/category/loesungen/seafile/">SEAFILE</a> (19)
+</li>
+	<li class="cat-item cat-item-112"><a href="https://www.datamate.org/category/loesungen/wordpress/">WORDPRESS</a> (1)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-94"><a href="https://www.datamate.org/category/tests/">TESTS</a> (6)
+<ul class='children'>
+	<li class="cat-item cat-item-95"><a href="https://www.datamate.org/category/tests/hardware-tests/">HARDWARE</a> (2)
+</li>
+	<li class="cat-item cat-item-96"><a href="https://www.datamate.org/category/tests/software-tests/">SOFTWARE</a> (3)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://www.datamate.org/category/uncategorized/">Uncategorized</a> (36)
+</li>
+			</ul>
+
+			</div>    </div>
+
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+	<footer id="footer" class="dark">
+		<div class="container clearfix">
+
+			<div class="footer-widgets-wrap">
+				<div class="col-sm-3">
+						<div class="widget clearfix"><h4>datamate &#8211; RETHINK IT</h4>			<div class="textwidget"><p>Wir sind ein Team von IT-Beratern und IT-Entwicklern. <br/>Wir entwickeln auf Basis von Open Source unsere <strong>eigenen Produkte</strong> und finden  <strong>IT-Lösungen</strong> für die Bedürfnisse unserer Kunden.  
+<hr/>
+<p><strong>datamate GmbH & Co. KG</strong><br>117er Ehrenhof 5<br>55118 Mainz</p></div>
+		</div>				</div>
+				<div class="col-sm-2">
+										</div>
+				<div class="col-sm-2">
+						<div class="widget widget_links clearfix"><h4>Produkte</h4>			<div class="textwidget"><ul>
+<li><a title="Buddy - Mini PC mit Windows und Linux" href="/buddy">Buddy</a></li>
+<li><a title="Homie - Private Cloud und Multimedia-Zentrale" href="/homie">Homie</a></li>
+<li><a title="Small Business Server" href="/fellow">Fellow</a></li>
+</ul>
+</div>
+		</div>				</div>
+				<div class="col-sm-2">
+						<div class="widget widget_links clearfix"><h4>Lösungen</h4>			<div class="textwidget"><ul>
+<li><a title="Seafile" href="/seafile">Seafile</a></li>
+<li><a title="3CX Telefonanlagen" href="/3cx">3CX</a></li>
+</ul></div>
+		</div>				</div>
+				<div class="col-sm-3">
+						<div class="widget widget_links clearfix"><h4>Datamate</h4>			<div class="textwidget"><ul>
+<li><a title="Über datamate" href="/unternehmensprofil">Über datamate</a></li>
+<li><a title="Presseinformationen" href="/presse">Presse</a></li>
+<li><a title="datamate wiki" href="/hilfe">Hilfe-Wiki</a></li>
+<li><a href="https://get.teamviewer.com/datamate" target="_blank" rel="noopener">Download TeamViewer</a></li>
+</ul></div>
+		</div>				</div>
+			</div>
+		</div>
+
+		<div id="copyrights">
+			<div class="container clearfix">
+				<div class="col_half">
+					datamate ist eine eingetragene Schutzmarke.<br>
+					<div class="copyright-links"><a href="https://www.datamate.org/impressum" title="Datamate Impressum">Impressum</a> / <a href="https://www.datamate.org/datenschutzerklaerung" title="Datenschutz von Datamate">Datenschutz</a> / <a href="https://www.datamate.org/downloads/Datamate-AGB.pdf" title="Datamate Allgemeine Geschäftsbedingungen">AGB</a></div>
+				</div>
+				<div class="col_half col_last tright">
+					<div class="fright clearfix">
+						<a href="https://www.facebook.com/datamate.rethink.it/" title="Datamate auf Facebook." class="social-icon si-small si-borderless si-facebook">
+							<i class="icon-facebook"></i>
+							<i class="icon-facebook"></i>
+						</a>
+						<a href="https://www.youtube.com/channel/UCnVWPO4V0n9aUGcG9q31b4g" title="Datamate auf Youtube." class="social-icon si-small si-borderless si-youtube">
+							<i class="icon-youtube"></i>
+							<i class="icon-youtube"></i>
+						</a>
+					</div>
+					<div class="clear"></div>
+					<i class="icon-envelope2"></i><a href="mailto:info@datamate.org" style="color: rgba(255,255,255,.25);"> info@datamate.org</a> <span class="middot">&middot;</span> <i class="icon-phone"></i> +49 (0)6131 3270777
+				</div>
+			</div>
+		</div>
+	</footer>
+</div> <!-- wrapper end -->
+
+<div id="gotoTop" class="icon-angle-up"></div>
+<!-- minified by https://javascript-minifier.com/ -->
+<script type="text/javascript" src="https://www.datamate.org/wp-content/themes/datamate-theme/js/canvas.js"></script>
+
+<script type="text/javascript" src="https://www.datamate.org/wp-content/themes/datamate-theme/datamate-theme.js"></script>
+
+<script type="text/javascript" id="slb_context">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB ) { {$.extend(SLB, {"context":["public","user_guest"]});} }})})(jQuery);}/* ]]> */</script>
+
+</body>
+</html>

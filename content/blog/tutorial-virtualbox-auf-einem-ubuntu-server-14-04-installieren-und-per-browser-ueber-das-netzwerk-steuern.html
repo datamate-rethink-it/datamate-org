@@ -1,0 +1,225 @@
++++
+title = "Tutorial: VirtualBox auf einem Ubuntu Server 14.04 installieren und per Browser über das Netzwerk steuern"
+titel_html = "Tutorial: VirtualBox auf einem Ubuntu Server 14.04 installieren und per Browser über das Netzwerk steuern | datamate"
+ueberschrift = "Tutorial: VirtualBox auf einem Ubuntu Server 14.04 installieren und per Browser über das Netzwerk steuern"
+beschreibung = "Mit phpVirtualBox kann ein auf einem Server installiertes VirtualBox per Browser ferngesteuert werden. Wir zeigen Ihnen wie Sie beides Installieren."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/04/url.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/tutorial-virtualbox-auf-einem-ubuntu-server-14-04-installieren-und-per-browser-ueber-das-netzwerk-steuern/"
+canonical = "https://www.datamate.org/tutorial-virtualbox-auf-einem-ubuntu-server-14-04-installieren-und-per-browser-ueber-das-netzwerk-steuern/"
+veroeffentlicht = "2015-05-27T06:02:18+00:00"
+geaendert = "2025-02-21T08:10:56+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "5 Minuten"
+bild_breite = 222
+bild_hoehe = 174
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Tutorial: VirtualBox auf einem Ubuntu Server 14.04 installieren und per Browser über das Netzwerk steuern", item = ""}]
+wortzahl = 606
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["anleitungen", "software"]
+schlagwoerter = []
+wp_id = 4413
+slug = "tutorial-virtualbox-auf-einem-ubuntu-server-14-04-installieren-und-per-browser-ueber-das-netzwerk-steuern"
+url = "/tutorial-virtualbox-auf-einem-ubuntu-server-14-04-installieren-und-per-browser-ueber-das-netzwerk-steuern/"
+date = "2015-05-27T08:02:18"
+lastmod = "2025-02-21T09:10:56"
+datum_utc = "2015-05-27T06:02:18+00:00"
+geaendert_utc = "2025-02-21T08:10:56+00:00"
+lightbox = true
++++
+						<a href="/wp-content/uploads/2018/04/url.png" data-slb-active="1" data-slb-asset="1566991061" data-slb-internal="0" data-slb-group="4413"><img decoding="async" src="/wp-content/uploads/2018/04/url.png" alt="url" width="222" height="174" class="alignnone size-full wp-image-142" style='float: left; padding: 10px 20px 0 0;' /></a>
+
+<p>VirtualBox ist eine fantastische Software zum experimentieren. Innerhalb von wenigen Minuten kann man beliebige Betriebssysteme in einer virtuellen Maschine installieren und unkompliziert neue Software oder neue Konfigurationen ausprobieren. Was die wenigsten wissen, ist dass es auch möglich ist VirtualBox auf einem zentralen Linux-Server zu installieren und per Browser mit Hilfe von phpVirtualBox über das Netzwerk zu steuern. So können zentrale Testmaschinen aufgesetzt werden und es muss sich nicht jeder Mitarbeiter eigene virtuelle Maschinen installieren. </p>
+
+<p>In diesem Tutorial zeigen wir Ihnen, wie Sie VirtualBox und phpVirtualBox auf einem Ubuntu Server 14.04 installieren und konfigurieren. Das ganze natürlich ohne einen Monitor anzuschließen.</p>
+
+<span id="more-4413"></span>
+
+<p>Wir starten mit einem nackten Ubuntu 14.04 Serversystem, auf dem wir lediglich einen openssh Server installiert haben um die Installation per SSH durchführen zu können. Alle Befehle führen wir als &#8220;root&#8221;-User aus.</p>
+
+<h2>Virtualbox-4.3 installieren</h2>
+
+<p>Um VirtualBox zu installieren, fügen wir zuerst die entsprechenden Paketquellen hinzu. Nach die Paketquellen aktualisiert wurden, können wir VirtualBox 4.3 installieren.</p>
+
+<pre>
+echo 'deb http://download.virtualbox.org/virtualbox/debian trusty contrib' > /etc/apt/sources.list.d/virtualbox.list
+wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+apt-get update
+apt-get install virtualbox-4.3
+</pre>
+
+<h2>Virtualbox Extension Pack installieren</h2>
+
+<p>Es folgt die Installation des VirtualBox Extension Pack, welches eine bessere Unterstützung der Hardware und zusätzliche Features für die virtuellen Maschinen hinzufügt. Sie sollten diesen Schritt nicht übergehen, da phpVirtualBox davon ausgeht, dass das Extension Pack installiert ist.</p>
+
+<pre>
+cd /tmp
+wget http://download.virtualbox.org/virtualbox/4.3.28/Oracle_VM_VirtualBox_Extension_Pack-4.3.28-100309.vbox-extpack
+VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.3.28-100309.vbox-extpack
+rm Oracle_VM_VirtualBox_Extension_Pack-4.3.28-100309.vbox-extpack
+</pre>
+
+<p>Regelmäßig erscheinen neue Versionen von VirtualBox und dem Expension Pack. Sollte die Datei nicht mehr verfügbar sein, sollten Sie auf der Seite von virtualbox.org nach dem aktuellen Downloadlink suchen.</p>
+
+<h2>Virtualbox User anlegen</h2>
+
+<p>VirtualBox muss von einem Systembenutzer ausgeführt werden. Wir empfehlen für VirtualBox einen eigenen Systembenutzer &#8220;vbox&#8221; anzulegen. </p>
+
+<pre>
+useradd -d /home/vbox -m -g vboxusers -s /bin/bash vbox
+passwd vbox
+</pre>
+<p>Geben Sie ein Passwort für den Benutzer vbox ein. Wir verwenden im weiteren Tutorial das Passwort &#8220;vbox&#8221;.</p>
+
+<pre>
+echo 'VBOXWEB_USER=vbox' >> /etc/default/virtualbox
+update-rc.d vboxweb-service defaults
+/etc/init.d/vboxweb-service start
+</pre>
+
+<h2>phpvirtualbox 4.3.3 installieren</h2>
+
+<p>Nun ist VirtualBox installiert und gestartet. Theoretisch könnten Sie nun über die Kommandozeile oder Bash das gesamte System steuern. Doch es geht eben noch viel einfacher per Browser. phpVirtualBox macht es möglich. Doch zuerst installieren wir den Webserver &#8220;nginx&#8221;.</p>
+
+<pre>
+apt-get install nginx php5-common php5-mysql php5-fpm php-pear unzip
+/etc/init.d/nginx start
+</pre>
+
+<p>Danach sollten Sie über den Aufruf Ihrer IP im Browser die nginx Startseite sehen können. Nun aktivieren wir noch den php support und dann installieren wir phpVirtualBox.</p>
+
+<pre>
+nano /etc/nginx/sites-available/default
+</pre>
+
+<p>Ändern Sie die Datei folgendermaßen ab:</p>
+
+<pre>
+server {
+        listen   80; ## listen for ipv4; this line is default and implied
+        listen   [::]:80 default ipv6only=on; ## listen for ipv6
+
+        root /usr/share/nginx/www/phpvirtualbox-4.3-3;
+        # wenn phpvirtualbox nicht direkt unter der IP erreichbar sein soll, dann nutzen Sie die folgende Zeile
+        # root /usr/share/nginx/www;
+        index index.php index.html index.htm;
+
+        # Make site accessible from http://localhost/
+        server_name _;
+
+        location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to index.html
+                try_files $uri $uri/ /index.html;
+                # Uncomment to enable naxsi on this location
+                # include /etc/nginx/naxsi.rules
+        }
+
+        location /doc/ {
+                alias /usr/share/doc/;
+                autoindex on;
+                allow 127.0.0.1;
+                deny all;
+        }
+
+        # Only for nginx-naxsi : process denied requests
+        #location /RequestDenied {
+                # For example, return an error code
+                #return 418;
+        #}
+
+        #error_page 404 /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+                root /usr/share/nginx/www;
+        }
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        location ~ \.php$ {
+                try_files $uri =404;
+                fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                fastcgi_pass unix:/var/run/php5-fpm.sock;
+                fastcgi_index index.php;
+                include fastcgi_params;
+        }
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        location ~ /\.ht {
+                deny all;
+        }
+}
+</pre>
+
+<p>Nun können Sie die Konfiguration von nginx neu laden und mit der Installation von phpVirtualBox beginnen.</p>
+
+<pre>
+cd /usr/share/nginx/html
+wget http://downloads.sourceforge.net/project/phpvirtualbox/phpvirtualbox-4.3-3.zip
+unzip phpvirtualbox-4.3-3.zip
+cd phpvirtualbox-4.3-3
+cp config.php-example config.php
+nano config.php
+</pre>
+
+<p>Fügen Sie in der Konfigurationsdatei den Benutzername und das Passwort des vbox Users hinzu und setzen Sie die noauth Variable um ohne Login auf die Webseite von virtualbox zu gelangen.</p>
+
+<pre>
+/* Username / Password for system user that runs VirtualBox */
+var $username = 'vbox';
+var $password = 'yourpassword';
+var $noAuth = true;
+</pre>
+
+<p>Ab sofort erreichen Sie phpVirtualBox über Ihren Browser durch die Eingabe der IP-Adresse des Servers.</p>
+
+<a href="/wp-content/uploads/2018/04/phpvirtualbox.png" data-slb-active="1" data-slb-asset="2910146651" data-slb-internal="0" data-slb-group="4413"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/phpvirtualbox.png" alt="phpvirtualbox" width="1232" height="747" class="alignnone size-full wp-image-136" /></a>
+
+<h2>Wie kriegt man die iso Dateien in virtualbox?</h2>
+
+<p>Die Installation von VirtualBox und phpVirtualBox ist nun abgeschlossen. Sie können nun theoretisch virtuelle Maschinen anlegen und installieren. Sie werden jedoch schnell merken, dass noch eine wichtige Kleinigkeit fehlt. Für die Installation von virtuellen Maschinen benötigen Sie iso-Dateien, welche aber natürlich lokal auf dem Server vorliegen müssen. </p>
+
+<p>Um nicht umständlich die iso-Dateien per Kommandozeile auf dem Server runterladen zu müssen, empfehlen wir die Installation von Samba und das nutzen eines Netzlaufwerkes. So kriegen Sie schnell und unkompliziert die iso Dateien auf den Server.</p>
+
+<pre>
+mkdir /vbox-isos
+chown vbox:vboxusers /vbox-isos
+chmod 755 /vbox-isos
+apt-get install samba
+nano /etc/samba/smb.conf
+</pre>
+
+<p>Fügen Sie die folgenden Zeilen am Ender der Konfiguration von Samba hinzu. So erhalten Sie ein Netzlaufwerk, in das Sie die iso Dateien kopieren können.</p>
+<pre>
+[vbox-isos]
+   path = /vbox-isos
+   comment = virtualbox iso files
+   available = yes
+   browseable = yes
+   writable = yes
+   guest ok = yes
+   create mask = 0660
+   directory mask = 0770
+   force group = vboxusers
+   force user = vbox
+</pre>
+
+<p>Als letztes starten Sie Dienste von Samba neu um das Netzlaufwerk verfügbar zu machen.</p>
+
+<pre>
+sudo restart smbd
+sudo restart nmdb
+</pre>
+
+<h2>Fazit</h2>
+
+<p>Das war&#8217;s! Die iso-Dateien können nun bequem per Samba auf den Server kopiert werden und die virtuellen Maschinen über http://IHRE-IP installiert werden. Wir wünschen viel Spaß beim experiementieren.</p>

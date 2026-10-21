@@ -1,0 +1,78 @@
++++
+title = "Schutz vor Datenverlust durch den Seafile Dateiverlauf"
+titel_html = "Schutz vor Datenverlust durch den Seafile Dateiverlauf | datamate"
+ueberschrift = "Schutz vor Datenverlust durch den Seafile Dateiverlauf"
+beschreibung = "Der File-Sharing Dienst Seafile bietet mit dem Dateiverlauf integrierte Funktionen zur Wiederherstellung von gelöschten Dateien und früheren Versionständen."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_typ = "article"
+og_url = "https://www.datamate.org/schutz-vor-datenverlust-durch-den-seafile-dateiverlauf/"
+canonical = "https://www.datamate.org/schutz-vor-datenverlust-durch-den-seafile-dateiverlauf/"
+veroeffentlicht = "2016-08-31T05:34:49+00:00"
+geaendert = "2025-02-21T08:10:50+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "7 Minuten"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Schutz vor Datenverlust durch den Seafile Dateiverlauf", item = ""}]
+wortzahl = 1391
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["seafile"]
+schlagwoerter = ["Backup", "Dateiverlauf", "Datensicherung", "seafile"]
+wp_id = 2913
+slug = "schutz-vor-datenverlust-durch-den-seafile-dateiverlauf"
+url = "/schutz-vor-datenverlust-durch-den-seafile-dateiverlauf/"
+date = "2016-08-31T07:34:49"
+lastmod = "2025-02-21T09:10:50"
+datum_utc = "2016-08-31T05:34:49+00:00"
+geaendert_utc = "2025-02-21T08:10:50+00:00"
++++
+						<p>Der File-Sharing Dienst <a href="/seafile">Seafile</a> hat gute Argumente auf seiner Seite: Die Community Edition ist Open Source und kostenfrei verfügbar. Sein Synchronisationsalgorithmus ist performant und zuverlässig. Seafile läuft auf allen wichtigen Plattformen inklusive mobile Apps für iOS und Android. Und im Unternehmensumfeld mit Corporate Design Vorgaben macht es dank Custom-Oberfläche eine gute Figur.</p>
+
+<p>Seine Wiederherstellungsfunktionen sind weitere Stärken von Seafile: Dank der Dateiversionsverläufe (englisch: file histories) und Schnappschüsse der Bibliotheken (englisch: library snapshots) bietet Seafile soliden Schutz gegen Datenverlust. Selbst Krypto-Locker à la Locky und TeslaCrypt verlieren so ihren Schrecken.</p>
+
+<p>In diesem Blogeintrag erklären wir für die Seafile-Server Version 5, wie man alte Versionsstände, gelöschte Dateien und gelöschte Bibliotheken wieder herstellt. In Seafile Version 4 sind die Vorgehensweisen weitgehend analog, die Menüs und Benutzeroberlfäche sehen aber teilweise anders aus.</p>
+
+<span id="more-2913"></span>
+<h2>Frühere Versionsstände einzelner Dateien wiederherstellen</h2>
+<p>Wenn man an einem umfangreicheren Dokument arbeitet, kommt es immer mal wieder vor, dass man aus Versehen einen Versionstand überschreibt, den man gerne behalten hätte. Oder man stellt nach der Überarbeitung eines Dokuments zähneknirschend fest, dass man eigentlich nur verschlimmbessert hat und die ursprüngliche Version doch die bessere war. In beiden Fällen wünscht man sich den Versionsstand des Dokuments vor den Änderungen zurück.</p>
+
+<p>In solchen Fällen ist der Dateiverlauf von Seafile Gold wert. Er sorgt ganz automatisch dafür, dass kein Versionsstand einer Datei verloren geht. Dazu speichert der Seafile-Dateiverlauf bei jeder Dateiänderung die alte Version und versieht sie mit einem Zeitstempel (englisch: time stamp). Mit nur wenig Aufwand lässt sich so eine frühere Version aus dem Dateiverlauf wiederherstellen. Im Datei Explorer, d.h. bei Windows der Datei Explorer und auf dem Mac der Finder, sieht man von der Versionierung nichts. Dort wird immer nur die aktuelle Dateiversion aufgeführt.</p>
+
+<p>
+<img decoding="async" class="alignnone size-large wp-image-758" style="margin-left: 20px;" src="/wp-content/uploads/2016/05/Dateiversionsverlauf_Seafile-1024x682.png" alt="Wiederherstellung von Dateien mittels Seafile Dateiverlauf" width="640" />
+Die verfügbaren Versionsstände einer Datei ruft man in Seahub, der Seafile-Weboberfläche, per Klick auf den Pfeil hinter dem Dateinamen und den Menüpunkt &#8216;Versionen&#8217; im sich öffnenden Menü auf. (In früheren Seafile-Versionen hieß der entsprechende Menüeintrag &#8216;Verlauf&#8217;.) In einem separaten Fenster werden die Versionsstände in chronologischer Ordnung angezeigt: Der älteste Versionsstand ganz unten, die aktuelle Version ganz oben. Wichtiger Hinweis: Über den File Explorer in Windows oder den Finder auf dem Mac kann man leider nicht auf den Versionsverlauf zugreifen.</p>
+
+<p>
+<img decoding="async" class="alignnone size-large wp-image-760" style=" margin-right: 20px;" src="/wp-content/uploads/2016/05/Datei_wiederhergestellt_Seafile-1024x682.png" alt="Mit dem Dateiverlauf von Seafile wiederhergestellte Datei" width="640" />
+Eine Altversion wird mit Klick auf ‚Wiederherstellen‘ wieder hergestellt. Die Bestätigung erhält man in Form einer knappen Meldung am oberen Fensterrand (siehe Abbildung). Im gleichen Augenblick verlängert sich auch die Liste der Versionsstände um einen Eintrag. Warum das so ist, wird leicht verständlich, wenn man die Logik der Wiederherstellung konsequent nachverfolgt: Mit der Wiederherstellung einer früheren Version wird diese an die Stelle der aktuellen Version gesetzt. Im Umkehrschluss wird aus der gerade noch aktuellen Version eine frühere Version und somit taucht diese auch in der Liste der Versionsstände auf.</p>
+
+<p>Bei einer umfangreicheren Versionshistorie ist häufig nicht unmittelbar ersichtlich, welcher Versionsstand der gesuchte ist. In diesen Fällen kann man über die Aktionen ‚Herunterladen‘ und ‚Ansicht‘ die Versionsstände begutachten, ohne sie gleich wiederherzustellen. Bei textbasierten Dokumenten gibt es mit der Funktion &#8216;Vergleichen&#8217; die zusätzliche Möglichkeit, die Unterschiede zwischen der aktuellen und der ausgewählten Version anzeigen zu lassen. In der <a href="https://www.seafile.com/en/product/private_server/">kostenpflichtigen Seafile Pro Version</a> geht das auch mit MS Office-Formaten wie DOC/DOCX und PPT/PPTX.</p>
+
+<p>Wer meint, den Seafile-Dateiverlauf nicht zu benötigen und Speicherplatz sparen möchte, der kann den Versionsverlauf in den Bibliothekseinstellungen deaktivieren. (Die Bibliothekseinstellungen waren in Seafile-Server Version 4 noch per Rad-Icon in der Verzeichnisstruktur einer Bibliothek erreichbar. In der Version 5 findet man die Verlaufseigenschaften über den &#8216;Mehr Aktionen&#8217;-Button in &#8216;Meine Bibliotheken&#8217;.) Wir von ionas raten grundsätzlich davon ab, den Versionsverlauf komplett zu deaktivieren. Löschungen und irrtümliche Speicherungen lassen sich nicht rückgängig machen. Ein Mittelweg zwischen vollumfänglicher Dateihistorie und vollständiger Deaktivierung ist die zeitliche Beschränkung der Vorhaltedauer der Versionsstände. Wer seinen Speicherplatz aktiv managen will, der hat mit dieser Einstellung einen guten Kompromiss aus Datensicherheit und Speichereffizienz.</p>
+
+<h2>Gelöschte Datei wiederherstellen</h2>
+<p>Hat man eine Datei gelöscht, dann greift der Dateiverlauf ins Leere. Eine Datei, die nicht im Verzeichnis geführt ist, kann auch nicht wiederhergestellt werden. An dieser Stelle tritt der Papierkorb in Aktion.</p>
+
+<p>Jede Bibliothek hat ihren eigenen Papierkorb. Diesen findet man auf Bibliotheksebene im Seafile-Webinterface. Ein Klick auf den Mülleimer in der rechten oberen Ecke der Verzeichnissicht öffnet ihn.</p>
+
+<p>Die Wiederherstellung einer Datei ist trivial. Die Spalte &#8216;Aktionen&#8217; bringt beim Herüberstreichen den Befehl &#8216;Wiederherstellen&#8217; hervor. Gelöschte Ordner mitsamt deren Inhalt lassen sich auf die gleiche Art und Weise wiederherstellen.</p>
+
+<p><img decoding="async" class="alignnone size-large wp-image-761" style="margin-right: 20px;" src="/wp-content/uploads/2016/05/KonfusionPapierkorb_Seafile-1024x552.png" alt="Papierkorb von Seafile" width="640" />Die Handhabung des Papierkorbs leidet am Fehlen einer Suchfunktion. Auch gibt es keine Sortierfunktion. Die Dateien werden immer chronologisch nach Löschzeitpunkt angezeigt. Bei einem gefüllten Papierkorb kann es so schon sein, dass man ein wenig suchen muss. Ein weiteres Manko des Papierkorbs ist, dass er nicht den gesamten Pfad der gelöschten Datei anzeigt. Verwendet man eifrig Ordner in Bibliotheken zur Strukturierung der Dateien, dann kann es schon mal vorkommen, dass zwei gleichnamige, aber völlig unterschiedliche Dateien im Papierkorb liegen (siehe Abbildung &#8211; im gezeigten Fall handelt es sich um Abrechnungen von vier unterschiedlichen Personen, die in separaten Ordnern lagen). Behelfen muss man sich in diesem Fall mit der Voransicht des Dokuments per Klick auf den Dokumentnamen. Nur so lässt sich herausfinden, welche Datei welche ist.</p>
+
+<h2>Versionsstände ganzer Bibliotheken wiederherstellen</h2>
+<p><img decoding="async" loading="lazy" class="alignnone size-large wp-image-763" style="margin-right: 20px;" src="/wp-content/uploads/2016/05/VersionsgeschichteOrdner_Seafile-1024x598.png" alt="Seafile Dateiverlauf auf Bibliotheksebene" width="1024" height="598" />Einen Verlauf gibt es auch auf Bibliotheksebene. Mit ihm kann man ganze Bibliotheken auf einen früheren Versionsstand zurücksetzen. Hat z.B. ein unerfahrener Kollege den Datenbestand in einer Bibliothek durcheinander gebracht, so bietet der Bibliotheksverlauf eine einfache Möglichkeit, um das entstandene Tohuwabohu wieder zu bereinigen. Der Weg dorthin ist kurz: Die Uhr-Schaltfläche auf der ersten Ebene innerhalb der Bibliothek öffnet den Versionverlauf.</p>
+
+<p>Der Versionsstand einer Bibliothek ist dabei weit mehr als das Aggregat der Versionsverläufe der Dateien in eben dieser Bibliothek. Damit der Bibliotheksversionsverlauf seine Aufgabe erledigen kann, erfasst er nicht nur alle Dateiänderungen, sondern auch alle Namensänderungen, neue Dateien, Löschungen und Wiederherstellungen. Seafile erstellt nach jeder Dateiänderung in einer Bibliothek einen Snapshot der Bibliothek. Dieser beinhaltet die komplette Datei- und Ordnerstruktur der Library.</p>
+
+<p>Auch hier gilt: Wer glaubt, den Versionsverlauf nicht zu benötigen, der kann ihn über die Bibliothekseigenschaften deaktivieren oder zeitlich begrenzen. Auf Bibliotheksebene wird bei Deaktivierung nur die jeweils letzte Änderung angezeigt. Die Konfiguration des Dateiverlaufs hängt mit der des Bibliothekverlaufs zusammen. Man kann nicht den einen aktivieren und den anderen deaktivieren.</p>
+
+<h2>Gelöschte Bibliotheken wiederherstellen</h2>
+<p>Nach den hier vorgestellten Wiederherstellungsfunktionen fehlt nur noch, dass man auch gelöschte Bibliotheken wiederherstellen kann. Und natürlich beherrscht Seafile auch diese Recovery-Funktion.</p>
+
+<p>Für die Wiederherstellung einer gelöschten Bibliothek muss man in den Administrationsbereich des Seafile-Servers vordringen. Auch wenn das zukünftig geändert werden soll, so bedeutet dies zunächst, dass diese Recovery-Maßnahmen die ausschließliche Domäne des Seafile-Administrators ist. Im Adminbereich steuert man den Bereich &#8216;Bibliotheken&#8217; und &#8216;Papierkorb&#8217;. Wie schon bei der Wiederherstellung von Dateien und Ordner braucht es dann nur einen Klick auf &#8216;Wiederherstellen&#8217; in der Aktionsspalte. Bei der Wiederherstellung wird natürlich auch der Verlauf und der Papierkorb der Bibliothek wiederhergestellt &#8211; insofern dieser nicht deaktiviert war.</p>
+
+<h2>Komfortabler Schutz der Daten durch den Seafile Dateiverlauf</h2>
+<p>Seafile liefert aus dem Stand wertvolle Funktionen zum Schutz der privaten Daten. Datenverlust aufgrund von Versionskonflikten, irrtümlichen Löschungen und Schadsoftware kann mit dem Seafile Dateiverlauf wirksam vorgebeugt werden. Sollte ein Krypto-Locker die lokale Festplatte verschlüsseln, dann lässt sich mit den Snapshots der Bibliotheken auf einem nicht verseuchten Computer schnell wieder Arbeitsfähigkeit herstellen.</p>
+
+<p>Wer eine Alternative zu Dropbox sucht, der ist mit Seafile bestens beraten. Die Bedienung von Seafile ist ein wenig anders als die von Dropbox, die Umgewöhnung sollte aber nur von kurzer Dauer sein und danach weiss man die zusätzliche Flexibilität von Seafile zu schätzen. Ein einfacher Weg, um Seafile für sich selbst zu nutzen, sind unsere ionas-Server. Seafile in der Community Edition ist fester Bestandteil des Softwarepakets beider ionas-Server &#8211; dem ionas-Server Home und dem ionas-Server Small Business. Wenn Sie zu den Geräten Fragen haben, dann erreichen Sie uns unter +49 (0)6131 3270777.</p>

@@ -1,0 +1,316 @@
++++
+title = "VDSL-Zugang mit ZyXEL VMG1312-B30A Modem und OpnSense Firewall"
+titel_html = "VDSL-Zugang mit ZyXEL VMG1312-B30A Modem und OpnSense Firewall | datamate"
+ueberschrift = "VDSL-Zugang mit ZyXEL VMG1312-B30A Modem und OpnSense Firewall"
+beschreibung = "Eine Busiss Firewall wie z.B. die OpnSense benötigt keinen Router. Dieser Artikel zeigt die Kombination mit dem ZyXEL VMG1312-B30A DSL-Modem."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/07/ZyXEL-VMG1312-B30A.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/vdsl-zugang-zyxel-vmg1312-b30a-modem-opnsense-firewall/"
+canonical = "https://www.datamate.org/vdsl-zugang-zyxel-vmg1312-b30a-modem-opnsense-firewall/"
+og_bild_breite = "1280"
+og_bild_hoehe = "960"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2017-07-20T10:26:45+00:00"
+geaendert = "2025-02-21T08:10:41+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "4 Minuten"
+beitragsbild = "/wp-content/uploads/2017/07/ZyXEL-VMG1312-B30A.jpg"
+bild_breite = 1280
+bild_hoehe = 960
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "VDSL-Zugang mit ZyXEL VMG1312-B30A Modem und OpnSense Firewall", item = ""}]
+wortzahl = 781
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["hardware"]
+schlagwoerter = ["Firewall", "Hardware", "OpnSense", "Sicherheit"]
+wp_id = 1291
+slug = "vdsl-zugang-zyxel-vmg1312-b30a-modem-opnsense-firewall"
+url = "/vdsl-zugang-zyxel-vmg1312-b30a-modem-opnsense-firewall/"
+date = "2017-07-20T12:26:45"
+lastmod = "2025-02-21T09:10:41"
+datum_utc = "2017-07-20T10:26:45+00:00"
+geaendert_utc = "2025-02-21T08:10:41+00:00"
+lightbox = true
++++
+						<p>datamate bietet neben seinen Produkten Homie, Buddy, Fellow und Hero auch individuellen IT-Support für Privat- und Gewerbekunden. Dazu gehört auch der Aufbau einer professionellen Firewall und die entsprechende Konfiguration der Internetleitung. Bei solche einer Anfrage empfehlen wir unseren Kunden typischerweise eine Kombination aus einer OpnSense Firewall und einem ZyXEL VMG1312-B30A Modem. Durch diese Kombination holen wir das Maximum aus der Internetleitung heraus, können sämtliche Funktionen der Busines-Firewall nutzen und der Kunde hat keine laufenden Lizenz- oder Wartungskosten.</p>
+
+<p>Im folgenden Artikel finden Sie eine Schritt für Schritt Anleitung, wie diese beiden Geräte zusammen eingerichtet werden können.</p>
+<span id="more-1291"></span>
+
+<p><strong>Wichtiger Hinweis:</strong> dieser Artikel bezieht sich auf das Model ZyXEL VMG1312-B30A, welches für deutsche DSL-Anschlüsse geeignet ist. Das Model VMG1312-B10A kann nicht verwendet werden.</p>
+
+<h2>Erster Login</h2>
+ 
+<p>Der ZyXEL Router hat im Auslieferungszustand die feste IP-Adresse <i>192.168.1.1</i> und DHCP ist nicht aktiviert. Der Zugriff auf die Weboberfläche des ZyXEL VMG1312-B30A erfordert somit die manuelle Konfiguration der LAN-Schnittstelle des eigenen Rechners. Tragen Sie also in den Adptereinstellungen der Netzwerkkarte eine IP-Adresse aus dem gleichen Subnetz, z.B.<i>192.168.1.10</i>, ein und verbinden Sie den Rechner per Netzwerkabel mit dem Modem. Anschließend genügt die Eingabe der IP des Geräts in einem beliebigen Browser, um zur Login-Fenster zu gelangen.</p>
+
+<p>Die Standard-Zugangsdaten lauten <i>admin</i> und <i>1234</i>. Anschließend schließt man den Quickstart-Assistenten, da man zu erst die Firmware aktualisieren sollte.</p>
+
+<h2>Firmware des ZyXEL Routers aktualisieren</h2>
+
+<p>Die aktuell verwendete Firmware des ZyXEL-Routers finden Sie unter <i>Wartung > Firmware Upgrade</i>. Zum Zeitpunkt der Veröffentlichung dieses Artikel ist die Version <i>1.00(AATO.6)C0 vom 21.11.2016</i> die neueste Firmware für dieses Produkt. Wenn Sie ein Firmwareupgrade durchführen, wozu wir dringend raten, dann achten Sie darauf, dass Sie die Firmware für das richtige Modell (B30A und nicht B10A) herunterladen und die ZIP-Datei erst entpacken. Die neueste Firmware finden Sie in der <a href="http://www.zyxel.com/uk/en/support/download_library/product/vmg1312_b_series_12.shtml?c=uk&#038;l=en&#038;pid=20120419163238&#038;tab=Firmware&#038;pname=VMG1312-B%20Series&#038;mtname=Firmware" target="_blank" rel="noopener">Download Library von ZyXEL</a></p>
+
+
+		<style type="text/css">
+			#gallery-1 {
+				margin: auto;
+			}
+			#gallery-1 .gallery-item {
+				float: left;
+				margin-top: 10px;
+				text-align: center;
+				width: 20%;
+			}
+			#gallery-1 img {
+				border: 2px solid #cfcfcf;
+			}
+			#gallery-1 .gallery-caption {
+				margin-left: 0;
+			}
+			/* see gallery_shortcode() in wp-includes/media.php */
+		</style>
+		<div id='gallery-1' class='gallery galleryid-1291 gallery-columns-5 gallery-size-thumbnail'><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-2.png" data-slb-active="1" data-slb-asset="3243998417" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-2-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-1-1306" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-1-1306'>
+				Login in den ZyXEL-Router
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-3.png" data-slb-active="1" data-slb-asset="1957513479" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-3-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-1-1305" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-1-1305'>
+				Der Quickstart-Assistent öffnet sich direkt nach dem Login
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-6.png" data-slb-active="1" data-slb-asset="1023672509" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-6-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-1-1303" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-1-1303'>
+				Entpacken Sie die zip-Datei und aktualisieren Sie dann die Firmware
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-4.png" data-slb-active="1" data-slb-asset="2668532015" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-4-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-1-1304" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-1-1304'>
+				Achten Sie beim Download der Firmware auf das richtige Model
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-7.png" data-slb-active="1" data-slb-asset="3408453302" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-7-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-1-1302" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-1-1302'>
+				Die Firmwareaktualisierung 
+				</dd></dl><br style="clear: both" />
+		</div>
+
+
+<h2>Der VDSL-Anschluß wird erkannt</h2>
+
+<p>Auf der startseite (network map) sollte die verbindung zwischen VMG1312-B30A und Internet nun grün sein. Auch unter <i>System Monitor > xDSL Statistics</i> sollte schon ein VDSL-Anschluß erkannt werden. Damit sind alle Voraussetzungen erfüllt und man kann mit der Konfiguration des Internetanschlußes beginnen.</p>
+<p>Wenn dies nicht der Fall ist, dann gibt es ein grundsätzliches Problem mit dem Anschluß und der Internetprovider sollte hinzugezogen werden. </p>
+
+
+		<style type="text/css">
+			#gallery-2 {
+				margin: auto;
+			}
+			#gallery-2 .gallery-item {
+				float: left;
+				margin-top: 10px;
+				text-align: center;
+				width: 20%;
+			}
+			#gallery-2 img {
+				border: 2px solid #cfcfcf;
+			}
+			#gallery-2 .gallery-caption {
+				margin-left: 0;
+			}
+			/* see gallery_shortcode() in wp-includes/media.php */
+		</style>
+		<div id='gallery-2' class='gallery galleryid-1291 gallery-columns-5 gallery-size-thumbnail'><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-9-hat-sofort-internet.png" data-slb-active="1" data-slb-asset="79776010" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-9-hat-sofort-internet-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-2-1310" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-2-1310'>
+				Nach dem Update wird direkt eine grüne DSL-Verbindung angezeigt
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-11.png" data-slb-active="1" data-slb-asset="4021273837" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-11-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-2-1308" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-2-1308'>
+				Die VDSL-Verbindung wird direkt erkannt und angezeigt
+				</dd></dl>
+			<br style='clear: both' />
+		</div>
+
+
+<h2>Routing oder Bridge? Welcher Modus ist besser geeignet</h2>
+
+<p>Es gibt zwei Möglichkeiten, um die Internetverbindung aufzubauen. Beide Varianten haben Ihre Vor- und Nachteile und somit gibt es keine richtige und falsche Konfiguration. Wir haben aber eine klare Empfehlung: Wir empfehlen den Routing-Modus, wenn man keine Business-Firewall im Einsatz hat und den Bridge-Modus, wenn man Besitzer einer OpnSense oder PfSense ist.</p>
+
+<h3>Routing-Modus</h3>
+
+<p>Beim Routing-Modus werden die PPPoE-Einwahldaten im Zyxel-Router eingetragen und dieser baut eigenständig die Internetverbindung auf. Sobald diese aufgebaut ist, kann die Internetverbindung von jedem Endgerät an einem der vier LAN-Ports genutzt werden. Die OpnSense wird quasi zu einem Client des ZyXEL-Routers.</p>
+
+<p>Der Nachteil bei dieser Konfiguration ist, dass der ZyXEL Sicherheits- und Routingfunktionen übernimmt, die eigentlich die OpnSense übernehmen soll. Die notwendigen Einstellungen sind nicht kompliziert, jedoch hat man eine etwas kompliziertere Technik, da am Ende zwei Geräte gewartet und konfiguriert werden müssen.
+
+<p>Um den Routing-Modus zu nutzen, müssen folgende Änderungen im ZyXEL vorgenommen werden:</p>
+<ul style="padding-left: 20px;">
+	<li>Eintragen der PPPoE-Zugangsdaten, Auswahl von VLAN 7 und der MTU-Size 1492</<li>
+	<li>Aktivieren des DHCP-Dienstes (z.B. für den Bereich 192.168.1.10 &#8211; 192.168.1.20)</li>
+	<li>Zuweisen einer festen IP an die OpnSense mit Hilfe der MAC-Adresse (z.B. 192.168.1.2)</li>
+	<li>Aktivieren einer DMZ mit der IP der OpnSense (z.B. 192.168.1.2)</li>
+	<li>WAN-Interfaces der OpnSense auf DHCP-Modus ändern</li>
+</ul>
+
+<p>Auf den folgenden Bildern werden die notwendigen Einstellungen nochmal gezeigt.</p>
+
+
+		<style type="text/css">
+			#gallery-3 {
+				margin: auto;
+			}
+			#gallery-3 .gallery-item {
+				float: left;
+				margin-top: 10px;
+				text-align: center;
+				width: 20%;
+			}
+			#gallery-3 img {
+				border: 2px solid #cfcfcf;
+			}
+			#gallery-3 .gallery-caption {
+				margin-left: 0;
+			}
+			/* see gallery_shortcode() in wp-includes/media.php */
+		</style>
+		<div id='gallery-3' class='gallery galleryid-1291 gallery-columns-5 gallery-size-thumbnail'><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-13.png" data-slb-active="1" data-slb-asset="2306851969" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-13-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-3-1320" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-3-1320'>
+				Tragen Sie zuerst die PPPoE-Zugangsdaten ein
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-15.png" data-slb-active="1" data-slb-asset="1492165406" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-15-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-3-1319" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-3-1319'>
+				Setzen Sie zweimal VLAN 7 und einen MTU-Wert von 1492
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-16.png" data-slb-active="1" data-slb-asset="2604106696" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-16-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-3-1318" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-3-1318'>
+				Die Internetverbindung sollte wenige Sekunden nach dem Speichern aufgebaut sein
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-51.png" data-slb-active="1" data-slb-asset="3058549151" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-51-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-3-1317" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-3-1317'>
+				Aktivieren Sie den DHCP-Dienst und legen Sie einen kleinen Adressbereich fest
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-52.png" data-slb-active="1" data-slb-asset="3305778074" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-52-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-3-1316" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-3-1316'>
+				Weisen Sie der Firewall per MAC-Adresse eine feste IP-Adresse zu
+				</dd></dl><br style="clear: both" /><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-53.png" data-slb-active="1" data-slb-asset="1763567136" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-53-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-3-1315" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-3-1315'>
+				Definieren Sie ein DMZ für die gerade festgelegte IP-Adresse der OpnSense
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-70.png" data-slb-active="1" data-slb-asset="2007573868" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-70-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-3-1314" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-3-1314'>
+				In der OpnSense genügt es ein Interface anzulegen und sich per DHCP zu verbinden
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-62.png" data-slb-active="1" data-slb-asset="1959330155" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-62-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-3-1313" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-3-1313'>
+				Die Internetverbindung steht sofort zur Verfügung
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-21.png" data-slb-active="1" data-slb-asset="65495257" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-21-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-3-1323" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-3-1323'>
+				Aktivieren Sie das Logging, wenn die DSL-Einwahl nicht funktioniert
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-23.png" data-slb-active="1" data-slb-asset="96976592" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-23-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-3-1322" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-3-1322'>
+				Hier sind eindeutig die PPPoE-Zugangsdaten falsch
+				</dd></dl><br style="clear: both" />
+		</div>
+
+
+<p>Sollte nun irgendetwas nicht funktionieren, kann man auf dem ZyXEL-Router das Logging aktivieren. Hierzu aktiviert man das Logging unter <i>Maintenance > Log Settings</i> und speichert den Modus <i>Local File</i>. Nach dem Speichern dieser Einstellung kann man unter <i>System Monitor > Log</i> die Statusmeldungen einsehen. In dem letzten Bild sieht man beispielsweise wie es aussieht, wenn die PPPoE-Zugangsdaten falsch eingetragen werden.</p>
+	
+<h3>Bridge-Modus</h3>
+
+<p>Die Alternative ist der Bridge-Modus, bei dem die PPPoE-Einwahldaten in die OpnSense eingetragen werden. Die OpnSense degradiert den ZyXEL zu einem reinen VDSL-Modem und übernimmt sämtliche Netzwerkfunktionen. Der Vorteil ist, dass dem ZyXEL VMG-B30A nur einmalig mitgeteilt werden muss, dass es in diesem Modus arbeiten soll. Danach erfolgt die gesamte Konfiguration und die gesamte Administration in der Firewall.</p>
+ 
+
+		<style type="text/css">
+			#gallery-4 {
+				margin: auto;
+			}
+			#gallery-4 .gallery-item {
+				float: left;
+				margin-top: 10px;
+				text-align: center;
+				width: 20%;
+			}
+			#gallery-4 img {
+				border: 2px solid #cfcfcf;
+			}
+			#gallery-4 .gallery-caption {
+				margin-left: 0;
+			}
+			/* see gallery_shortcode() in wp-includes/media.php */
+		</style>
+		<div id='gallery-4' class='gallery galleryid-1291 gallery-columns-5 gallery-size-thumbnail'><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-17.png" data-slb-active="1" data-slb-asset="2386173725" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-17-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-4-1328" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-4-1328'>
+				Versetzen Sie den ZyXEL in den Bridge und tragen Sie zweimal das VLAN 7 ein
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-72.png" data-slb-active="1" data-slb-asset="843287114" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-72-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-4-1327" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-4-1327'>
+				Wählen Sie im Interface der OpnSense PPPoE aus &#8230;
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-73.png" data-slb-active="1" data-slb-asset="3161373876" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-73-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-4-1324" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-4-1324'>
+				&#8230; und tragen Sie im gleichen Fenster die Zugangsdaten ein
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-75.png" data-slb-active="1" data-slb-asset="3877038401" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-75-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-4-1325" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-4-1325'>
+				Nach dem Speichern, wird die Internetverbindung automatisch aufgebaut
+				</dd></dl><dl class='gallery-item'>
+			<dt class='gallery-icon landscape'>
+				<a href="/wp-content/uploads/2017/07/B30A-74.png" data-slb-active="1" data-slb-asset="1955967088" data-slb-internal="0" data-slb-group="1291"><img width="150" height="150" src="/wp-content/uploads/2017/07/B30A-74-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" loading="lazy" aria-describedby="gallery-4-1326" /></a>
+			</dt>
+				<dd class='wp-caption-text gallery-caption' id='gallery-4-1326'>
+				Details und Log zum Interface können Sie in der OpnSense einsehen
+				</dd></dl><br style="clear: both" />
+		</div>
+
+	
+<h2>Entfesselte Business Firewall</h2>
+
+<p>Dank des Bridge-Modus ist es fast schon kinderleicht, mit dem ZyXEL VMG-B30A eine VDSL-Verbindung aufzubauen. Durch die Degradierung zum DSL-Modem muss das Gerät nicht mehr administriert und überwacht werden und sämtliche Steuerungsfunktionen im lokalen Netzwerk übernimmt die OpnSense. Dies sind die Aufgaben, die die Firewall perfekt beherrscht und wofür man Sie einsetzen will.</p>
+
+<p>Der Routing-Modus funktioniert auch, ist aus unserer Sicht aber eher für den Fall geeignet, dass man keine separate Firewall verwenden möchte. In diesem Fall übernimmt der ZyXEL-Router die Steuerungsfunktionen im Netzwerk.</p>

@@ -1,0 +1,197 @@
++++
+title = "A+ Rating mit NGINX und Let’s Encrypt"
+titel_html = "A+ Rating mit NGINX und Let&#039;s Encrypt | datamate"
+ueberschrift = "A+ Rating mit NGINX und Let&#8217;s Encrypt"
+beschreibung = "Ein Let&#039;s Encrypt Zertifikat ist der richtige Weg zur Absicherung des eigenen NGINX Webservers. Dieser Artikel zeigt, wie man ein A+ Rating erhält."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2020/03/ssl-labs-a-plus-rating-nginx-letsencrypt.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/a-plus-rating-nginx-lets-encrypt/"
+canonical = "https://www.datamate.org/a-plus-rating-nginx-lets-encrypt/"
+og_bild_breite = "1600"
+og_bild_hoehe = "1067"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2020-03-16T22:48:34+00:00"
+geaendert = "2025-02-21T08:10:00+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "9 Minuten"
+beitragsbild = "/wp-content/uploads/2020/03/ssl-labs-a-plus-rating-nginx-letsencrypt.jpg"
+bild_breite = 1600
+bild_hoehe = 1067
+bild_beschriftung = "SSL Labs a+ Rating mit NGINX und Let's Encrypt"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "A+ Rating mit NGINX und Let&#8217;s Encrypt", item = ""}]
+wortzahl = 1421
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["anleitungen"]
+schlagwoerter = ["https", "lets encrypt", "nginx", "Sicherheit"]
+wp_id = 6600
+slug = "a-plus-rating-nginx-lets-encrypt"
+url = "/a-plus-rating-nginx-lets-encrypt/"
+date = "2020-03-16T23:48:34"
+lastmod = "2025-02-21T09:10:00"
+datum_utc = "2020-03-16T22:48:34+00:00"
+geaendert_utc = "2025-02-21T08:10:00+00:00"
+lightbox = true
++++
+						<p>Dank Let&#8217;s Encrypt ist es in den letzten Jahren denkbar einfach geworden, Webserver mit einer SSL/TLS-Transportverschlüsselung zu versehen. Andererseits ist das Let&#8217;s Encrypt Zertifikat nur der erste Schritt für die Absicherung des Zugriffs. Eine optimale Absicherung  erfordert weitere. Im folgenden Artikel zeige ich Dir, wie Du Zugriffe auf den Webserver NGINX mit einem Let&#8217;s Encrypt Zertifikat wirkungsvoll absichern kannst. Als Maßstab dafür verwende ich den Sicherheitstest von SSL Labs.</p>
+
+<span id="more-6600"></span>
+
+<h2>Wie testet man die Qualität und Sicherheit der SSL-Konfiguration?</h2>
+<p>Die meisten Surfer assoziieren mit HTTPS vermutlich einfach nur das Schloß in der Adressleiste des Browsers. Viele Admins verbinden mit dem Thema wohl vor allem die dazugehörigen SSL/TLS-Zertifikate. Das Thema geht aber natürlich noch viel tiefer und hat zahlreiche, nicht ganz triviale Aspekte.</p>
+<p>Die Analyse der SSL-Konfiguration einer Webseite ist mit dem Dienst <a href="https://ssllabs.com_/ssltest/" target="_blank" rel="noopener noreferrer">SSL Labs</a> von Qualys so einfach wie sie nur sein kann: Du gibst die URL der eigenen Webseite oder des eigenen Webdienstes ein und rund eine Minute später erhälst Du eine umfangreiche Auswertung und Beurteilung der SSL-Konfiguration. Ein Beispiel für eine solche Auswertung findest Du unten für Domain dmz.seafile-demo.de. Qualys ist nicht irgendeine Firma, sondern ein an der Technologiebörse NASDAQ gelistetes Unternehmen, das mit dem Thema Cloud-Sicherheit und Compliance groß geworden ist. SSL Labs ist deren kostenloser Onlinedienste für die tiefgehende Analyse der SSL-Konfiguration von öffentlich erreicharen Webseiten. </p>
+
+<a href="/wp-content/uploads/2020/03/rate-b.png" data-slb-active="1" data-slb-asset="263186463" data-slb-internal="0" data-slb-group="6600"><img decoding="async" src="/wp-content/uploads/2020/03/rate-b.png" alt="SSL Labs Note B für ein Lets Encrypt Zertifikat mit nginx" /></a>
+
+<p>Vier Kategorien zieht SSL Labs für die Webseiten-Bewertung heran:</p>
+<ul style="padding-left: 20px;">
+<li>Verwendetes Zertifikat</li>
+<li>Protokollunterstützung</li>
+<li>Schlüsselaustausch</li>
+<li>Sicherheit des verwendeten Chiffrierungsschlüssels</li>
+</ul>
+
+<p>Wie man im Screenshot sehen kann, vergab SSL Labs für die Beispieldomain die Gesamtnote B. Im Rahmen dieses Artikel erkläre ich, wie sich aus der soliden Note B das Top-Rating A+ machen läßt.</p>
+
+<h2>Zum A Rating</h2>
+<p>Die NGINX-Konfiguration unserer Beispieldomain sah zum Testzeitpunkt so aus: </p>
+
+<pre>  ssl on;
+  ssl_certificate /etc/letsencrypt/live/dmz.seafile-demo.de/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/dmz.seafile-demo.de/privkey.pem;
+  ssl_session_timeout 5m;
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers "HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES";
+  ssl_prefer_server_ciphers on;</pre>
+  
+<p>Ich gehe nun durch die vier Kategorien von SSL Labs und erläutere, welche Änderungen an der Konfiguration des Webservers, die ebenso beispielhaft wie typisch ist, vorgenommen werden müssen, um das Rating zu verbessern.
+
+<p>Ganz wichtig: Lege zwischen den Anpassungen immer eine Sicherheitskopie Deiner NGINX-Konfigurationsdatei an. Du wirst feststellen, dass es vorkommen kann, dass die Verbesserung in einer Kategorie zu einer Abstrafung an anderer Stelle führen kann. Aber keine Sorge, wenn Du diesem Artikel folgst, wirst Du mit einem höheren Rating belohnt.</p>
+
+<h3>100% in der Kategorie &#8220;Certificate&#8221;</h3>
+<p>Bei Verwendung eines Let&#8217;s Encrypt Zertifikats &#8211; richtige Integration in NGINX vorausgesetzt &#8211; vergibt SSL Labs  den gewünschten Maximalwert von 100%. Es ist also nicht besonders schwer, in dieser Kategorie 100% zu erreichen.</p>
+<p>Wie man ein solches Zertifikat mit der Hilfe des Tools <strong>certbot</strong> beantragt, soll aber nicht Teil dieses Artikels sein. Die Instruktionen und die Dokumentation auf der <a href="https://certbot.eff.org/">EFF-Seite</a> sind vorbildhaft.</p>
+
+<h3>100% in der Kategorie &#8220;Protocol Support&#8221;</h3>
+<p>Die SSL Labs Bewertung in dieser Kategorie richtet sich nach den vom Server akzeptierten TLS-Versionen. Die Verwendung aktueller Protokollversionen sorgen für Bestnoten; alte Protokollversionen wie TLSv1.0 und TLSv1.1 für Abzüge, da diese mittlerweile als unsicher gelten. In noch größerem Maße gilt dies für das TLS-Vorläuferprotokoll SSL. In unserem Beispiel oben ist dies auch der Grund für die Gesamtnote B. Bei Verwendung der beiden alten TLS-Protokollversionen kann die Gesamtnote dieses Rating nicht übersteigen. </p>
+
+<p>Weil die alten TLS-Versionen mittlerweile wirklich zum alten (Verschlüsselungs-)Eisen gehören, haben die großen Browser-Entwickler wie Google, Mozilla und Apple in ihren neuesten Browserversionen die Unterstützung für diese alten Techniken bereits gestrichen oder werden sie bald streichen. Google Chrome wird in der ab morgen (17.03.2020) erscheinenden Version 81 die beiden TLS-Protokollversionen 1.0 und 1.1 nicht mehr unterstützen. Auch Firefox hat mit seiner Version 74, welche am 10. März 2020 erschienen ist, mit ihnen Schluß gemacht.</p>
+
+<p>Ganz grundsätzlich besteht natürlich die Gefahr, dass man durch die Deaktivierung dieser Protokolle ältere Geräte von der eigenen Webseite ausschließt. Die Gefahr des Besucher-/Kundenverlusts durch die Protokolldeaktivierung ist jedoch überschaubar. Gemäß einer <a href="https://security.googleblog.com/2018/10/modernizing-transport-security.html" target="_blank" rel="noopener noreferrer">Analyse von Google lag jedoch bereits Ende 2018 der Anteil von TLSv1.1 und TLSv1 bei unter 1%</a>. Das Aus in den großen Browsern wird diesen Wert rasch in Richtung Nulllinie bewegen.</p>
+
+<p>Mit der folgenden Konfiguration erreichst Du einen Wert von 100% für Protocol Support:</p>
+
+<pre>  # get 100% from SSL Labs at "Protocol Support"
+  ssl_protocols TLSv1.2 TLSv1.3;</pre>
+
+<h3>100% in der Kategorie &#8220;Key Exchange&#8221;</h3>
+<p>Bei einer Installation von NGINX unter Ubuntu aus den Paketquellen wird standardmäßig das Diffie-Hellman-Verfahren für den Schlüsselaustausch zwischen Client und Server verwendet. Interessierte Leser finden auf <a href="https://de.wikipedia.org/wiki/Diffie-Hellman-Schl%C3%BCsselaustausch" target="_blank" rel="noopener noreferrer">Wikipedia</a> weitere Details zu Diffie-Hellman, jedoch ist dieses Detailwissen für das Folgende unerheblich. Für uns ist wichtig zu wissen, dass der Austausch mit Hilfe eines mathematischen Schlüssels erfolgt. </p>
+
+<p>Im Standard wird ein 1024 Bit-Schlüssel verwendet. Ein solcher kurzer Schlüssel erhält bei SSL Labs einen Abzug. Um 100% der Punkte zu erreichen, sind zwei Änderungen erforderlich: Zum einen muss ein neuer Schlüssel mit 2048 oder 4096 Bit-Länge erzeugt und in NGINX eingetragen werden. Weiterhin muss man bei der Beantragung des Let&#8217;s Encrypt Zertifikats einen längeren Schlüssel erzwingen. Dies geschieht mit den folgenden Befehlen:</p>
+
+<pre># Befehl zum Erzeugen des längeren Schlüssels
+openssl dhparam -out /etc/nginx/dhparam.pem 4096
+
+# die folgende Zeile muss der NGINX-Konfiguration hinzugefügt werden
+ssl_dhparam /etc/nginx/dhparam.pem;
+
+# so erzwingt man bei Let's Encrypt einen längeren Schlüssel
+certbot certonly -d &lt;Ihre-Domain&gt; -m &lt;Ihre-Mail-Adresse&gt; --rsa-key-size 4096
+</pre>
+
+<p>Die entsprechende NGINX Konfiguration sieht dann schlußendlich so aus:</p>
+
+<pre>  # get 100% from SSL Labs at "Key Excange" 
+  # (use certbot with --rsa-key-size 4096)
+  ssl_dhparam /etc/nginx/dhparam.pem;
+  ssl_ecdh_curve secp384r1;</pre>
+  
+<h3>90% in der Kategorie &#8220;Cipher Strength&#8221;</h3>
+<p>Der Bereich <i>Cipher Strength</i> unterliegt einem konstanten Wandel. Eine Liste an Chiffrierungsschlüsseln mag heute optimal sein und morgen schon wieder überholt sein. Die Schwierigkeit liegt bei den Ciphern besonders in einer Abwägung zwischen Sicherheit und Kompatibilität. Wenn man nur die als absolut sicher geltenen Chiffren verwendet, schließt man deutlich mehr Geräte aus, als dies bei den SSL-Protokollen TLSv1 oder TLSv1.1 der Fall ist. Aus unserer Sicht es es somit an dieser Stelle NICHT ratsam, einen Wert von 100% anzustreben, sondern einen gesunden Mittelweg aus Sicherheit und Kompatibilität zu erreichen. Deshalb empfehle ich die folgende Konfiguration:</p>
+
+<pre>  # get 90% from SSL Labs at "Cipher Strength"
+  ssl_ciphers AES256+EECDH:AES256+EDH:!aNULL;
+  ssl_prefer_server_ciphers on;</pre>
+  
+<h2>Vom A zum A+ Rating</h2>
+<p>Wenn Du nun Deinen Webserver neu startest und eine erneute Prüfung mit SSL Labs durchführst, solltest Du mit einer A-Bewertung belohnt werden. Wir haben also ein gutes Stück Weg gemacht, sind aber noch nicht ganz am Ziel.</p>
+
+<p>Für die Note A+ muss man der Konfiguration von NGINX noch <a href="https://de.wikipedia.org/wiki/HTTP_Strict_Transport_Security" target="_blank" rel="noopener noreferrer">HTTP Strict Transport Security (HSTS)</a> hinzufügen. Wie das geht, erfährst Du im nächsten Abschnitt. Die Umsetzung ist im Grund ganz einfach, da die Aktivierung aber ein schwerwiegende Konsequenz mit sich bringt, werde ich diese zunächst vorstellen.</p>
+
+<p>HSTS zwingt die Browser zur Nutzung HTTPS. Dies beschleunigt den Seitenaufruf und erhöht die Sicherheit gegenüber einigen Man-in-the-Middle-Attacken. Soweit nichts dagegen einzuwenden. Das HTTPS-only Prinzip ist aber dann problematisch, wenn Du an irgendeiner Stelle auch die HTTP-Version benötigst. Diese ist &#8211; wie gesagt &#8211; bei HSTS nicht mehr erreichbar. In diesem Fall ist HSTS für Dich keine Option und Du musst Dich mit einer A-Bewertung begnügen.</p>
+
+<p>Nach diesen warnenden Worten ist die technische Umsetzung von HSTS denkbar einfach. Gerade mal zwei Zeilen in der NGINX-Konfiguration genügen, um HSTS zu aktivieren:</p>
+
+<pre>  # get A+ Rating from SSL Labs
+  add_header Strict-Transport-Security "max-age=31536000; 
+  includeSubDomains; preload" always;</pre>
+  
+<p>Die 31536000 stehen für Sekunden, was umgerechnet ungefähr ein Jahr ist. Dies ist die Zeit, für die sich der Browser merkt, dass er Deine Webseite nur per HTTPS aufrufen soll. Ein Problem entsteht dann, wie gesagt, wenn Du HSTS irgendwann wieder entfernen und zu einer unverschlüsselten HTTP-Webseite zurückkehren willst. Besucher, die schon vorher Deine Webseite besucht haben, werde diese nicht mehr erreichen und in einer unendlichen Schleife gefangen sein. Setze diesen Wert also nur, wenn Du Deine Webseite dauerhaft per HTTPS anbieten willst.</p>
+
+<p>Ähnlich verhält es sich mit <i>includeSubDomains</i>. Wenn einige Subdomains noch nicht für HTTPS bereit sind, solltest Du diese Einstellung nicht setzen.</p>
+
+<p>Beim ersten Seitenaufruf erfolgt der Datenaustausch noch per HTTP. Ein <i>preload</i> verhindert auch dies, indem Deine Webseite der <a href="https://hstspreload.org/" target="_blank" rel="noopener noreferrer">HSTS Preload List</a> hinzugefügt wird. So &#8220;wissen&#8221; Browser schon vor dem ersten Aufruf, dass sie die HTTPS-Version verwenden sollen/müssen. Auch dies ist natürlich kontraproduktiv, wenn Du irgendwann zu HTTP zurückkehren willst.</p>
+
+<p>Das <i>always</i> bedeutet, das NGINX bei jedem Antwort Code die Umleitung auf die HTTPS-Seite vornimmt. Ohne always-Parameter würde dies nur die HTTP-Antwort-Codes 200, 201, 204, 206, 301, 302, 303, 304 und 307 gelten.</p>
+
+<h2>Sicherheit und Kompatibilität ist möglich</h2>
+
+<p>Wenn Du all diese Konfigurationsschritte befolgst hast, dann wirst Du mit einer A+-Bewertung von SSL Labs belohnt. Zumindest für eine Weile kannst Du Dich entspannt zurücklehnen und das Gefühl geniesen, dass Du Deinen Webserver sicherer gemacht hast, ohne auf die notwendige Kompabilität zu verzichten.</p>
+
+<a href="https://de.seafile.com/wp-content/uploads/2020/03/a-plus-rating-with-nginx-letsencrypt.png" data-slb-active="1" data-slb-asset="3756697272" data-slb-group="6600"><img decoding="async" src="https://de.seafile.com/wp-content/uploads/2020/03/a-plus-rating-with-nginx-letsencrypt.png" alt="A+ Note bei SSL Labs mit Nginx und Let&#039;s Encrypt" class="alignnone size-full wp-image-3884" /></a>
+
+<p>Die finale Konfiguration für ein A+-Rating mit Let&#8217;s Encrypt und NGINX &#8211; inklusive ein paar Performance Optimierungen &#8211; könnte dann z.B. so aussehen:</p>
+
+<pre># Expires map
+map $sent_http_content_type $expires {
+  default                    off;
+  text/html                  epoch;
+  text/css                   max;
+  application/javascript     max;
+  ~images/                   max;
+}
+
+server {
+  listen 443 default_server;
+  listen [::]:443;
+  server_name dmz.seafile-demo.de;
+  index index.php;
+  expires $expires;
+
+  # get 100% from SSL Labs at "Certificate"
+  ssl on;
+  ssl_certificate /etc/letsencrypt/live/dmz.seafile-demo.de/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/dmz.seafile-demo.de/privkey.pem;
+  ssl_trusted_certificate /etc/letsencrypt/live/dmz.seafile-demo.de/chain.pem;
+  ssl_session_timeout 5m;
+  ssl_session_cache shared:SSL:5m;
+  ssl_stapling on;
+  ssl_stapling_verify on;
+
+  # get 100% from SSL Labs at "Protocol Support"
+  ssl_protocols TLSv1.2 TLSv1.3;
+
+  # get 100% from SSL Labs at "Key Excange" 
+  # (use certbot with --rsa-key-size 4096)
+  ssl_dhparam /etc/nginx/dhparam.pem;
+  ssl_ecdh_curve secp384r1;
+
+  # get 90% from SSL Labs at "Cipher Strength"
+  ssl_ciphers AES256+EECDH:AES256+EDH:!aNULL;
+  ssl_prefer_server_ciphers on;
+
+  # options to get an A+-Rating
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header X-XSS-Protection "1; mode=block" always;
+  add_header X-Frame-Options "DENY" always;
+  add_header Referrer-Policy "strict-origin" always;
+  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
+
+  # other opimizations
+  resolver 8.8.8.8 8.8.4.4 valid=300s;
+  resolver_timeout 10s;</pre>
+  
+  <p>Ich wünsche viel Spaß beim Experiementieren.</p>

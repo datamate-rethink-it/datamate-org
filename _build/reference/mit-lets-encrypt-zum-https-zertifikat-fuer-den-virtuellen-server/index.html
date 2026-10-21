@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="de">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="datamate" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- minified by https://cssminifier.com/ -->
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/canvas.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/datamate-theme.css" type="text/css" />
+
+	<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+	<![endif]-->
+
+
+
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+
+
+	<link rel="icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500.png" type="image/png" sizes="64x64">
+    <meta name="format-detection" content="telephone=no">
+	<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v19.6.1 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Mit Let&#039;s Encrypt zum HTTPS-Zertifikat für den virtuellen Server | datamate</title>
+	<link rel="canonical" href="https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/" />
+	<meta property="og:locale" content="de_DE" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Mit Let&#039;s Encrypt zum HTTPS-Zertifikat für den virtuellen Server | datamate" />
+	<meta property="og:description" content="Bis vor wenigen Monaten war der Erwerb eines sicheren (d.h. grünen HTTPS-Zertifikats) noch eine teure Angelegenheit. Privatpersonen oder kleinere Firmen scheuten die Investition von mindestens 100 € pro Jahr und Domain und gaben sich mit dem ungesicherten http oder einem selbst signierten Zertifikat zufrieden. Doch seit dem 12. April 2016 ist dieser Zustand nun vorbei. [&hellip;]" />
+	<meta property="og:url" content="https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/" />
+	<meta property="og:site_name" content="datamate" />
+	<meta property="article:publisher" content="https://www.facebook.com/datamate.rethink.it" />
+	<meta property="article:published_time" content="2016-07-20T09:20:34+00:00" />
+	<meta property="article:modified_time" content="2025-02-21T08:10:51+00:00" />
+	<meta property="og:image" content="https://www.datamate.org/wp-content/uploads/2018/04/certificate_authority_lets_encrypt.png" />
+	<meta name="author" content="Christoph Dyllick-Brenzinger" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:label1" content="Verfasst von" />
+	<meta name="twitter:data1" content="Christoph Dyllick-Brenzinger" />
+	<meta name="twitter:label2" content="Geschätzte Lesezeit" />
+	<meta name="twitter:data2" content="3 Minuten" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Article","@id":"https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/#article","isPartOf":{"@id":"https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/"},"author":{"name":"Christoph Dyllick-Brenzinger","@id":"https://www.datamate.org/#/schema/person/871495303b4e9fc8efd66c3237355b20"},"headline":"Mit Let&#8217;s Encrypt zum HTTPS-Zertifikat für den virtuellen Server","datePublished":"2016-07-20T09:20:34+00:00","dateModified":"2025-02-21T08:10:51+00:00","mainEntityOfPage":{"@id":"https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/"},"wordCount":591,"publisher":{"@id":"https://www.datamate.org/#organization"},"image":{"@id":"https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/#primaryimage"},"thumbnailUrl":"https://www.datamate.org/wp-content/uploads/2018/04/certificate_authority_lets_encrypt.png","articleSection":["Uncategorized"],"inLanguage":"de"},{"@type":"WebPage","@id":"https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/","url":"https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/","name":"Mit Let's Encrypt zum HTTPS-Zertifikat für den virtuellen Server | datamate","isPartOf":{"@id":"https://www.datamate.org/#website"},"primaryImageOfPage":{"@id":"https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/#primaryimage"},"image":{"@id":"https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/#primaryimage"},"thumbnailUrl":"https://www.datamate.org/wp-content/uploads/2018/04/certificate_authority_lets_encrypt.png","datePublished":"2016-07-20T09:20:34+00:00","dateModified":"2025-02-21T08:10:51+00:00","breadcrumb":{"@id":"https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/#breadcrumb"},"inLanguage":"de","potentialAction":[{"@type":"ReadAction","target":["https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/"]}]},{"@type":"ImageObject","inLanguage":"de","@id":"https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/#primaryimage","url":"https://www.datamate.org/wp-content/uploads/2018/04/certificate_authority_lets_encrypt.png","contentUrl":"https://www.datamate.org/wp-content/uploads/2018/04/certificate_authority_lets_encrypt.png","width":790,"height":667},{"@type":"BreadcrumbList","@id":"https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Startseite","item":"https://www.datamate.org/"},{"@type":"ListItem","position":2,"name":"Mit Let&#8217;s Encrypt zum HTTPS-Zertifikat für den virtuellen Server"}]},{"@type":"WebSite","@id":"https://www.datamate.org/#website","url":"https://www.datamate.org/","name":"datamate","description":"","publisher":{"@id":"https://www.datamate.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.datamate.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"de"},{"@type":"Organization","@id":"https://www.datamate.org/#organization","name":"datamate GmbH & Co. KG","url":"https://www.datamate.org/","sameAs":["https://www.youtube.com/channel/UCnVWPO4V0n9aUGcG9q31b4g","https://www.facebook.com/datamate.rethink.it"],"logo":{"@type":"ImageObject","inLanguage":"de","@id":"https://www.datamate.org/#/schema/logo/image/","url":"https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png","contentUrl":"https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png","width":100,"height":100,"caption":"datamate GmbH & Co. KG"},"image":{"@id":"https://www.datamate.org/#/schema/logo/image/"}},{"@type":"Person","@id":"https://www.datamate.org/#/schema/person/871495303b4e9fc8efd66c3237355b20","name":"Christoph Dyllick-Brenzinger","description":"Christoph ist Gründer und Chefentwickler von datamate. Er ist ein absoluter Linux-Fan und hat schon früh seine Leidenschaft für Technik und Programmierung entdeckt. Seine langjährige Erfahrung als Unternehmensberater spürt man regelmäßig, wenn er nach optimalen Lösungen für die Kunden sucht. Wenn er nicht gerade den Tennisplatz unsicher macht oder bei Overwatch sein Liga-Ranking verbessert, verbringt Christoph seine Freizeit mit seiner Frau und seinen drei Kindern."}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel="alternate" type="application/rss+xml" title="datamate &raquo; Kommentar-Feed zu Mit Let&#8217;s Encrypt zum HTTPS-Zertifikat für den virtuellen Server" href="https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/feed/" />
+<script type="text/javascript">
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.datamate.org\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.1.15"}};
+/*! This file is auto-generated */
+!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode,e=(p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0),i.toDataURL());return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(p&&p.fillText)switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([129777,127995,8205,129778,127999],[129777,127995,8203,129778,127999])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(e=t.source||{}).concatemoji?c(e.concatemoji):e.wpemoji&&e.twemoji&&(c(e.twemoji),c(e.wpemoji)))}(window,document,window._wpemojiSettings);
+</script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css' href='https://www.datamate.org/wp-includes/css/dist/block-library/style.min.css?ver=6.1.15' type='text/css' media='all' />
+<link rel='stylesheet' id='classic-theme-styles-css' href='https://www.datamate.org/wp-includes/css/classic-themes.min.css?ver=1' type='text/css' media='all' />
+<style id='global-styles-inline-css' type='text/css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;}:where(.is-layout-flex){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='slb_core-css' href='https://www.datamate.org/wp-content/plugins/simple-lightbox/client/css/app.css?ver=2.9.0' type='text/css' media='all' />
+<link rel="https://api.w.org/" href="https://www.datamate.org/wp-json/" /><link rel="alternate" type="application/json" href="https://www.datamate.org/wp-json/wp/v2/posts/4490" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.datamate.org/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.datamate.org/wp-includes/wlwmanifest.xml" />
+<meta name="generator" content="WordPress 6.1.15" />
+<link rel='shortlink' href='https://www.datamate.org/?p=4490' />
+<link rel="alternate" type="application/json+oembed" href="https://www.datamate.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.datamate.org%2Fmit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.datamate.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.datamate.org%2Fmit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server%2F&#038;format=xml" />
+<!-- Analytics by WP Statistics v13.2.5 - https://wp-statistics.com/ -->
+<link rel="icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500-180x180.png" />
+<meta name="msapplication-TileImage" content="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500-270x270.png" />
+<link rel="icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500-150x150.png" sizes="64x64" />
+
+</head>
+
+
+<body class="stretched">
+
+	<div id="wrapper" class="clearfix">
+		<header id="header" class="transparent-header ">
+			<div id="header-wrap">
+				<div class="container clearfix">
+					<div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
+					<div id="logo">
+						<a href="/" class="standard-logo" title="Datamate Home" data-dark-logo="https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png"><img title="Datamate Logo" src="https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png" alt="datamate"></a>
+						<a href="/" class="retina-logo" title="Datamate Home" data-dark-logo="https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png"><img title="Datamate Logo" src="https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png" alt="datamate"></a>
+					</div>
+
+					<nav id="primary-menu" class="menu-primary-container"><ul id="menu-primary" class="norightborder"><li id="menu-item-3054" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3054"><a title="Seafile" href="https://www.datamate.org/seafile/">Seafile</a></li>
+<li id="menu-item-5246" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5246"><a title="3CX" href="https://www.datamate.org/3cx/">3CX</a></li>
+<li id="menu-item-137" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-137"><a title="Blog" href="/blog/">Blog</a></li>
+</ul></nav>				</div>
+			</div>
+		</header>
+
+<div class="section" id="content">
+    <div>
+        <div class="container clearfix" id="blog">
+            <div class="row clearfix">
+
+                <div class="col-sm-8">
+			<div class="ipost clearfix">
+				<div class="entry-title">
+					<h1 style="font-size: 24px; text-transform: uppercase; font-weight: 400;">Mit Let&#8217;s Encrypt zum HTTPS-Zertifikat für den virtuellen Server</h1>
+					<ul class="entry-meta clearfix">
+                        <li><i class="icon-clock"></i> 20. Juli 2016</li>
+					</ul>
+					<div class="clear"></div>
+
+				</div>
+
+				<div class="entry clearfix">
+
+						<p>Bis vor wenigen Monaten war der Erwerb eines sicheren (d.h. grünen HTTPS-Zertifikats) noch eine teure Angelegenheit. Privatpersonen oder kleinere Firmen scheuten die Investition von mindestens 100 € pro Jahr und Domain und gaben sich mit dem ungesicherten http oder einem selbst signierten Zertifikat zufrieden. Doch seit dem 12. April 2016 ist dieser Zustand nun vorbei. Mit Hilfe von <i>Let&#8217;s Encrypt</i> kann sich nun jeder ein sicheres Zertifikat für seine Domains und auch Subdomains besorgen.</p>
+
+<p>In diesem Artikel wollen wir ein paar Hintergründe zu <i>Let&#8217;s Encrypt</i> liefern und am Ende zeigen, wie Beantragung und Verlängerung von <i>Let&#8217;s Encrypt</i>-Zertifikaten unter Ubuntu funktioniert. Wir werden dabei auf das offizielle Tool <i>certbot</i> und die Authorisierungsmethode <i>standalone</i> von <i>Let&#8217;s encrypt</i> eingehen.</p>
+
+<span id="more-4490"></span>
+<h2>Ein bisschen Geschichtswissen zu Let&#8217;s Encrypt</h2>
+<p>Spätestens seit den Snowden-Enthüllungen im Jahre 2013 ist klar, dass weltweit der Internetverkehr abgefangen und ausgewertet wird. Kaum ein Jahr später, im November 2014, erblickte die <i>Internet Security Research Group (ISRG)</i> das Licht der Welt und versprach freie und sichere SSL-Zertifikate für alle Serverbetreiber. Gründungsmitglieder der ISRG waren Branchengrößen wie die Mozilla Corporation, Cisco Systems, Akamai Technologies, die Electronic Frontier Foundation, IdenTrust sowie Forscher der University of Michigan. Die ISRG sprach in ihrem ersten Blogeintrag am 18. November 2014 davon, dass &#8220;alle verschlüsseln sollten&#8221; und dass &#8220;die Herausforderung in den Zertifikate liegt&#8221;.<p>
+<blockquote><i>Vital personal and business information flows over the Internet more frequently than ever, and we don’t always know when it’s happening. It’s clear at this point that encrypting is something all of us should be doing. Then why don’t we use TLS (the successor to SSL) everywhere? Every browser in every device supports it. Every server in every data center supports it. Why don’t we just flip the switch?</i>
+
+The challenge is server certificates. The anchor for any TLS-protected communication is a public-key certificate which demonstrates that the server you’re actually talking to is the server you intended to talk to. For many server operators, getting even a basic server certificate is just too much of a hassle. The application process can be confusing. It usually costs money. It’s tricky to install correctly. It’s a pain to update.
+
+Let’s Encrypt is a new free certificate authority, built on a foundation of cooperation and openness, that lets everyone be up and running with basic server certificates for their domains through a simple one-click process.
+(aus dem Blogeintrag <a href="https://letsencrypt.org/2014/11/18/announcing-lets-encrypt.html" target="_blank" rel="noopener">https://letsencrypt.org/2014/11/18/announcing-lets-encrypt.html</a>)</blockquote>
+<p>Das ursprüngliche angepeilte Ziel des Go-Lives der ISRG vom zweiten Quartal 2015 wurde zwar verfehlt, aber mittlerweile ist Let&#8217;s Encrypt für den produktiven Betrieb geeignet.</p>
+<h2>Pro und Contra von HTTPS</h2>
+<p>Wenn man seine Webseite per HTTPS ausliefert, profitieren die Seitenbesucher und man selbst. Der Vorteil für die Kunden ist der offensichtliche: Sie können dank SSL-/TLS-Zertifikate nun verschlüsselt mit der Webseite kommunizieren.  Man selbst wird durch einen kleinen Boost des Google Webseiten-Ranking belohnt. Natürlich kann sich mit der zunehmenden Verbreitung von HTTPS-Zertifikaten dieser positive Ranking-Faktor nivellieren, aktuell ist die Verwendung von einem Zertifikat jedoch definitiv ein Plus im Bewertungsalgorithmus von Google.</p>
+
+<p>Zusätzlich lässt sich sagen, dass ein grünes Schloss in der URL-Leiste auch Vertrauen bei den Besuchern einer Webseite schafft und ab sofort eher zum Standard als zur Ausnahme gehören sollte.</p>
+
+<p>Grundsätzlich gibt es kein Argument, was gegen den Einsatz eines HTTPS-Zertifikats spricht. Die Ladegeschwindigkeit der Seite bleibt gleich, jeder Browser kann damit umgehen und auch sonst will einfach kein Grund dagegen einfallen.</p<
+<h2>Wie funktioniert Let&#8217;s Encrypt?</h2>
+<p>Im Zentrum von <i>Let&#8217;s Encrypt</i> steht eine Zertifizierungsstelle (Certificate Authority oder CA), die Domain-Inhabern kostenlos ein SSL-Zertifikat ausstellt. Dabei handelt es sich um <i>Domain-Validated-Zertifikate</i>, die für die meisten Zwecke ausreichen. Um so ein Zertifikat zu erhalten, muss man gegenüber der CA lediglich beweisen, dass man eine Domain (oder auch Subdomain) unter Kontrolle. Wenn man diesen Nachweis erbringen kann, dann erhält man ein Zertifikat. Hierfür gibt es verschiedene Methoden, auf die wir im späteren Verlauf des Textes noch eingehen werden.</p>
+
+<div id="attachment_939" style="width: 800px" class="wp-caption alignleft"><a href="https://www.datamate.org/wp-content/uploads/2018/04/certificate_authority_lets_encrypt.png" data-slb-active="1" data-slb-asset="801117108" data-slb-internal="0" data-slb-group="4490"><img aria-describedby="caption-attachment-939" decoding="async" class="size-full wp-image-939" src="https://www.datamate.org/wp-content/uploads/2018/04/certificate_authority_lets_encrypt.png" alt="Die ausgestellten Zertifikate der &quot;Let's Encrypt Authority X3&quot; werden von den gängigen Browsern akzeptiert." width="790" /></a><p id="caption-attachment-939" class="wp-caption-text">Die ausgestellten Zertifikate der &#8220;Let&#8217;s Encrypt Authority X3&#8221; werden von den gängigen Browsern akzeptiert.</p></div>
+
+<p>Das besondere an diesen Zertifikaten ist, dass die Client Authority von Let&#8217;s Encrypt automatisch von jedem Browser akzeptiert wird. Ganz im Gegensatz zu selbst erzeugten Zertifikaten. Hier ist man selbst die eigene CA, welche aber von keinem Browser als vertrauenswürdig akzeptiert wird und daher vermutet jeder Browser ein Risiko hinter dem Aufruf einer Seite mit einem selbst signierten Zertifikat.</p>
+
+<p>Dazu muss man wissen, dass jedes Betriebssystem eine Liste von beglaubigten CAs verwaltet. Diese Liste gibt an, welchem Aussteller eines Zertifikats automatisch vertraut wird und welchem nicht. Da natürlich nur wenige Firmen diesen Status des Vertrauens genießen, ließ man sich die Beglaubigung eines Zertifikats bisher gut bezahlen. Mit der <i>Let&#8217;s Encrypt Authority</i> ist aber nun auch eine Zertifizierungsstelle in der Liste jedes Browsers und Betriebssystems enthalten, die eben kein Geld für die Beglaubigung der Zertifikate verlangt.</p>
+
+<p>Die zweite Besonderheit ist der automatische Beglaubigungsprozess, welches es ermöglicht ohne menschliches Eingreifen auf Seiten der CA <i>Let&#8217;s-Encrypt-Zertifikate</i> zu erstellen. Um dies zu erreichen, installiert man auf seinem Server den <i>Let&#8217;s-Encrypt-Client</i>, der über das <i>Automated Certificate Management Environment, kurz ACME</i> für eine bestimmte Domain oder Subdomain ein Zertifikat anfordert. Die CA stellt dem Server daraufhin eine Aufgabe, welche der Client erfüllen muss, um die Hoheit über die Domain zu beweisen. Dies kann zum Beispiel eine Datei sein, die auf dem Webserver angelegt werden und über die Domain erreichbar sein muss (=webroot validation). Alternativ kann auch anstelle des Webservers ein Dienst gestartet werden, der auf einem entsprechenden Port lauscht und eine Anfrage der CA beantwortet (=standalone validation). Für den Webserver Apache gibt es sogar ein eigenes Modul, welches nicht nur das Zertifikat beantragt, sondern auch gleich in die Konfiguration mit einbindet. Die Entwickler sprechen jeweils von einem eigenen Plugin, welches eine andere Art der Domainhoheit nutzt.</p>
+
+<p>Sobald diese Aufgabe vom Client gelöst wurde, holt sich der Client das Zertifikat ab. 90 Tage lang ist dieses Zertifikat gültig und muss innerhalb dieser Zeit erneuert werden. Diese kurze Lebenszeit dient der Sicherheit, da es den Domainbesitzer zwingt, regelmäßig die Hoheit über die Domain zu beweisen. Natürlich läuft auch der Erneuerungsprozess automatisch ab.</p>
+<h2>Let&#8217;s Encrypt &#8211; ganz konkret</h2>
+<p>Nachdem Sie nun verstanden haben, was <i>Let&#8217;s Encrypt</i> ist und wie es funktioniert, wollen wir Ihnen zeigen, wie Sie Ihre Domain oder Ihren virtuellen Server mit einem grünen SSL-Zertifikat ausstatten. Wir gehen von einem virtuellen Server mit Ubuntu und nginx als Webserver aus. Aufgrund der guten <a href="https://certbot.eff.org/docs/" target="_blank" rel="noopener">Dokumentation des eingesetzten <i>certbots</i></a> sollte es Ihnen jedoch möglich sein, diese Anleitung auch auf andere Browser oder Betriebssysteme zu übertragen. Eine zentrale Voraussetzung ist jedoch, dass Sie auf Ihrem Server einen Root-Zugriff haben, da Sie sonst die notwendige Installation des <i>certbots</i> sowie der Konfiguration des Webservers nicht vornehmen können.</p>
+
+<p>Als Beispiel für den folgenden Text beziehen wir uns auf unseren virtuellen Server bei Host-Europe, auf dem sowohl die Domain <i>www.ionas.com</i> als auch <i>www.ionas-server.com</i> gehostet werden. Bisher hatten wir zwar ein HTTPS-Zertifikat für die beiden Hauptdomains, jedoch war uns der Kauf eines wildcard-Zertifikats für beliebige Subdomains zu teuer. Nun möchten wir mit <i>Let&#8217;s Encrypt</i> die Subdomain <i>https://cloud.ionas.com</i> absichern. Eine weitere Besonderheit ist, dass die Domain <i>cloud.ionas.com</i> gar nicht auf den Webspace bei Host-Europe liegen soll, sondern auf einen ionas-Server Small Business bei uns im lokalen Netzwerk. Dies macht die Angelegenheit zwar etwas komplizierter, verdeutlicht aber gleichzeitig die vielfältigen Einsatzmöglichkeiten von <i>Let&#8217;s Encrypt</i>. Um <i>Let&#8217;s Encrypt</i> für den normalen Webspace bei Host-Europe zu nutzen, muss man einfach nur ein paar vorbereitende Schritte weglassen und würde auch zum gewünschten Ergebnis kommen. Legen wir also los.</p>
+<h2>Schritte 1: Weiterleitung von Anfragen an https://cloud.ionas.com einrichten</h2>
+<p>Unsere Domain <a href="https://www.ionas.com" target="_blank" rel="noopener">www.ionas.com</a> verwalten wir über Plesk, ein Server-Administrationstool, welches unser Domain-Hoster <i>Host-Europe</i> zur Verfügung stellt. Wir passen die DNS-Einstellungen für <i>ionas.com</i> an und fügen einen neuen CNAME-Eintrag hinzu.</p>
+
+<div id="attachment_951" style="width: 860px" class="wp-caption alignleft"><a href="https://www.datamate.org/wp-content/uploads/2018/04/cname-eintrag-in-plesk.png" data-slb-active="1" data-slb-asset="1622041110" data-slb-internal="0" data-slb-group="4490"><img aria-describedby="caption-attachment-951" decoding="async" class="size-full wp-image-951" src="https://www.datamate.org/wp-content/uploads/2018/04/cname-eintrag-in-plesk.png" alt="Durch den CNAME-Eintrag werden Anfragen an cloud.ionas.com an den ionas-Server im lokalen Netzwerk weitergeleitet." width="850" /></a><p id="caption-attachment-951" class="wp-caption-text">Durch den CNAME-Eintrag werden Anfragen an https://cloud.ionas.com an den ionas-Server in unserem lokalen Netzwerk weitergeleitet.</p></div>
+
+<p>Wenn die Subdomain auf den Webspace des virtuellen Servers bei Host-Europe zeigen soll, hätten wir hier die IP-Adresse des virtuellen Servers eingetragen. Da wir jedoch auf einen ionas-Server Small Business im lokalen Netzwerk unseres Büros zeigen wollen, verweisen wir auf Adresse <i>ionas.spdns.de</i>.</p>
+
+<p><i>ionas.spdns.de</i> ist ein DynDNS-Eintrag, hinter dem sich wiederum eine Umleitung auf die IP-Adresse unseres Büros verbirgt. Die Aktualisierung des DynDNS-Eintrags übernimmt dankenswerter der Small Business gleich selber.</p>
+
+<p>Nach diesen Änderungen würden HTTPS-Anfragen an <i>cloud.ionas.com</i> bis zu unserem Router im Büro kommen. Von diesem werden Sie solange verworfen, bis wir im Router eine Portweiterleitung für den generischen HTTPS Port 443 eintragen. Ist dies geschehen &#8211; und auch die Firewall des ionas-Servers für den Port 443 geöffnet -, erreichen die Browseranfragen den Webserver des ionas-Servers Small Business. Kommen wir nun zur Einrichtung des Zertifikats auf dem Webserver.</p>
+<h2>Schritt 2: Let&#8217;s Encrypt Client installieren und Zertifikat anfordern</h2>
+<p>Als nächstes benötigen wir einen Root-Shell auf dem ionas-Server. Auf dieser installieren wir den offiziellen <i>Certbot ACME-Client</i> mit den folgenden Befehlen:</p>
+<pre>cd /usr/local/bin
+git clone https://github.com/certbot/certbot
+cd certbot
+</pre>
+<p>Wir empfehlen die Installation des Tools unter <i>/usr/local/bin</i>, weil dort unter Ubuntu Programme hingehören, die nicht über die eigene Paketquellen installiert wurden. Natürlich können Sie <i>Certbot</i> auch an jedem anderen beliebigen Ort installieren.</p>
+
+<p>Als nächstes kommen wir zur Zertifikatsanforderung. Üblicherweise wird dieses per <i>webroot-Plugin</i> angefordert, bei dem die CA nach einer Datei auf dem Server sucht. Dies erfolgt üblicherweise über den Port 80, d.h. es würde nach einer Datei <i>http://cloud.ionas.com/.well-known/acme-challenge</i> gesucht werden. Da wir jedoch nur den Port 443 (d.h. https://) auf den ionas-Server weitergeleitet und freigegeben haben, wird diese Authentifizierung nicht funktionieren. Deshalb verwenden wir die <i>standalone</i>-Authentifizierung, welche verlangt, dass wir den aktuellen nginx-Webserver für kurze Zeit deaktivieren. Diese Methode startet selber eine Art Webserver und beantwortet nur die Anfrage der CA. Deshalb deaktivieren wir zuerst den Webserver mit den folgenden Befehlen, bevor wir das Zertifikat anfordern.</p>
+<pre>service nginx stop
+./certbot-auto certonly --standalone --rsa-key-size 4096 -d cloud.ionas.com --standalone-supported-challenges tls-sni-01
+</pre>
+<p>Im Folgendenden nun die Parameter mit der jeweiliger Erklärung:
+<ul>
+ 	<li><strong>certbot-auto</strong>: dies ist der Name des <i>Let&#8217;s Encrypt Clients</i>.</li>
+ 	<li><strong>certonly</strong>: es wird nur das Zertifikat angefordert. Der Webserver wird nicht automatisch konfiguriert oder verändert.</li>
+ 	<li><strong>&#8211;standalone</strong>: die von uns gewählte Authentifizierungsmethode.</li>
+ 	<li><strong>&#8211;rsa-key-size 4096</strong>: erhöht die Sicherheit, indem die Länge für den zu generierenden RSA Private Key auf 4096 Bits festgelegt wird. Standard sind 2048 Bit.</li>
+ 	<li><strong>-d cloud.ionas.com</strong>: dies ist die Domain oder Subdomain, für die das Zertifikat beantragt werden soll. Gleichzeitig mehrere Domains und Subdomains anzugeben, ist natürlich möglich.</li>
+ 	<li><strong>&#8211;standalone-support-challenges tls-sni-01</strong>: dieser Parameter teilt der CA mit, dass die Anfrage auf dem Port 443 und nicht auf dem Port 80 erfolgen soll.</li>
+</ul></p>
+<p>Nach Eingabe Ihrer E-Mailadresse und der einmaligen Zustimmung zu den Nutzungsbedingungen wird das gewünschte Zertifikat vom ACME-Server abgeholt und in dem Verzeichnis <i>/etc/letsencrypt/live/cloud.ionas.com</i> gespeichert. In Summe liegen dort bei einer erfolgreichen Anforderung vier verschiedene Dateien:</p>
+<ul>
+ 	<li>cert.pem (das öffentliche Zertifikat)</li>
+ 	<li>chain.pem (die sogenannte Keychain)</li>
+ 	<li>fullchain.pem (entspricht cert.pem + chain.pem)</li>
+ 	<li>privkey.pem (der private Schlüssel)</li>
+</ul>
+<p>Damit haben Sie alles, um <i>Let&#8217;s Encrypt</i> in Ihrem Webserver einzubauen.</p>
+<h2>Schritt 3: Webserver nginx starten und konfigurieren</h2>
+<p>Nachdem wir nun die Zertifikate erhalten haben, können wir nginx wieder starten.</p>
+<pre>service nginx start
+</pre>
+<p>Nun müssen wir nur noch die erhaltenen Zertifikate einbinden, um eine grüne URL mit vertrauenswürdigem SSL-Zertifikat zu erhalten.
+Eine Minimalkonfiguration des nginx-Webservers könnte z.B. so aussehen:</p>
+<pre>server {
+  listen 443;
+  server_name cloud.ionas.com;
+  index index.php;
+  allow all;
+
+  ssl on;
+  ssl_certificate /etc/letsencrypt/live/cloud.ionas.com/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/cloud.ionas.com/privkey.pem;
+  ssl_session_timeout 5m;
+
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers "HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES";
+  ssl_prefer_server_ciphers on;
+
+  location / {
+    root /var/www;
+    index index.php;
+  }
+}
+</pre>
+<p>Sobald der Webserver neu gestartet wurde, können wir überprüfen, ob das Zertifikat richtig eingebunden wurde. Wichtig ist, dass Sie nur beim Aufruf von https://cloud.ionas.com ein grünes Zertifikat sehen können.</p>
+
+<strong>Wichtige Hinweise:</strong>
+
+<p>1) Wenn Sie die lokale IP-Adresse (z.B. 192.168.7.3) verwenden, werden Sie auch weiterhin einen Zertifikatsfehler erhalten, da das Zertifikat nur für cloud.ionas.com beantragt wurde und eben nicht für die lokale IP-Adresse.</p>
+
+<p>2) Aufgrund der geforderten Domainhoheit merkt man spätestens jetzt, das <i>Let&#8217;s Encrypt</i> nicht für lokale IP-Adressen oder DynDNS-Adressen verwendet werden kann. In beiden Fällen kann man die Domainhoheit eben nicht nachweisen.</p>
+
+<p>3) Aus Sicherheitsgründen verweigern die meisten Router den Aufruf von https://cloud.ionas.com aus dem gleichen lokalen Netzwerk. Besitzer einer Fritz!Box können sich freuen, weil diese automatisch die Anfrage richtig im lokalen Netzwerk auflöst. Besitzer anderer Router müssen hier entweder entsprechende Einträge in der jeweiligen HOSTS-Dateien der Clients vornehmen oder prüfen, ob Ihr Router eventuell eine lokale DNS-Auflösung beherrscht. Dieses Thema an dieser Stelle weiter auszuführen, würde definitiv den Rahmen sprengen, aber gerne stehen wir auch für diese Fragen mit Rat und Tat zur Seite.</p>
+
+
+<h2>Schritt 4: Zertifikat automatisch per Cronjob erneuern lassen</h2>
+<p>Nun haben wir unseren virtuellen Server mit einem vertrauenswürdigen SSL-Zertifikat ausgestattet. Da das Zertifikat nur 90 Tage gültig ist, sollte man dieses automatisch aktualisieren lassen.</p>
+
+<p>Dafür bietet sich der folgende Cronjob-Eintrag an:</p>
+<pre>0 0 * * * /usr/local/bin/certbot/certbot-auto renew --standalone --pre-hook "service nginx stop" --post-hook "service nginx start" >> /var/log/letsencrypt.log
+</pre>
+<p>Der Befehl wird täglich zur Geisterstune ausgeführt. Es wird der <i>certbot</i> mit dem Parameter <i>renew</i> aufgerufen. Gleichzeitig sorgen wir durch die <i>pre-hook</i> und <i>post-hook</i> dafür, dass zum Zeitpunkt der Anfrage der Webserver gestoppt wird.</p>
+
+<p>Das Ergebnis des Befehls schreiben wir dabei fortlaufend in eine Logdatei mit Namen letsencrypt.log. Das schöne an diesem Befehl ist, dass der ACME-Client nur aktiv wird, wenn das Zertifikat in weniger als 30 Tagen abläuft. Wenn das Zertifikat noch länger gültig ist, legt der <i>Certbot</i> sich automatisch wieder schlafen.
+<h2>Automatisierte Konfiguration mit ionas-Server Cockpit 3.4</h2>
+Das Beantragen von <i>Let&#8217;s Encrypt</i> Zertifikaten ist nicht schwer und erlaubt es, eigene virtuelle Server und Domains wirkungsvoll abzusichern. Gleichzeitig können private Home-Server oder Business-Server wie die ionas-Server zu vollwertigen Private Clouds aufgewertet werden.</p>
+
+<p>Wir sind so begeistert von den Möglichkeiten, dass wir mit dem kommenden Cockpit-Update die Konfiguration von <i>Let&#8217;s Encrypt</i> über die Weboberfläche des ionas-Server möglich machen werden. Jeder unser Kunden wird z.B. die eigenen Seafile-Daten mit einem grünen SSL-Zertifikat ins Internet freigeben können. Seien Sie also gespannt auf das nächste ionas-Server Cockpit Update 3.4.</p>					</div>
+                  <!-- Post Author Info	============================================= -->
+<div class="team team-list clearfix">
+	<div class="team-image" style="width: 96px;">
+			</div>
+	<div class="team-desc">
+		<div class="team-title"><span>geschrieben von</span><h4 class="nobottommargin">Christoph Dyllick-Brenzinger</h4></div>
+		<div class="team-content">Christoph ist Gründer und Chefentwickler von datamate. Er ist ein absoluter Linux-Fan und hat schon früh seine Leidenschaft für Technik und Programmierung entdeckt. Seine langjährige Erfahrung als Unternehmensberater spürt man regelmäßig, wenn er nach optimalen Lösungen für die Kunden sucht. Wenn er nicht gerade den Tennisplatz unsicher macht oder bei Overwatch sein Liga-Ranking verbessert, verbringt Christoph seine Freizeit mit seiner Frau und seinen drei Kindern.</div>
+	</div>
+</div>
+		</div> <!-- ipost clearfix -->
+
+
+
+
+
+
+        </div>
+<div class="col-sm-4 bottommargin-sm">
+
+    <div class="widget clearfix">
+        <div class="widget clearfix"><form role="search" method="get" class="search-form" action="https://www.datamate.org/">
+    <label>
+        <input class="typeahead sm-form-control tt-input" type="search" class="search-field"
+            placeholder="Suchen nach:"
+            value="" name="s"
+            title="Suchen nach:" />
+    </label>
+    <input type="submit" class="button button-3d button-rounded"
+        value="Suchen" />
+</form>
+</div><div class="widget clearfix"><h3>Kategorien</h3>
+			<ul>
+					<li class="cat-item cat-item-110"><a href="https://www.datamate.org/category/alles-ueber-die-cloud/">Alles über die Cloud</a> (5)
+</li>
+	<li class="cat-item cat-item-34"><a href="https://www.datamate.org/category/anleitungen/">ANLEITUNGEN</a> (47)
+<ul class='children'>
+	<li class="cat-item cat-item-36"><a href="https://www.datamate.org/category/anleitungen/hardware/">HARDWARE</a> (5)
+</li>
+	<li class="cat-item cat-item-35"><a href="https://www.datamate.org/category/anleitungen/software/">SOFTWARE</a> (37)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-31"><a href="https://www.datamate.org/category/datamate/">DATAMATE</a> (28)
+<ul class='children'>
+	<li class="cat-item cat-item-33"><a href="https://www.datamate.org/category/datamate/aus-dem-leben-eines-startups/">AUS DEM LEBEN EINES STARTUPS</a> (8)
+</li>
+	<li class="cat-item cat-item-32"><a href="https://www.datamate.org/category/datamate/unsere-produkte/">UNSERE PRODUKTE</a> (21)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-28"><a href="https://www.datamate.org/category/kunden/">KUNDEN</a> (17)
+<ul class='children'>
+	<li class="cat-item cat-item-29"><a href="https://www.datamate.org/category/kunden/erfolgsgeschichten/">ERFOLGSGESCHICHTEN</a> (3)
+</li>
+	<li class="cat-item cat-item-30"><a href="https://www.datamate.org/category/kunden/praktische-anwendungsfaelle/">PRAKTISCHE ANWENDUNGSFÄLLE</a> (14)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-56"><a href="https://www.datamate.org/category/loesungen/">LÖSUNGEN</a> (33)
+<ul class='children'>
+	<li class="cat-item cat-item-181"><a href="https://www.datamate.org/category/loesungen/3cx/">3CX</a> (3)
+</li>
+	<li class="cat-item cat-item-111"><a href="https://www.datamate.org/category/loesungen/friendica/">Friendica</a> (1)
+</li>
+	<li class="cat-item cat-item-83"><a href="https://www.datamate.org/category/loesungen/odoo/">ODOO</a> (4)
+</li>
+	<li class="cat-item cat-item-57"><a href="https://www.datamate.org/category/loesungen/seafile/">SEAFILE</a> (19)
+</li>
+	<li class="cat-item cat-item-112"><a href="https://www.datamate.org/category/loesungen/wordpress/">WORDPRESS</a> (1)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-94"><a href="https://www.datamate.org/category/tests/">TESTS</a> (6)
+<ul class='children'>
+	<li class="cat-item cat-item-95"><a href="https://www.datamate.org/category/tests/hardware-tests/">HARDWARE</a> (2)
+</li>
+	<li class="cat-item cat-item-96"><a href="https://www.datamate.org/category/tests/software-tests/">SOFTWARE</a> (3)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://www.datamate.org/category/uncategorized/">Uncategorized</a> (36)
+</li>
+			</ul>
+
+			</div>    </div>
+
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+	<footer id="footer" class="dark">
+		<div class="container clearfix">
+
+			<div class="footer-widgets-wrap">
+				<div class="col-sm-3">
+						<div class="widget clearfix"><h4>datamate &#8211; RETHINK IT</h4>			<div class="textwidget"><p>Wir sind ein Team von IT-Beratern und IT-Entwicklern. <br/>Wir entwickeln auf Basis von Open Source unsere <strong>eigenen Produkte</strong> und finden  <strong>IT-Lösungen</strong> für die Bedürfnisse unserer Kunden.  
+<hr/>
+<p><strong>datamate GmbH & Co. KG</strong><br>117er Ehrenhof 5<br>55118 Mainz</p></div>
+		</div>				</div>
+				<div class="col-sm-2">
+										</div>
+				<div class="col-sm-2">
+						<div class="widget widget_links clearfix"><h4>Produkte</h4>			<div class="textwidget"><ul>
+<li><a title="Buddy - Mini PC mit Windows und Linux" href="/buddy">Buddy</a></li>
+<li><a title="Homie - Private Cloud und Multimedia-Zentrale" href="/homie">Homie</a></li>
+<li><a title="Small Business Server" href="/fellow">Fellow</a></li>
+</ul>
+</div>
+		</div>				</div>
+				<div class="col-sm-2">
+						<div class="widget widget_links clearfix"><h4>Lösungen</h4>			<div class="textwidget"><ul>
+<li><a title="Seafile" href="/seafile">Seafile</a></li>
+<li><a title="3CX Telefonanlagen" href="/3cx">3CX</a></li>
+</ul></div>
+		</div>				</div>
+				<div class="col-sm-3">
+						<div class="widget widget_links clearfix"><h4>Datamate</h4>			<div class="textwidget"><ul>
+<li><a title="Über datamate" href="/unternehmensprofil">Über datamate</a></li>
+<li><a title="Presseinformationen" href="/presse">Presse</a></li>
+<li><a title="datamate wiki" href="/hilfe">Hilfe-Wiki</a></li>
+<li><a href="https://get.teamviewer.com/datamate" target="_blank" rel="noopener">Download TeamViewer</a></li>
+</ul></div>
+		</div>				</div>
+			</div>
+		</div>
+
+		<div id="copyrights">
+			<div class="container clearfix">
+				<div class="col_half">
+					datamate ist eine eingetragene Schutzmarke.<br>
+					<div class="copyright-links"><a href="https://www.datamate.org/impressum" title="Datamate Impressum">Impressum</a> / <a href="https://www.datamate.org/datenschutzerklaerung" title="Datenschutz von Datamate">Datenschutz</a> / <a href="https://www.datamate.org/downloads/Datamate-AGB.pdf" title="Datamate Allgemeine Geschäftsbedingungen">AGB</a></div>
+				</div>
+				<div class="col_half col_last tright">
+					<div class="fright clearfix">
+						<a href="https://www.facebook.com/datamate.rethink.it/" title="Datamate auf Facebook." class="social-icon si-small si-borderless si-facebook">
+							<i class="icon-facebook"></i>
+							<i class="icon-facebook"></i>
+						</a>
+						<a href="https://www.youtube.com/channel/UCnVWPO4V0n9aUGcG9q31b4g" title="Datamate auf Youtube." class="social-icon si-small si-borderless si-youtube">
+							<i class="icon-youtube"></i>
+							<i class="icon-youtube"></i>
+						</a>
+					</div>
+					<div class="clear"></div>
+					<i class="icon-envelope2"></i><a href="mailto:info@datamate.org" style="color: rgba(255,255,255,.25);"> info@datamate.org</a> <span class="middot">&middot;</span> <i class="icon-phone"></i> +49 (0)6131 3270777
+				</div>
+			</div>
+		</div>
+	</footer>
+</div> <!-- wrapper end -->
+
+<div id="gotoTop" class="icon-angle-up"></div>
+<!-- minified by https://javascript-minifier.com/ -->
+<script type="text/javascript" src="https://www.datamate.org/wp-content/themes/datamate-theme/js/canvas.js"></script>
+
+<script type="text/javascript" src="https://www.datamate.org/wp-content/themes/datamate-theme/datamate-theme.js"></script>
+
+<script type='text/javascript' src='https://www.datamate.org/wp-includes/js/jquery/jquery.min.js?ver=3.6.1' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-content/plugins/simple-lightbox/client/js/prod/lib.core.js?ver=2.9.0' id='slb_core-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-content/plugins/simple-lightbox/client/js/prod/lib.view.js?ver=2.9.0' id='slb_view-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-content/plugins/simple-lightbox/themes/baseline/js/prod/client.js?ver=2.9.0' id='slb-asset-slb_baseline-base-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-content/plugins/simple-lightbox/themes/default/js/prod/client.js?ver=2.9.0' id='slb-asset-slb_default-base-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-content/plugins/simple-lightbox/template-tags/item/js/prod/tag.item.js?ver=2.9.0' id='slb-asset-item-base-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-content/plugins/simple-lightbox/template-tags/ui/js/prod/tag.ui.js?ver=2.9.0' id='slb-asset-ui-base-js'></script>
+<script type='text/javascript' src='https://www.datamate.org/wp-content/plugins/simple-lightbox/content-handlers/image/js/prod/handler.image.js?ver=2.9.0' id='slb-asset-image-base-js'></script>
+<script type="text/javascript" id="slb_footer">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB && SLB.has_child('View.init') ) { SLB.View.init({"ui_autofit":true,"ui_animate":true,"slideshow_autostart":true,"slideshow_duration":"6","group_loop":true,"ui_overlay_opacity":"0.8","ui_title_default":false,"theme_default":"slb_default","ui_labels":{"loading":"Loading","close":"Close","nav_next":"Next","nav_prev":"Previous","slideshow_start":"Start slideshow","slideshow_stop":"Stop slideshow","group_status":"Item %current% of %total%"}}); }
+if ( !!window.SLB && SLB.has_child('View.assets') ) { {$.extend(SLB.View.assets, {"801117108":{"id":4491,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2018\/04\/certificate_authority_lets_encrypt.png","title":"certificate_authority_lets_encrypt","caption":"","description":""},"1622041110":{"id":4492,"type":"image","internal":true,"source":"https:\/\/www.datamate.org\/wp-content\/uploads\/2018\/04\/cname-eintrag-in-plesk.png","title":"cname-eintrag-in-plesk","caption":"","description":""}});} }
+/* THM */
+if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_baseline',{"name":"Grundlinie","parent":"","styles":[{"handle":"base","uri":"https:\/\/www.datamate.org\/wp-content\/plugins\/simple-lightbox\/themes\/baseline\/css\/style.css","deps":[]}],"layout_raw":"<div class=\"slb_container\"><div class=\"slb_content\">{{item.content}}<div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><div class=\"slb_controls\"><span class=\"slb_close\">{{ui.close}}<\/span><span class=\"slb_slideshow\">{{ui.slideshow_control}}<\/span><\/div><div class=\"slb_loading\">{{ui.loading}}<\/div><\/div><div class=\"slb_details\"><div class=\"inner\"><div class=\"slb_data\"><div class=\"slb_data_content\"><span class=\"slb_data_title\">{{item.title}}<\/span><span class=\"slb_group_status\">{{ui.group_status}}<\/span><div class=\"slb_data_desc\">{{item.description}}<\/div><\/div><\/div><div class=\"slb_nav\"><span class=\"slb_prev\">{{ui.nav_prev}}<\/span><span class=\"slb_next\">{{ui.nav_next}}<\/span><\/div><\/div><\/div><\/div>"}); }if ( !!window.SLB && SLB.has_child('View.extend_theme') ) { SLB.View.extend_theme('slb_default',{"name":"Standard (hell)","parent":"slb_baseline","styles":[{"handle":"base","uri":"https:\/\/www.datamate.org\/wp-content\/plugins\/simple-lightbox\/themes\/default\/css\/style.css","deps":[]}]}); }})})(jQuery);}/* ]]> */</script>
+<script type="text/javascript" id="slb_context">/* <![CDATA[ */if ( !!window.jQuery ) {(function($){$(document).ready(function(){if ( !!window.SLB ) { {$.extend(SLB, {"context":["public","user_guest"]});} }})})(jQuery);}/* ]]> */</script>
+
+</body>
+</html>

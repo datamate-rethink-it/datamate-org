@@ -1,0 +1,102 @@
++++
+title = "Mehrsprachigkeit leicht gemacht – Odoo Modul übersetzen"
+titel_html = "Mehrsprachigkeit leicht gemacht - Odoo Modul übersetzen."
+ueberschrift = "Mehrsprachigkeit leicht gemacht &#8211; Odoo Modul übersetzen"
+beschreibung = "Eine große Stärke von Odoo ist die Mehrsprachigkeit. Doch viele Custom-Module sind nur auf Englisch verfügbar. Wir zeigen, wie Sie diese Module übersetzen."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/11/translate.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/mehrsprachigkeit-odoo-modul-uebersetzen/"
+canonical = "https://www.datamate.org/mehrsprachigkeit-odoo-modul-uebersetzen/"
+og_bild_breite = "748"
+og_bild_hoehe = "421"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2016-04-25T20:56:00+00:00"
+geaendert = "2025-02-21T08:10:52+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "5 Minuten"
+beitragsbild = "/wp-content/uploads/2017/11/translate.jpg"
+bild_breite = 748
+bild_hoehe = 421
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Mehrsprachigkeit leicht gemacht &#8211; Odoo Modul übersetzen", item = ""}]
+wortzahl = 1064
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["odoo", "software"]
+schlagwoerter = ["Odoo", "Odoo 9", "Open Source", "Übersetzung"]
+wp_id = 3187
+slug = "mehrsprachigkeit-odoo-modul-uebersetzen"
+url = "/mehrsprachigkeit-odoo-modul-uebersetzen/"
+date = "2016-04-25T22:56:00"
+lastmod = "2025-02-21T09:10:52"
+datum_utc = "2016-04-25T20:56:00+00:00"
+geaendert_utc = "2025-02-21T08:10:52+00:00"
++++
+						<p>Die Mehrsprachigkeit von Odoo ist eine große Stärke. Die Standardmodule von Odoo 8 und Odoo 9 gibt es aktuell in über 40 Sprachen. Doch sobald man die Odoo Standardmodule wie z.B. Odoo-CRM hinter sich lässt und auch ein paar <i>Custom-Module</i> einsetzt, ist es mit der Mehrsprachigkeit vorbei. Kaum ein Entwickler, sei es ein Implementierungspartner oder ein Community-Entwickler macht sich die Mühe, das selbst entwickelte Addon in mehr als zwei Sprachen zu übersetzen. Englisch ist zwar eigentlich immer dabei, aber Deutsch ist nun man leider keine Weltsprache und gehört deshalb bei vielen Custom-Modulen nicht zwingend dazu.</p>
+
+<p>In diesem Artikel erfahren Sie, wie die Mehrsprachigkeit von Odoo funktioniert und anhand des Custom-Moduls <i>Click2Dial</i> von Akretion stellen wir beispielhaft dar, wie man einem Custom-Modul eine zusätzliche Sprache beibringt.</p>
+
+<span id="more-3187"></span>
+
+<h2>Umsetzung der Mehrsprachigkeit in Odoo</h2>
+
+<p>Odoo ist nicht ein zusammenhängendes Stück Software, sondern es ist modular, d.h. es besteht einer Vielzahl von Modulen, die jeweils eine oder mehrere klar umrissene Aufgaben übernehmen. Odoo-CRM ist ein Modul, die Weboberfläche von Odoo ist ein Modul und auch die Schnittstelle zu einem Asterisk-Server ist ein Modul. Jedes dieser Module muss eigene Sprachdateien mitliefern, die innerhalb des Moduls im Ordner <i>i18n</i> gespeichert werden und z.B. den Dateiennamen <i>en.po</i> oder <i>de.po</i> haben. Die Struktur dieser <i>.po-Dateien</i> ist immer gleich. Sie alle bestehen aus vielen Einträgen der folgenden Art:</p>
+
+<pre>
+#. module: base_phone
+#: view:reformat.all.phonenumbers:base_phone.reformat_all_phonenumbers_form
+msgid "Cancel"
+msgstr "Abbruch"
+</pre>
+
+<p>Im ersten Zeileneintrag wird angezeigt, zu welchem Modul <i>(module)</i> der Eintrag gehört. In der zweiten Zeile wird der Ort in der Weboberfläche <i>(view)</i> aufgezeigt, in dem die Übersetzung zur Anwendung kommen soll. Mit <i>msgid</i> wird der Standardwert beschrieben, der durch den Wert hinter <i>msgstr</i> ersetzt werden soll. Natürlich können nicht nur einzelne Worte, sondern auch ganze Sätze inklusive Variablen wie <i>%s</i> übersetzt werden. Das oben gezeigte Beispiel ist ein Ausschnitt aus der <i>de.po</i> Datei und teilt Odoo mit, dass bei Auswahl der deutschen Sprache der Begriff <i>Cancel</i> durch <i>Abbruch</i> ersetzt werden soll.</p>
+
+<img decoding="async" src="/wp-content/uploads/2017/11/odoo-translate2.png" alt="Die Weboberfläche von Odoo kann in beliebige Sprachen übersetzt werden." class="shadow" />
+
+<h2>Fallbeispiel: Deutsche Sprachdatei für den Akretion VoIP-Connector</h2>
+
+<p>Beginnen wir also damit, den <a href="http://www.akretion.com/open-source-contributions/openerp-asterisk-voip-connector">VoIP-Connector von Akretion</a> ins Deutsche zu übersetzen. Der Connector, welcher standardmäßig auf jedem ionas-Server Small Business installiert ist, macht es möglich, Kunden direkt aus Odoo heraus anzurufen und bei eingehenden Anrufen die Kundendatenbank auf die Rufnummer zu durchsuchen. Durch diese Computer-Telefonie-Integration (CTI) kann sich der Anwender, also noch bevor er den Anruf entgegen nimmt, die passende Kundenakte mit allen Informationen anzeigen lassen. </p>
+
+<p>In einem früheren Artikel haben wir bereits beschrieben, wie wir beim ionas-Server Small Business mit Hilfe dieses Moduls <a href="/odoo-crm-mit-der-voip-telefonanlage-verbinden/">die VoIP-Telefonanlage und Odoo miteinander gekoppelt haben</a>. Grundsätzlich ist es jedoch egal, welches Modul übersetzt werden soll. Das Vorgehen ist immer das Gleiche.</p>
+
+<p>Der VoIP-Connector besteht aus vier verschiedenen Modulen:</p>
+<ul>
+<li>base_phone</li>
+<li>asterisk_click2dial</li>
+<li>crm_claim_phone</li>
+<li>crm_phone</li>
+</ul>
+
+<p>Typischerweise liegen alle Custom-Module in einem Unterverzeichnis von Odoo. Auf dem ionas-Server findet man die vier Module unter <i>/opt/odoo/custom/addons/voip/</i>. In jedem der vier Module gibt es ein Verzeichnis mit dem Namen <i>i18n</i> mit den .po-Sprachdateien. </p>
+
+<h3>Sprachdatei individuell anpassen</h3>
+<p>Der erste Schritt sollte immer die Kopie der Datei <i>en.po</i> und Speicherung unter dem Namen <i>de.po</i> sein. Achten Sie darauf, dass die neue Datei über die gleichen Berechtigungen verfügt wie die Ursprungsdatei. </p>
+
+<p>Nun können wir die <i>de.po</i> Datei mit den deutschen Übersetzungen anpassen. Teilweise ist es schwierig die genaue Übersetzung zu finden, da aus der Datei nicht immer sofort der Zusammenhang hervorgeht. Trotzdem sollte man die Datei einmal vollständig übersetzen und dann abspeichern. Nachträgliche Ergänzungen und Änderungen sind ohne weiteres möglich und sinnvoll.</p>
+
+<p>Da es sich bei den .po-Dateien um reine Textdateien handelt, kann man für die Arbeit an den Sprachdateien jeden beliebigen Texteditor verwenden.</p>
+
+<h3>Module aktualisieren</h3>
+<img decoding="async" src="/wp-content/uploads/2017/11/odoo-translate1.png" alt="Module müssen aktualisiert werden, um die neue Sprachdatei zu laden." class="shadow" /> 
+
+<p>Damit Odoo auf die neuen Sprachdateien zugreifen kann, müssen die Module aktualisiert werden. Dies ist angenehmerweise direkt über das Menü Einstellungen in der Weboberfläche möglich.</p>
+
+<p>Loggen Sie sich als Administrator in Odoo ein. Wechseln Sie zu <strong>Einstellungen -> Module -> Lokale Apps</strong>. Suchen Sie nach den vier Apps und aktualisieren Sie jedes einzelne Modul. Dies funktioniert, indem Sie das Modul anklicken und dann den Knopf <strong>Aktualisieren</strong> auswählen. </p>
+
+<p>Sobald Odoo die Seite neu geladen hat, wurde die neue Sprachdatei in die Datenbank von Odoo aufgenommen. Wenn Sie nun die Sprache des Anwenders wechseln, werden Sie feststellen, dass die Weboberfläche von Odoo die Übersetzungen anzeigt. Sie haben das Custom-Modul ins Deutsche übersetzt.</p>
+
+<h3>Nachträgliche Änderungen übernehmen</h3>
+<p>Angenommen Sie stellen fest, dass an manchen Stellen die Übersetzung noch nicht perfekt ist, dann können Sie natürlich die <i>de.po</i> erneut über die Kommandozeile bzw. das Terminal anpassen. Wenn Sie im Anschluss daran das zugehörige Modul erneut aktualisieren, dann werden Sie feststellen, dass Ihre Änderungen nicht in der Weboberfläche von Odoo übernommen werden. Die Erklärung für dieses Verhalten ist ganz einfach. </p>
+
+<p>Odoo liest zwar beim Aktualisieren alle Sprachdateien des Moduls aus, schreibt aber nur neue Übersetzungen aus den <i>.po-Dateien</i> in die eigene PostgreSQL-Datenbank. Wenn aber erstmal eine Sprache für ein Modul in der Datenbank steht, überschreibt Odoo die Werte nicht einfach. Was auf den ersten Blick unlogisch erscheint, liegt in der Möglichkeit der Sprachanpassung über die Odoo-Weboberfläche begründet. Ich werde diese Möglichkeit der Oberflächenanpassung von Odoo in einem späteren Artikel beleuchten. Stattdessen muss man Odoo also auffordern eine Sprache vollständig neu einzulesen. </p>
+
+<img decoding="async" src="/wp-content/uploads/2017/11/odoo-translate3.png" alt="Nachträgliche Änderungen in einer Sprache müssen von Odoo komplett neu geladen werden." class="shadow" />
+
+<p>Hierzu geht man in Odoo auf <strong>Einstellungen -> Übersetzungen -> eine Übersetzung laden</strong>. In dem sich öffnenden Fenster wählt man die gewünschte Sprache aus und setzt den Haken bei <strong>Bisherige Übersetzungen ändern</strong>. Die Sprache wird nun vollständig neu geladen und die Änderungen werden nun in der Weboberfläche von Odoo angezeigt. </p>
+
+<h2>Fazit: Die Übersetzung von Custom-Modulen in Odoo ist einfach</h2>
+<p>Die Mehrsprachigkeit von Odoo ist eine große Stärke des OpenSource ERP/CRM-Systems. Die Übersetzung von beliebigen Custom-Modulen in die gewünschte Sprache ist durch die Kopie und Anpassung der original Sprachdatei schnell erledigt. Fortlaufende Arbeiten an den Sprachdateien lassen sich leicht durch Updates des Moduls bzw. das Laden von Übersetzungenänderungen in Odoo integrieren.</p>
+
+<p>Sollten Sie Fragen oder Probleme haben, rufen Sie uns an. Gerne übernehmen wir für Sie die Übersetzung von Custom-Modulen oder liefern Ihnen mit dem ionas-Server Small Business die perfekte IT für Ihre Unternehmen.</p>

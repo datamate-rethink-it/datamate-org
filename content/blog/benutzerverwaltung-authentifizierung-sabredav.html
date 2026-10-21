@@ -1,0 +1,155 @@
++++
+title = "Teil 3: Benutzerverwaltung und -autentifizierung mit sabre/dav"
+titel_html = "Teil 3: Benutzerverwaltung und -autentifizierung mit sabre/dav | datamate"
+ueberschrift = "Teil 3: Benutzerverwaltung und -autentifizierung mit sabre/dav"
+beschreibung = "sabre/dav liefert keine eigene Benutzerverwaltung. Glücklicherweise ist die Anlage und die Verwaltung von Benutzern, Kalendern und Adressbüchern einfach."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/07/sabredav-authentification.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/benutzerverwaltung-authentifizierung-sabredav/"
+canonical = "https://www.datamate.org/benutzerverwaltung-authentifizierung-sabredav/"
+og_bild_breite = "1920"
+og_bild_hoehe = "1277"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2017-07-24T19:36:00+00:00"
+geaendert = "2025-02-21T08:10:40+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "5 Minuten"
+beitragsbild = "/wp-content/uploads/2017/07/sabredav-authentification.jpg"
+bild_breite = 1920
+bild_hoehe = 1277
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Teil 3: Benutzerverwaltung und -autentifizierung mit sabre/dav", item = ""}]
+wortzahl = 747
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["software"]
+schlagwoerter = ["CalDAV", "CardDAV", "Kontaktsynchronisation", "sabre/dav", "Termin-", "Tutorial"]
+wp_id = 275
+slug = "benutzerverwaltung-authentifizierung-sabredav"
+url = "/benutzerverwaltung-authentifizierung-sabredav/"
+date = "2017-07-24T21:36:00"
+lastmod = "2025-02-21T09:10:40"
+datum_utc = "2017-07-24T19:36:00+00:00"
+geaendert_utc = "2025-02-21T08:10:40+00:00"
++++
+						<p>In <a href="/blog/eigener-caldav-server-mit-sabredav/">Teil 1 &#8211; Was ist sabre/dav?</a> wurde die Synchronisationslösung für Termine, Kontakte und Aufgaben bereits vorgestellt. In <a href="/blog/installation-caldav-server-ubuntu/">Teil 2 &#8211; Installation von sabre/dav unter Ubuntu 16.04</a> wurden die notwendigen Befehle vorgestellt, um den eigenen sabre/dav-Server zu installieren. In diesem dritten Teil geht es nun darum den Dienst das erste Mal zu benutzen und die dafür benötigen User mit den entsprechenden Berechtigungen anzulegen. Gleichzeitig werden Sie beginnen die modulare Bauweise und die MySQL-Datenbank von sabre/dav kennen zu lernen.</p>
+
+<p>Nach diesem Kapitels werden sie einen voll einsatzfähigen Synchronisationsserver haben. Ausserdem werden Sie wissen, wie Sie weitere Benutzer anlegen und verwalten können. Sie werden erste Schritte mit der MySQL-Datenbank machen, bevor es dann im vierten Teil um die Konfiguration der verschiedenen Clients gehen wird. Schon bald können Sie Ihre privaten Daten über alle Ihre Geräte und Betriebssysteme hinweg synchronisieren.</p>
+
+<span id="more-275"></span>
+
+<h2>Anlage eines Benutzers mit einem eigenen Kalender und Adressbuch</h2>
+
+<h3>Bietet sabre/dav eine Benutzerverwaltung?</h3>
+
+<blockquote>
+<p>SabreDAV does not provide an administrative interface to add users. While this may happen in the future, for now SabreDAV is mostly intended for developers.</p>
+<p>Adding new users is done directly on the database. In order to allow a user to log in, add them to the users table. You must also add them to the principals table to enable calendar access.</p><br/>
+<p>&#8211; Evert Pot auf <a href="http://sabre.io/dav/caldav/" target="_blank" rel="noopener">http://sabre.io/dav/caldav/</a></p>
+</blockquote>
+
+<style>
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+	color: #333;
+}
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+blockquote p {
+  display: inline;
+}
+	</style>
+
+<p>Dieses Zitat vom Entwickler Evert Pot soll Sie nicht entmutigen, aber auch nichts beschönigen: sabre/dav ist ein Framework von einem Entwickler für andere Entwickler. Die Installation der Software ist ziemlich gut beschrieben und sollte Ihnen durch den vorherigen Artikel nicht schwer gefallen sein. Aber bereits jetzt, wenn es an die Anlage von Benutzern geht, muss man sich selbst in der Datenbank zurechtfinden &#8211; oder eben diesen Artikel lesen. Worauf warten wir also?!?</p>
+
+<h3>Struktur der MySQL-Datenbank</h3>
+
+<p>Die zwei zentralen Tabellen für die Benutzerverwaltung von sabre/dav sind <i>users</i> und <i>principals</i>. Sie sehen diese Tabellen, wenn Sie sich mit dem vorher angelegten MySQL-User mit der MySQL-Datenbank verbinden. In der Tabelle <i>users</i> findet man den Benutzernamen und das gehashte Passwort <i>digesta1</i>, welche Sie verwenden um sich gegenüber sabre/dav zu authentifizieren.</p> 
+	
+<pre><code class="hljs">mysql -u sabredav -p
+Enter password: 
+
+Welcome to the MySQL monitor. Commands end with ; or \g.
+...
+
+mysql> describe users;
++----------+------------------+------+-----+---------+----------------+
+| Field    | Type             | Null | Key | Default | Extra          |
++----------+------------------+------+-----+---------+----------------+
+| id       | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| username | varbinary(50)    | YES  | UNI | NULL    |                |
+| digesta1 | varbinary(32)    | YES  |     | NULL    |                |
++----------+------------------+------+-----+---------+----------------+
+</pre></code>
+
+<p>Die <i>principals</i>-Tabelle ist nur unwesentlich komplizierter. Die <i>uri</i> beschreibt den absoluten Pfad zu des zugehörigen Users und hat immer die Form 'principals/BENUTZERNAME</i> und hinter <i>displayname</i> verbirgt sich immer der Name in der Form, wie er später auch dem Anwender angezeigt wird - also z.B. <i>Christoph Dyllick</i>.
+
+<pre><code class="hljs">mysql> describe principals;
++-------------+------------------+------+-----+---------+----------------+
+| Field       | Type             | Null | Key | Default | Extra          |
++-------------+------------------+------+-----+---------+----------------+
+| id          | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| uri         | varbinary(200)   | NO   | UNI | NULL    |                |
+| email       | varbinary(80)    | YES  |     | NULL    |                |
+| displayname | varchar(80)      | YES  |     | NULL    |                |
++-------------+------------------+------+-----+---------+----------------+
+</code></pre>
+
+<h3>Anlage eines Benutzers</h3>
+
+<p>Beginne wir also mit ein paar MySQL-Befehlen um einen Benutzer anzulegen:</p>
+
+<pre><code class="hljs">mysql> use sabredav;
+mysql> INSERT INTO users (username, digesta1) VALUES ('cdb',MD5('cdb:SabreDAV:meinPasswort'));
+mysql> INSERT INTO principals (uri, email, displayname) VALUES ('principals/cdb','cdb@datamate.org','Christoph Dyllick');
+</code></pre>
+
+<p>Nach diesen Datenbankeinträgen sollte sich der User <i>cdb</i> mit dem Passwort <i>meinPasswort</i> auf der Weboberfläche von sabre/dav oder per Client einloggen können. Wichtig: sabre/dav bietet keine Logout-Funktion, weshalb man nur wieder zum Login kommt, wenn man den Browser-Cache manuell leert und danach die Seite neu lädt.</p>
+
+<h3>Kalender und Adressbuch anlegen</h3>
+
+<p>Bisher haben wir nur den User <i>cdb</i> angelegt und noch keinen Kalender und kein Adressbuch angelegt. Dies muss nicht zwingend bei der Anlage eines Benutzers erfolgen, macht aber natürlich großen Sinn. Höchste Zeit also, um das zuvor genannte nachzuholen. Ein Adressbuch anzulegen ist dabei mit einem Befehl getan, wohingegen bei der Anlage eines Kalenders zwei Befehle und ein bischen Hirnschmalz gefordert ist. </p>
+
+<pre><code class="hljs"># Zuerst legen wir das Adressbuch an
+mysql> INSERT INTO addressbooks (principaluri, displayname, uri, description, synctoken) VALUES ( 'principals/cdb', 'Adressbuch', 'addresses', NULL, '1' );
++----+-----------------+-------------+-----------+-------------+-----------+
+| id | principaluri    | displayname | uri       | description | synctoken |
++----+-----------------+-------------+-----------+-------------+-----------+
+|  1 | principals/cdb  | Adressbuch  | addresses | NULL        |         1 |
++----+-----------------+-------------+-----------+-------------+-----------+
+</code></pre>
+
+<p>Die Werte der Tabelle <i>addressbooks</i> sind fast selbsterklärend. <i>principaluri</i> zeigt, welchem Benutzer aus der Tabelle <i>principals</i> das Adressbuch gehört. <i>displayname</i> ist die Bezeichnung, die der Anwender später sieht und <i>uri</i> beschreibt den genauen Pfad im System (in einem folgenden Artikel mehr dazu...). Die <i>description</i> könnte beliebig gesetzt werden, wir aber meines Wissens von den wenigsten Clients überhaupt zur Anzeige gebracht. Viel spannender ist der Wert <i>synctoken</i>, der bei Clientanfragen hilft zu erkennen, ob es etwas zu synchronisieren gibt. Mit jedem zusätzlichen Eintrag oder jeder Änderung in den zum Adressbuch gehörenden Einträgen steigt der synctoken um eins. Wenn also zwischen der letzten und der aktuellen Synchronisation der <i>synctoken</i> gleich geblieben ist, muss nichts synchronisiert werden.</p>
+
+<pre><code class="hljs"># Nun zur Anlage des Kalenders
+mysql> INSERT INTO calendars (synctoken, components) VALUES ('1', 'VEVENT,VTODO');
+mysql> select * from calendars;
++----+-----------+--------------+
+| id | synctoken | components   |
++----+-----------+--------------+
+|  1 |         2 | VEVENT,VTODO |
++----+-----------+--------------+
+
+mysql> INSERT INTO calendarinstances (calendarid, principaluri, access, displayname, uri) VALUES ( '1', 'principals/cdb', '1', 'Kalender', 'cfc80623-b1dd-4889-88fe-caa9de79902d');
+
+# Wichtige Hinweise: 
+# calendarid (=1) ist die id aus der Tabelle calendars. Wenn in der Tabelle calendars die id = 200 steht, muss auch die 200 in der Tabelle calendarinstances stehen.
+# access kann die folgenden Werte annehmen: 1 = owner, 2 = readonly, 3 = readwrite
+# die uri muss nicht 32 Stellen haben. Sie kann auch deutlich kürzer sein, es muss jedoch sichergestellt werden, dass die uri einzigartig ist. Später mehr dazu.
+</code></pre>
+
+<h2>Fazit: das Ziel des eigenen Termin- und Kontaktserver ist fast erreicht.</h2>
+
+<p>Endlich sind alle Vorbereitungen getroffen und nun kann es mit der Synchronisation losgehen. Es wurde der erste Benutzer mit Passwort angelegt, dieser Benutzer mit ausreichenden Berechtigungen versehen und ein erster Kalender und erstes Addressbuch angelegt. Im nächsten Teil dieser Serie wird es um die Synchronisation mit verschiedensten Clients gehen, bevor wir uns weiteren Funktionen von sabre/dav zuwenden.</p>

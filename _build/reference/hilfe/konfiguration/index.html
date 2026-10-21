@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="de">
+<head>
+	<meta http-equiv="Cache-control" content="private">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="datamate" />
+	<!-- === Stylesheets === -->
+	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/style.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/dark.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/swiper.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/font-icons.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/animate.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/magnific-popup.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/responsive.css" type="text/css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+	<![endif]-->
+
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/colors.php?color=4b8b2a" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/custom.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/custom-help.css" type="text/css" />
+
+	<!-- === Favicon === -->
+	<link rel="icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500.png" type="image/png" sizes="64x64">
+	<!-- Hotjar Tracking Code for www.datamate.org -->
+	<script>
+	    (function(h,o,t,j,a,r){
+	        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+	        h._hjSettings={hjid:851473,hjsv:6};
+	        a=o.getElementsByTagName('head')[0];
+	        r=o.createElement('script');r.async=1;
+	        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+	        a.appendChild(r);
+	    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+	</script>
+</head>
+<body class="stretched side-header no-transition">
+
+	<div id="wrapper" class="clearfix">
+	<header id="header" class="no-sticky dark">
+	<div id="header-wrap">
+		<div class="container clearfix">
+			<div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
+			<div id="logo">
+				<a href="/hilfe" class="standard-logo"><img src="/wp-content/uploads/2017/09/logo-white.png" alt="datamate"></a>
+				<a href="/hilfe" class="retina-logo"><img src="/wp-content/uploads/2017/09/logo-white.png" alt="datamate"></a>
+			</div>
+
+			<nav id="primary-menu">
+				<ul>
+					<li><a href="/hilfe/uebersicht"><div><i class="icon-line2-home"></i> Übersicht</div></a></li>
+					<li><a href="/hilfe/benutzer"><div><i class="icon-line2-users"></i> Benutzer</div></a></li>
+					<li><a href="/hilfe/dienste"><div><i class="icon-line2-grid"></i> Dienste</div></a></li>
+					<li><a href="/hilfe/wartung"><div><i class="icon-line2-wrench"></i> Wartung</div></a></li>
+					<li><a href="/"><div><i class="icon-line-power"></i> zu datamate.org</div></a></li>
+				</ul>
+			</nav>
+
+		</div>
+	</div>
+</header><!-- #header end -->
+
+
+<section id="content">
+<div class="content-wrap">
+
+
+<div class="container clearfix help">
+	
+	<div class="heading-block nobottomborder">
+		<h2>Konfiguration</h2>
+	</div>
+	
+	<div class="tabs side-tabs responsive-tabs clearfix">
+
+		<ul class="tab-nav navbar-right clearfix col-sm-4 col-sm-offset-1 last_col subnav">
+			<li><a href="#tab-stammzertifikat">Stammzertifikat erzeugen</a></li>
+			<li><a href="#tab-stammzertifikat-chrome">Stammzertifikat in Google Chrome importieren</a></li>
+			<li><a href="#tab-stammzertifikat-firefox">Stammzertifikat in Firefox importieren</a></li>
+			<li><a href="#tab-stammzertifikat-ios">Stammzertifikat in iOS importieren</a></li>
+		</ul>
+
+		<div class="tab-container">
+			<div class="tab-content clearfix" id="tab-stammzertifikat">
+				<h3>Erzeugen eines eigenen Stammzertifikats</h3>
+				
+				<p>Grundsätzlich ist die Erzeugung eines eigenen Stammzertifikats nur eine Notlösung. Wenn man die Möglichkeit hat die Dienste von Homie und Fellow über eine öffentliche (Sub-)Domain freizugeben, dann sollte man dies tun und diese Adresse mit einem Let&#8217;s Encrypt Zertifikat verstehen. Ein eigenes Stammzertifikat ist dann sinnvoll, wenn man Homie und Fellow nur im lokalen Netzwerk betreibt.</p>
+				
+				<img decoding="async" width="1024" height="688" src="https://www.datamate.org/wp-content/uploads/2019/04/download-stammzertifikat-cockpit-1024x688.png" alt="Download des Stammzertifikats aus dem datamate Cockpit" class="alignleft size-large wp-image-5617" srcset="https://www.datamate.org/wp-content/uploads/2019/04/download-stammzertifikat-cockpit-1024x688.png 1024w, https://www.datamate.org/wp-content/uploads/2019/04/download-stammzertifikat-cockpit-300x202.png 300w, https://www.datamate.org/wp-content/uploads/2019/04/download-stammzertifikat-cockpit-768x516.png 768w, https://www.datamate.org/wp-content/uploads/2019/04/download-stammzertifikat-cockpit.png 1480w" sizes="(max-width: 1024px) 100vw, 1024px" />
+
+				<p>Seit der Cockpit Version 1.4 bieten Homie und Fellow die Möglichkeit die verwendeten Informationen der Zertifizierungsstelle und des selbst erzeugten Zertifikats zu verändern. Unter &#8220;Konfiguration > Stammzertifikat&#8221; kann ein Administrator unter anderem den eigenen Firmennamen und den Ort angeben und damit ein neues Zertifikat für den Server erstellen. Daraufhin hat dann jeder User des Cockpits die Möglichkeit in seinem eigenen Bereich dieses Stammzertifikat herunterzuladen. Im folgenden gehe ich davon aus, dass diese Datei bereits auf den Computer heruntergeladen wurde.</p>
+			</div>
+
+			<div class="tab-content clearfix" id="tab-stammzertifikat-chrome">
+				<h3>Import des Stammzertifikats in Google Chrome (Version 72)</h3>
+				
+				<img decoding="async" loading="lazy" width="1024" height="831" src="https://www.datamate.org/wp-content/uploads/2019/04/google-chrome-zertifikate-verwalten-1-1024x831.png" alt="Zertifikatsverwaltung in Google Chrome" class="alignleft size-large wp-image-5804" srcset="https://www.datamate.org/wp-content/uploads/2019/04/google-chrome-zertifikate-verwalten-1-1024x831.png 1024w, https://www.datamate.org/wp-content/uploads/2019/04/google-chrome-zertifikate-verwalten-1-300x243.png 300w, https://www.datamate.org/wp-content/uploads/2019/04/google-chrome-zertifikate-verwalten-1-768x623.png 768w, https://www.datamate.org/wp-content/uploads/2019/04/google-chrome-zertifikate-verwalten-1.png 1313w" sizes="(max-width: 1024px) 100vw, 1024px" />
+
+				<p>Am einfachsten findet man den gewünschten Bereich, wenn man in den Einstellungen von Google Chrome nach <i>Zertifikat</i> sucht. Unter dem Menüpunkt <strong>Zertifikate verwalten</strong> befindet sich die Verwaltung von Zertifikaten und vertrauenswürdigen Zertifizierungsstellen. Man wählt den Tab <strong>Zertifizierungsstellen</strong> und klickt anschließend auf <strong>Importieren</strong>. Anschließend wählt man die bereits heruntergeladene <i>Stammdatenzertifikat.pem</i> aus und bestätigt durch das Setzen der drei Haken, das man der Zertifizierungsstelle das Vertrauen ausspricht. Anschließend muss noch den Browser neu starten um ab sofort beim Aufruf des Cockpits von Homie oder Fellow ein grünes HTTPS-Zertifikat angezeigt zu bekommen.</p>
+
+				<img decoding="async" loading="lazy" width="1024" height="681" src="https://www.datamate.org/wp-content/uploads/2019/04/chrome-zertifizierungsstelle-vertrauen-1024x681.png" alt="Man muss der Zertifizierungsstelle sein Vertrauen aussprechen" class="alignleft size-large wp-image-5622" srcset="https://www.datamate.org/wp-content/uploads/2019/04/chrome-zertifizierungsstelle-vertrauen-1024x681.png 1024w, https://www.datamate.org/wp-content/uploads/2019/04/chrome-zertifizierungsstelle-vertrauen-300x199.png 300w, https://www.datamate.org/wp-content/uploads/2019/04/chrome-zertifizierungsstelle-vertrauen-768x510.png 768w, https://www.datamate.org/wp-content/uploads/2019/04/chrome-zertifizierungsstelle-vertrauen.png 1294w" sizes="(max-width: 1024px) 100vw, 1024px" />
+			</div>	
+			
+			<div class="tab-content clearfix" id="tab-stammzertifikat-firefox">
+				<h3>Import des Stammzertifikats in Firefox (Version 65)</h3>
+				<p>Auch bei Firefox gestaltet sich der Import der Zertifizierungsstelle nicht als besonders schwierig. Auch in diesem Browser sucht man am Einfachsten in den Einstellungen nach <i>Zertifikat</i> und landet sofort an der richtigen Stelle.</p>
+
+				<img decoding="async" loading="lazy" width="1024" height="582" src="https://www.datamate.org/wp-content/uploads/2019/04/firefox-zertifikate-anzeigen-1024x582.png" alt="Zertifikatsverwaltung unter Firefox" class="alignleft size-large wp-image-5623" srcset="https://www.datamate.org/wp-content/uploads/2019/04/firefox-zertifikate-anzeigen-1024x582.png 1024w, https://www.datamate.org/wp-content/uploads/2019/04/firefox-zertifikate-anzeigen-300x170.png 300w, https://www.datamate.org/wp-content/uploads/2019/04/firefox-zertifikate-anzeigen-768x436.png 768w, https://www.datamate.org/wp-content/uploads/2019/04/firefox-zertifikate-anzeigen.png 1267w" sizes="(max-width: 1024px) 100vw, 1024px" />
+
+				<p>Auch in Firefox wählt man den Tab <strong>Zertifizierungsstellen</strong> und importiert das zuvor heruntergeladene Stammdatenzertifikat. Auch bei Firefox muss man das Vertrauen durch das Setzen von zwei Haken bestätigen und dann den Browser neu starten. Danach gelingt der Aufruf des Cockpits ohne störenden Warnhinweis.</p>
+
+			</div>
+			
+			<div class="tab-content clearfix" id="tab-stammzertifikat-ios">
+				<h3>Import des Stammzertifikats in iOS (Version 12.1)</h3>
+				<img decoding="async" loading="lazy" width="600" height="338" src="https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikats-import.png" alt="iOS fragt vor dem Zertifikatsimport um Erlaubnis"  class="alignleft size-medium wp-image-5625" style="margin-right: 20px;" srcset="https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikats-import.png 600w, https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikats-import-300x169.png 300w" sizes="(max-width: 600px) 100vw, 600px" />
+
+				<p>Um unter iOS das Stammzertifikat zu importieren, genügt es im Cockpit auf den Download zu klicken. iOS erkennt, dass es sich um eine Zertifizierungsdatei handelt und fragt direkt um Erlaubnis, ob die passende Einstellungsseite geöffnet werden darf. Wenn man dies bestätigt, genügen zwei Klick auf <strong>Installieren</strong> um die Zertifizierungsstelle im System zu verankern. Ab sofort erhält man keinen Warnhinweis mehr beim Aufruf der datamate Cockpits &#8211; selbst wenn man über die IP-Adresse darauf zugreift.</p>
+
+				<img decoding="async" loading="lazy" width="1024" height="603" src="https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikatsbestätigung-1024x603.png" alt="Mit wenigen Klicks ist die Zertifizierungsstelle beglaubigt" class="alignleft size-large wp-image-5626" srcset="https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikatsbestätigung-1024x603.png 1024w, https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikatsbestätigung-300x177.png 300w, https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikatsbestätigung-768x452.png 768w, https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikatsbestätigung.png 1200w" sizes="(max-width: 1024px) 100vw, 1024px" />
+
+			</div>
+				
+		</div>
+	</div></div>
+</section>
+
+	</div><!-- #wrapper end -->
+
+	<div id="gotoTop" class="icon-angle-up"></div>
+	<!-- minified by https://javascript-minifier.com/ -->
+	<script type="text/javascript" src="https://www.datamate.org/wp-content/themes/datamate-theme/js/canvas.js"></script>
+
+	
+<script type="text/javascript">
+  $.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results !== null){
+      return results[1];
+    }
+    return 0;
+  }
+
+  $(document).ready(function() {
+    var tab = $.urlParam('tab');
+    console.log("Setze den Tab " + $.urlParam('tab') + " auf aktiv");
+    $( ".tabs" ).tabs({ active: $.urlParam('tab') });
+  });
+</script>
+
+
+</body>
+</html>

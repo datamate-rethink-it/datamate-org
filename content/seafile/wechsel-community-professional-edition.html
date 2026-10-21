@@ -1,0 +1,97 @@
++++
+title = "Wechsel Community Professional Edition"
+titel_html = "Wechsel Community Professional Edition | datamate"
+beschreibung = "Bei intensiver Nutzung der Seafile Community entsteht womöglich Interesse an einem Upgrade auf Seafile Professional. Der Wechsel zwischen den Seafile Editionen ist in aller Regel bei guter Vorbereitung ohne weiteres machbar."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/10/seafile-seahub-seafile-sync-client.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/seafile/wechsel-community-professional-edition/"
+canonical = "https://www.datamate.org/seafile/wechsel-community-professional-edition/"
+geaendert = "2020-09-21T12:54:57+00:00"
+twitter_label1 = "Geschätzte Lesezeit"
+twitter_data1 = "3 Minuten"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Seafile", item = "https://www.datamate.org/seafile/"}, {name = "Wechsel Community Professional Edition", item = ""}]
+wp_id = 2862
+date = "2017-10-26T15:15:58"
+lastmod = "2020-09-21T14:54:57"
+datum_utc = "2017-10-26T13:15:58+00:00"
+geaendert_utc = "2020-09-21T12:54:57+00:00"
++++
+<section id="slider" class="slider-parallax full-screen" style="background: url('/wp-content/uploads/2017/10/seafile-wechsel-community-enterprise.jpg') center center no-repeat; background-size: cover">
+	<div class="slider-parallax-inner">
+		<div class="container vertical-middle clearfix">
+			<div class="heading-block title-center nobottomborder">
+				<h1 style="text-shadow: 1px 1px 2px #fff;">Ist ein Wechsel zwischen Community und Professional Edition möglich?</h1><br/>
+				<span style="font-size: 32px; text-shadow: 1px 1px 2px #fff;">Ein nachträglicher Umstieg auf Professional ist möglich.</span>
+			</div>
+		</div>
+	</div>
+	<a href="#" data-scrollto="#content" data-offset="0" class="one-page-arrow" style="z-index: 10;"><i class="icon-angle-down infinite animated fadeInDown"></i></a>
+</section>
+
+<section id="content">
+<div class="content-wrap nopadding nobottommargin">
+
+<div class="section notopmargin">
+	<div class="container clearfix">
+		<div class="row">
+			
+			<div class="col-sm-7 topmargin-sm bottommargin-lg">
+
+				<h2>Ein Wechsel zwischen den Seafile-Versionen ist möglich.</h2>
+				<p style='font-size: 16px;'>Bei intensiver Nutzung der Seafile Community entsteht womöglich Interesse an einem Upgrade auf Seafile Professional. Mit umgekehrtem Vorzeichen kann die Situation eintreten, dass auf Seafile zwar nicht vollständig verzichtet werden soll, dass aber die <a href="/seafile/preise/" title="Preise der Seafile Pro Edition">kostenpflichtige Seafile Professional Edition</a> nicht mehr benötigt wird. Solche Wechsel zwischen den Seafile Editionen sind in aller Regel bei guter Vorbereitung ohne weiteres machbar.</p>
+
+				<p style='font-size: 16px;'>Für ein Upgrade von Seafile Community auf Seafile Professional müssen <a href="https://manual.seafile.com/deploy_pro/migrate_from_seafile_community_server.html" title="Eine vollständige englischsprachige Anleitung zur Migration zwischen Community und Professional Edition findet sich im Seafile Manual.">folgende vorbereitende Aktionen</a> ausgeführt werden:</p>
+
+				<ol style='padding-left: 30px; font-size:16px;'>
+					<li>Installation der Java Runtime Environment (JRE) und der poppler-utils als Voraussetzungen für die erweiterten Seafile Professional Funktionen</li>
+					<li>Download der gewünschten Professional Server Version vom <a href="https://customer.seafile.com/" title="Download der Programmdateien des Seafile Professional Servers über das Customer Center">Seafile Customer Center</a> und Entpackung der Tar-Archivdatei</li>
+					<li>Update des <a href="/seafile/server-plattformen/" title="Seafile als Multi-Plattformsystem">Seafile Community Servers</a> auf die Version der gerade heruntergeladenen Seafile Professional Server Version</li>
+					<li>Speicherung der Lizenzdatei im Hauptverzeichnis der Seafile Professional Installation</li>
+				</ol> 
+
+				<p style='font-size: 16px;'>Sind diese vier Maßnahmen ausgeführt, dann muss nur noch das Skript <i>pro.py</i> im Ordner <i>Pro</i> des Seafile Professional Servers ausgeführt werden. Die Überprüfung der Lizenzdatei erfolgt beim Serverneustart. Ist diese Prüfung erfolgreich, steht der Seafile Professional Server zur Verfügung.</p>
+
+				<p style='font-size: 16px;'>Das Downgrade von Seafile Professional auf Seafile Community ist noch einfacher. Nach dem Download und der Entpackung der Programmdateien des Community Servers muss lediglich das Skript <i>minor_upgrade.sh</i> in dessen Verzeichnis ausgeführt werden. Wichtig ist auch hier, dass die Versionsstände des Community und Professional Servers gleich sind, da es sonst Probleme bei der Migration der Datenbank gibt.</p>
+
+				<p style='font-size: 16px;'>Nicht richtig ist die Vermutung, dass ein Seafile Professional Server mit abgelaufener Lizenz quasi automatisch auf die <a href="/seafile/open-source/" title="Seafile Community Server ist Open Source">Open Source Edition</a> des Seafile Servers <i>downgraded</i>. Bei einem Seafile Professional Server mit abgelaufener Lizenz können alle <a href="/seafile/enterprise-infrastrukturen/" title="Erweiterte Funktionen von Seafile">erweiterten Funktionen</a> ohne Einschränkungen bis zum nächsten Server-Neustart weiter genutzt werden. Beim nächssten Server-Neustart wird jedoch die Validierung der Lizenzdatei scheitern und der Seafile Server verweigert den Dienst. Um einen solchen &#8216;festgefahrenen&#8217; Server wieder zu starten, gibt es drei Möglichkeiten. Der erste und einfachste Weg ist die Aktualisierung der Lizenzdatei. datamate ist Seafile Vertriebspartner und beschafft Seafile Professional Lizenzen kurzfristig. Option 2 ist die Deaktivierung aller Nutzer bis auf drei. Da die Seafile Professional Edition auch ohne gültige Lizenzdatei mit bis zu drei Benutzern verwendet werden kann, startet nun der Server wieder. Die letzte Option ist das oben beschriebene Downgrade von der Seafile Professional auf die Community Edition.</p>
+
+			</div>
+
+			<div class="col-sm-4 col-sm-offset-1 topmargin-sm bottommargin col_last">
+	
+				<img decoding="async" src="/wp-content/uploads/2017/10/seafile-seahub-seafile-sync-client.png" alt="Wechsel von Community und Professional ist möglich.">
+				<div class="divider divider-center"><i class="icon-cloud"></i></div>
+				
+				<div class="widget widget_links clearfix">
+					<h3>Seafile FAQs</h3>
+					<ul>
+						<li><a href="/seafile/architektur" title="Wie arbeitet Seafile?"> Wie arbeitet Seafile?</a></li>
+						<li><a href="/seafile/open-source" title="Ist Seafile freie bzw. Open Source Software?"> Ist Seafile freie bzw. Open Source Software?</a></li>
+						<li><a href="/seafile/zugriffsarten" title="Wie komme ich an die Server-Daten ran?">Wie komme ich an die Server-Daten ran?</a></li>
+						<li><a href="/seafile/client-plattformen" title="Seafile Client Plattformen"> Für welche Plattformen gibt es Seafile Clients?</a></li>
+						<li><a href="/seafile/server-plattformen" title="Seafile Server Plattformen"> Für welche Plattformen gibt es den Seafile Server?</a></li>
+						<li><a href="/seafile/unterschiede-seafile-dropbox" title="Seafile Unterschied zu Dropbox, OneDrive und Google Drive"> Was ist der Unterschied zwischen Seafile und Dropbox, OneDrive und Google Drive?</a></li>
+						<li><a href="/seafile/unterschiede-seafile-owncloud" title="Seafile Unterschied zu ownCloud"> Was ist der Unterschied zwischen Seafile und ownCloud?</a></li>
+						<li><a href="/seafile/preise" title="Seafile Professional Preise"> Was kostet die Professional Edition des Seafile Servers?</a></li>
+						<li><a href="/seafile/enterprise-infrastrukturen" title="Seafile und enterprise Infrastrukturen"> Lässt sich Seafile in bestehende Enterprise-Infrastrukturen integrieren?</a></li>
+						<li><a href="/seafile/customizing" title="Seafile und Cooper" title="Seafile Customizing">Läßt sich das Design von Seafile anpassen?</a></li>
+						<li><a href="/seafile/wechsel-community-professional-edition" title="Wechsel der Seafile Editionen.">Ist ein Wechsel zwischen Community und Professional Edition möglich?</a></li>
+					</ul>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+	
+<div class="promo promo-light promo-full bottommargin-lg header-stick notopborder nobottommargin">
+	<div class="container clearfix">
+		<h2>Brauchen Sie Support oder Hilfe mit Seafile?</h2><h3><span>datamate ist offizieller deutscher Seafile Support Partner!</span></h3>
+		<span>Wir bieten Installationen, Customizing, Support, Debugging<br/>
+		und individuelle Entwicklungen. Rufen Sie uns an unter +49 (0)6131 3270777.</span>
+		<a href="mailto:seafile@datamate.org" class="button button-dark button-xlarge button-rounded">Schreiben Sie uns</a>
+	</div>
+</div>
+
+ </div></section>

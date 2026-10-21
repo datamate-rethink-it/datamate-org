@@ -1,0 +1,28 @@
+{{- /* Fehlerseite, Aufbau wie 404.php des alten Themes: Hinweis und die
+       drei neuesten Beitraege. */ -}}
+{{ partial "kopf.html" . }}
+<body class="stretched">
+
+	<div id="wrapper" class="clearfix">
+{{- partial "site-header.html" . }}
+<div class="section" id="content">
+    <div>
+        <div class="container clearfix" id="blog">
+		<div class="heading-block"><h1>Diese Seite wurde nicht gefunden. </h1></div>
+		<div class="row clearfix">
+			<div class="col-sm-8">
+                <p>Leider konnten wir unter dem eingegebenen Link keinen Inhalt finden.<br/>
+                Vielleicht befindet sich etwas Passendes unter folgenden Beiträgen.</p>
+                <hr/>
+
+            {{ range first 3 (where site.RegularPages "Section" "blog") }}{{ partial "beitragsliste.html" (dict "seite" . "stil" "lang") }}
+            {{ end }}
+        </div>
+{{ partial "seitenleiste.html" . }}
+
+</div>
+
+</div>
+</div>
+</div>
+{{ partial "site-footer.html" . }}

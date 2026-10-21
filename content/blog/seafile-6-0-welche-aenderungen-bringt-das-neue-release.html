@@ -1,0 +1,99 @@
++++
+title = "Seafile 6.0 – Welche Änderungen bringt das neue Release?"
+titel_html = "Seafile 6.0 - Welche Änderungen bringt das neue Release? | datamate"
+ueberschrift = "Seafile 6.0 &#8211; Welche Änderungen bringt das neue Release?"
+beschreibung = "Seafile 6.0 wurde vor wenigen Tagen veröffentlicht. Wir werfen einen ersten genauen Blick auf Seafile Drive, die neue Fullscreen UI und Dateikommentare."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2016/09/dateikommentare-seafile-1024x518.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/seafile-6-0-welche-aenderungen-bringt-das-neue-release/"
+canonical = "https://www.datamate.org/seafile-6-0-welche-aenderungen-bringt-das-neue-release/"
+veroeffentlicht = "2016-09-11T17:46:05+00:00"
+geaendert = "2025-02-21T08:10:49+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "7 Minuten"
+bild_breite = 1026
+bild_hoehe = 519
+bild_beschriftung = "Aus der Gruppendiskussion wurden die Dateikommentare"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Seafile 6.0 &#8211; Welche Änderungen bringt das neue Release?", item = ""}]
+wortzahl = 1299
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["seafile"]
+schlagwoerter = ["Dateisynchronisation", "Dropbox Alternative", "File sync", "private Cloud", "seafile"]
+wp_id = 2918
+slug = "seafile-6-0-welche-aenderungen-bringt-das-neue-release"
+url = "/seafile-6-0-welche-aenderungen-bringt-das-neue-release/"
+date = "2016-09-11T19:46:05"
+lastmod = "2025-02-21T09:10:49"
+datum_utc = "2016-09-11T17:46:05+00:00"
+geaendert_utc = "2025-02-21T08:10:49+00:00"
+lightbox = true
++++
+						<img decoding="async" src="/wp-content/uploads/2016/09/seafile-6.0.png" alt="Wir testen die neuen Funktionen von Seafile 6.0" class="buttommargin-sm" style="float: left; padding-right: 20px; " />
+
+<p><a href="/seafile">Seafile</a> bildet das Herz eines jeden ionas-Servers und bietet jedem unserer Kunden die Möglichkeit die eigene private Cloud zu betreiben ohne die Hoheit über die eigenen Dateien zu verlieren. Dementsprechend gespannt beobachten wir jede Entwicklung, die uns Daniel Pan, Jonathan Xu und ihr Entwicklerteam präsentieren. Im folgenden Artikel werden wir die neuen Fähigkeiten von Seafile 6.0, welches am 2. September 2016 offiziell den Beta-Status verlassen hat, testen. Die angekündigten Fähigkeiten im <a href="https://blogs.seafile.com/2016/09/02/seafile-server-6-0-2-stable-is-released/">Offiziellen Seafile Blog</a> versprechen nicht weniger als eine erst zunehmende Samba Alternative, eine neue skalierbare (=responsive) Weboberfläche, Dateikommentare und eine Fortschrittsanzeige beim Download von ganzen Ordnern. Wir, und hoffentlich auch Sie, sind gespannt, was Seafile 6.0 unter der Haube hat.</p>
+
+<span id="more-2918"></span>
+
+<h2>Die neue responsive Weboberfläche von Seafile 6.0</h2>
+<p>Das Update unseres ionas-Servers von Version 5.1.3 auf 6.0.3 läuft unter Ubuntu gewohnt einfach. Server stoppen, neue Version herunterladen, entpacken, Updatescripte ausführen und den Seafile-Server neu starten. Schon begrüßt uns die neue Seafile-Weboberfläche, welche nun die ganzen Bildschirmbreite ausnutzt.</p>
+
+<div id="attachment_2924" style="width: 1034px" class="wp-caption alignleft"><a href="/wp-content/uploads/2016/09/seafile6.0.png" data-slb-active="1" data-slb-asset="4027355465" data-slb-internal="0" data-slb-group="2918"><img aria-describedby="caption-attachment-2924" decoding="async" loading="lazy" src="/wp-content/uploads/2016/09/seafile6.0-1024x756.png" alt="" width="1024" height="756" class="size-large wp-image-2924" srcset="/wp-content/uploads/2016/09/seafile6.0-1024x756.png 1024w, /wp-content/uploads/2016/09/seafile6.0-300x222.png 300w, /wp-content/uploads/2016/09/seafile6.0-768x567.png 768w, /wp-content/uploads/2016/09/seafile6.0.png 1197w" sizes="(max-width: 1024px) 100vw, 1024px" /></a><p id="caption-attachment-2924" class="wp-caption-text">Das neue Responsive Design von Seafile 6.0</p></div>
+
+<p>Wir klicken, wir verschieben, wir verkleinern und vergrößern das Browserfenster und sind begeistert. Dank Bootstrap und modernen Webtechniken passt sich Seahub, wie die Seafile-Oberfläche auch genannt wird, der jeweiligen Fenstergröße dynamisch an. Wie man es heute von zahlreichen Anwendung gewohnt ist, gelingt so der neuen Weboberfläche der Spagat zwischen kleinen Handy-Displays und Monitoren so groß wie Leinwände. Wenn die Fenstergröße eine bestimmte Größe unterschreitet, wird die Navigation auf der linken Seite ausgeblendet. Über das Icon mit den querliegende Balken (siehe Abbildung oben, &#8220;Anzeige ohne Navigationsbereich&#8221;) kann sie wieder eineblendet werden.</p>
+
+<p>Den einzigen Kritikpunkt, den wir anbringen können, ist der Umstand, dass sich beim Verkleinern des Browserfensters der Navigationsbereich immer vor den Inhalt verschiebt. Erst nach einem Refresh der Seite oder der Minimierung des Navigationsbereichs über das Kreuz-Icon neben <i>Dateien</i> sieht man wieder die eigenen Bibliotheken und Dateien.</p>
+
+<p>Es ist möglich, dass dies ein gewolltes Verhalten ist, aber im ersten Moment ist es erstmal ungewohnt. Wenn ungewollt, dann wird das sicher in einem kommenden Update beseitigt. Alles in allem lässt sich aber sagen, dass das neue, moderne Gesicht von Seafile eine substanzielle Verbesserung darstellt und Seahub nun auch auf Smartphone Bildschirmen zur Freude werden lässt.</p>
+
+<h2>Seafile Drive, die Netzlaufwerke von Seafile</h2>
+
+<p>Seafile war bisher Synonym für die zuverlässige, plattformübergreifende Synchronisation von Dateien und Ordnern. Mit <i>Seafile Drive</i> wird Seafile nochmals deutlich vielseitiger! Mit dem in Seafile 6.0 integrierten Seafile Drive kann man auch direkt auf die Daten des Seafile Servers zugreifen, ohne diese synchronisieren und damit auf der Festplatte ablegen zu müssen. So können kleine SSD-Festplatten von Client-Rechnern entlastet, Daten den Anwendern direkt zur Verfügung gestellt und umfangreiche Forschungsdaten direkt auf den Seafile-Server geschrieben werden. Egal wie der Anwendungsfall aussehen mag, Seafile Drive ist &#8211; wenn es hält was es verspricht &#8211; eine mehr als nur überlegenswerte Alternative für die typischen Netzlaufwerke, die man mit Samba oder einem Windows Server im Netzwerk zur Verfügung stellt.</p>
+
+<div id="attachment_2931" style="width: 765px" class="wp-caption alignleft"><a href="/wp-content/uploads/2016/09/seadrive-client.png" data-slb-active="1" data-slb-asset="2017168419" data-slb-internal="0" data-slb-group="2918"><img aria-describedby="caption-attachment-2931" decoding="async" loading="lazy" src="/wp-content/uploads/2016/09/seadrive-client.png" alt="" width="755" height="418" class="size-full wp-image-2931" srcset="/wp-content/uploads/2016/09/seadrive-client.png 755w, /wp-content/uploads/2016/09/seadrive-client-300x166.png 300w" sizes="(max-width: 755px) 100vw, 755px" /></a><p id="caption-attachment-2931" class="wp-caption-text">Seafile Drive erzeugt ein neues Netzlaufwerk S:</p></div>
+
+<p>Höchste Zeit also, dieses spannende neue Feature auszuprobieren. Aktuell befindet sich <a href="https://blogs.seafile.com/2016/09/02/announcing-seafile-drive-client-a-new-way-to-map-seafile-storage-as-virtual-drive/">Seafile Drive</a> noch im Beta-Stadium und es existiert nur ein Windows-Client. Wir laden also den Client herunter und installieren diesen auf einem Windows 10 Rechner genau wie wir die Seafile-App installieren würden. Wir tragen die Server-Daten ein und erhalten auch automatisch ein neues Netzlaufwerk <i>S:</i> mit Namen SeaDrive. Daten können wir jedoch keine finden. Der Grund dafür wird beim Blick in die Log-Dateien von Seafile-Drive auf dem Client klar: Die Kommunikation mit dem Server wird aufgrund des selbst erzeugten SSL-Zertifikats des Servers abgelehnt. Die Fehlermeldungen lauten:</p>
+
+<pre>[09/05/16 15:42:52] seadrive.c(429): Starting SeaDrive client 0.1.0
+[09/05/16 15:42:52] seadrive.c(453): rpc server started.
+[09/05/16 15:43:22] http-tx-mgr.c(578): libcurl failed to GET https://192.168.5.95/seafile/api2/repos/: SSL peer certificate or SSH remote key was not OK.
+</pre>
+
+<p>Wie auch in der Seafile-App bietet der SeaDrive-Client die Option, HTTPS-Zertifikate nicht durch den Client verifizieren zu lassen. Diese Einstellung wird allem Anschein nach aber ignoriert. Wir können den Haken bei <i>Do not verify server certificates in HTTPS syncing</i> aktivieren und deaktivieren, die Fehlermeldungen bleiben jedoch erhalten und SeaDrive zeigt weiterhin keine Inhalte an. Wahrscheinlich wird diese fehlende Funktion bis zum Ende der Beta Phase behoben sein. Leider wird die always-on Zertifikatsprüfung aber wohl den Großteil der Community davon abhalten, das neue SeaDrive zu testen.</p>
+
+<p>Zum Glück bietet unser ionas-Server Small Business seit dem Cockpit Update 3.4 die Möglichkeit, die verwendete Stammzertifizierungsstelle zu exportieren, um diese in das jeweilige Betriebssystem und den Browser zu importieren. Mit wenigen Klicks auf dem ionas-Server und dem Client machen wir aus dem roten und durchgestrichenen HTTPS- ein grünes und gültiges HTTPS-Zertifikat. Nach einem Neustart von Seafile Drive funktioniert die Anmeldung prompt und wir haben per Datei Explorer Zugriff auf sämtliche Seafile-Daten.</p>
+
+<div id="attachment_2934" style="width: 912px" class="wp-caption alignleft"><a href="/wp-content/uploads/2016/09/seadrive.png" data-slb-active="1" data-slb-asset="1934501895" data-slb-internal="0" data-slb-group="2918"><img aria-describedby="caption-attachment-2934" decoding="async" loading="lazy" src="/wp-content/uploads/2016/09/seadrive.png" alt="" width="902" height="572" class="size-full wp-image-2934" srcset="/wp-content/uploads/2016/09/seadrive.png 902w, /wp-content/uploads/2016/09/seadrive-300x190.png 300w, /wp-content/uploads/2016/09/seadrive-768x487.png 768w" sizes="(max-width: 902px) 100vw, 902px" /></a><p id="caption-attachment-2934" class="wp-caption-text">Seafile Daten im Windows Explorer</p></div>
+
+<p>Der erste Eindruck ist überzeugend. Die Daten auf dem Seafile-Server direkt im Dateiexplorer zu sehen, ist schon eine spannende Sache. Auf den zweiten Blick merkt man Seafile Drive noch an vielen Stellen an, dass sich die Lösung im Beta-Stadium befindet. Neben der nicht zu deaktivierenden Zertifikatsprüfung stören irreführende Fehlermeldungen beim Versuch, Dateien, die man nur im Lesezugriff hat, zu löschen sowie andere Kleinigkeiten.</p>
+
+<p>Vor den Entwicklern liegt noch einiges an Wegstrecke. Im Großen und Ganzen sind wir jedoch von SeaDrive überzeugt und halten diese neue Fähigkeit für eine sehr spannende Angelegenheit. SeaDrive hat das Potenzial, die parallele Nutzung von Netzlaufwerken und Seafile überflüssig zu machen. Seafile könnte sich zur vollständigen Datei-Austauschlösung mausern, mit der man nicht nur Dateien zwischen Geräten synchronisieren, sondern mit der man auch bequem auf zentrale Datenspeicher per Datei Explorer zugreifen kann.</p>
+
+<h2>Die neuen Dateikommentare von Seafile</h2>
+
+<div id="attachment_2935" style="width: 983px" class="wp-caption alignleft"><a href="/wp-content/uploads/2016/09/dateikommentare-seafile-button.png" data-slb-active="1" data-slb-asset="3445749264" data-slb-internal="0" data-slb-group="2918"><img aria-describedby="caption-attachment-2935" decoding="async" loading="lazy" src="/wp-content/uploads/2016/09/dateikommentare-seafile-button.png" alt="" width="973" height="291" class="size-full wp-image-2935" srcset="/wp-content/uploads/2016/09/dateikommentare-seafile-button.png 973w, /wp-content/uploads/2016/09/dateikommentare-seafile-button-300x90.png 300w, /wp-content/uploads/2016/09/dateikommentare-seafile-button-768x230.png 768w" sizes="(max-width: 973px) 100vw, 973px" /></a><p id="caption-attachment-2935" class="wp-caption-text">Der neue Knopf für Dateikommentare.</p></div>
+
+<p>In früheren Seafile-Versionen (vor 5.1) war es möglich, eine Gruppe anzulegen, eine Datei hochzuladen und innerhalb der Gruppe eine Diskussion zu beginnen. Diese Funktion der Gruppendiskussion wurde mit Version 5.1 komplett aus Seafile verbannt. Mit Version 6.0 wurde sie in seiner neuen Form als Dateikommentare wieder eingeführt.</p>
+
+<p>Über die Weboberfläche von Seafile kann nun in der Detailansicht für jede Datei eine Kommentarleiste eingeblendet werden. In dieser können die Benutzer ihre Kommentar zu einer Datei ablegen.</p>
+
+<div id="attachment_2940" style="width: 1034px" class="wp-caption alignleft"><a href="/wp-content/uploads/2016/09/dateikommentare-seafile.png" data-slb-active="1" data-slb-asset="3475036271" data-slb-internal="0" data-slb-group="2918"><img aria-describedby="caption-attachment-2940" decoding="async" loading="lazy" src="/wp-content/uploads/2016/09/dateikommentare-seafile-1024x518.png" alt="" width="1024" height="518" class="size-large wp-image-2940" srcset="/wp-content/uploads/2016/09/dateikommentare-seafile-1024x518.png 1024w, /wp-content/uploads/2016/09/dateikommentare-seafile-300x152.png 300w, /wp-content/uploads/2016/09/dateikommentare-seafile-768x388.png 768w, /wp-content/uploads/2016/09/dateikommentare-seafile.png 1026w" sizes="(max-width: 1024px) 100vw, 1024px" /></a><p id="caption-attachment-2940" class="wp-caption-text">Aus der Gruppendiskussion wurden die Dateikommentare</p></div>
+
+<p>Diese Funktion, die in der Vergangenheit immer wieder von der Community gefordert wurde, gefällt uns spontan gut. Gleichzeitig denken wir, dass man die Funktion noch deutlich aufwerten könnte, wenn man in Seahub die Dateien, für die bereits Diskussionen begonnen wurden, hervorheben würde. Man denke z.B. an die Kommentare in Microsoft Excel. Ohne diesen Hinweis tappt man als Benutzer im Dunkeln. Man muss bei einer Datei erstmal auf die Idee kommen zu prüfen, ob nicht bereits eine Diskussion begonnen wurde.</p>
+
+<h2>Fortschrittsbalken beim Download von ZIP-Downloads</h2>
+
+<div id="attachment_2941" style="width: 375px" class="wp-caption alignleft"><a href="/wp-content/uploads/2016/09/zip-download-seafile.png" data-slb-active="1" data-slb-asset="993407248" data-slb-internal="0" data-slb-group="2918"><img aria-describedby="caption-attachment-2941" decoding="async" loading="lazy" src="/wp-content/uploads/2016/09/zip-download-seafile.png" alt="" width="365" height="188" class="size-full wp-image-2941" srcset="/wp-content/uploads/2016/09/zip-download-seafile.png 365w, /wp-content/uploads/2016/09/zip-download-seafile-300x155.png 300w" sizes="(max-width: 365px) 100vw, 365px" /></a><p id="caption-attachment-2941" class="wp-caption-text">Fortschrittsbalken beim Download von ZIP-Dateien</p></div>
+
+<p>Wenn über einen Download-Link ein ganzer Ordner als ZIP-Datei heruntergeladen wird, kann es bei großen Ordnern eine ganze Weile dauern, bis diese ZIP-Datei erzeugt wurde. Bisher erhielt der Anwender keine Hinweise darauf, wie lange die Erzeugung dieser ZIP-Datei dauern würde.</p>
+
+<p>Für diese Wartezeit wurde in Seafile 6.0 nun ein neuer Fortschrittsbalken hinzugefügt, um die Usability zu steigern.</p>
+
+<h2>Fazit: Seafile 6.0 macht Lust auf mehr!</h2>
+
+<p>Seafile 6.0 enthält mit der neuen Weboberfläche und Seafile Drive zwei mächtige, neue Fähigkeiten. Das Responsive Design von Seahub überzeugt vom ersten Moment an, wohingegen man Seafile Drive noch deutlich den Beta-Status anmerkt. Es bleibt abzuwarten, wie sich diese neue Funktion entwickelt.</p>
+
+<p>Für alle ionas-Server Kunden bleibt noch zu erwähnen, dass wir noch ein paar Wochen abwarten, bevor wir die Installation von Seafile 6.0 anbieten.</p>

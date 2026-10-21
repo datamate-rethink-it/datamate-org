@@ -1,0 +1,153 @@
+name: Bauen und veröffentlichen
+
+# Bei jedem Push auf main und bei jedem Pull Request wird die Ausgabe gegen
+# den alten Produktionsstand geprüft. Ein Tag veröffentlicht zusätzlich das
+# Image nach GHCR; ausgerollt wird von Hand auf dem Server:
+#
+#   git tag 2026-10-21 && git push --tags
+#   ssh server 'cd /opt/datamate.org && docker compose pull && docker compose up -d'
+
+on:
+    push:
+        branches: [main]
+        tags: ['*']
+    pull_request:
+        branches: [main]
+    workflow_dispatch:
+
+env:
+    REGISTRY: ghcr.io
+
+jobs:
+    pruefen:
+        name: Ausgabe prüfen
+        runs-on: ubuntu-latest
+        steps:
+            - name: Repository auschecken
+              uses: actions/checkout@v7
+
+            # Die Versionen stehen nur im Dockerfile. Von dort gelesen, damit
+            # CI und Image nicht auseinanderlaufen.
+            - name: Werkzeugversionen aus dem Dockerfile lesen
+              id: versionen
+              run: |
+                  set -euo pipefail
+                  for v in HUGO PAGEFIND CADDY; do
+                    wert=$(grep -oP "^ARG ${v}_VERSION=\K.*" Dockerfile)
+                    if [ -z "$wert" ]; then echo "::error::ARG ${v}_VERSION fehlt im Dockerfile"; exit 1; fi
+                    echo "${v,,}=$wert" >> "$GITHUB_OUTPUT"
+                    echo "${v} = $wert"
+                  done
+
+            - name: Hugo und Pagefind installieren
+              env:
+                  HUGO: ${{ steps.versionen.outputs.hugo }}
+                  PAGEFIND: ${{ steps.versionen.outputs.pagefind }}
+              run: |
+                  set -euo pipefail
+                  curl -fsSL -o /tmp/hugo.tar.gz \
+                    "https://github.com/gohugoio/hugo/releases/download/v${HUGO}/hugo_extended_${HUGO}_linux-amd64.tar.gz"
+                  sudo tar -C /usr/local/bin -xzf /tmp/hugo.tar.gz hugo
+                  curl -fsSL -o /tmp/pagefind.tar.gz \
+                    "https://github.com/CloudCannon/pagefind/releases/download/v${PAGEFIND}/pagefind-v${PAGEFIND}-x86_64-unknown-linux-musl.tar.gz"
+                  sudo tar -C /usr/local/bin -xzf /tmp/pagefind.tar.gz
+                  hugo version
+                  pagefind --version
+
+            - name: Seite bauen
+              run: |
+                  hugo --gc
+                  pagefind --site public
+
+            # Die drei Prüfungen sind das Sicherheitsnetz der Migration: sie
+            # vergleichen die Ausgabe mit dem Stand, den die alte Seite
+            # ausgeliefert hat (Referenz-Snapshots in _build/).
+            - name: Seitenrümpfe gegen den alten Stand prüfen
+              run: python3 -E -s _build/verify.py
+
+            - name: Blog, Kategorien, Feed und Sitemaps prüfen
+              run: python3 -E -s _build/verify_blog.py
+
+            - name: Seiteninterne Verweise prüfen
+              run: python3 -E -s _build/linkcheck.py
+
+            # Die Weiterleitungsdatei ist erzeugt. Sie muss zum Stand der
+            # Inhalte passen, sonst zeigen Regeln auf Adressen, die es
+            # nicht mehr gibt - oder es fehlen welche.
+            - name: Weiterleitungen sind aktuell
+              run: |
+                  set -euo pipefail
+                  python3 -E -s _build/gen_redirects.py > /dev/null
+                  if ! git diff --quiet -- deploy/redirects.caddy _build/weiterleitungen.json; then
+                    echo "::error::deploy/redirects.caddy ist nicht aktuell - _build/gen_redirects.py laufen lassen und das Ergebnis einchecken"
+                    git diff -- deploy/redirects.caddy _build/weiterleitungen.json
+                    exit 1
+                  fi
+
+            - name: Caddy-Konfiguration prüfen
+              env:
+                  CADDY: ${{ steps.versionen.outputs.caddy }}
+              run: |
+                  docker run --rm \
+                    -v ./deploy/Caddyfile.container:/etc/caddy/Caddyfile:ro \
+                    -v ./deploy/redirects.caddy:/etc/caddy/redirects.caddy:ro \
+                    "caddy:${CADDY}-alpine" caddy validate --adapter caddyfile \
+                    --config /etc/caddy/Caddyfile
+
+    veroeffentlichen:
+        name: Image veröffentlichen
+        needs: pruefen
+        if: startsWith(github.ref, 'refs/tags/')
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+        steps:
+            - name: Repository auschecken
+              uses: actions/checkout@v7
+
+            - name: Buildx einrichten
+              uses: docker/setup-buildx-action@v4
+
+            - name: Bei GHCR anmelden
+              uses: docker/login-action@v4
+              with:
+                  registry: ${{ env.REGISTRY }}
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Image bauen und pushen
+              uses: docker/build-push-action@v7
+              with:
+                  context: .
+                  push: true
+                  tags: |
+                      ${{ env.REGISTRY }}/${{ github.repository }}:${{ github.ref_name }}
+                      ${{ env.REGISTRY }}/${{ github.repository }}:latest
+                  cache-from: type=gha
+                  cache-to: type=gha,mode=max,ignore-error=true
+                  # Ohne Attestierungs-Manifest: das Image enthält statisches
+                  # HTML und läuft auf einem eigenen Server, nicht bei Dritten.
+                  provenance: false
+                  labels: |
+                      org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+                      org.opencontainers.image.revision=${{ github.sha }}
+                      org.opencontainers.image.version=${{ github.ref_name }}
+
+            - name: Zusammenfassung
+              run: |
+                  {
+                    echo "### Image veröffentlicht"
+                    echo
+                    echo '```'
+                    echo "${{ env.REGISTRY }}/${{ github.repository }}:${{ github.ref_name }}"
+                    echo '```'
+                    echo
+                    echo "Ausrollen auf dem Server:"
+                    echo
+                    echo '```bash'
+                    echo "cd /opt/datamate.org"
+                    echo "sed -i 's/^DATAMATE_VERSION=.*/DATAMATE_VERSION=${{ github.ref_name }}/' .env"
+                    echo "docker compose pull && docker compose up -d"
+                    echo '```'
+                  } >> "$GITHUB_STEP_SUMMARY"

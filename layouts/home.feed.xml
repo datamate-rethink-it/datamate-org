@@ -1,0 +1,49 @@
+{{- /* RSS-Feed unter /feed/, Aufbau wie der WordPress-Feed: die zwanzig
+       neuesten Beitraege mit dem Teaser als description. */ -}}
+{{- $beitraege := first 20 (where site.RegularPages "Section" "blog") -}}
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>datamate</title>
+	<atom:link href="{{ "feed/" | absURL }}" rel="self" type="application/rss+xml" />
+	<link>https://www.datamate.org</link>
+	<description></description>
+	<lastBuildDate>{{ (index $beitraege 0).Lastmod.UTC.Format "Mon, 02 Jan 2006 15:04:05 +0000" }}</lastBuildDate>
+	<language>de</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+
+<image>
+	<url>{{ "wp-content/uploads/2017/05/cropped-datamate-logo-500x500-32x32.png" | absURL }}</url>
+	<title>datamate</title>
+	<link>https://www.datamate.org</link>
+	<width>32</width>
+	<height>32</height>
+</image>
+{{- range $beitraege }}
+{{- $roh := .RawContent }}
+{{- $teaser := index (split $roh "<span id=\"more-") 0 }}
+{{- if eq (len $teaser) (len $roh) }}{{ $teaser = printf "%s</p>" (index (split $roh "</p>") 0) }}{{ end }}
+	<item>
+		<title>{{ .Title }}</title>
+		<link>{{ .Permalink }}</link>
+		<dc:creator><![CDATA[{{ .Params.autor }}]]></dc:creator>
+		<pubDate>{{ .Date.UTC.Format "Mon, 02 Jan 2006 15:04:05 +0000" }}</pubDate>
+{{- range .Params.kategorien }}
+		<category><![CDATA[{{ index hugo.Data.kategoriennamen . }}]]></category>
+{{- end }}
+		<guid isPermaLink="false">https://www.datamate.org/?p={{ .Params.wp_id }}</guid>
+		<description><![CDATA[{{ $teaser | plainify | htmlUnescape | chomp }}]]></description>
+	</item>
+{{- end }}
+</channel>
+</rss>

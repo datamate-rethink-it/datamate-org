@@ -1,0 +1,151 @@
+# Weiterleitungen und entfallene Adressen.
+#
+# ERZEUGT von _build/gen_redirects.py - nicht von Hand aendern.
+# Eingebunden von Caddyfile.container. Die Reihenfolge der
+# handle-Bloecke ist die Logik: der erste passende gewinnt.
+#
+# Die redir-Zeilen tragen den Matcher * : ohne ihn liest Caddy das
+# Ziel, weil es mit / beginnt, als Pfadmuster und leitet nicht um.
+
+# --- 1. Adressen mit festem Ziel -------------------------------
+# Zusammengefasst aus vier Quellen:
+#   * gepflegte Regeln des Plugins Redirection (ohne Platzhalter)
+#   * nackte Adressen der Unterseiten: /architektur/ ->
+#     /seafile/architektur/, von WordPress selbst umgeleitet
+#   * Anhangseiten -> Bilddatei, von Yoast SEO umgeleitet
+#   * Adressen, die WordPress aus einem Teil des Slugs erraten hat
+map {path} {ziel} {
+	~^/architektur/?$                                                              /seafile/architektur/
+	~^/aus\-ipv4\-in\-ipv6\-serverzugriff\-aus\-dem\-mobilfunknetz/nat\-loopback\-oder\-wie\-dyndns\-fuers\-interne\-netzwerk\-fit\-gemacht\-werden\-kann/?$ /nat-loopback-oder-wie-dyndns-fuers-interne-netzwerk-fit-gemacht-werden-kann/
+	~^/client\-plattformen/?$                                                      /seafile/client-plattformen/
+	~^/corporate\-design/?$                                                        /dropbox-alternative/corporate-design/
+	~^/customizing/?$                                                              /seafile/customizing/
+	~^/datenschutz/?$                                                              /datenschutzerklaerung/
+	~^/editionenvergleich/?$                                                       /seafile/editionenvergleich/
+	~^/enterprise\-infrastrukturen/?$                                              /seafile/enterprise-infrastrukturen/
+	~^/ezeelogin\-installation/ez10/?$                                             /wp-content/uploads/2019/10/ez10.png
+	~^/ezeelogin\-installation/ez12/?$                                             /wp-content/uploads/2019/10/ez12.png
+	~^/ezeelogin\-installation/ez13/?$                                             /wp-content/uploads/2019/10/ez13.png
+	~^/ezeelogin\-installation/ez2/?$                                              /wp-content/uploads/2019/10/ez2.png
+	~^/ezeelogin\-installation/ez20/?$                                             /wp-content/uploads/2019/10/ez20.png
+	~^/ezeelogin\-installation/ez21/?$                                             /wp-content/uploads/2019/10/ez21.png
+	~^/ezeelogin\-installation/ez22/?$                                             /wp-content/uploads/2019/10/ez22.png
+	~^/ezeelogin\-installation/ez23/?$                                             /wp-content/uploads/2019/10/ez23.png
+	~^/ezeelogin\-installation/ez24/?$                                             /wp-content/uploads/2019/10/ez24.png
+	~^/ezeelogin\-installation/ez26/?$                                             /wp-content/uploads/2019/10/ez26.png
+	~^/ezeelogin\-installation/ez27/?$                                             /wp-content/uploads/2019/10/ez27.png
+	~^/ezeelogin\-installation/ez28/?$                                             /wp-content/uploads/2019/10/ez28.png
+	~^/ezeelogin\-installation/ez29/?$                                             /wp-content/uploads/2019/10/ez29.png
+	~^/ezeelogin\-installation/ez33/?$                                             /wp-content/uploads/2019/10/ez33.png
+	~^/ezeelogin\-installation/ez4/?$                                              /wp-content/uploads/2019/10/ez4.png
+	~^/ezeelogin\-installation/ez5/?$                                              /wp-content/uploads/2019/10/ez5.png
+	~^/ezeelogin\-installation/ez9/?$                                              /wp-content/uploads/2019/10/ez9.png
+	~^/funktionen/?$                                                               /seafile/funktionen/
+	~^/integration\-api/?$                                                         /seafile/integration-api/
+	~^/kundenstimmen/?$                                                            /seafile/kundenstimmen/
+	~^/lizenzbedingungen/?$                                                        /software/lizenzbedingungen/
+	~^/open\-source/?$                                                             /seafile/open-source/
+	~^/openproject/?$                                                              /openproject-6-0-was-bringt-das-neue-major-release/
+	~^/preise/?$                                                                   /seafile/preise/
+	~^/produktvergleich/?$                                                         /dropbox-alternative/produktvergleich/
+	~^/produktvorstellung\-access\-point\-hp\-m330/hp\-m330\-2\-2/?$               /wp-content/uploads/2017/01/hp-m330-2.jpg
+	~^/produktvorstellung\-access\-point\-hp\-m330/hp\-m330\-3/?$                  /wp-content/uploads/2017/01/hp-m330-3.jpg
+	~^/produktvorstellung\-access\-point\-hp\-m330/hp\-m330/?$                     /wp-content/uploads/2017/01/hp-m330.jpg
+	~^/seafile\-alternativen/?$                                                    /seafile/seafile-alternativen/
+	~^/seafile\-einfaches\-dokumentenmanagementsystem/(\||%7C)$                    /seafile-einfaches-dokumentenmanagementsystem/
+	~^/seafile\-neu/?$                                                             /seafile/
+	~^/server\-plattformen/?$                                                      /seafile/server-plattformen/
+	~^/sicherheit/?$                                                               /dropbox-alternative/sicherheit/
+	~^/sitemap\.xml/?$                                                             /sitemap_index.xml
+	~^/software/?$                                                                 /dropbox-alternative/software/
+	~^/unterschiede\-seafile\-dropbox/?$                                           /seafile/unterschiede-seafile-dropbox/
+	~^/unterschiede\-seafile\-owncloud/?$                                          /seafile/unterschiede-seafile-owncloud/
+	~^/wechsel\-community\-professional\-edition/?$                                /seafile/wechsel-community-professional-edition/
+	~^/windows\-benutzerpasswort\-vergessen\-hero\-eilt\-zur\-hilfe/mit\-der\-windows\-wiederherstellung\-defekte\-systeme\-munter\-machen/?$ /mit-der-windows-wiederherstellung-defekte-systeme-munter-machen/
+	~^/zugriffsarten/?$                                                            /seafile/zugriffsarten/
+	default ""
+}
+@mit_ziel expression `{ziel} != ""`
+handle @mit_ziel {
+	redir * {ziel} permanent
+}
+
+# --- 2. Alte Beitragsadressen mit geaendertem Slug -------------
+# Diese Beitraege lagen unter /blog/ und wurden danach umbenannt.
+handle /blog/5-gruende-business-firewall* {
+	redir * /5-gruende-warum-eine-business-firewall-einer-fritzbox-ueberlegen-ist permanent
+}
+handle /blog/backup-methoden-software-im-vergleich* {
+	redir * /backupmethoden-im-vergleich permanent
+}
+handle /blog/faehigkeiten-einer-modernen-voip-telefonanlage* {
+	redir * /faehigkeiten-moderner-voip-telefonanlagen permanent
+}
+handle /blog/import-von-kundendaten-in-odoo-in-4-schritten* {
+	redir * /import-von-kundendaten-in-odoo-9-in-4-schritten permanent
+}
+handle /blog/ldap-login-odoo-einrichten* {
+	redir * /ldap-login-und-authentifizierung-in-odoo-einrichten permanent
+}
+handle /blog/lets-encrypt-zertifikat-mit-dem-raspberry-pi* {
+	redir * /lets-encrypt-zertifikat-in-nginx-auf-dem-raspberry-pi permanent
+}
+handle /blog/megaraid-unter-ubuntu-ueberwachen* {
+	redir * /megaraid-hw-controller-mit-ubuntu-ueberwachen permanent
+}
+handle /blog/online-speicher-fuer-jedermann* {
+	redir * /online-speicher-fuer-jedermann permanent
+}
+handle /blog/tutorial-odoo-9-ubuntu-installieren* {
+	redir * /tutorial-odoo-9-unter-ubuntu-installieren permanent
+}
+handle /blog/vm-invalid-status-wiederbeleben* {
+	redir * /vm-mit-invalid-status-wiederbeleben permanent
+}
+handle /blog/zubehoer-voip-telefone-snom-yealink* {
+	redir * /zubehoer-fuer-voip-telefone-von-snom-und-yealink permanent
+}
+
+# --- 3. Bilder, die unter /blog/ verlinkt wurden ---------------
+# 23 458 Aufrufe im Zaehler des Plugins - alte Beitragsbilder.
+@blogbilder path_regexp blogbilder ^/blog/(?:page/)?wp-content/uploads/(.*)$
+handle @blogbilder {
+	redir * /wp-content/uploads/{re.blogbilder.1} permanent
+}
+
+# --- 4. Blog-Uebersicht und ihre Blaetterseiten ----------------
+# Muss vor Regel 5 stehen: /blog/page/2/ ist eine echte Adresse,
+# kein alter Beitragspfad.
+handle /blog/page/* {
+	try_files {path} {path}/index.html
+	file_server
+}
+handle /blog/ {
+	try_files {path}index.html
+	file_server
+}
+
+# --- 5. /blog/<slug>/ -> /<slug>/ ------------------------------
+# Jeder Beitrag war einmal unter /blog/ erreichbar; WordPress hat
+# diese Adressen selbst umgeleitet.
+@blogslug path_regexp blogslug ^/blog/(.+)$
+handle @blogslug {
+	redir * /{re.blogslug.1} permanent
+}
+
+# --- 9. Suche --------------------------------------------------
+# Die WordPress-Suche lief ueber /?s=... - jetzt sucht Pagefind
+# unter /suche/ im Browser.
+@suche query s=*
+handle @suche {
+	redir * /suche/?q={http.request.uri.query.s} permanent
+}
+
+# --- 10. Eingestellte Bereiche: 410 Gone -----------------------
+# Entscheidung vom 21.10.2026, siehe README. 410 statt 404, damit
+# Suchmaschinen die Adressen zuegig aus dem Index nehmen.
+@entfallen path /3cx /3cx/ /antivirus /antivirus/ /avira-rescue /avira-rescue/ /benutzer /benutzer/ /clonezilla /clonezilla/ /consulting /consulting/ /dienste /dienste/ /dienstprogramme /dienstprogramme/ /downloads/firmware /downloads/firmware/* /downloads/manuals /downloads/manuals/* /firmware /firmware/* /goldenrosskaserne /goldenrosskaserne/ /hero /hero/* /hilfe /hilfe/* /kaspersky-rescue /kaspersky-rescue/ /konfiguration /konfiguration/ /linux /linux/ /manuals /manuals/* /odoo /odoo/ /roadmap /roadmap/ /seafile/seamate /seafile/seamate/ /seamate /seamate/ /software/roadmap /software/roadmap/ /start /start/ /ubuntu-desktop /ubuntu-desktop/ /ubuntu-server /ubuntu-server/ /uebersicht /uebersicht/ /voip /voip-ip-telefone-firmware-handbuecher-und-standard-passwoerter /voip-ip-telefone-firmware-handbuecher-und-standard-passwoerter/ /voip/ /wartung /wartung/ /windows /windows/ /windows10 /windows10/ /windows7 /windows7/ /windows8 /windows8/ /wp-content/uploads/2018/12/datamate_Auftragsformular_3CXInstallation.pdf /wp-content/uploads/2019/04/3CX_Installation_Bestellformular-1.pdf
+handle @entfallen {
+	error 410
+}
+

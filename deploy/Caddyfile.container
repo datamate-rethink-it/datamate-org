@@ -1,0 +1,67 @@
+# Caddy im Container datamate-org. Kein TLS, kein Hostname: davor steht
+# das native nginx des Servers (siehe deploy/nginx-vhost.conf).
+#
+# Die Ausliefer-Regeln stecken mit Absicht hier im Image und nicht im
+# vhost des Servers: so sind sie mit dem Inhalt zusammen versioniert, und
+# ein Rueckschritt auf eine aeltere Fassung nimmt die Regeln mit.
+#
+# Pruefen:
+#   docker run --rm \
+#     -v ./deploy/Caddyfile.container:/etc/caddy/Caddyfile:ro \
+#     -v ./deploy/redirects.caddy:/etc/caddy/redirects.caddy:ro \
+#     caddy:2.11.7-alpine caddy validate --adapter caddyfile \
+#     --config /etc/caddy/Caddyfile
+
+:80 {
+	root * /srv
+	encode zstd gzip
+
+	# --- Weiterleitungen und entfallene Adressen -------------------
+	# Erzeugt von _build/gen_redirects.py: die 24 Regeln des Plugins
+	# Redirection, die Weiterleitungen, die WordPress selbst gemacht hat
+	# (nackte Unterseiten-Adressen, /blog/<slug>/, Anhangseiten), und
+	# 410 Gone fuer die eingestellten Bereiche.
+	import redirects.caddy
+
+	# --- /feed/ ----------------------------------------------------
+	# Hugo legt den Feed als /feed/index.xml ab. Ausgeliefert wird er
+	# unter /feed/ - so steht die Adresse in Feedreadern und im Kopf
+	# jeder Seite. /feed (ohne Schraegstrich) und /blog/feed/ sind im
+	# WordPress ebenfalls erreichbar gewesen.
+	handle /feed* {
+		header Content-Type "application/rss+xml; charset=utf-8"
+		rewrite * /feed/index.xml
+		file_server
+	}
+
+	# --- statische Auslieferung ------------------------------------
+	# try_files bedient /impressum und /impressum/ gleich, ohne
+	# Weiterleitung - genau wie WordPress.
+	handle {
+		try_files {path} {path}/index.html
+		file_server
+	}
+
+	handle_errors 404 {
+		rewrite * /404.html
+		file_server
+	}
+
+	# 410 behaelt seinen Code und bekommt einen kurzen Text statt der
+	# Fehlerseite - eine Fehlerseite mit 410 verwirrt Suchmaschinen.
+	handle_errors 410 {
+		header Content-Type "text/plain; charset=utf-8"
+		respond "410 Gone - diese Seite gibt es nicht mehr." 410
+	}
+
+	# Lange Cache-Zeiten fuer Medien, kurze fuer die Seiten selbst.
+	@medien path /wp-content/* /wp-includes/* /eigen/* /downloads/* /css/* /img/* /pagefind/*
+	@seiten not path /wp-content/* /wp-includes/* /eigen/* /downloads/* /css/* /img/* /pagefind/*
+	header @medien Cache-Control "public, max-age=2592000"
+	header @seiten Cache-Control "public, max-age=300"
+
+	log {
+		output stdout
+		format console
+	}
+}

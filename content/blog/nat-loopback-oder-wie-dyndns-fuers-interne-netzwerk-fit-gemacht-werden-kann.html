@@ -1,0 +1,196 @@
++++
+title = "NAT-Loopback oder “wie DynDNS fürs interne Netzwerk fit gemacht werden kann”"
+titel_html = "NAT-Loopback oder &quot;wie DynDNS fürs interne Netzwerk fit gemacht werden kann&quot; | datamate"
+ueberschrift = "NAT-Loopback oder &#8220;wie DynDNS fürs interne Netzwerk fit gemacht werden kann&#8221;"
+beschreibung = "Dank DynDNS kann man sehr bequem von unterwegs auf Geräte im Heimnetzwerk zuzugreifen. Mit NAT-Loopback kann man DynDNS auch im internen Netzwerk verwenden."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/08/cobweb-959578_1280.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/nat-loopback-oder-wie-dyndns-fuers-interne-netzwerk-fit-gemacht-werden-kann/"
+canonical = "https://www.datamate.org/nat-loopback-oder-wie-dyndns-fuers-interne-netzwerk-fit-gemacht-werden-kann/"
+og_bild_breite = "1280"
+og_bild_hoehe = "960"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2017-08-22T10:02:42+00:00"
+geaendert = "2025-02-21T08:10:14+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Ralf Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "5 Minuten"
+beitragsbild = "/wp-content/uploads/2017/08/cobweb-959578_1280.jpg"
+bild_breite = 1280
+bild_hoehe = 960
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "NAT-Loopback oder &#8220;wie DynDNS fürs interne Netzwerk fit gemacht werden kann&#8221;", item = ""}]
+wortzahl = 1010
+autor = "Ralf Dyllick-Brenzinger"
+autor_kurz = "rdb"
+kategorien = ["praktische-anwendungsfaelle"]
+schlagwoerter = ["DynDNS", "Hairpinning", "IP-Adresse", "NAT", "NAT-Loopback"]
+wp_id = 200
+slug = "nat-loopback-oder-wie-dyndns-fuers-interne-netzwerk-fit-gemacht-werden-kann"
+url = "/nat-loopback-oder-wie-dyndns-fuers-interne-netzwerk-fit-gemacht-werden-kann/"
+date = "2017-08-22T12:02:42"
+lastmod = "2025-02-21T09:10:14"
+datum_utc = "2017-08-22T10:02:42+00:00"
+geaendert_utc = "2025-02-21T08:10:14+00:00"
++++
+						<p>Dynamic DNS oder kurz DynDNS ist die Technik, die es ermöglicht, über eine sich nicht ändernde Internetadresse auf einen Server zuzugreifen, der sich an einem Internetanschluss mit wechselnder IP-Adresse befindet. Auch Homie und Fellow machen von dieser Technik Gebrauch. Für eine komfortable Nutzung von DynDNS auf den beiden Servern ist jedoch eine zweite technische Voraussetzung notwendig: Das Internet-Gateway aka Router muss NAT-Loopback unterstützen. Glücklicherweise unterstützen die meisten Router in Deutschland, Österreich und der Schweiz diese Technik. Leider jedoch nicht alle. Dieser Artikel erklärt die Idee von NAT-Loopback und zeigt auf, welche Router NAT-Loopback Unterstützung mitbringen und welche nicht.</p>
+
+<span id="more-200"></span>
+
+<h2>Die Bedeutung von DynDNS für Heimserver</h2> 
+
+<img decoding="async" src="/wp-content/uploads/2017/08/HomieFritzbox_800x884.jpg" style="float:left; margin-right: 15px;" alt="Fritz!Box unterstützt NAT-Loopback" width="400" class="alignnone size-full wp-image-1487" srcset="/wp-content/uploads/2017/08/HomieFritzbox_800x884.jpg 800w, /wp-content/uploads/2017/08/HomieFritzbox_800x884-271x300.jpg 271w, /wp-content/uploads/2017/08/HomieFritzbox_800x884-768x849.jpg 768w" sizes="(max-width: 800px) 100vw, 800px" />
+
+<p>Eindeutig definierte Adressen sind für die korrekte Zustellung von Datenpaketen in Netzwerken genauso wichtig wie sie für die Zustellung von Paketen in der realen Welt sind. Befände sich die Postleitzahl 55116 am einen Tag in Mainz, am nächsten Tag in Berlin und am Folgetag in München, bei der Paketzustellung entstände ein heilloses Durcheinander.</p>
+
+<p>Tatsächlich ist die geschilderte Situation bei den meisten Internetanschlüssen für Privatnutzer jedoch die Normalsituation. Der Internetrouter erhält täglich eine neue öffentliche IP-Adresse vom Internetanbeiter (kurz ISP für Internet Service Provider). Heute hat der Router die öffentliche Adresse 93.197.80.253, gestern war er mit der IP-Adresse 87.159.207.74 im Internet verbunden, und morgen wird es wieder eine andere sein. Es braucht also einen Lokalisierungsdienst, der die variable Adresse des Internetanschlusses unter einer statischen Adresse verfügbar macht.</p>
+
+<p>DynDNS ist dieser gesucht Lokalisierungsdienst. Bei DynDNS prüft ein Netzwerkgerät in konstanten Intervallen auf die Veränderung der öffentlichen IP-Adresse. Tritt eine Veränderung ein, dann meldet es die neue Adresse an eine zentrale Instanz. Diese zentrale Instanz ist wiederum über eine statische Adresse erreichbar. Von dieser erfährt man die aktuelle IP-Adresse des gesuchten Internet-Gateways. Damit die Abfrage der aktuellen Adresse denkbar einfach ist, ordnet man Ihr einfach eine URL zu. Dies ist die DynDNS-Adresse.</p>
+
+<p>Zur Verdeutlichung ein fiktives Beispiel für die Arbeitsweise von DynDNS: Ein kleines Programm auf <a href="/homie">Homie</a> prüft in regelmäßigen Abständen die öffentliche IP des Routers. Findet das Programm eine Abweichung in der öffentlichen IP gegenüber der letzten Abfrage, dann schickt es ein Adress-Update an einen DynDNS-Dienst, z.B. <a href="https://www.spdyn.de/">spDYN von Securepoint</a>. Der DynDNS-Dienst speichert die neue Adresse und stellt sie bei Anfragen zur Verfügung. Ruft man seine DynDNS-Adresse auf, z.B. example.spdns.eu, dann löst spDYN die URL auf die IP des Routers auf. Ganz einfach testen lässt sich dies mit einem Ping an die DynDNS-Adresse (siehe Abbildung unten).</p>
+
+<img decoding="async" loading="lazy" src="/wp-content/uploads/2017/08/PingDynDNS.png" alt="Ping auf eine DynDNS-Adresse" width="727" height="275" class="alignnone size-full wp-image-1491" srcset="/wp-content/uploads/2017/08/PingDynDNS.png 727w, /wp-content/uploads/2017/08/PingDynDNS-300x113.png 300w" sizes="(max-width: 727px) 100vw, 727px" />
+
+
+<h2>Probleme mit DynDNS bei Zugriffen aus dem lokalen Netzwerk</h2>
+<p>DynDNS bietet also eine komfortable Technik, die auch von unterwegs den zuverlässigen Zugriff auf den eigenen Server im Heimnetzwerk mit dynamischer offentlicher IP ermöglicht. Wenn man in den Client-Geräten den Server Zugriff via DynDNS-Adresse konfiguriert, ist man von den Änderungen der öffentlichen IP des Servers unabhängig.</p>
+
+<p>Ein Problem kann jedoch auftreten, wenn man aus dem  eigenen lokalen Netzwerk via DynDNS auf den Server zugreifen will. Diese Situation lässt sich leicht an einem Beispiel veranschaulichen:<br/></p>
+
+<p>
+<strong>Client:</strong> Request an den Server per example.spdns.eu, die per DynDNS auf die öffentliche IP des Routers aufgelöst wird<br/>
+<strong>Router:</strong> Routing des Requests an den Server im lokalen Netzwerk, wobei die öffentliche IP des Routers durch die lokale IP des Servers ersetzt wird (z.B. 192.168.178.10)<br/>
+<strong>Server:</strong> Response an die lokale IP-Adresse des Clients als Absender, da diese vom Router nicht verändert wurde (z.B. 192.168.178.5)<br/>
+<strong>Router:</strong> Routing der Pakete an den Client via lokaler IP<br/>
+<strong>Client:</strong> Verwerfen der Antwort, da eine Antwort von der öffentlichen IP des Routers erwartet wird<br/></p>
+
+<p>Eine bidirektionale Kommunikation zwischen dem Client und dem Server kann nicht zustande kommen, da die NAT-Regeln des Routers in Kombination mit den Sicherheitseinstellungen des Clients dafür sorgen, dass die Antworten des Servers vom Client nicht akzeptiert werden. Ohne weiteres ist mit DynDNS also kein Zugriff auf interne Ressourcen aus dem lokalen Netzwerk möglich.</p>
+
+<h2>NAT-Loopback als Lösung für DynDNS-Zugriffe aus lokalem Netzwerk</h2>
+<p>Damit bei Zugriffen aus dem lokalen Netzwerk per DynDNS die Anfragen vom Client angenommen werden, ist es nötig, dass der Router bei der Antwort des Servers dessen interne IP durch seine eigene externe IP-Adresse ersetzt. Dann bekommt der Client die Antworten vom aus seiner Sicht richtigen Absender und akzeptiert die Pakete.</p>
+
+<p>Die Technik, die DynDNS für den Einsatz in lokalen Netzwerken fit macht, nennt sich NAT-Loopback. NAT-Loopback sorgt dafür, dass der anfragende Rechner im lokalen Netzwerk die Antwort von der erwarteten Stelle zurück erhält. Ein Router mit NAT-Loopback Unterstützung beseitigt die oben dargestellte Einschränkung von DynDNS.</p>
+
+<p>Ein mit NAT-Loopback eng verwandter Begriff ist Hairpinning: Mit Hairpinning ist die Kommunikation zwischen zwei Geräten in ein und demselben Netzwerk über die externe IP des Internet Gateways gemeint. NAT-Loopback ist also die Technik, die Hairpinning ermöglicht.</p>
+
+<h2>Router mit Hairpinning-Unterstützung</h2>
+<p>Die meisten Router in Deutschland sind mittlerweile NAT-Loopback fähig. Die Situation in Österreich ist ähnlich. In der Schweiz unterstützen die Router von UPC kein Hairpinning und der Kabelanbeiter ist auch nicht gewillt, Kunden alternative, leistungsfähige Router verwenden zu lassen. Anders als in Deutschland, wo der Routerzwang in 2016 fiel, hat man als Kunde wenig in der Hand.</p>
+
+<p>Die technischen Dokumentationen vieler Router sind hinsichtlich Ihrer NAT-Loopback-Fähigkeit nicht besonders auskunftsfreudig. In den nachfolgenden Tabellen haben wir versucht, eine Übersicht zu erstellen (alle Angaben ohne Gewähr):</p>
+
+<h3>Apple</h3>
+<table style="border:1px solid black,display: block">
+		<tr>
+			<td style="padding-right:1em;">Airport Extreme</td>
+			<td>ja</td>
+		</tr>
+</table>
+
+<h3>AVM</h3>
+<table>
+	<tr>
+		<td style="padding-right:1em;">Fritz!Box 7140</td>
+		<td>ja</td>
+	</tr>
+	<tr>
+		<td style="padding-right:1em;">Fritz!Box 7390</td>
+		<td>ja</td>
+	</tr>
+	<tr>
+		<td style="padding-right:1em;">Fritz!Box 7490</td>
+		<td>ja</td>
+	</tr>
+</table>
+
+
+
+<h3>Deutsche Telekom</h3>
+
+<table>
+	<tr>
+		<td style="padding-right:1em;">Digitalisierungsbox Standard</td>
+		<td>ja <a href="https://www.telekom.de/hilfe/geraete-zubehoer/router/weitere-router/digitalisierungsbox/digitalisierungsbox-standard">(nach Aktivierung)</a></td>
+	</tr>
+	<tr>
+		<td style="padding-right:1em;">Digitalisierungsbox Premium</td>
+		<td><a href="https://telekomhilft.telekom.de/t5/Festnetz-Internet/Digitalisierungsbox-Premium-NAT-Loopback/td-p/2471257">ja</a></td>
+	</tr>
+	<tr>
+		<td style="padding-right:1em;">Digitalisierungsbox Smart</td>
+		<td>ja <a href="http://www.telekom.de/hilfe/downloads/bedienungsanleitung-digitalisierungsbox-smart-telefonanlage.pdf">(nach Aktivierung)</a></td>
+	</tr>
+	<tr>
+		<td style="padding-right:1em;">Speedport W503V</td>
+		<td>ja</td>
+	</tr>
+	<tr>
+		<td style="padding-right:1em;">Sportport W724V Typ A</td>
+		<td>nein</td>
+	</tr>
+	<tr>
+		<td style="padding-right:1em;">Sportport W724V Typ B</td>
+		<td>ja (<a href="https://telekomhilft.telekom.de/t5/forums/v3_1/forumtopicpage/board-id/552/page/19/thread-id/70030">ab Firmware 01011603.05.020</a>)</td>
+	</tr>
+	<tr>
+		<td style="padding-right:1em;">Sportport W724V Typ C</td>
+		<td>nein</td>
+	</tr>
+	<tr>
+		<td style="padding-right:1em;">Speedport W922V</td>
+		<td>nein</td>
+	</tr>
+</table>
+	
+<h3>Sunrise (CH)</h3>
+
+<table>
+	<tr>
+		<td style="padding-right:1em;">Sunrise Internet Box</td>
+		<td>nein</td>
+	</tr>
+</table>
+
+<h3>Swisscom (CH)</h3>
+
+<table>
+	<tr>
+		<td style="padding-right:1em;">Internet-Box Standard</td>
+		<td>ja</td>
+	</tr>
+	<tr>
+		<td style="padding-right:1em;">Internet-Box Light</td>
+		<td>nein</td>
+	</tr>
+	<tr>
+		<td style="padding-right:1em;">Internet-Box Plus</td>
+		<td>ja</td>
+	</tr>
+	<tr>
+		<td style="padding-right:1em;">Internet-Box 2</td>
+		<td>ja</td>
+	</tr>
+</table>
+
+<h3>UPC (CH)</h3>
+
+<table>
+	<tr>
+		<td style="padding-right:1em;">Horizon Box</td>
+		<td>nein</td>
+	</tr>
+</table>
+
+
+<h3>Vodafone</h3>
+
+<table>
+	<tr>
+		<td style="padding-right:1em;">EasyBox 803</td>
+		<td>ja</td>
+	</tr>
+	<tr>
+		<td style="padding-right:1em;">EasyBox 804</td>
+		<td><a href="https://forum.vodafone.de/t5/Festnetz-LTE-Ger%C3%A4te/EasyBox-804-DDNS-Port-Mapping-funktioniert-nicht/td-p/816308/page/2">nein</a></td>
+	</tr>
+</table>

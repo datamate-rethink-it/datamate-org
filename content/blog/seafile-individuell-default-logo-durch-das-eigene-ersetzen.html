@@ -1,0 +1,87 @@
++++
+title = "Seafile individuell: Default Logo durch das Eigene ersetzen"
+titel_html = "Seafile individuell: Default Logo durch das Eigene ersetzen | datamate"
+ueberschrift = "Seafile individuell: Default Logo durch das Eigene ersetzen"
+beschreibung = "Seafile mit dem eigenen statt dem Default-Logo sieht einfach schicker aus. Gewusst wie ist der Austausch schnell gemacht. Wir zeigen wie &quot;gewusst wie&quot; geht."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_typ = "article"
+og_url = "https://www.datamate.org/seafile-individuell-default-logo-durch-das-eigene-ersetzen/"
+canonical = "https://www.datamate.org/seafile-individuell-default-logo-durch-das-eigene-ersetzen/"
+veroeffentlicht = "2016-07-25T16:41:20+00:00"
+geaendert = "2025-02-21T08:10:50+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "3 Minuten"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Seafile individuell: Default Logo durch das Eigene ersetzen", item = ""}]
+wortzahl = 522
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["seafile"]
+schlagwoerter = ["Customizing", "logo", "seafile"]
+wp_id = 2908
+slug = "seafile-individuell-default-logo-durch-das-eigene-ersetzen"
+url = "/seafile-individuell-default-logo-durch-das-eigene-ersetzen/"
+date = "2016-07-25T18:41:20"
+lastmod = "2025-02-21T09:10:50"
+datum_utc = "2016-07-25T16:41:20+00:00"
+geaendert_utc = "2025-02-21T08:10:50+00:00"
++++
+						<p>Wer das Filesharing-Tool <a href="/seafile">Seafile</a> nur als Arbeitstier für den privaten Dateiaustausch verwendet, der hat wohl kaum etwas gegen das Seafile-Logo im Webinterface Seahub. Wer Seafile jedoch im Unternehmen einsetzt, der wünscht sich schnell das eigene Logo an Stelle der Standardgrafik.</p>
+
+<p>Einfach durch Konfigurationsänderung in den Einstellungen ist der Logoaustausch leider nicht möglich. Die dazu notwendigen Änderungen muss man in der Serverkonfiguration vornehmen. Wie man das macht, erklären wir in diesem kurzen Beitrag.</p>
+
+<span id="more-2908"></span>
+
+<h2>Vorgehen zum Wechsel des Logos in Seahub</h2>
+
+<p>Für diese Erklärung gehen wir davon aus, dass eine SSH-Verbindung zum Seafile-Server besteht und unter dem Verzeichnis &#8216;seahub-data&#8217; der Ordner &#8216;custom&#8217; existiert. Sollte dieser nicht bestehen, dann ist unsere Empfehlung diesen für größtmögliche Ordnung anzulegen.</p>
+
+<p>Zuallererst muss die Logo-Datei auf den Server kommen. Das kann per SCP erledigt werden. (Bei Windows Rechnern bietet sich dafür das Programm <a href="https://winscp.net/eng/download.php" target="_blank" rel="noopener">WinSCP</a> an.) Noch einfacher geht es, wenn die Logo-Datei bereits im Internet über eine URL verfügbar ist. Dann ist die Datei mit einem wget-Befehl in den Custom-Ordner heruntergeladen:</p>
+
+<pre>wget https://www.beispieldomain.de/logo.png</pre>
+
+<p>Falls die Grafikdatei mit einem kryptischen Namen eingefügt wird, dann empfiehlt es sich, diese der Einfachheit halber umzubenennen:</p>
+
+<pre>mv alter_dateiname.png neuer_dateiname.png</pre>
+
+<p>Jetzt liegt die Logo-Datei mit einem deskriptiven Dateinamen im Custom-Ordner und wartet auf die &#8220;Weiterverarbeitung&#8221;.</p>
+
+<p>In der Konfigurationsdatei von Seahub muss nun noch ein Verweis auf das neue Custom-Logo eingefügt werden. Die relevante Config-Datei ist die seahub_settings.py. Der Texteditor nano ist hier Mittel der Wahl.</p>
+
+<pre>nano seahub_settings.py</pre>
+
+<p>Wenn in dieser Config-Datei bereits ein &#8216;LOGO-PATH&#8217; eingetragen ist, dann kopiert man die Zeile am besten, kommentiert dann den ursprünglichen Eintrag aus und passt den neuen Eintrag entsprechend an. (So behält man den Ursprungseintrag als Referenz.) Gibt es noch keinen solchen Eintrag, dann fügt man einfach die folgende Zeile hinzu: </p>
+
+<pre>LOGO_PATH = 'custom/neuer_dateiname.png'</pre>
+
+<p>Danach muss man nur noch die Seafile-Server Dienste entsprechend der gewählten Installation neu starten. Voilà, beim nächsten Aufruf von Seahub thront das eigene Logo dort wo zuvor das Seafile-Logo war.</p>
+
+<p>Sollte das Unternehmenslogo zu groß oder zu klein angezeigt werden, dann hat man zwei Möglichkeiten, dies zu ändern: Entweder man verkleinert/vergrößert das Logo in einem Grafikprogramm und importiert es dann erneut in den Custom-Ordner oder man passt einfach die Anzeigegröße in der seahub-settings.py über die Einträge </p>
+
+<pre>'LOGO_HEIGHT = xx' </pre>
+
+<p>und </p>
+
+<pre>'LOGO_WIDTH = xx' </pre>
+
+<p>an. </p>
+
+<p>Eine beispielhafte Konfiguration würde dann so aussehen:</p>
+
+<pre>
+...
+LOGO_PATH = 'custom/neuer_dateiname.png'
+LOGO_HEIGHT = 100
+LOGO_WIDTH = 100
+...
+</pre>
+<p>Nicht vergessen werden darf, zur Aktivierung der Änderungen in der Konfigurationsdatei seahub_settings.py die Seafile-Dienste seafile und seahub neu zu starten.</p>
+
+<h2>Weiteres Customizing von Seafile</h2>
+
+<p>Mit dem Logwechsel hat man gerade mal an der Oberfläche der <a href="/seafile/customizing">Customizing-Möglichkeiten von Seahub und dem Seafile-Client</a> gekratzt. Mittels einer Custom-CSS lassen sich in Seafile Farben, Hover-Effekte Schriftarten und auch der Footer ändern. Dies erfordert jedoch etwas mehr Vorwissen als einfach nur der Austausch des Logos.</p>
+
+<img decoding="async" src="/wp-content/uploads/2017/10/Customzing_Möglichkeiten_Seafile.png" alt="Weitere Möglichkeiten zur individuellen Anpassung der Weboberfläche" class="buttommargin-sm" />
+
+<p>Wenn Sie ein für Ihr Unternehmen individuell angepasstes Seafile wünschen, dann sprechen Sie uns an: +49 (0)6131 3270777. Wenn Sie uns die gewünschten Anpassungen nennen, dann machen wir Ihnen gerne ein Angebot. Wir diskutieren mit Ihnen auch gerne sämtliche Möglichkeiten zur Modifikation von Seahub und des Seafile Clients.</p>

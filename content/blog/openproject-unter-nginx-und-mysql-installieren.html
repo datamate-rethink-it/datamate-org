@@ -1,0 +1,264 @@
++++
+title = "OpenProject unter nginx und Mysql installieren"
+titel_html = "OpenProject unter nginx und Mysql installieren | datamate"
+ueberschrift = "OpenProject unter nginx und Mysql installieren"
+beschreibung = "Openproject ist eine OpenSource Projektmanagementsuite. In diesem Artikel erfahren Sie, wie man OpenProject unter nginx und mit MySQL installiert."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/04/openproject.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/openproject-unter-nginx-und-mysql-installieren/"
+canonical = "https://www.datamate.org/openproject-unter-nginx-und-mysql-installieren/"
+veroeffentlicht = "2015-03-26T11:01:35+00:00"
+geaendert = "2025-02-21T08:10:57+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "8 Minuten"
+bild_breite = 950
+bild_hoehe = 509
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "OpenProject unter nginx und Mysql installieren", item = ""}]
+wortzahl = 1085
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["anleitungen", "software"]
+schlagwoerter = []
+wp_id = 4403
+slug = "openproject-unter-nginx-und-mysql-installieren"
+url = "/openproject-unter-nginx-und-mysql-installieren/"
+date = "2015-03-26T12:01:35"
+lastmod = "2025-02-21T09:10:57"
+datum_utc = "2015-03-26T11:01:35+00:00"
+geaendert_utc = "2025-02-21T08:10:57+00:00"
++++
+						<p><img decoding="async" style="float: left; padding-bottom: 30px;" src="/wp-content/uploads/2018/04/openproject.png" alt="OpenProject unter nginx und mit MySQL installieren" />OpenProject ist ein in Ruby und AngularJS geschriebenes Projektmanagementsystem der OpenProject Foundation und wird von einer freien Entwickler-community fortlaufend weiterentwickelt.</p>
+
+<p>Neben Meilensteinplanung und Projekt Management bietet es unter anderem Issue Management, Bug-Tracking sowie Zeitplan-Reporte und liegt aktuell in der Version 4.1 vor.</p>
+
+<p>Wir zeigen Ihnen in dem folgenden Tutorial, wie Ihr OpenProject auf einem Ubuntu Server System unter dem Webserver nginx und mit der Datenbank MySQL zum Laufen kriegt. Unsere Wahl fiel bewußt auf nginx und MySQL, weil diese Serverdienste bereits im ionas-Server Small Business von anderen Serverdiensten genutzt wird. Der gesunde Menschenverstand verbietet es neben nginx noch zusätzlich Apache oder eine zweite Datenbank auf dem Server zu betreiben.</p>
+
+<span id="more-4403"></span>
+<h2>1. Installation von OpenProject</h2>
+<p>Die nachfolgende Installationsanleitung wurde auf einem Ubuntu Server 14.04.1 LTS Image durchgeführt. Zum Einsatz kommen MySQL als Datenbank sowie Nginx als Webserver.</p>
+
+<p>Um die unterschiedlichen Schritte genauer abgrenzen zu können wird jeweils der ausführende Benutzer mit angegeben.
+So kann einfacher zwischen einem voll privilegierten Benutzer [root] oder einem eingeschränkten Benutzer unterschieden werden.</p>
+
+<p>Weiterhin nutzen wir zwei verschiedene Schreibweisen von &#8220;OpenProject&#8221;:</p>
+<ul>
+ 	<li>&#8220;OpenProject&#8221; bezeichnet das allg. Projekt</li>
+ 	<li>&#8220;openproject&#8221; bezeichnet den Linux Systembenutzer, welchen wir im Rahmen der Installation anlegen werden</li>
+</ul>
+<p>Zunächst sind Vorbereitungen zu treffen, um Ruby &#8211; und somit auch OpenProject &#8211; kompilieren zu können.</p>
+<h2>1.1 Aktualisierung des Systems und installation benötigter Libraries</h2>
+<pre><code>[root@machine] apt-get update
+[root@machine] apt-get install git curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev
+libsqlite3-dev sqlite3 libmysqlclient-dev libpq-dev libxml2-dev libxslt1-dev libcurl4-openssl-dev
+python-software-properties memcached libgdbm-dev libncurses5-dev automake libtool bison libffi-dev</code></pre>
+<h2>1.2 Anlegen eines Benutzers für OpenProject</h2>
+<p>Der Systembenutzer kann frei gewählt werden. Der Übersicht wegen empfiehlt sich allerdings &#8220;openproject&#8221;.</p>
+
+<pre><code>[root@machine] groupadd openproject
+[root@machine] useradd --create-home --gid openproject openproject
+[root@machine] passwd openproject</code></pre>
+
+<p>Nun muss für den Benutzer openproject ein Passwort eingegeben werden. Dies kann ggfs. mit der option &#8220;&#8211;disable-password&#8221; deaktiviert werden. Vorteil: Man muss sich kein weiteres Passwort merken und kann mit &#8220;sudo -i -u openproject&#8221; auf diesen Benutzer wechseln.</p>
+
+<p>Als nächstes müssen MySQL-Server und MySQL-Client installiert werden. Wer bereits einen MySQL-Server betreibt, kann diesen Schritt überspringen.</p>
+<h2>1.3 Installation von MySQL</h2>
+<pre><code>[root@machine] apt-get install mysql-server mysql-client</code></pre>
+
+<p>Während der Installation wird nach einem root-Passwort gefragt. Dieses bitte anlegen und notieren! Es wird in den nächsten Schritten benötigt!</p>
+<h2>1.4 Anlegen der OpenProject-Datenbank</h2>
+<p>Als nächstes legen wir eine MySQL Datenbank an.</p>
+
+<pre><code>[root@machine] mysql -u root -p</code></pre>
+
+<p>Nun wird das mysql-promt &#8220;mysql&gt;&#8221; angezeigt.
+Wichtig ist, hierbei zu beachten, dass ALLE mysql-Befehle mit einem Semikolon beendet werden.
+Selbstverständlich muss der Datebankbenutzer nicht openproject heißen. diese kann genau wie der Systembenutzer frei gewählt werden.</p>
+
+<pre><code>mysql&gt; CREATE DATABASE openproject CHARACTER SET utf8;
+mysql&gt; CREATE USER 'openproject'@'locahost' IDENTIFIED BY 'xxxxxxx';
+mysql&gt; GRANT ALL PRIVILEGES ON openproject.* TO 'openproject'@'localhost';
+mysql&gt; \q</code></pre>
+
+<p>Nun hat der mysql-Benutzer &#8220;openproject&#8221; mit dem Passwort &#8220;xxxxxxx&#8221; Zugriff auf alle OpenProject-Datenbanken.</p>
+<h2>1.5 Installation von Node.js</h2>
+<p>Um Node.js via nodeenv zu installieren wird python und python-pip benötigt. Sollten diese Komponenten bereits installiert sein, muss lediglich nodeenv installiert werden.</p>
+
+<pre><code>[root@machine] apt-get install python python-pip
+[root@machine] pip install nodeenv</code></pre>
+
+<p>Anschließend muss zum Benutzer für OpenProject gewechselt werden, um dort die Installation weiterzuführen.</p>
+
+<pre><code>[root@machine] sudo -i -u openproject</code></pre>
+
+<p>Zunächst wechseln wir in das Home-Verzeichnis des Benutzers</p>
+
+<pre><code>[openproject@machine] cd ~</code></pre>
+
+<p>Nun muss zunächst der GPG key heruntergeladen werden, damit beim anschließenden Download von RVM (Ruby Version Manager) keine Fehlermeldung auftritt.</p>
+<h2>1.6 Herunterladen von RVM</h2>
+<pre><code>[openproject@machine] gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+[openproject@machine] \curl -sSL https://get.rvm.io | bash -s stable</code></pre>
+
+<p>In den folgenden Schritten wird nun RVM installiert sowie die Default-Version (hier 2.1.4) ausgewählt, mit welcher OpenProject installiert wird. Außerdem wird bundler installiert, welches sich sodann um die Verwaltung der Ruby Gems kümmert.</p>
+<h2>1.7 Installation/Einrichtung RVM</h2>
+<pre><code>[openproject@machine] source $HOME/.rvm/scripts/rvm
+[openproject@machine] rvm autolibs disable
+[openproject@machine] rvm install 2.1.4
+[openproject@machine] rvm use --default 2.1.4
+[openproject@machine] gem install bundler</code></pre>
+
+<p>Als nächstes kommt nodeenv zum Einsatz um eine Node.js-Umgebung für OpenProject zu schaffen.</p>
+<h2>1.8 Erzeugen einer virtuellen Node.js Laufzeitumgebung</h2>
+<p>Dieser Schritt ist nur zur Installation und bei Updates bzw. Installation von Modulen notwendig. Die Node.js Laufzeitumgebung hat für den laufenden Betrieb keine Bedeutung.</p>
+
+<pre><code>[openproject@machine] cd ~
+[openproject@machine] nodeenv nodeenv
+[openproject@machine] source ./nodeenv/bin/activate</code></pre>
+
+<p>Mit der Installation von bower &#8211; einem &#8220;Paketmanager für&#8217;s Web&#8221; sind nun alle Komponenten komplett, um OpenProject zu installieren.</p>
+
+<h2>1.9. Installation von bower</h2>
+<pre><code>[openproject@machine] npm -g install bower</code></pre>
+
+<h2>1.10 Download und Installation von OpenProject</h2>
+<pre><code>[openproject@machine] cd ~
+[openproject@machine] git clone https://github.com/opf/openproject.git
+[openproject@machine] cd openproject
+[openproject@machine] git checkout stable
+[openproject@machine] bundle install
+[openproject@machine] npm install
+[openproject@machine] bower install</code></pre>
+
+<p>Wenn diese Befehle alle ohne Fehlermeldung durchlaufen, dann ist OpenProject fertig installiert. Als nächstes folgt die Konfiguration.</p>
+<h2>2. Konfiguration der Projectmanagementsuite</h2>
+<p>Als Erstes muss die Datei config/database.yml angepasst werden.
+Hier müssen nun die Zugangsdaten für die mysql-Datenbank eingetragen werden:</p>
+<h2>2.1 Yaml-Configurationsdateien ändern.</h2>
+<pre><code>[openproject@machine] nano config/database.yml
+production:
+adapter: mysql2
+database: openproject
+host: localhost
+username: openproject
+password: xxxxxxx
+encoding: utf8</code></pre>
+
+<p>Nun wird die Datei config/configuration.yml.example kopiert und als configuration.yml abgelegt.
+Auch in dieser Datei müssen Veränderungen vorgenommen werden.</p>
+
+<pre><code>[openproject@machine] cp config/configuration.yml.example configuration.yml
+[openproject@machine] nano config/configuration.yml</code></pre>
+
+<p>Ein Beispiel kann so aussehen:</p>
+
+<pre><code>production:
+email_delivery_method: :smtp
+smtp_address: smtp.gmail.com
+smtp_port: 587
+smtp_domain: smtp.gmail.com
+smtp_user_name: ***@gmail.com
+smtp_password: ****
+smtp_enable_starttls_auto: true
+smtp_authentication: plain</code></pre>
+
+<p>Außerdem muss am Ende der Datei noch folgender Zusatz hinzugefügt werden:</p>
+
+<pre><code>rails_cache_store: :memcache</code></pre>
+<h2>2.2 Wichtiger Hinweis: Webverzeichnis in nginx definieren</h2>
+<p>Wenn OpenProject von Nginx in einem Unterverzeichnis erreichbar sein soll (z.B: example.com/openproject), dann <strong>muss</strong> dies unbedingt VOR dem Kompilieren in der Datei configuration.yml eingetragen werden.
+In diesem Beispiel wird OpenProject im Unterverzeichnis &#8220;/openproject&#8221; ausgeliefert:</p>
+
+<code>rails_relative_url_root: "/openproject"</code>
+
+<p>Jetzt kommt der wichtigste Schritt: Um die Datenbanken von OpenProject zu generieren und alle Verknüpfungen richtig zu erstellen wird OpenProject nun kompiliert.</p>
+<h2>2.3 OpenProject kompilieren</h2>
+<pre><code>[openproject@machine] cd ~/openproject
+[openproject@machine] bundle exec rake db:create:all
+[openproject@machine] bundle exec rake generate_secret_token
+[openproject@machine] RAILS_ENV="production" bundle exec rake db:migrate
+[openproject@machine] RAILS_ENV="production" bundle exec rake db:seed
+[openproject@machine] RAILS_ENV="production" bundle exec rake assets:precompile</code></pre>
+
+<p>Um nun OpenProject ausliefern zu können müssen wir noch den Phusion Passenger installieren. Phusion dient in diesem Fall als App-Server, der die HTTP-Daten an Nginx übergibt. Um Passenger mit Nginx zu starten, müssen einige Pakete nachinstalliert und Konfigurationen geändert werden.</p>
+<h2>3. Installation Phusion Passenger</h2>
+<p>Zunächst verlassen wir den Benutzer openproject.</p>
+
+<pre><code>[openproject@machine] exit</code></pre>
+
+<p>Anschließend als root den Key für Passenger herunterladen, um mit der Installation fortfahren zu können.</p>
+
+<pre><code>[root@machine] apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7</code></pre>
+
+<p>Dann werden die Zusatzpakete installieren.</p>
+
+<pre><code>[root@machine] apt-get install apt-transport-https ca-certificates</code></pre>
+
+<p>Dann eine Datei anlegen, um die Repositories von Passenger aufzunehmen.</p>
+
+<pre><code>[root@machine] nano /etc/apt/sources.list.d/passenger.list</code></pre>
+
+<p>Die Datei sollte für Ubuntu 14.04 folgenden Inhalt haben:</p>
+
+<pre><code>>deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main</code></pre>
+
+<p>Anschließend die Paketquellen aktualisieren</p>
+
+<pre><code>[root@machine] apt-get update</code></pre>
+<h2>4. Webserver nginx installieren und einrichten</h2>
+<p>Nun werden nginx, nginx-extras und passenger installiert. Sollte nginx bereits installiert sein, kann das Paket nginx natürlich weggelassen werden.</p>
+<h2>4.1 Nginx installieren</h2>
+<pre><code>[root@machine] apt-get install nginx nginx-extras passenger
+[root@machine] nano /etc/nginx/nginx.conf</code></pre>
+
+<p>In der nginx.conf müssen nun die beiden Zeilen &#8220;passenger_root&#8221; und &#8220;passenger_ruby&#8221; entkommentiert werden.
+Sollte nginx bereits installiert gewesen sein, kann es sein, dass diese beiden Zeilen nicht in der Datei enthalten sind.</p>
+
+<p>In diesem Fall müssen beide Zeilen von Hand am Ende des HTTP-Blocks eingefügt werden.
+Die beiden Zeilen geben die Pfade zu Phusion Passengers &#8220;locations.ini&#8221; und Ruby an und können wie folgt aussehen:</p>
+
+<pre><code>passenger_root /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini;
+passenger_ruby /usr/bin/ruby;</code></pre>
+
+<p>Die Richtigkeit der Angabe in passenger_root können hier überprüft werden, indem man folgenden Befehl ausführt:</p>
+
+<pre><code>[root@machine] /usr/bin/passenger-config --root</code></pre>
+
+<p>Die Ausgabe dieses Befehls muss mit dem Eintrag in der nginx.conf übereinstimmen.<p>
+<p>Passenger wird nun mit nginx gestartet.</p>
+<h2>4.2 nginx einrichten</h2>
+<p>Um OpenProject jetzt über nginx erreichen zu können muss nginx entsprechend konfiguriert werden.</p>
+
+<pre><code>[root@machine] nano /etc/nginx/sites-available/default</code></pre>
+
+<p>Eine Beispielkonfiguration kann wie folgt aussehen:</p>
+<pre><code>server {
+listen 80;
+server_name example.com;
+root /var/www;
+index index.html index.htm index.php;
+location ~ ^/openproject(/.*|$) {
+alias /home/openproject/openproject/public$1;
+access_log /var/log/nginx/openproject/openproject.access.log;
+error_log /var/log/nginx/openproject/openproject.error.log;
+passenger_base_uri /openproject;
+passenger_app_root /home/openproject/openproject;
+passenger_document_root /home/openproject/openproject/public;
+passenger_enabled on;
+passenger_user openproject;
+}
+passenger_ruby /home/openproject/.rvm/gems/ruby-2.1.4/wrappers/ruby;
+passenger_enabled on;
+passenger_user openproject;
+}</code></pre>
+
+<p>Jetzt noch nginx neu starten und OpenProject ist verfügbar.</p>
+
+<pre><code>[root@machine] service nginx restart</code></pre>
+
+<p>erer Meinung nach ist OpenProject ein gigantisch gutes Stück OpenSource Software und definitiv eine Bereicherung für jedes Projektteam. Den Vergleich mit MS Project oder anderen Planungstools braucht es auf jeden Fall nicht zu scheuen. Aus diesen Gründen war von Anfang an Klar, dass wir diese Projektplanungssuite in unseren ionas-Server Small Business integrieren.</p>
+
+<p>ls Sie Fragen oder Probleme bei der Installation habt, erreichen Sie uns unter +49 (0)6131 3270777.
+ionas &#8211; Ihr Online Assistent</p>

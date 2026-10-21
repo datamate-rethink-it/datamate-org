@@ -1,0 +1,148 @@
++++
+title = "Installation der Zoom Alternative Jitsi Meet unter Ubuntu 18.04"
+titel_html = "Installation der Zoom Alternative Jitsi Meet unter Ubuntu 18.04 | datamate"
+ueberschrift = "Installation der Zoom Alternative Jitsi Meet unter Ubuntu 18.04"
+beschreibung = "Jitsi Meet ist die sichere und einfache Alternative zu Zoom und Skype. Mit dieser Anleitung kann jeder sein eigenes Videokonferenzsystem installieren."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2020/04/jitsi-webkonferenz.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/installation-zoom-alternative-jitsi-meet-ubuntu/"
+canonical = "https://www.datamate.org/installation-zoom-alternative-jitsi-meet-ubuntu/"
+og_bild_breite = "2000"
+og_bild_hoehe = "1333"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2020-04-06T17:18:56+00:00"
+geaendert = "2025-02-21T08:09:59+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "9 Minuten"
+beitragsbild = "/wp-content/uploads/2020/04/jitsi-webkonferenz.jpg"
+bild_breite = 2000
+bild_hoehe = 1333
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Installation der Zoom Alternative Jitsi Meet unter Ubuntu 18.04", item = ""}]
+wortzahl = 1586
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["praktische-anwendungsfaelle", "software"]
+schlagwoerter = ["Jitsi", "Sicherheit", "Skype", "Videokonferenz", "Zoom"]
+wp_id = 6783
+slug = "installation-zoom-alternative-jitsi-meet-ubuntu"
+url = "/installation-zoom-alternative-jitsi-meet-ubuntu/"
+date = "2020-04-06T19:18:56"
+lastmod = "2025-02-21T09:09:59"
+datum_utc = "2020-04-06T17:18:56+00:00"
+geaendert_utc = "2025-02-21T08:09:59+00:00"
+lightbox = true
++++
+						<p>Corona zwingt uns alle zur Arbeit von zu Hause und zu Videokonferenzen an Stelle von persönlichen Treffen. Wer da nach einer schnellen Lösung sucht, landet üblicherweise bei Diensten wie Skype und Zoom. Diese Lösungen funktionieren gut und sind quasi sofort verfügbar. Konto anlegen und los geht&#8217;s. Wenn Schnelligkeit nicht das einzige Kriterium ist, der sollte einen genauen Blick auf <a href="https://jitsi.org">Jitsi Meet</a> werfen. Mit dieser Anleitung installierst Du diese quelloffene Zoom Alternative ohne große Mühe auf Deinem eigenen Server und genießt leistungsfähige Videotelefonie bei maximaler Unabhängigkeit und Datensicherheit. Wir von datamate sind Fans von Jitsi Meet und möchten mit diesem Beitrag helfen, Jitsis Verbreitung und Anwendbarkeit zu steigern. Schulen und wohltätige Vereine unterstützen wir bis auf weiteres kostenlos bei der Installation eines Jitsi-basierten Webkonferenzsystems.</p>
+
+<span id="more-6783"></span>
+
+<h2>Jitsi Meet als bessere Alternative zu Zoom und Skype</h2>
+<img decoding="async" src="/wp-content/uploads/2020/04/jitsi-meet-logo.png" alt="Jitsi Meet - die Zoom Alternative" class="alignnone size-full wp-image-6786" width="40%" style="float:right; margin-left: 2%;" srcset="/wp-content/uploads/2020/04/jitsi-meet-logo.png 1125w, /wp-content/uploads/2020/04/jitsi-meet-logo-300x159.png 300w, /wp-content/uploads/2020/04/jitsi-meet-logo-1024x542.png 1024w, /wp-content/uploads/2020/04/jitsi-meet-logo-768x406.png 768w" sizes="(max-width: 1125px) 100vw, 1125px" />
+<p>Die Zoom App gehört sowohl unter Android als auch unter iOS seit Tagen zu den am häufigsten heruntergeladenen Apps weltweit. Bis <a href="https://www.cnbc.com/2020/02/26/zoom-has-added-more-users-so-far-this-year-than-in-2019-bernstein.html">Ende Februar 2020 hat Zoom mehr Neukunden gewonnen</a> als im ganzen Jahr 2019. Unverdient ist dieser Erfolg auch nicht: Zoom ist leicht zu bedienen, unterstützt alle relevanten Plattformen und die Audio- und Videoqualität sind gut.</p>
+
+<p>Mit der steigenden Beliebtheit von Zoom wurde zuletzt aber auch genauer hingeschaut und die Kritik häufte sich. Anfang April titelte Heise Online <a href="https://www.heise.de/security/meldung/Videokonferenz-Software-Ist-Zoom-ein-Sicherheitsalptraum-4695000.html" target="_blank" rel="noopener noreferrer">Ist Zoom ein Sicherheitsalbtraum?</a> Und als ob SpaceX, das Weltraumunternehmen des Senkrechtstarters Elon Musk, auf diese Frage eine Antwort geben wollte, <a href="https://www.n-tv.de/wirtschaft/SpaceX-verbietet-Zoom-Nutzung-article21687105.html" target="_blank" rel="noopener noreferrer">verbot es seinen Mitarbeitern aufgrund von Sicherheitsbedenken die Nutzung von Zoom</a>.</p>
+
+<p>Eine Generalverurteilung von Zoom und Co. ist sicher voreilig. Klar ist aber auch: Bei Zoom und Skype laufen die Datenströme der eigenen Videokonferenzen über Server, die nicht unter eigener Kontrolle sind. Welche Daten wie und wie lange gespeichert werden, kann nicht kontrolliert werden. Die Betreiber können noch so sehr beteuern, dass die Datenströme mit aktuellen Verschlüsselungstechniken geschützt sind, eine Garantie hat man nicht, da alle Ströme auf den Servern der Anbieter zusammenlaufen. Insbesondere Organisationen, die besondere personenbezogenen Daten verarbeiten, sowie Anwälte, Steuerberater und Unternehmen mit vertraulichen Informationen sollten nicht leichtfertig ihre Kommunikation über solche fremden Systeme laufen lassen. </p>
+
+<p>Jitsi Meet ist mit Blick auf Funktionen ähnlich umfangreich wie Zoom. Für Videokonferenzen übliche Teilnehmerzahlen schafft Jitsi Meet locker, bei <a href="/jitsi-meet-im-einsatz/">Verwendung geeigneter Clients wie Chrome oder den iOS und Android Apps</a>. Die nicht triviale Installation und die noch weniger triviale Einrichtung einer Authentifizierung als gewichtigste Argument gegen Jitsi versuchen wir mit diesem und weiteren Beiträgen entgegenzutreten. Wer will, kann mit diesen Anleitungen ein Videokonferenzsystem auf dem eigenen Server einrichten, das es mit Zoom aufnehmen kann.</p>
+
+<h2>Zum eigenen Jitsi Videokonferenzsystem</h2>
+<p>Die folgende Anleitung beschreibt die Installation von Jitsi Meet auf einem Linux Server mit Ubuntu Server 18.04 LTS (Bionic Beaver). Dieser Server ist über eine öffentliche, statische IPv4-Adresse direkt aus dem Internet erreichbar und eine beliebige Domain bzw. Subdomain verweisst per A-Record auf diese IP-Adresse. Für dir einfachere Illustration benutze ich in diesem Artikel für diese beliebige Domain stellvertretend <i>meet.datamate.org</i>.
+
+<p>Aufgrund der geringen Abhängigkeiten kann man die Zoom Alternative durchaus neben anderen Diensten auf einem bestehenden Server mit eigener öffentlicher IP-Adresse betreiben. Die Anleitung sollte auch unter Ubuntu 16.04 LTS und Debian 9 sowie 10 funktionieren. Getestet habe ich dies aktuell noch nicht. Hinweis: Ein Großteil der Installationsanleitung stammt aus dem offiziellen <a href="https://github.com/jitsi/jitsi-meet/blob/master/doc/quick-install.md" target="_blank" rel="noopener noreferrer">Jitsi Meet Quick Install Guide</a>, wurde jedoch um ein paar meiner Erfahrungen ergänzt.</p>
+
+<p>Wer keinen solchen Server besitzt oder anmieten will, kann Jitsi Meet schließlich auch auf einem Computer oder einer virtuellen Maschine im lokalen Netzwerk installieren. Auf die statische IPv4-Adresse des Internetanschlusses sollte man aber im Sinner der Stabilität nicht verzichten und der Router muss Portweiterleitungen für die Ports 80, 443, 4443 und 10000 unterstützen.</p> 
+
+<h2>Vorbereitung der Installation</h2>
+
+<p>Beginnen wir mit den Vorbereitungen. Alle Befehle werden übrigens &#8211; wenn nicht explizit anders beschrieben &#8211; entweder als Root oder mit einem vorangestellten sudo ausgeführt.</p>
+
+<p>Zunächst sollte das System auf dem neuesten Stand gebrachte werden.</p>
+<pre>apt update && apt upgrade -y
+</pre>
+
+<p>Falls noch nicht geschehen, dann muss der Webserver NGINX installiert und ein paar NGINX Verzeichnisse angelegt werden. </p>
+<pre>
+apt install nginx
+mkdir -p /etc/nginx/{sites-enabled,sites-available,modules-enabled}
+</pre>
+
+<p>Weiterhin empfiehlt es sich, die für das Jitsi Videokonferenzsystem verwendete (Sub-)Domain dem Betriebssystem bekannt zu machen. Dies macht man mit einem Eintrag in der <i>/etc/hosts</i>. Öffne die Datei mit einem Editor und ergänze die folgende Zeile:</p>
+
+<pre>127.0.0.1 localhost meet.datamate.org
+# wenn auch andere Domains auf den Server verweisen, können hier auch weitere Domains stehen.</pre>
+
+<p>Auch ist es ratsam, den Hostnamen an den FQDN anzupassen. Dies erledigen die folgenden beiden Befehle:</p>
+
+<pre>echo "meet.datamate.org" > /etc/hostname
+hostname meet.datamate.org</pre>
+
+<h2>Anpassung der Firewall und des Routers</h2>
+<p>Auf gemieteten VServern oder Dedicated Servern ist normalerweise keine Firewall aktiviert, d.h. sämtliche Dienste bzw. Ports können direkt über das Internet angesprochen werden. In diesem Fall sind keine Anpassungen notwendig. Natürlich empfiehlt es sich aber, später eine Firewall einzurichten.</p>
+<p>Wird Jitsi Meet auf einem bestehenden System mit Firewall oder auf einem (V)Server hinter einem Router installiert, dann müssen die Ports 80, 443, 4443 (alle TCP) und 10000 (UDP) geöffnet werden. Bei der Linux Firewall ufw sind dafür diese Befehle notwendig:
+<pre>
+ufw allow 80
+ufw allow 443
+ufw allow 4443/tcp
+ufw allow 10000/udp</pre>
+<p>Beim Betrieb im lokalen Netzwerk hinter einem Router müssen die vier oben genannten Ports an die lokale IP-Adresse des Servers weitergeleitet werden. Dies erfolgt im Webinterface des Routes. In der Abbildung stellen wir es für eine Fritz!Box mit aktuellem Fritz!OS dar.</p>
+
+<img decoding="async" src="/wp-content/uploads/2020/04/JitsiMeet_Portfreigaben_FritzBox-1024x505.png" alt="Portweiterleitungen in einer Fritz!Box für den Betrieb von Jitsi im Heimnetzwerk" width="1024" />
+<p>Auch bei den anfragenden Clients müssen diese vier Ports durchlässig sein, zumindest für ausgehenden Traffic. Bei privaten Internetanschlüssen mit handelsüblichen Routern ist das normalerweise kein Problem. Restriktivere Firmenfirewalls jedoch können diese Ports für den ausgehenden Datenverkehr teilweise blockieren. Ob dem so ist, merkst Du beim Testen glücklicherweise sehr schnell. Wenn beispielsweise auf dem Port 10000 kein ausgehender Datenverkehr erlaubt ist, kann Du Dich zwar in eine Konferenz einwählen, jedoch scheitert die Übermittlung von Bild und Ton.</p>
+
+<h2>Die Installation von Jitsi Meet</h2>
+<p>Nun kann es mit der Installation des Konferenzsystems Jitsi Meet losgehen. Jitsi Meet ist aktuell noch nicht in den offiziellen Ubuntu Paketquellen enthalten. Deshalb muss die entsprechende Paketquelle (=Repository) eingebunden werden. Anschließend läßt sich das Meta-Paket jitsi-meet, welches die drei Bestandteile Videobridge, Jicofo und Prosody enthält, einfach mit dem Paketverwaltungstool apt installieren.</p>
+
+<pre>wget -qO -  https://download.jitsi.org/jitsi-key.gpg.key | apt-key add -
+echo 'deb https://download.jitsi.org stable/' >> /etc/apt/sources.list.d/jitsi-stable.list
+apt update
+apt install jitsi-meet</pre>
+
+<p>Während der Installation wird man zwei Dinge gefragt:</p>
+<ul style="padding-left: 20px;">
+<li>Unter welcher Domain soll später Jitsi-Meet laufen? (&#8220;The host name of the current installation:&#8221;)</li>
+<li>Sollen neue Zertifikate erzeugt oder existierende verwenden werden? (&#8220;SSL certificate for the Jitsi Meet instance&#8221;)</li>
+</ul>
+
+<p>Bei der ersten Abfrage sollte man direkt die finale Domain angeben. Für unsere Beispielkonfiguration ist das meet.datamate.org. Bei der Frage nach den Zertifikaten muss man abwägen. Wenn man schon über ein Let&#8217;s Encrypt Zertifikat verfügt, kann man diese Option wählen und den Pfad zu den Zertifikatsdateien angeben. Alternativ kann man zunächst selbsterzeugte Zertifikate erstellen lassen und Let&#8217;s Encrypt nachträglich einrichten.</p>
+
+<p>Nach ein bis zwei Minuten ist die Installation von Jitsi Meet abgeschlossen. Wenn keine Firewall oder Router den Zugriff verhindert (und auch sonst alles gut ging), kann man nun auch schon die Domain aufrufen und die erste Konferenz starten. Nicht überrascht sein sollte man bei Verwendung selbst signierter Zertfikate über den Sicherheitshinweis. Diesen kann man erstmal akzeptieren. Der Warnhinweis verschwindet auch durch den Einsatz eines Let&#8217;s Encrypt Zertifikats, dessen Einrichtung wir im nächsten Schritt erläutern.</p>
+
+<h2>Umstellung auf ein Let&#8217;s Encrypt Zertifikat</h2>
+<p>Im Rahmen der Installation wurde eine neue NGINX Konfigurationsdatei unter <i>/etc/nginx/sites-available</i> erstellt und ein entsprechender Symlink unter <i>/etc/nginx/sites-enabled</i> erzeugt. </p>
+
+<p>Sollte man bei der Installation noch kein Let&#8217;s Encrypt Zertifikat besessen haben, muss man dieses jetzt beantragen und in der Konfigurationsdatei <i>meet.datamate.org.conf</i> hinterlegen. Jitsi Meet bringt für diese Aufgabe eine praktische Hilfe in Form eines Skripts mit. Dieses muss einfach ausgeführt werden, die Konfiguration erfolgt dann automatisch. Nach der Ausführung des Skripts sollte beim Aufruf der Domain kein Sicherheitshinweis mehr auf Probleme hinweisen. Der Befehl auf der Kommandozeile zum Ausführen lautet:</p>
+
+<pre>/usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh</pre>
+
+<p>Alternativ kann man natürlich auch auf jede erdenkliche andere Art sein Let&#8217;s Encrypt Zertifikat erstellen und dann in der NGINX Konfigurationsdatei eintragen. Gleiches gilt auch für andere SSL/TLS-Zertifikate. Entscheidend ist, dass die Konfigurationsdateien des Webserver NGINX nach Anpassung keine Fehler enthält und sich der Webserver neu starten lässt.</p>
+
+<pre># so testet man die Konfiguration:
+nginx -t
+
+# Das Ergebnis sollte dann so aussehen:
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+# so starte man den Webserver neu, wenn die Konfiguration in Ordnung ist.
+nginx -s reload</pre>
+
+<h2>Konferenzräume für alle</h2>
+
+<p>Fertig ist die Einrichtung Deiner Zoom Alternative! Nach dieser Standardinstallation erlaubt Jitsi Meet jedem Besucher der Domain die Eröffnung eines Konferenzraums. Dies gelingt entweder, in dem man den gewünschten Raumnamen in das Eingabefeld eintippt oder die Domain mit angehängtem Raumnamen in die Adresszeile des Browsers eingibt. Durch den Aufruf von <i>https://meet.datamate.org/hallo</i> betritt man also den Konferenzraum &#8220;hallo&#8221;. Wenn sich noch kein anderer Teilnehmer darin befindet, dann wird dieser eröffnet. </p>
+
+<a href="/wp-content/uploads/2020/04/jitsi-meet.png" data-slb-active="1" data-slb-asset="3163692323" data-slb-internal="0" data-slb-group="6783"><img decoding="async" loading="lazy" width="1129" height="640" src="/wp-content/uploads/2020/04/jitsi-meet.png" alt="Jitsi Meet Portal" class="alignnone size-full wp-image-6784" srcset="/wp-content/uploads/2020/04/jitsi-meet.png 1129w, /wp-content/uploads/2020/04/jitsi-meet-300x170.png 300w, /wp-content/uploads/2020/04/jitsi-meet-1024x580.png 1024w, /wp-content/uploads/2020/04/jitsi-meet-768x435.png 768w" sizes="(max-width: 1129px) 100vw, 1129px" /></a>
+
+<p>Dieses Verhalten findet man genauso beim öffentlich zugänglichen Jitsi Demo-System <a href="https://meet.jit.si" target="_blank" rel="noopener noreferrer">meet.jit.si</a> sowie bei vielen anderen Systemen, die in Deutschland zur freien Verfügung stehen. Hier nur eine Mini-Auswahl, eine umfangreichere Liste gibt&#8217;s bei <a href="https://github.com/jitsi/jitsi-meet/wiki/Jitsi-Meet-Instances">Jitsi auf Github</a>:
+<ul style="padding-left: 20px;">
+<li><a href="https://meet.lrz.de" target="_blank" rel="noopener noreferrer">Leibniz-Rechenzentrum</a></li>
+<li><a href="https://jitsi.hamburg.freifunk.net/" target="_blank" rel="noopener noreferrer">Freifunk Hamburg</a></li>
+<li><a href="https://meet.golem.de/" target="_blank" rel="noopener noreferrer">Golem</a></li>
+
+</ul>
+
+<p>Wer kein Problem damit hat, sein Jitsi Meet mit der Öffentlichkeit zu teilen, kann an dieser Stelle fast aufhören. Nur fast, weil man nochmals seine Datenschutzerklärung prüfen sollte, ob die ausreichend ist und den Betrieb on Jitsi Meet abdeckt.</p>
+<p>Wer jedoch möchte, das Konferenzräume nur von den eigenen Mitarbeitern oder ausgewählten Personen eröffnet werden können, der kann gespannt sein auf die Artikel, die wir in den nächsten Tagen noch veröffentlichen werden. Die Zoom Alternative Jitsi Meet kann noch viel mehr.</p>

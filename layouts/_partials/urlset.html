@@ -1,0 +1,11 @@
+{{- /* Rumpf einer Sitemap in der Form, die Yoast SEO erzeugt hat.
+       Aufruf: partial "urlset.html" (slice von Seiten) */ -}}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{{- range . }}
+	<url>
+		<loc>{{ .Params.canonical | default .Permalink }}</loc>
+		<lastmod>{{ .Params.geaendert_utc | default (.Lastmod.UTC.Format "2006-01-02T15:04:05+00:00") }}</lastmod>
+	</url>
+{{- end }}
+</urlset>

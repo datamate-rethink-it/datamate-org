@@ -1,0 +1,175 @@
++++
+title = "Autoprovisionierung von IP-Telefonen mit Factory Reset"
+titel_html = "Autoprovisionierung von IP-Telefonen mit Factory Reset | datamate"
+ueberschrift = "Autoprovisionierung von IP-Telefonen mit Factory Reset"
+beschreibung = "Autoprovisionierung von VoIP-Telefonen ersetzt die mühsame manuelle Konfiguration. Wir erklären in dem Artikel, wie man den notwendigen Factory Reset macht."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/02/VOIP-IP-Telefon-Grandstream-Yealink-Snom-Gigaset.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/autoprovisionierung-von-ip-telefonen-mit-factory-reset/"
+canonical = "https://www.datamate.org/autoprovisionierung-von-ip-telefonen-mit-factory-reset/"
+og_bild_breite = "1600"
+og_bild_hoehe = "1200"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2017-02-02T09:07:27+00:00"
+geaendert = "2025-02-21T08:10:45+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "8 Minuten"
+beitragsbild = "/wp-content/uploads/2017/02/VOIP-IP-Telefon-Grandstream-Yealink-Snom-Gigaset.jpg"
+bild_breite = 1600
+bild_hoehe = 1200
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Autoprovisionierung von IP-Telefonen mit Factory Reset", item = ""}]
+wortzahl = 1088
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["hardware"]
+schlagwoerter = []
+wp_id = 4537
+slug = "autoprovisionierung-von-ip-telefonen-mit-factory-reset"
+url = "/autoprovisionierung-von-ip-telefonen-mit-factory-reset/"
+date = "2017-02-02T10:07:27"
+lastmod = "2025-02-21T09:10:45"
+datum_utc = "2017-02-02T09:07:27+00:00"
+geaendert_utc = "2025-02-21T08:10:45+00:00"
++++
+						<p>datamate bietet seit dem Frühjahr 2023 keine Leistungen mehr zum Thema VoIP/3CX an. Bitte wenden Sie sich vertrauensvoll an unseren Nachfolger 
+<a href="https://www.3cx.de/benutzerhandbuch/webclient/" rel="noopener" target="_blank">systemwerk.</a></p>
+
+<p>Wenn wir eine der von uns sehr geschätzten Askozia <a href="/wechseln-sie-zum-anschluss-der-zukunft-sonst-wird-der-vertrag-gekuendigt/">VoIP-Telefonanlagen</a> einrichten, dann versuchen wir uns mittels Autoprovisionierung das Leben so einfach wie möglich zu machen. Dank Autoprovisionierung entfällt die mühsame manuelle Konfiguration der Telefone. Die IP-Phone beziehen ihre Konfigurationsdaten automatisch über das lokale Netzwerk von der Telefonanlage. Wie man den dafür bei den meisten Geräten notwendigen <strong>Factory Reset</strong> durchführt, beschreiben wir in diesem Blogbeitrag. (Ausführliche Informationen zum Thema <a href="https://www.3cx.de/voip-sip/autoprovisionierung-ip-telefon/">Autoprovisionierung selbst gibts auf der Webseite von 3CX</a>.)</p>
+
+<span id="more-4537"></span>
+
+<p>Die Autoprovisionierung ist eine super Sache: Das Telefon bezieht automatisch über das Netzwerk die benötigten Konfigurationsdaten und man kann sofort loslegen. Eintipporgien auf der Wähltastatur oder mühsames Durchforsten der Menüs der Weboberfläche entfallen. Die auf dem ionas-Server installierte Askozia Telefonanlage unterstützt Autoprovisionierung.</p>
+
+<p>Autoprovisionierung von VoIP-Telefonen funktioniert nach dem gleichen Prinzip wie die Vergabe von IP-Adressen in einem Netzwerk mit automatischer Konfiguration. Loggt sich ein Gerät ins WLAN ein oder wird ein Computer an das LAN angeschlossen, dann &#8220;ruft&#8221; er in das Netzwerk hinein, ob es denn einen Netzwerkverwalter gibt, der die Vergabe der IP-Adressen regelt. Ein sogenannter DHCP-Server meldet dann zurück, dass er verantwortlich für die Adressvergabe sei. Im gleichen Atemzug teilt auch eine IP-Adresse und alle weiteren notwendigen Netzwerkinformationen (DNS-Server-Adresse, Standardgateway, &#8230;) mit. Auf diese Weise sind IP-Adressen im Netzwerk einmalig und die Datenpakete finden zielgenau ihren Empfänger. Ohne manuelle Konfiguration kann man sich sofort im Netzwerk bewegen. Der Unterschied zwischen VoIP-Telefon und Computer/Laptop: Beim Telefon redet man nicht von einem DHCP, sondern vom Autoprovisioning Server. Auch sind natürlich die ausgetauschten Config-Daten unterschiedlich und ein Telefon muss zunächst auf dem Server angelegt werden. Der Prozess ist ansonsten praktisch gleich.</p>
+
+<p>Bei den meisten VoIP-Telefonen ist ein Factory Reset notwendig, um die Telefone zu veranlassen, in das Netzwerk hinein zu rufen und Konfigurationsdaten anzufragen. Ein einfacher Neustart reicht nicht! Der Grund: Die Gefahr wäre groß, dass sämtliche Telefone nach einem einfach Stromausfall nicht mehr oder falsch konfiguriert wären. Ein solcher Factory Reset ist keine große Sache, wenn man weiß, wie es geht. Nun kocht aber leider jeder Anbieter sein eigenes Süppchen. So ist der Suchaufwand für das Ermitteln des korrekten Factory Reset Vorgehens häufig ein Vielfaches des eigentlichen Resetting-Aufwands. Dies wollen wir mit diesem Artikel ändern.</p>
+
+<p>In diesem Beitrag haben wir für zahlreiche Modelle der wichtigsten Hersteller die unterschiedlichen Möglichkeiten zum Durchführen eines Factory Reset aufgelistet. Somit ist dieser Artikel eine Ergänzung zum Artikel VoIP &#8211; IP-Telefone: Firmware, Handbücher und Standard Passwörter, in dem wir weitere zentrale Informationen zur Einrichtung von mehr als 50 VoIP-Telefonen zusammengetragen haben.</p>
+
+<p>Für Geräte der folgenden vier Anbieter stellen wir in diesem Artikel vor, wie der Factory Reset abläuft:</p>
+<ul style="padding-left: 20px";>
+	<li><a href="#snom">Snom</a></li>
+	<li><a href="#yealink">Yealink</a></li>
+	<li><a href="#grandstream">Grandstream</a></li>
+	<li><a href="#gigaset">Gigaset</a></li>
+</ul>
+
+Wenn es bei einem Model oder einer Serie mehrere Möglichkeiten für den Factory Reset gibt, dann stellen wir diese dar, wenn dies aus unserer Sicht einen Mehrwert bietet.
+
+<img decoding="async" id="snom" class="alignnone size-full wp-image-1632" src="/wp-content/uploads/2018/04/snomLogo.png" style="margin-top: 100px;" alt="Snom Logo" width="299" height="96" />
+
+<h2>Snom 3xx Serie</h2>
+<img decoding="async" loading="lazy" class="alignnone size-medium wp-image-1648" style="float: left; margin-right: 10px;" src="/wp-content/uploads/2018/04/snom3xx.png" style="margin-left:10px;" alt="Factory Reset beim Snom3xx" width="300" height="218" />
+
+<p>Folgende Tasten der Reihe nach drücken: </p>
+<pre>*, Lautstärke LAUTER, *, Lautstärke LEISER, #.</pre>
+
+Die Tastenkombination ist auch in der Abbildung links dargestellt. Mit ihr ist ein Snom der Serie 3xx innerhalb von Sekunden zurückgesetzt. <br/><br/>
+
+<h2>Snom D-Serie und 7xx &#8211; 8xx</h2>
+<img decoding="async" loading="lazy" class="wp-image-1654 size-medium alignright" src="/wp-content/uploads/2018/04/snom7xx.png" alt="snom7xx" width="145" height="300" style="margin-right: 10%;"/>
+<ol start="1" style="padding-left: 20px;">
+ 	<li>Gerät ausschalten</li>
+ 	<li><strong>#</strong>-Taste gedrückt halten und das Gerät einschalten</li>
+ 	<li>Solange die Taste <strong>#</strong> gedrückt lassen, bis im Display <strong>Rescue Mode</strong> erscheint</li>
+ 	<li>Im Menü den Punkt <strong>Settings Reset</strong> auswählen</li>
+</ol>
+
+<p>Das Gerät wird damit wieder auf die ursprünglichen Werkseinstellungen zurückgesetzt. Wenn das nicht funktioniert, können Sie das Gerät auch über seine Weboberfläche zurücksetzen, die man im Browser durch Eingabe der Geräte-IP aufrufen kann.</p>
+
+<hr/>
+
+<img decoding="async" loading="lazy" id="yealink" class="alignnone size-medium wp-image-1630" src="/wp-content/uploads/2018/04/yealinkLogo-300x85.jpg" style="margin-top:30px;" alt="Yealink Logo" width="300" height="85" />
+
+<h2>Yealink T1, T2, T3, T4, CP und VP-Serien</h2>
+
+<p>Bei den Yealink Geräten kann der Factory Reset per Tastenkombination auf der Tastatur des Telefons oder über die Weboberfläche erfolgen.</p>
+
+<h3>Factory Reset via Telefontasten</h3>
+
+<img decoding="async" class="alignnone size-medium wp-image-1667" style="float: right; margin-left: 10px;" src="/wp-content/uploads/2018/04/yealink_factory-300x295.png" alt="yealink_factory" width="300" />
+
+<ol style="padding-left: 20px;">
+ 	<li>Telefon ausschalten</li>
+ 	<li>Telefon einschalten</li>
+ 	<li>Warten bis der <strong>Idle </strong>(Ruhe-) Bildschirm anzeigt wird</li>
+ 	<li>Taste <strong>OK</strong> solange drücken, bis die Nachricht <strong>Reset to factory setting?</strong> erscheint</li>
+ 	<li>Mit <strong>OK</strong> oder <strong>YES</strong> (je nach Modell) bestätigen</li>
+</ol>
+
+<p>In der Abbildung rechts sind die relevanten Tasten für das Model Yealink T42G abgebildet. Bei anderen Geräten sitzen die Tasten eventuell an einer anderen Stelle.</p>
+
+<h3>Factory Reset via Weboberfläche</h3>
+
+<img decoding="async" src="/wp-content/uploads/2017/02/Yealink-GUI-1024x504.jpg" style="float:right; margin-left: 10px;" alt="Yealink Webinterface" width="512" class="alignnone size-large wp-image-1676" />
+
+<ol style="padding-left: 20px;">
+ 	<li>Aufruf der Weboberfläche des Telefons per Eingabe der Geräte-IP im Browser</li>
+        <li>Die Registerkarte <strong>Settings</strong> auswählen</li>
+ 	<li>In der Seitennavigation <strong>Upgrade</strong> anklicken</li>
+ 	<li><strong>Reset to Factory Setting</strong> anklicken</li>
+</ol>
+
+
+<p>Die nebenstehende Abbildung zeigt die Weboberfläche eines Yealink T42G, Stand Januar 2017. Es ist möglich, dass sich die Menüstruktur mit Firmwareupdates verändert.</p>
+
+<hr/>
+
+<img decoding="async" loading="lazy" id="grandstream" class="alignnone size-medium wp-image-1629" src="/wp-content/uploads/2018/04/GrandstreamLogo-300x43.png" style="margin-top: 30px;" alt="Grandstream Logo" width="300" height="43" />
+
+<h2>Grandstream GXP-Serie</h2>
+
+<ol style="padding-left: 20px;">
+ 	<li><strong>Menü</strong>-Taste drücken, um ins Konfigurationsmenü zu gelangen</li>
+ 	<li><strong>System</strong> wählen und bestätigen</li>
+ 	<li><strong>Operations &#8211; Factory Reset</strong> wählen und bestätigen</li>
+ 	<li>Den Warnhinweis mit mit <strong>Yes</strong> bestätigen</li>
+</ol>
+<p>Das Gerät startet danach neu und die Einstellungen werden auf die Werkseinstellungen zurückgesetzt.</p>
+
+<h2>Grandstream GXV-Serie</h2>
+
+<ol style="padding-left: 20px;">
+ 	<li><strong>Menü</strong>-Taste drücken, um ins Konfigurationsmenü zu gelangen</li>
+ 	<li><strong>Settings</strong> wählen und bestätigen</li>
+ 	<li><strong>Advanced Settings</strong> wählen und bestätigen, anschliessen <strong>Factory Reset</strong> wählen und bestätigen</li>
+ 	<li><strong>Clear the SD Card</strong> auswählen, wenn alle Bilder, Videos und andere Dateien, die auf der SD-Karte im Telefon gespeichert sind, entfernt werden sollen</li>
+</ol>
+
+
+<hr/>
+
+<img decoding="async" loading="lazy" class="alignnone size-medium wp-image-1631" src="/wp-content/uploads/2018/04/GigasetLogo-300x92.png" style="margin-top: 30px;" alt="Logo Gigaset" width="300" height="92" /><a name="gigaset"></a>
+
+<h2>Gigaset IP310 &#8211; IP900</h2>
+
+<h3>Factory Reset via Weboberfläche</h3>
+<ol style="padding-left: 20px;">
+ 	<li>Aufruf der Weboberfläche des Telefons per Eingabe der Geräte-IP im Browser </li>
+ 	<li>Zunächst <strong>Settings</strong>, dann <strong>System</strong> und schliesslich <strong>Reboot and Reset</strong> auswählen</li>
+ 	<li>Auf <img decoding="async" class="confluence-embedded-image" src="https://teamwork.gigaset.com/gigawiki/download/attachments/7405655/rtaImage.jpg?version=1&amp;modificationDate=1352463395000&amp;api=v2" data-image-src="/gigawiki/download/attachments/7405655/rtaImage.jpg?version=1&amp;modificationDate=1352463395000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="7569417" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="rtaImage.jpg" data-base-url="https://teamwork.gigaset.com/gigawiki" data-linked-resource-content-type="image/jpeg" data-linked-resource-container-id="7405655" data-linked-resource-container-version="7" /> klicken </li>
+</ol>
+
+<p>Das Gerät setzt sich nun auf Werkseinstellung zurück.</p>
+
+<h3>Factory Reset via Telefonmenü</h3>
+<ol style="padding-left: 20px;">
+ 	<li>Zunächst <strong>Menu</strong>, dann <strong>Settings</strong> und schliesslich <strong>Reset</strong> auswählen</li>
+ 	<li>Standardpasswort des Admins eingeben (Default Admin-Passwort: <strong>admin</strong>)</li>
+ 	<li><strong>Save</strong>-Knopf drücken</li>
+ 	<li>Abfrage <strong>Reset settings to default?</strong> mit <strong>Yes</strong> bestätigen</li>
+</ol>
+
+<p>Voilà, nach einem Neustart ist das Gerät auf Factory Settings zurückgesetzt.</p>
+
+<h3>Factory Reset via Reset-Button</h3>
+
+<p>Die Gigaset-Geräte verfügen auf ihrer Unterseite über einen Reset-Button, mit dem sich die Geräte auf Werkseinstellungen zurücksetzen lassen. Betätigen Sie diesen Knopf &#8211; am besten mit einer Büroklammer &#8211; circa 5 Sekunden lang. Lassen Sie den Knopf los und das Gerät startet neu. Nach dem Neustart sollten alle früheren Einstellungen gelöscht sein. Sollte das nicht der Fall sein, dann versuchen Sie es erneut und halten Sie den Knopf länger gedrückt.</p>
+
+<h2>Factory Reset für Gigaset <strong>Handteile / Mobilteile</strong></h2>
+<p>Folgende Tasten müssen nacheinander gedrückt werden:</p>
+
+<img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/resetting-gigaset.png" alt="resetting-gigaset" width="540" height="60" class="alignnone size-full wp-image-1674" />

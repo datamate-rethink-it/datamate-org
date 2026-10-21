@@ -1,0 +1,40 @@
+{{- /*
+  Seitenleiste der Beitrags-, Blog- und Kategorieseiten: Suchfeld und
+  Kategorieliste, wie im alten Theme.
+
+  Zwei Unterschiede zum WordPress-Stand, beide unvermeidlich:
+    * Das Suchfeld fuehrte auf /?s=... und damit in die WordPress-Suche.
+      Es fuehrt jetzt auf /suche/, wo Pagefind im Browser sucht.
+    * Die Zahl hinter einer Kategorie wird beim Bauen gezaehlt, nicht aus
+      der Datenbank gelesen. Sie zaehlt - wie bisher - die Beitraege der
+      Kategorie samt ihrer Unterkategorien.
+*/ -}}
+{{- define "_partials/kategoriezweig.html" -}}
+{{- range .kategorien }}
+	<li class="cat-item cat-item-{{ .slug }}"><a href="{{ .pfad }}">{{ .name }}</a> ({{ len (where $.beitraege "Params.kategorien" "intersect" .mit) }})
+{{ if .kinder }}<ul class='children'>
+{{ template "_partials/kategoriezweig.html" (dict "kategorien" .kinder "beitraege" $.beitraege) }}</ul>
+{{ end }}</li>
+{{- end }}
+{{- end -}}
+<div class="col-sm-4 bottommargin-sm">
+
+    <div class="widget clearfix">
+        <div class="widget clearfix"><form role="search" method="get" class="search-form" action="/suche/">
+    <label>
+        <input class="typeahead sm-form-control tt-input" type="search" class="search-field"
+            placeholder="Suchen nach:"
+            value="" name="q"
+            title="Suchen nach:" />
+    </label>
+    <input type="submit" class="button button-3d button-rounded"
+        value="Suchen" />
+</form>
+</div><div class="widget clearfix"><h3>Kategorien</h3>
+			<ul>
+{{ template "_partials/kategoriezweig.html" (dict "kategorien" hugo.Data.kategorien "beitraege" (where site.RegularPages "Section" "blog")) }}			</ul>
+
+			</div>    </div>
+
+
+</div>

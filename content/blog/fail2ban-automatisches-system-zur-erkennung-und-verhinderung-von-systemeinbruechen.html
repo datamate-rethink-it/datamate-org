@@ -1,0 +1,62 @@
++++
+title = "Fail2Ban: automatisches System zur Erkennung und Verhinderung von Systemeinbrüchen"
+titel_html = "Fail2Ban: System zur Erkennung und Verhinderung von Systemeinbrüchen"
+ueberschrift = "Fail2Ban: automatisches System zur Erkennung und Verhinderung von Systemeinbrüchen"
+beschreibung = "Mit dem Intrusion Detection System Fail2Ban lassen sich Linux-Server mit wenig Aufwand und effektiv gegen Brute-Force-Angriffe absichern. Gerade zur Absicherung des SSH-Zugangs oder eines WordPress Blogs ist Fail2Ban ein geeignetes Tool. Wir erklären Funktionsweise und Einsatzfelder."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/05/fail2ban-server-absichern.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/fail2ban-automatisches-system-zur-erkennung-und-verhinderung-von-systemeinbruechen/"
+canonical = "https://www.datamate.org/fail2ban-automatisches-system-zur-erkennung-und-verhinderung-von-systemeinbruechen/"
+og_bild_breite = "1600"
+og_bild_hoehe = "1200"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2017-05-02T13:08:25+00:00"
+geaendert = "2025-02-21T08:10:43+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "4 Minuten"
+beitragsbild = "/wp-content/uploads/2018/05/fail2ban-server-absichern.jpg"
+bild_breite = 1600
+bild_hoehe = 1200
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Fail2Ban: automatisches System zur Erkennung und Verhinderung von Systemeinbrüchen", item = ""}]
+wortzahl = 753
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["loesungen"]
+schlagwoerter = []
+wp_id = 4672
+slug = "fail2ban-automatisches-system-zur-erkennung-und-verhinderung-von-systemeinbruechen"
+url = "/fail2ban-automatisches-system-zur-erkennung-und-verhinderung-von-systemeinbruechen/"
+date = "2017-05-02T15:08:25"
+lastmod = "2025-02-21T09:10:43"
+datum_utc = "2017-05-02T13:08:25+00:00"
+geaendert_utc = "2025-02-21T08:10:43+00:00"
++++
+						<p>Fail2Ban ist eine verbreitete Linux-Sicherheitssoftware, die durch die Überwachung und Analyse von Log-Dateien des Betriebssystems und von Anwendungen unerlaubte Zugriffe verhindert. Mit Fail2Ban können Angriffe von Hackern und insbesondere Brute-Force-Angriffe mit wenig Aufwand und effektiv unterbunden werden.</p>
+
+<span id="more-4672"></span>
+
+<h2>Fail2ban auf den datamate-Servern</h2>
+<p>Auf dem <a href="/homie">Home Server Homie</a> und <a href="/fellow">Small Business Server Fellow</a> ist Fail2ban standardmäßig installiert, um die unerlaubten Anmeldung per SSH zu vermeiden und den Zugriff via Cockpit und die anderen Serverdienste abzusichern. Bei wiederholten nicht-erfolgreichen Zugriffsversuchen sperrt (englisch &#8220;banned&#8221;) Fail2Ban die IP-Adresse des anfragenden Rechners und verhindert weitere Zugriffe. Fail2Ban lässt sich im Cockpit individuelle konfigurieren und arbeitet unauffällig im Hintergrund.</p>
+
+<h2>Funktionsweise von Fail2Ban</h2>
+<p>Fail2Ban ist eine in Python geschriebene Software zur Vorbeugung von Einbrüchen auf Linux-Servern. Fail2Ban überwacht die Logdateien des Servers und fahndet nach sich wiederholenden Einträgen, die auf fehlgeschlagene Zugriffsversuche hindeuten. Wenn Fail2Ban wiederholte, nicht-authentifizierte Zugriffsversuche erkennt, dann erzeugt Fail2Ban eine Firewallregel, die die entsprechende IP blockiert und weiteren Datenverkehr unterbindet. Die Frequenz der nicht-erfolgreichen Zugriffe, d.h. Anzahl und überwachte Periode, lassen sich individuell einstellen. Nach einer konfigurierbaren Sperrfrist wird die Firewallregel wieder entfernt. Zugriffe von der bisher geblockten IP-Adresse sind dann wieder möglich.</p>
+
+<p>Fail2Ban ist ein Dienst, der unauffäulig im Hintergrund läuft und der auf praktisch allen Linux-Server Systemen ohne Schwierigkeiten installiert werden kann oder bereits in der Grundinstallation enthalten ist. Mit der Installation liefert Fail2Ban bereits vordefinierte &#8220;Filter&#8221; (d.h. Suchregeln zum Durchsuchen der Log-Dateien) für Apache, nginx, sshd, roundcube und viele andere populäre Dienste. Filter werden durch einen oder mehrere <a href="https://de.wikipedia.org/wiki/Regul%C3%A4rer_Ausdruck" rel="noopener noreferrer" target="_blank"> reguläre Ausdrücke</a> definiert, die auch als Vorlage für die Definition eigener Filter dienen. Dank des guten Manuals von Fail2Ban ist dies mit geringem Aufwand möglich.</p>
+
+<p>Eine valide Alternative zu Fail2Ban ist <a href="http://www.ossec.net/" rel="noopener noreferrer" target="_blank">OSSEC</a>, das sehr umfangreiche Funktionen und eine gute Dokumentation bietet. Gegenüber Fail2Ban ist es weniger verbreitet und kann auch nicht direkt aus den offiziellen Paketquellen installiert werden. Weitere Programme mit ähnlichen Funktionen zu Fail2Ban sind <a href="http://denyhosts.sourceforge.net/" rel="noopener noreferrer" target="_blank">Denyhosts</a> und <a href="http://caia.swin.edu.au/stockade/" rel="noopener noreferrer" target="_blank">Stockade</a>, welche jedoch beide seit einigen Jahren nicht mehr gepflegt werden. </p>
+
+<h2>Anwendungsfälle von Fail2Ban</h2>
+<p>Immer wieder ließt man von davon, dass häufig genutzte Softwareprodukte wie z.B. das weit verbreitete <a href="http://www.spiegel.de/netzwelt/gadgets/weltweite-hacker-angriffe-gegen-blog-plattform-wordpress-a-894366.html" rel="noopener noreferrer" target="_blank">Blogging-Tool WordPress</a> massiven Angriffen unterliegt. So ein Angriff ist dabei für einen böswilligen Hacker denkbar einfach. Die Angreifer durchsuchen automatisiert oder manuell das Internet nach WordPress-Blogs. Sobald sie so einen Blog gefunden haben, starten Sie eine sogenannte Brute-Force-Attacke, bei der innerhalb von kürzester Zeit tausende von Passwörtern durchprobiert werden. Der Angreifer hofft dabei, dass ein schwaches Passwort für den Adminbenutzer gewählt wurde.</p>
+
+<p>Üblicherweise wird von Sicherheitsexperten empfohlen ein langes und zufälliges Passwort zu verwenden, um sich vor Brute-Force Angriffe zu schützen. Doch Fail2Ban bietet eine viel sinnvollere Lösung. Wieso die bösen Jungs dazu animieren sich an meinem schweren Passwort die Zähne auszubeißen und vielleicht sogar deren Ergeiz zu wecken? Stattdessen kann man auch mit Fail2Ban den Zugriff zu dem Adminbereich des eigenen WordPress-Blogs automatisch für die IP-Adresse des Angreifers sperren. Der Angreifer probiert einige wenige Passwörter aus und das System ist (nur für ihn) nicht mehr erreichbar. Alle anderen Besucher können weiterhin die spannenden Beiträge des Blogs lesen.</p>
+
+<p>Doch Fail2Ban schützt nicht nur WordPress-Blogs. Man kann mit geringem Aufwand mit Fail2Ban jedes beliebige Programm, jede Webseite oder jeden Dienst auf einem Linux-Server schützen. Man bringt Fail2Ban bei, wie es die entsprechenden Logfiles auszuwerten muss und kann somit diesen Angriffen mit der Brechstange sofort einen Riegel vorschieben. Fail2Ban garantiert zwar keine Sicherheit, aber Brute-Force-Attacke werden wirkungsvoll und mit sofortiger Wirkung unterbunden.</p>
+
+<h2>Voraussetzungen für den Einsatz von Fail2Ban</h2>
+<p>Fail2Ban benötigt lediglich ein installiertes Python (mindestens 2.6 oder 3.2) auf dem Linux-Server. Darüber hinaus hat Fail2Ban keinerlei Abhängigkeiten. Es gibt optionale Pakete, die jedoch keinen Einfluss auf die Schutzwirkung haben, sondern Komfortfunktionen bieten, wie z.B. dem Administrator eine Statusnachricht zukommen zu lassen, wenn eine IP gesperrt wurde.</p>
+
+<h2>Fail2Ban &#8211; optimaler und unauffälliger Schutz für jeden Linux-Server</h2>
+<p>Fail2Ban bietet einen einfachen und wirkungsvollen Schutz gegen Brute-Force-Angriffe. Es ist schnell installiert und danke mitgelieferter Filterregeln auch schnell eingerichtet. Ohne großes Aufsehen zu erregen, verrichtet es zuverlässig seinen Dienst im Hintergrund. Fail2Ban sollte auf keinem Linux-Server fehlen.</p>

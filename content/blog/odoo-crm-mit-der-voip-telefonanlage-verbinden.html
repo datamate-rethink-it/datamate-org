@@ -1,0 +1,111 @@
++++
+title = "Odoo-CRM mit der VoIP-Telefonanlage verbinden"
+titel_html = "Odoo-CRM mit der VoIP-Telefonanlage verbinden | datamate"
+ueberschrift = "Odoo-CRM mit der VoIP-Telefonanlage verbinden"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/04/odoo-voip1.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/odoo-crm-mit-der-voip-telefonanlage-verbinden/"
+canonical = "https://www.datamate.org/odoo-crm-mit-der-voip-telefonanlage-verbinden/"
+veroeffentlicht = "2016-03-29T11:43:59+00:00"
+geaendert = "2025-02-21T08:10:53+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "5 Minuten"
+bild_breite = 1214
+bild_hoehe = 692
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Odoo-CRM mit der VoIP-Telefonanlage verbinden", item = ""}]
+wortzahl = 990
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["odoo"]
+schlagwoerter = []
+wp_id = 4471
+slug = "odoo-crm-mit-der-voip-telefonanlage-verbinden"
+url = "/odoo-crm-mit-der-voip-telefonanlage-verbinden/"
+date = "2016-03-29T13:43:59"
+lastmod = "2025-02-21T09:10:53"
+datum_utc = "2016-03-29T11:43:59+00:00"
+geaendert_utc = "2025-02-21T08:10:53+00:00"
+lightbox = true
++++
+						<p>Odoo-CRM ist ein professionelles, webbasiertes und OpenSource-lizenziertes CRM-System, welches von Weltkonzernen wie Danone und France Telecom eingesetzt wird. Odoo-CRM kann modular erweitert werden und hat uns aufgrund seiner skalierbaren und modernen Technologie überzeugt. Odoo-CRM ist auf jedem ionas-Server Small Business zusammen mit einer VoIP-Telefonanlage vorkonfiguriert und ermöglicht es unseren Kunden &#8211; Startups sowie kleinen und mittelständischen Unternehmen &#8211; Ihre Kundenkontakte optimal zu managen.</p>
+
+<p>Ein CRM ist jedoch nur so gut, wie es in die eigenen Prozesse integriert werden kann. Telefonie ist auch im Jahre 2016 immer noch eines der wichtigsten Kommunikationsmittel, weshalb Telefonate mit den Kunden strukturiert und konsequent im CRM erfasst werden müssen um jederzeit die gesamte Kontakthistorie zur Verfügung zu haben.</p>
+
+<p>In diesem Artikel werde ich Ihnen zeigen, wie Sie Odoo mit einer asterisk-basierten VoIP-Telefonanlage verbinden können. Nach dieser Kopplung der beiden System ist es möglich, dass Ihre Mitarbeiter das Kundenprofil aufrufen, noch bevor man den Anruf entgegen nimmt. Gleichzeitig können Anrufe mit einem Klick aus Odoo heraus aufgebaut werden. Nummern wählen oder die Frage nach dem Name des Anrufers gehört damit der Vergangenheit an. </p>
+
+<span id="more-4471"></span>
+
+<h2>Voraussetzungen für die Integration der VoIP-Telefonanlage mit Odoo-CRM</h2>
+
+<p>Der folgende Artikel geht von einem installierten Odoo 8 und einer asterisk-basierten VoIP-Telefonanlage aus. Das folgende Verfahren ist keine theoretische Abhandlung, sondern kommt genau so bei jedem <a href="/shop/small-business" target="_blank" rel="noopener">ionas-Server Small Business</a> zum Einsatz. Auf jedem ionas-Server Small Business ist bereits das Odoo System mit der Telefonanlage verbunden und kann direkt eingesetzt werden. Die folgende Integration ist somit Bestandteil der All-In-One Serverlösung für unsere Kunden.</p>
+
+<p>Als VoIP-Telefonanlage verwenden wir die Softwarelösung <a href="http://askozia.com/de/" target="_blank" rel="noopener">Askozia</a>, welche auf der Asterisk Version 10.9.0 aufsetzt. Die Kommunikation der beiden Systeme erfolgt über eine standardisierte Schnittstelle. Auf Seiten der Telefonanlage heißt die Schnittstelle &#8220;AMI&#8221; (Asterisk Management Interface), welche bei jeder Asterisk-Installation enthalten ist. Odoo bietet bereits im Standard die Möglichkeit sich mit VoIP-Telefonanlagen zu verbinden, für den Rufaufbau und die Anruferidentifizierung werden jedoch zusätzliche Module benötigt. Im Folgenden wird der kostenlose <a href="http://www.akretion.com/open-source-contributions/openerp-asterisk-voip-connector" target="_blank" rel="noopener">Akretion VoIP-Connector</a> verwendet. Die Installation des VoIP-Connectors wird nicht im Rahmen dieses Artikels behandelt, sollte jemanden mit einer gewissen Odoo Erfahrung vor keine große Herausforderung stellen. </p>
+
+<h2>Konfiguration der Telefonanlage</h2>
+
+<p>Damit Odoo sich per AMI mit der VoIP-Telefonanlage Askozia verbinden kann, muss ein User für diese Schnittstelle definiert werden. Hierfür genügt es die folgenden Zeilen in die manager.conf von Asterisk einzutragen.</p>
+
+<pre>
+[click2dial]
+secret = ein-selbst-gewähltes-Passwort
+deny = 0.0.0.0/0.0.0.0
+permit = 10.0.0.0/255.0.0.0
+read = system,originate,reporting,call,dialplan,cdr,config
+write = originate,reporting,call,command,verbose,agent,dialplan
+</pre>
+
+<p>Der hier angelegte User hat den Benutzernamen <i>click2dial</i> und ein von Ihnen selbst gewähltes Passwort. Zusätzlich wird über den <i>deny</i>&#8211; und <i>permit</i>-Befehl festgelegt, das nur Zugriffe aus dem Adressbereich 10.0.0.0 erlaubt sind. Mit den letzten beiden Zeilen wird festgelegt, welche Aktionen der User <i>click2dial</i> auf der Telefonanlage ausführen darf. Der User <i>click2dial</i> verfügt durch diese Angaben über sehr weitreichende Fähigkeiten, da der User auf dem ionas-Server noch zusätzliche Aktivitäten, wie z.B. die Abfrage der Anrufer in der Warteschleife durch den User erfolgt. </p>
+
+<p>Nachdem dem Speichern der Einstellungen, sollte die Telefonanlage neu gestartet werden.</p>
+
+<h2>Installation der notwendigen Module in Odoo 8</h2>
+
+<a href="/wp-content/uploads/2018/04/odoo-voip1.png" rel="attachment wp-att-552" data-slb-active="1" data-slb-asset="2605222385" data-slb-internal="0" data-slb-group="4471"><img decoding="async" src="/wp-content/uploads/2018/04/odoo-voip1.png" alt="Notwendige Module in Odoo 8 zur Nutzung von VoIP-Telefonie." width="300" height="171" class="size-medium wp-image-552" /></a>
+
+<p>Als nächstes loggt man sich als Administrator oder superuser in Odoo ein. Unter <strong>Einstellungen → Module → Lokale Apps</strong> kontrolliert man, dass die fünf notwendigen Module installiert sind. Wenn eines der folgenden Module fehlen sollte, muss dieses zuerst installiert werden:</p>
+
+<p>1. Asterisk Click2dial<br/>
+2. Asterisk Click2dial CRM<br/>
+3. Base Phone<br/>
+4. CRM Claim Phone<br/>
+5. CRM Phone<br/></p>
+
+<h2>Konfiguration der Verbindung zur VoIP-Telefonanlage</h2>
+
+<p>Als nächstes kann die Verbindung zur Asterisk-Telefonanlage in Odoo konfiguriert und die Verbindung getestet werden. Hierzu geht man auf <strong>Einstellungen → Technisch → Telephony → Asterisk Server</strong>. Dort muss ein neuer Server mit den folgenden Informationen angelegt werden:</p>
+
+<a href="/wp-content/uploads/2018/04/odoo-voip3.png" rel="attachment wp-att-556" data-slb-active="1" data-slb-asset="2032665971" data-slb-internal="0" data-slb-group="4471"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/odoo-voip3.png" alt="Einstellungen zur Verbindung des Asterisk-Servers in Odoo 8" width="300" height="187" class="size-medium wp-image-556" /></a>
+
+<p>Asterisk IP address or DNS: <strong>10.37.104.7</strong><br/>
+Port: <strong>5038</strong><br/>
+AMI Login: <strong>click2dial</strong><br/>
+AMI Password: <strong>***</strong><br/>
+Dialplan Context: <strong>CFE-PHONE-UNIQUE-internalandexternal</strong><br/></p>
+
+<p>Die IP-Adresse und das Passwort sind natürlich entsprechend anzupassen. Auch der <i>Dialplan Context</i> kann je nach Telefonanlage anders aussehen. 
+Als nächstes kann man mit einem Klick auf <strong>Test Connection to Asterisk</strong> die Verbindung per AMI und Akretion VoIP-Connector testen. </p>
+
+<h2>Dem Mitarbeiter eine interne Durchwahl zuweisen</h2>
+
+<a href="/wp-content/uploads/2018/04/odoo6.png" rel="attachment wp-att-559" data-slb-active="1" data-slb-asset="3983595458" data-slb-internal="0" data-slb-group="4471"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/odoo6.png" alt="VoIP-Extension einem Mitarbeiter zuweisen" width="300" height="182" class="size-medium wp-image-559" /></a>
+
+<p>Damit man nun aus Odoo heraus Anrufe aufbauen kann, muss dem Benutzer eine entsprechende Durchwahl / Extension zugeordnet werden. Dafür muss man unter <strong>Einstellungen → Benutzer → Benutzer</strong> den gewünschten Benutzer auswählen und unter <strong>Telephony</strong> die Durchwahl eintragen. Die vorher angelegte VoIP-Telefonanlage ist unter <i>Asterisk Server</i> einzutragen. Es ist wichtig, dass jeder Mitarbeiter der die Telefoniefunktionen in Odoo nutzen will, eine Extension in seinem Benutzeraccount hat. Ansonsten laufen alle Kommunikationsversuche zwischen der Telefonanlage und Odoo ins Leere.</p>
+
+<h2>Anrufe in Odoo aufbauen</h2>
+
+<a href="/wp-content/uploads/2018/04/odoo5.png" rel="attachment wp-att-558" data-slb-active="1" data-slb-asset="208775356" data-slb-internal="0" data-slb-group="4471"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/odoo5.png" alt="Anrufe per Click in Odoo" width="300" height="126" class="size-medium wp-image-558" /></a>
+
+<p>Sobald die Verbindung erfolgreich ist, kann man die angesprochenen Fähigkeiten der Telefonanlage in Odoo verwenden. Ab sofort steht neben jeder Telefonnummer in jeder Maske von Odoo ein <strong>Dial</strong> über das die zugehörige Telefonnummer angerufen werden kann. Wenn Sie auf <i>Dial</i> klicken, wird die Durchwahl angerufen, die in Ihrem Benutzeraccount gespeichert ist. Sobald Sie das Gespräch entgegennehmen, baut die Telefonanlage die Verbindung auf und es klingelt beim Kunden. Gleichzeitig bietet Ihnen Odoo direkt an das Telefongespräch zu dokumentieren. Wenn Sie diesem Vorschlag folgen, wird dem angerufenen Kunden der entsprechende Eintrag zugeordnet.</p>
+
+<h2>Anrufer vor der Anrufannahme identifizieren</h2>
+
+<p>Wenn Sie jemand anruft und Ihr Telefon klingelt, können Sie mit einem Mausklick auf das kleine Hörersymbol in oberen Navigationsleiste das zugehörige Kundenprofil öffnen. Sollte die Nummer nicht gefunden werden, wird ein Formular zur Anlage eines zugehörigen Kundenprofils angeboten. In dem folgenden Video wird diese Funktionsweise dargestellt.</p>
+
+<iframe loading="lazy" width="500" height="375" src="https://www.youtube.com/embed/bryc_uettDI?feature=oembed" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h2>Fazit</h2>
+
+<p>Ein Odoo-CRM mit einer verbunden VoIP-Telefonanlage erleichtert die Dokumentation der Kundenkontakte ungemein. Der Aufwand für die Konfiguration dieser Schnittstelle ist vergleichsweise gering und bietet riesige Effizienzvorteile. Wenn Sie selbst keine Lust verspüren diese Konfiguration selbst vorzunehmen, ist eventuell ein ionas-Server Small Business für Sie interessant. Neben diversen anderen vorkonfigurierten Softwarelösungen für kleine und mittelständische Unternehmen ist die Telefonanlage bereits in Odoo integriert. So können Sie direkt loslegen und Ihre Kundenkontakte effizienter managen.</p>

@@ -1,0 +1,44 @@
+# Auf dem Server nach /opt/datamate.org/docker-compose.yml kopieren.
+#
+#   cd /opt/datamate.org
+#   echo "DATAMATE_VERSION=2026-10-21" > .env
+#   docker compose pull && docker compose up -d
+#
+# Ausrollen einer neuen Fassung: Version in .env aendern, dann dieselben
+# zwei Befehle. Zurueck auf eine aeltere Fassung: alten Wert eintragen,
+# dieselben zwei Befehle.
+
+services:
+    datamate-org:
+        image: ${DATAMATE_IMAGE:-ghcr.io/datamate-rethink-it/datamate-org}:${DATAMATE_VERSION:?Bitte DATAMATE_VERSION in .env setzen, z.B. 2026-10-21}
+        container_name: datamate-org
+        restart: unless-stopped
+        # Nur lokal erreichbar - davor steht das native nginx.
+        # ionas.com liegt auf 8081.
+        ports:
+            - 127.0.0.1:8082:80
+        read_only: true
+        tmpfs:
+            - /tmp
+            - /config
+            - /data
+        cap_drop:
+            - ALL
+        cap_add:
+            # Die Caddy-Binaerdatei traegt cap_net_bind_service als
+            # Datei-Capability. Ohne diese eine Rueckgabe scheitert schon
+            # das exec ("operation not permitted").
+            - NET_BIND_SERVICE
+        security_opt:
+            - no-new-privileges:true
+        healthcheck:
+            test: ['CMD', 'wget', '--spider', '-q', 'http://127.0.0.1/']
+            interval: 30s
+            timeout: 5s
+            retries: 3
+            start_period: 5s
+        logging:
+            driver: json-file
+            options:
+                max-size: 10m
+                max-file: '3'

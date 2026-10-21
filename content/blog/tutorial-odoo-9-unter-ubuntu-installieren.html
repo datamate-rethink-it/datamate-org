@@ -1,0 +1,253 @@
++++
+title = "Tutorial: Odoo 9 unter Ubuntu installieren"
+titel_html = "Tutorial: Odoo 9 unter Ubuntu installieren | datamate"
+ueberschrift = "Tutorial: Odoo 9 unter Ubuntu installieren"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/04/odoo9.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/tutorial-odoo-9-unter-ubuntu-installieren/"
+canonical = "https://www.datamate.org/tutorial-odoo-9-unter-ubuntu-installieren/"
+veroeffentlicht = "2015-10-11T12:34:21+00:00"
+geaendert = "2025-02-21T08:10:55+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "6 Minuten"
+bild_breite = 1232
+bild_hoehe = 702
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Tutorial: Odoo 9 unter Ubuntu installieren", item = ""}]
+wortzahl = 703
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["uncategorized"]
+schlagwoerter = []
+wp_id = 4433
+slug = "tutorial-odoo-9-unter-ubuntu-installieren"
+url = "/tutorial-odoo-9-unter-ubuntu-installieren/"
+date = "2015-10-11T14:34:21"
+lastmod = "2025-02-21T09:10:55"
+datum_utc = "2015-10-11T12:34:21+00:00"
+geaendert_utc = "2025-02-21T08:10:55+00:00"
+lightbox = true
++++
+						<a href="/wp-content/uploads/2018/04/odoo9.png" data-slb-active="1" data-slb-asset="428229606" data-slb-internal="0" data-slb-group="4433"><img decoding="async" src="/wp-content/uploads/2018/04/odoo9.png" alt="Odoo 9 App Übersicht" width="300" height="171" class="size-medium wp-image-280" /></a>
+
+<p>Odoo 9 ist seit dem 1.Oktober 2015 verfügbar und lockt mit einer Fülle neuer Features wie dem Website Builder, einem überarbeiteten e-Commerce und Vertragsmanagement Modul (<a href='https://www.odoo.com/de_DE/slides/slide/keynote-odoo-9-new-features-201'>zu Odoo 9 Keynotes</a>).</p>
+
+<p>Um sich schnell und unkompliziert diese neuen Features ansehen zu können, bietet sich die <a href='/tutorial-virtualbox-auf-einem-ubuntu-server-14-04-installieren-und-per-browser-ueber-das-netzwerk-steuern/'>Installation von Odoo 9 in einer virtuellen Maschine</a> (z.B. VirtualBox) an. Die Installation des Ubuntu Server Systems und Odoo 9 (ehemals OpenERP) ist in weniger als einer Stunde abgeschlossen. Danach kann man unkompliziert und ohne Risiko die neuen Fähigkeiten sowie sämtliche Apps des OpenSource ERP / CRM ausprobieren. Also worauf warten?</p>
+
+<span id="more-4433"></span>
+
+<p><strong>Hinweis: sämtliche Befehle werden im folgenden als Root-User ausgeführt. Nur wenn es ein anderer Benutzer sein muss, wird dies explizit erwähnt.</strong></p>
+
+<h2>Updates des Servers</h2>
+<p>Auch wenn es sich um eine frische Ubuntu Installation handelt, sollte man immer zuerst das Basissystem aktualisieren. Außerdem installieren wir den Zeichensatz c.utf-8, da es dann garantiert keine Inkompatibilitäten zwischen ASCII und UTF8 bei der Anlage der Postgresql-Datenbank gibt.</p>
+
+<pre>
+apt-get update
+apt-get upgrade -y
+apt-get install -y locales
+dpkg-reconfigure locales
+locale-gen C.UTF-8
+/usr/sbin/update-locale LANG=C.UTF-8
+echo 'LC_ALL=C.UTF-8' >> /etc/environment
+</pre>
+
+<h2>Postgresql installieren</h2>
+<p>Als nächstes Installieren wir die Datenbank. Odoo (ehemals OpenERP) setzt auf Postgresql, welche mit wenigen Befehlen installiert ist. Nach der Installation der Datenbank legen wir einen neuen Datenbankbenutzer &#8220;odoo&#8221; an.</p>
+
+<pre>
+apt-get install postgresql -y
+su - postgres -c "createuser -s odoo"
+service postgresql restart
+</pre>
+
+<h2>Odoo Benutzer und Log-Datei anlegen</h2>
+<p>Odoo soll später unter einem eigenen Systembenutzer (und nicht dem Root-User) laufen. Dieser Benutzer mit dem Namen odoo soll sich nicht am System anmelden können, sondern sich lediglich um die Ausführung von Odoo kümmern. Deshalb wird das Home-Verzeichnis auch unter /opt/odoo angelegt.</p>
+
+<pre>
+adduser --system --quiet --shell=/bin/bash --home=/opt/odoo --gecos 'ODOO' --group odoo
+mkdir /var/log/odoo
+chown odoo: /var/log/odoo
+</pre>
+
+<h2>Odoo Voraussetzungen installieren</h2>
+<p>Bevor wir zur eigentlichen Installation kommen, müssen eine Vielzahl von Voraussetzungen erfüllt sein. Dieses erledigen wir mit den folgenden Befehlen.</p>
+
+<pre>
+apt-get install wget git python-pip python-imaging python-setuptools python-dev libxslt-dev libxml2-dev libldap2-dev libsasl2-dev node-less postgresql-server-dev-all -y
+wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
+</pre>
+
+<p>Weiterhin installieren wir das Webkit html-to-pdf. Dies machen wir mit den folgenden Befehlen.</p>
+
+<pre>
+dpkg -i wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
+apt-get install -f -y
+dpkg -i wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
+cp /usr/local/bin/wkhtmltopdf /usr/bin
+cp /usr/local/bin/wkhtmltoimage /usr/bin
+rm wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
+</pre>
+
+<h2>Odoo 9 mit allen Abhängigkeiten installieren</h2>
+<p>Nachdem nun alle Voraussetzungen erfüllt sind, kommen wir zu eigentlichen Installation von Odoo. Mit den folgenden Befehlen wird das ca. 50 Megabyte große Odoo Paket von github runtergeladen und sämtlich Abhängigkeiten installiert. Dieser Vorgang dauert mit Abstand am längsten von allen Arbeitsschritten.</p>
+
+<pre>
+cd /opt/odoo
+su odoo -c "git clone --depth 1 --single-branch --branch 9.0 https://www.github.com/odoo/odoo /opt/odoo/odoo-server/"
+su odoo -c "mkdir -p /opt/odoo/custom/addons"
+chown -R odoo:odoo /opt/odoo/*
+pip install -r /opt/odoo/odoo-server/requirements.txt
+easy_install pyPdf vatnumber pydot psycogreen suds ofxparse
+</pre>
+
+<h2>Odoo konfigurieren</h2>
+<p>Nun ist es fast geschafft. Odoo 9 ist installiert und es bedarf nur noch ein paar Einstellungen um Odoo lauffähig zu machen. Konkret muss die odoo-server.conf angepasst werden.</p>
+
+<pre>
+cp /opt/odoo/odoo-server/debian/openerp-server.conf /etc/odoo-server.conf
+chown odoo: /etc/odoo-server.conf
+chmod 640 /etc/odoo-server.conf
+nano /etc/odoo-server.conf
+</pre>
+
+<p>Bitte passen Sie die odoo-server.conf an, dass diese den folgenden Inhalt hat. Das geheime Passwort dürfen Sie natürlich beliebig setzen. Wählen Sie ein ausreichend sicheres Passwort.</p>
+
+<pre>
+[options]
+; This is the password that allows database operations:
+db_host = False
+db_port = False
+db_password = False
+db_user = odoo
+admin_passwd = HIER_STEHT_IHR_GEHEIMES_PASSWORT
+logfile = /var/log/odoo/odoo-server.log
+addons_path=/opt/odoo/odoo-server/addons,/opt/odoo/custom/addons
+</pre>
+
+<p>Nun wird noch ein Start-Script angelegt, dass man das ERP / CRM System bequem per <strong>service odoo-server start</strong> starten kann und dieses auch zum Autostart des Servers hinzufügen kann.</p>
+
+<pre>
+touch /etc/init.d/odoo-server
+chmod 755 /etc/init.d/odoo-server
+chown root: /etc/init.d/odoo-server
+nano /etc/init.d/odoo-server
+</pre>
+
+<p>Kopieren Sie nun den vollständigen Inhalt in das Start-Script odoo-server.</p>
+
+<pre>
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides: odoo-server
+# Required-Start: $remote_fs $syslog
+# Required-Stop: $remote_fs $syslog
+# Should-Start: $network
+# Should-Stop: $network
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Enterprise Business Applications
+# Description: ODOO Business Applications
+### END INIT INFO
+PATH=/bin:/sbin:/usr/bin
+DAEMON=/opt/odoo/odoo-server/openerp-server
+NAME=odoo-server
+DESC=odoo-server
+
+# Specify the user name (Default: odoo).
+USER=odoo
+
+# Specify an alternate config file (Default: /etc/openerp-server.conf).
+CONFIGFILE="/etc/odoo-server.conf"
+
+# pidfile
+PIDFILE=/var/run/$NAME.pid
+
+# Additional options that are passed to the Daemon.
+DAEMON_OPTS="-c $CONFIGFILE"
+[ -x $DAEMON ] || exit 0
+[ -f $CONFIGFILE ] || exit 0
+checkpid() {
+[ -f $PIDFILE ] || return 1
+pid=`cat $PIDFILE`
+[ -d /proc/$pid ] && return 0
+return 1
+}
+_status() {
+start-stop-daemon --status --quiet --pidfile $PIDFILE
+return $?
+}
+
+case "${1}" in
+start)
+echo -n "Starting ${DESC}: "
+start-stop-daemon --start --quiet --pidfile ${PIDFILE} \
+--chuid ${USER} --background --make-pidfile \
+--exec ${DAEMON} -- ${DAEMON_OPTS}
+echo "${NAME}."
+;;
+stop)
+echo -n "Stopping ${DESC}: "
+start-stop-daemon --stop --quiet --pidfile ${PIDFILE} \
+--oknodo
+echo "${NAME}."
+;;
+
+restart|force-reload)
+echo -n "Restarting ${DESC}: "
+start-stop-daemon --stop --quiet --pidfile ${PIDFILE} \
+--oknodo
+sleep 1
+start-stop-daemon --start --quiet --pidfile ${PIDFILE} \
+--chuid ${USER} --background --make-pidfile \
+--exec ${DAEMON} -- ${DAEMON_OPTS}
+echo "${NAME}."
+;;
+
+status)
+echo -n "Status of ${DESC}: "
+start-stop-daemon --status --quiet --pidfile $PIDFILE
+_status && echo "running." || echo "stopped."
+;;
+
+*)
+N=/etc/init.d/${NAME}
+echo "Usage: ${NAME} {start|stop|restart|force-reload}" >&2
+exit 1
+;;
+
+esac
+exit 0
+</pre>
+
+<p>Um nun Odoo automatisch bei jedem Neustart zu starten genügt der folgende Befehl.</p>
+
+<pre>
+update-rc.d odoo-server defaults
+</pre>
+
+<p>Herzlichen Glückwunsch! Odoo 9 ist nun installiert und kann über http://IHRE-IP:8069 aufgerufen werden. </p>
+
+
+<h2>Datenbank anlegen und loslegen</h2>
+
+<a href="/wp-content/uploads/2018/04/odoo-install.png" data-slb-active="1" data-slb-asset="647443360" data-slb-internal="0" data-slb-group="4433"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/odoo-install.png" alt="initiale Datenbank in Odoo anlegen" width="300" height="287" class="size-medium wp-image-288" /></a>
+
+<p>Beim ersten Aufruf von Odoo im Browser, müssen Sie eine initiale Datenbank anlegen. Natürlich funktioniert die Anlage nur, wenn Sie beim <strong>Master Passwort</strong> Ihr geheimes Passwort aus der odoo-server.conf eintragen. Die anderen Werte können Sie beliebig wählen. </p>
+
+<p>Nach einem Klick auf &#8220;Create database&#8221; dauert es ca. 30 Sekunden, bis die Datenbank angelegt wurde und Sie in Ihrem fertig installiertem Odoo System landen. Sie sind nun als Administrator eingeloggt und können direkt mit der Installation der gewünschten Apps loslegen. </p>
+
+<p>Natürlich ist dies nur eine absolute Basisinstallation von Odoo 9, welche nicht für den produktiven Einsatz gedacht ist. Für den produktiven Einsatz sind noch eine Reihe von Sicherheitseinstellungen zu treffen, um das System gründlich abzusichern. Alternativ können Sie auch einen ionas-Server Small Business kaufen. Dort ist Odoo 9 bereits vorinstalliert, abgesichert und mit einer zentralen Benutzerverwaltung und der VoIP-Telefonanlage integriert.</p>
+
+
+<h2>Korrupte Datenbank mit &#8220;demonstration data&#8221; löschen</h2>
+<p>Bei meinen ersten Testinstallationen kam es bei der Anlage einer neuen Datenbank mit Beispieldaten (demonstration data) zu einem reproduzierbarem Fehler. Die Fehlermeldung lautete <strong>Database creation error: Unable to use a closed cursor</strong> und sobald diese Datenbank verwendet wurde, war das System nicht mehr zu erreichen.</p>
+
+<p>Mit den folgenden Befehlen können Sie Odoo beenden und die korrupte Datenbank löschen. Natürlich müssen Sie DATENBANKNAME durch den Namen der erzeugten Datenbank ersetzen.</p>
+
+<pre>
+service odoo-server stop
+su postgres -c "dropdb DATENBANKNAME"
+service odoo-server start
+</pre>

@@ -1,0 +1,112 @@
+{{- /*
+  Der JSON-LD-Graph in der Form, in der Yoast SEO ihn geschrieben hat.
+  Alle Angaben kommen aus dem Vorspann - Bildabmessungen, Beschriftung,
+  Brotkrumen, Wortzahl und die Personen-Kennung hat _build/gen_content.py
+  aus dem alten Graphen uebernommen, damit hier nichts geraten wird.
+*/ -}}
+{{- $k := .Params.canonical | default .Permalink -}}
+{{- $titel := .Params.titel_html | default (printf "%s | datamate" .Title) -}}
+{{- $graph := slice -}}
+{{- $autor := index hugo.Data.autoren (.Params.autor_kurz | default "") -}}
+{{- if eq .Section "blog" -}}
+  {{- $artikel := dict
+      "@type" "Article"
+      "@id" (printf "%s#article" $k)
+      "isPartOf" (dict "@id" $k)
+      "author" (dict "name" .Params.autor "@id" $autor.person_id)
+      "headline" (.Params.ueberschrift | default .Title)
+      "datePublished" .Params.datum_utc
+      "dateModified" .Params.geaendert_utc
+      "mainEntityOfPage" (dict "@id" $k)
+      "publisher" (dict "@id" "https://www.datamate.org/#organization")
+      "articleSection" (apply .Params.kategorien "index" hugo.Data.kategoriennamen ".")
+      "inLanguage" "de" -}}
+  {{- with .Params.wortzahl }}{{ $artikel = merge $artikel (dict "wordCount" .) }}{{ end -}}
+  {{- with .Params.beitragsbild -}}
+    {{- $artikel = merge $artikel (dict
+        "image" (dict "@id" (printf "%s#primaryimage" $k))
+        "thumbnailUrl" (printf "https://www.datamate.org%s" .)) -}}
+  {{- end -}}
+  {{- with .Params.schlagwoerter }}{{ $artikel = merge $artikel (dict "keywords" .) }}{{ end -}}
+  {{- $graph = $graph | append $artikel -}}
+{{- end -}}
+{{- $seite := dict
+    "@type" "WebPage"
+    "@id" $k
+    "url" $k
+    "name" $titel
+    "isPartOf" (dict "@id" "https://www.datamate.org/#website")
+    "datePublished" .Params.datum_utc
+    "dateModified" .Params.geaendert_utc
+    "breadcrumb" (dict "@id" (printf "%s#breadcrumb" $k))
+    "inLanguage" "de"
+    "potentialAction" (slice (dict "@type" "ReadAction" "target" (slice $k))) -}}
+{{- with .Params.beschreibung }}{{ $seite = merge $seite (dict "description" .) }}{{ end -}}
+{{- with .Params.beitragsbild -}}
+  {{- $seite = merge $seite (dict
+      "primaryImageOfPage" (dict "@id" (printf "%s#primaryimage" $k))
+      "image" (dict "@id" (printf "%s#primaryimage" $k))
+      "thumbnailUrl" (printf "https://www.datamate.org%s" .)) -}}
+{{- end -}}
+{{- if .IsHome }}{{ $seite = merge $seite (dict "about" (dict "@id" "https://www.datamate.org/#organization")) }}{{ end -}}
+{{- $graph = $graph | append $seite -}}
+{{- with .Params.beitragsbild -}}
+  {{- $bild := dict
+      "@type" "ImageObject"
+      "inLanguage" "de"
+      "@id" (printf "%s#primaryimage" $k)
+      "url" (printf "https://www.datamate.org%s" .)
+      "contentUrl" (printf "https://www.datamate.org%s" .) -}}
+  {{- with $.Params.bild_breite }}{{ $bild = merge $bild (dict "width" .) }}{{ end -}}
+  {{- with $.Params.bild_hoehe }}{{ $bild = merge $bild (dict "height" .) }}{{ end -}}
+  {{- with $.Params.bild_beschriftung }}{{ $bild = merge $bild (dict "caption" .) }}{{ end -}}
+  {{- $graph = $graph | append $bild -}}
+{{- end -}}
+{{- with .Params.brotkrumen -}}
+  {{- $punkte := slice -}}
+  {{- range $i, $b := . -}}
+    {{- $p := dict "@type" "ListItem" "position" (add $i 1) "name" $b.name -}}
+    {{- with $b.item }}{{ $p = merge $p (dict "item" .) }}{{ end -}}
+    {{- $punkte = $punkte | append $p -}}
+  {{- end -}}
+  {{- $graph = $graph | append (dict
+      "@type" "BreadcrumbList"
+      "@id" (printf "%s#breadcrumb" $k)
+      "itemListElement" $punkte) -}}
+{{- end -}}
+{{- $graph = $graph | append (dict
+    "@type" "WebSite"
+    "@id" "https://www.datamate.org/#website"
+    "url" "https://www.datamate.org/"
+    "name" "datamate"
+    "description" ""
+    "publisher" (dict "@id" "https://www.datamate.org/#organization")
+    "potentialAction" (slice (dict
+        "@type" "SearchAction"
+        "target" (dict "@type" "EntryPoint" "urlTemplate" "https://www.datamate.org/suche/?q={search_term_string}")
+        "query-input" "required name=search_term_string"))
+    "inLanguage" "de") -}}
+{{- $graph = $graph | append (dict
+    "@type" "Organization"
+    "@id" "https://www.datamate.org/#organization"
+    "name" "datamate GmbH & Co. KG"
+    "url" "https://www.datamate.org/"
+    "sameAs" (slice "https://www.youtube.com/channel/UCnVWPO4V0n9aUGcG9q31b4g" "https://www.facebook.com/datamate.rethink.it")
+    "logo" (dict
+        "@type" "ImageObject"
+        "inLanguage" "de"
+        "@id" "https://www.datamate.org/#/schema/logo/image/"
+        "url" "https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png"
+        "contentUrl" "https://www.datamate.org/wp-content/uploads/2017/05/logo-100x100.png"
+        "width" 100
+        "height" 100
+        "caption" "datamate GmbH & Co. KG")
+    "image" (dict "@id" "https://www.datamate.org/#/schema/logo/image/")) -}}
+{{- if and (eq .Section "blog") $autor -}}
+  {{- $graph = $graph | append (dict
+      "@type" "Person"
+      "@id" $autor.person_id
+      "name" $autor.name
+      "description" $autor.beschreibung) -}}
+{{- end -}}
+<script type="application/ld+json" class="yoast-schema-graph">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify }}</script>

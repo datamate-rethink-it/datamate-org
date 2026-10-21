@@ -1,0 +1,164 @@
++++
+title = "Aktivierung der Soundausgabe unter Ubuntu Server"
+titel_html = "Aktivierung der Soundausgabe unter Ubuntu Server | datamate"
+ueberschrift = "Aktivierung der Soundausgabe unter Ubuntu Server"
+beschreibung = "Nach der Standardinstallation von Ubuntu Server funktioniert die Soundausgabe nicht. Wir zeigen einen einfachen Weg, diese zu aktivieren."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_typ = "article"
+og_url = "https://www.datamate.org/aktivierung-der-soundausgabe-unter-ubuntu-server/"
+canonical = "https://www.datamate.org/aktivierung-der-soundausgabe-unter-ubuntu-server/"
+veroeffentlicht = "2015-06-03T13:10:41+00:00"
+geaendert = "2025-02-21T08:10:56+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "4 Minuten"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Aktivierung der Soundausgabe unter Ubuntu Server", item = ""}]
+wortzahl = 789
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["hardware"]
+schlagwoerter = []
+wp_id = 4422
+slug = "aktivierung-der-soundausgabe-unter-ubuntu-server"
+url = "/aktivierung-der-soundausgabe-unter-ubuntu-server/"
+date = "2015-06-03T15:10:41"
+lastmod = "2025-02-21T09:10:56"
+datum_utc = "2015-06-03T13:10:41+00:00"
+geaendert_utc = "2025-02-21T08:10:56+00:00"
++++
+						<p>Ein Server – egal ob Zuhause oder im Büro &#8211; übernimmt für gewöhnlich keine Multimedia-Aufgaben. Er dient als Fileserver, Host für virtuelle Maschinen, Domain Controller oder übernimmt andere Aufgaben. Möchte man seinen Server aber zum Beispiel als zentrales Radiogerät nutzen, kann das unter Ubuntu durchaus zu grauen Haaren führen. Dabei ist die Lösung denkbar einfach.</p>
+
+<p>Für unsere ionas-Server nutzen wir Mopidy als zentrale Musikbox. Radiostreams und auf dem Server gespeicherte mp3-Dateien können so mit dem Gerät abgespielt werden, ohne das zusätzlich ein Radio benötigt wird. 
+Da die Serverversion von Ubuntu mit unkonfigurierter Soundausgabe ausgeliefert wird, mussten wir einen kurzen aber wirksamen Weg finde, diese wieder zu aktivieren. Lesen Sie hier, wie es geht.</p>
+
+<span id="more-4422"></span>
+
+<p>Dieser Artikel beschäftigt sich mit der Aktivierung der Stereoausgabe über den normalen Klinke-Anschluss, nicht mit der Ausgabe über HDMI.</p>
+
+<h2>ALSA – Advanced Linux Sound Architecture</h2>
+
+<p>ALSA – die grundlegende Soundarchitektur &#8211; ist als Bestandteil des Grundsystems bereits auf jedem Ubuntu Server vorhanden, da es aus Kernelmodulen besteht. PulseAudio, ein erweiterter Soundserver der in den meisten Desktopsystemen genutzt wird, ist hingegen nicht installiert. 
+Um eine zufriedenstellende Soundausgabe zu ermöglichen ist dies aber auch nicht notwendig, da die Kommunikation zwischen Software und Soundkarte ohnehin auch von Pulse über ALSA geleitet werden müsste. 
+Grundsätzlich müssen also keine weiteren Pakete installiert werden.</p>
+
+<h2>Diagnose</h2>
+
+<p>Zunächst testen wir die Ausgabe mit aplay, einem Bordmittel von ALSA. </p>
+
+<pre>
+sudo aplay /usr/share/sounds/alsa/Front_Center.wav
+</pre>
+
+<p>Erwartungsgemäß sollten nun einige Fehlermeldungen angezeigt werden. </p>
+
+<p>Als nächster Schritt empfiehlt es sich, zu testen, ob die Soundkarte erkannt wird, und welche als Standard ausgewählt ist. 
+Die einfachste Möglich ist hier, direkt mit ALSA-Mitteln zu arbeiten. </p>
+
+<p>Mit alsamixer können wir zunächst testen, ob unsere Soundkarte(n) erkannt werden. Bei aktueller Hardware sind für gewöhnlich sowohl normale PCM- als auch HDMI-Soundkarten onboard mitgeliefert.</p>
+
+<p>Der folgende Befehl liefert eine Übersicht.</p>
+<pre>
+sudo alsamixer
+</pre>
+
+<p>Mit „F6“ lassen wir uns nun die erkannten Soundkarten anzeigen. Hier sollte nun wenigstens eine Soundkarte angezeigt sein. In der Regel finden wir aber 3 Einträge:</p>
+
+<pre>
+-  (default) 
+0  HDA Intel HDMI
+1  HDA Intel PCH
+</pre>
+
+<p>In diesem Fall wollen wir die PCH-Karte aktivieren. </p>
+
+<h2>Kein Sound unter Ubuntu Server</h2>
+
+<p>In der Grundkonfiguration ist Ubuntu Server nicht in der Lage, die ausgewählte Soundkarte als Standard zu speichern. 
+Dies können wir testen, indem die entsprechende PCH-Soundkarte ausgewählt und mit „Enter“ bestätigt wird. Nun verlassen wir alsamixer und rufen ihn erneut auf. 
+Die zuvor ausgewählte Soundkarte sollte nun nicht als Default ausgewählt sein. 
+Deshalb kümmern wir uns selbst um diese Aufgabe. </p>
+
+<p>Hier zu legen wir unter „/etc/“ eine „asound.conf“ an, in welcher wir folgende Informationen speichern: </p>
+
+<pre>
+pcm.!default { 
+  type plug 
+  slave { 
+    pcm "hw:1,0" 
+  } 
+} 
+ctl.!default { 
+  type hw 
+  card 1 
+} 
+</pre>
+
+<p><strong>WICHTIG:</strong> Sollte hier nur eine PCH-Soundkarte angezeigt werden, oder die PCH-Karte nicht unter Punkt „1“ aufgeführt werden, muss in der asound.conf die entsprechende Nummer anstelle der 1 eingetragen werden. </p>
+
+<h2>Test der Umstellung</h2>
+
+<p>Nachdem nun die asound.conf angelegt wurde, können wir testen, ob die Soundkarte nun vom System genutzt werden kann. </p>
+
+<p>Hierzu rufen wir erneut amixer auf. Nun sollte die richtige Karte direkt angezeigt werden. Ist dies nicht der Fall, muss wie oben beschrieben nochmal der Eintrag in  asound.conf geprüft werden.</p>
+
+<p>Wurde die richtige Karte ausgewählt, sollten nun die Lautstärkelevel eingestellt werden. Es empfiehlt sich, hierbei innerhalb des oberen, weiß angezeigten Lautstärkebereichs zu bleiben, um eine ausreichende Lautstärke ohne Klirren oder Verzerrung zu erreichen.</p>
+
+<p>Um die Funktion der Soundkarte zu testen spielen wir erneut eine Datei mit aplay ab:</p>
+
+<pre>
+sudo aplay /usr/share/sounds/alsa/Front_Center.wav
+</pre>
+
+<p>Ton sollte nun noch nicht zu hören sein, aber die Folgende Meldung sollte anstatt der vorherigen Fehlermedungen angezeigt werden: </p>
+
+<pre>
+Playing WAVE '/usr/share/sounds/alsa/Front_Center.wav' : Signed 16 bit Little Endian, Rate 48000 Hz, Mono
+</pre>
+
+<p>Dies ist ein Zeichen dafür, dass die Karte erkannt und richtig eingestellt wurde. Alle Mitglieder der „audio“-Gruppe können nun die Soundkarte nutzen. </p>
+
+<p>Ton wird ausschließlich deshalb nicht ausgegeben, da die einzelnen Kanäle als Standard in Ubuntu Server gemuted sind, also auch bei funktionierender Konfiguration und eingestellter Lautstärke erstmal keinen Ton liefern. </p>
+
+<p>Um sie zu aktivieren, müssen wir uns zunächst einen Überblick über die verfügbaren Kanäle verschaffen. </p>
+
+<pre>
+sudo amixer scontrols
+</pre>
+
+<p>Die dadurch angezeigte Liste enthält Einträge aller verfügbaren Kanäle: </p>
+
+<pre>
+Simple mixer control 'Master',0 
+Simple mixer control 'Headphone',0 
+Simple mixer control 'Front',0 
+Simple mixer control 'Front Mic',0 
+Simple mixer control 'Front Mic Boost',0 
+Simple mixer control 'Surround',0 
+Simple mixer control 'Center',0 
+.
+.
+.
+.
+</pre>
+
+<h2>Soundausgabe unter Ubuntu Server einschalten</h2>
+
+<p>Für die Stereo-Ausgänge des Boards (Klinke) sind zwei Kanäle wichtig: „Master“ und „Headphone“. Diese beiden müssen wir nun einschalten. </p>
+
+<pre>
+sudo amixer sset 'Master' unmute
+sudo amixer sset 'Headphone' unmute
+</pre>
+
+<p>Nachdem die beiden Kanäle eingeschaltet wurden sollte nun durch einen erneuten Aufruf von aplay tatsächlich Ton abgespielt werden. </p>
+
+<pre>
+sudo aplay /usr/share/sounds/alsa/Front_Center.wav
+</pre>
+
+<p>Ein angeschlossener Lautsprecher oder Kopfhörer natürlich vorausgesetzt. </p>
+
+<h2>Fazit</h2>
+
+<p>Die wenigsten Leute benötigen bei einem Linux Server die Soundausgabe. Trotzdem ist es im ersten Moment verwirrend, wenn die Soundausgabe aktiv, aber trotzdem kein Sound aus den Boxen kommt. Mit unserer Anleitung haben Sie in wenigen Minuten die Soundausgabe in Ihrem Server aktiviert.</p>

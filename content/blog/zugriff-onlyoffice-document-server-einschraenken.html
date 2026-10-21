@@ -1,0 +1,80 @@
++++
+title = "Zugriff auf OnlyOffice einschränken"
+titel_html = "Zugriff auf OnlyOffice einschränken | datamate"
+ueberschrift = "Zugriff auf OnlyOffice einschränken"
+beschreibung = "OnlyOffice ist eine beliebte und leicht zu installierende Online Office Suite. Wir zeigen, wie man den eigenen Online-Dokumentenserver absichert."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2019/04/onlyoffice-zugriffe-beschraenken.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/zugriff-onlyoffice-document-server-einschraenken/"
+canonical = "https://www.datamate.org/zugriff-onlyoffice-document-server-einschraenken/"
+og_bild_breite = "1920"
+og_bild_hoehe = "1280"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2019-04-29T22:52:59+00:00"
+geaendert = "2025-02-21T08:10:04+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "2 Minuten"
+beitragsbild = "/wp-content/uploads/2019/04/onlyoffice-zugriffe-beschraenken.jpg"
+bild_breite = 1920
+bild_hoehe = 1280
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Zugriff auf OnlyOffice einschränken", item = ""}]
+wortzahl = 424
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["software", "unsere-produkte"]
+schlagwoerter = ["document server", "onlyoffice", "private Cloud", "Sicherheit", "zugriffsberechtigung"]
+wp_id = 5936
+slug = "zugriff-onlyoffice-document-server-einschraenken"
+url = "/zugriff-onlyoffice-document-server-einschraenken/"
+date = "2019-04-30T00:52:59"
+lastmod = "2025-02-21T09:10:04"
+datum_utc = "2019-04-29T22:52:59+00:00"
+geaendert_utc = "2025-02-21T08:10:04+00:00"
++++
+						<p>Die Online Editoren von OnlyOffice erfreuen sich großer Beliebtheit, da sie selbstgehosteten Cloud-Lösungen wie Seafile Fähigkeiten verleihen, die Public Cloud-Dienste wie Google Docs und Office 365 standardmäßig anbieten. Nach der Installation und Integration sollte der Admin aber nicht gleich zur Tagesordnung übergehen. Die Absicherung des Dokumentenservers gegen den Missbrauch durch Unbefugten sollte seine Aufmerksamkeit für ein wenig länger auf sich ziehen. Wie man den Zugriff auf einen OnlyOffice Server einschränkt, zeigen wir in diesem Artikel.</p>
+
+<span id="more-5936"></span>
+
+<h3>Zusätzliche Absicherung von OnlyOffice nötig</h3>
+
+<p>Die Installation und Integration von OnlyOffice auf dem eigenen Server ist präzise im <a href="https://download.seafile.com/published/seafile-manual/deploy/only_office.md" target="_blank" rel="noopener noreferrer">Seafile Manual</a> erläutert und ausführlich in unserem <a href="https://www.youtube.com/watch?v=vu5KO1yTMXc" target="_blank" rel="noopener noreferrer">YouTube Video</a> beschrieben.
+
+<p>Die Installation &#8211; ein Dankeschön an Docker &#8211; ist in wenigen Sekunden erledigt. Die Integration in Seafile gestaltet sich kaum schwieriger, da lediglich die folgenden Konfigurationsparameter angepasst und in die <i>seahub_settings.py</i> eintragen werden müssen:</p>
+
+<pre># Enable Only Office
+ENABLE_ONLYOFFICE = True
+VERIFY_ONLYOFFICE_CERTIFICATE = False
+ONLYOFFICE_APIJS_URL = 'http{s}://{OnlyOffice domain or IP}/web-apps/apps/api/documents/api.js'
+ONLYOFFICE_FILE_EXTENSION = ('doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'odt', 'fodt', 'odp', 'fodp', 'ods', 'fods')
+ONLYOFFICE_EDIT_FILE_EXTENSION = ('docx', 'pptx', 'xlsx')
+</pre>
+
+<p>Damit ist Onlyoffice einsatzbereicht. Bei kritischem Blick auf die Konfiguration in der seahub_settings.py fällt aber ein Problem auf: Wie man am Konfigurationsparameter ONLYOFFICE_APIJS_URL sieht, ist Seafile beim OnlyOffice Server nicht wählerisch. Die eingetragene URL kann auf einen eigenen OnlyOffice Server verweisen, muss aber nicht. Ist der OnlyOffice Server ungesichert, dann habe Freerider, die einen fremden Dokumentenserver für eigene Zwecke verwenden, einfaches Spiel. (Wir mussten beim Verfassen dieses Artikels nicht lange suchen, um mehrere ungeschützte OnlyOffice Dokumentenserver Instanzen zu finden.) Bei der kostenlosen Community Variante von OnlyOffice mag das vielleicht nicht sonderlich schmerzen. Unternehmenskunden hingegen, die die kostenpflichtige Integration Edition von OnlyOffice verwenden, werden über die Belegung der Serverzugriffe durch Fremde nicht erfreut sein.</p>
+
+<h3>Absicherungsfunktion in OnlyOffice integriert</h3>
+<p>Die Absicherung von OnlyOffice ist dank des mitgelieferten IP-Adressenfilters ohne größere Herausforderungen. Der Konfiguration des Filters von OnlyOffice erfolgt über die Konfigurationsdatei default.json unter <i>/etc/onlyoffice/documentserver/</i>.</p>
+
+<p>Im Standard sieht der entsprechende Eintrag wie folgt aus:</p>
+
+<pre>"ipfilter": {
+    "rules": [{"address": "*", "allowed": true}],
+    "useforrequest": false,
+    "errorcode": 401
+},</pre>
+
+<p>Durch eine Anpassung der Zeile <i>rules</i> lassen sich Zugriffe auf bestimmte IP-Adressen limitieren. Um den eigenen Onlyoffice Server gegen fremde Nutzung abzusichern, muss die eigene IP genehmigt und alle anderen IP-Adressen gesperrt werden:</p>
+
+<pre>"ipfilter": {
+    "rules": [{"address": "{Seafile domain or IP}", "allowed": true},{"address": "*", "allowed": false}],
+    "useforrequest": true,
+    "errorcode": 403
+},</pre>
+
+<p>Wirksam werden die Änderungen mit einem Neustart des OnlyOffice Servers bzw. einem Neustart der Dienste mit <i>sudo supervisorctl restart all</i>.</p>
+
+<img decoding="async" src="/wp-content/uploads/2019/04/onlyoffice-ipfilter.png" alt="Fehlermeldung von OnlyOffice" width="290" height="147" class="alignleft size-full wp-image-6164" style="float: right;" />
+
+<p>Versucht nun jemand, den OnlyOffice Server als Dokumentenserver für die eigene private Cloud zu verwenden, dann wird der Versuch mit obiger Fehlermeldung quittiert. Die möglichen gleichzeitigen Verbindungen, der der installierte OnlyOffice Server bietet, können also nicht von anderen genutzt werden. Freerider beißen sich die Zähne aus.</p>

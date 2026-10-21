@@ -1,0 +1,110 @@
++++
+title = "Linux Backup mit duplicity und Backblaze B2"
+titel_html = "Linux Backup mit duplicity und Backblaze B2 | datamate"
+ueberschrift = "Linux Backup mit duplicity und Backblaze B2"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2019/04/cloud-storage.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/linux-backup-mit-duplicity-und-backblaze-b2/"
+canonical = "https://www.datamate.org/linux-backup-mit-duplicity-und-backblaze-b2/"
+og_bild_breite = "1920"
+og_bild_hoehe = "1280"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2019-04-11T23:31:16+00:00"
+geaendert = "2025-02-21T08:10:05+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "5 Minuten"
+beitragsbild = "/wp-content/uploads/2019/04/cloud-storage.jpg"
+bild_breite = 1920
+bild_hoehe = 1280
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Linux Backup mit duplicity und Backblaze B2", item = ""}]
+wortzahl = 905
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["praktische-anwendungsfaelle", "software", "unsere-produkte"]
+schlagwoerter = ["backblaze", "Backup", "cloud", "Cloud Speicher", "Duplicity", "Fellow", "inkrementelles Backup"]
+wp_id = 5834
+slug = "linux-backup-mit-duplicity-und-backblaze-b2"
+url = "/linux-backup-mit-duplicity-und-backblaze-b2/"
+date = "2019-04-12T01:31:16"
+lastmod = "2025-02-21T09:10:05"
+datum_utc = "2019-04-11T23:31:16+00:00"
+geaendert_utc = "2025-02-21T08:10:05+00:00"
++++
+						<p>Bei Mac und Windows werben eine Vielzahl guter Backup-Tools um die Gunst der Kunden. Im Linux Umfeld gibt es kaum fertige Lösungen. Nahe dran an einer out-of-the-box Datensicherungslösung für Linux ist duplicity in Kombination mit dem Online Speicher Backblaze B2. Mit diesem Zweiergespann lässt sich in wenigen Minuten auf jedem Linux Desktop und Linux Server ein automatischer Backup-Prozess aufsetzen. Günstig ist Backblaze darüber hinaus auch noch, so dass es eigentlich keine Gründe mehr gegen die Umsetzung der 3-2-1 Regel (3 Backups, 2 Zielmedien, 1 außer Haus) gibt. Wie das genau funktioniert, beschreiben wir in diesem Artikel. </p>
+
+<span id="more-5834"></span>
+
+<h3>Gründe für Backblaze B2 und duplicity</h3>
+
+<p>In der Vergangenheit haben wir bereits mit einer Vielzahl von Cloud Anbietern experimentiert. Angefangen bei Amazon S3, Amazon Glacier über Strato HiDrive bis hin zu Hetzner Storage Boxen haben wir schon einiges gesehen &#8211; viel Licht und auch viel Schatten. Bei Amazon z.B. schrecken die vielen Funktionen ab. Auch kaum ein Kunde, bei dem die Amazon Rechnung am Ende trotz solider Planung nicht höher ausfiel als ursprünglich geplant. </p>
+<p>Für <a href="https://www.backblaze.com/cloud-backup.html#af9tht" target="_blanc" rel="nofollow noopener noreferrer">Backblaze</a> spricht zunächst einmal die schlichte und übersichtliche Weboberfläche. Mit Backblaze kommt man schnell und einfach ans Ziel. Außerdem ist das Preismodell verständlich und die Konditionen günstig. Die Speicherung eines Terabytes in einem Amazon S3 Bucket in Frankfurt kostet 45$ pro Monat. Bei Backblaze B2 kostet es nur 5$ pro Monat. </p>
+
+<p>duplicity ist eine weit verbreitete Backuplösung, die man in den Paketquellen quasi jeder Linux Distribution findet. duplicity ist mit Sicherheit nicht die schnellste Software, gilt dafür aber als absolut zuverlässig. Es punktet mit seinen stabil laufenden inkrementellen Backups, der nativen Unterstützung zahlreicher Storage Backends inkl. Backblaze B2 und einer optionalen Verschlüsselung per Gnu Privacy Guard (GPG). (GPG ist eher unter der Abkürzung PGP für Pretty Good Privacy bekannt. Auch wenn nicht ganz korrekt, werden wir im folgenden Text PGP und GPG der Einfachheit halber synonym verwenden.) Im Artikel <a href="/duplicity-duply-datensicherung-auf-die-verlass-ist/">duplicity/duply: Datensicherung auf die Verlass ist</a> haben wir die Arbeitsweise und die Vorteile von duplicity ausführlich erläutert.</p>
+
+<h3>Installation</h3>
+
+<p>Um duplicity mit Backblaze B2 zu verwenden, benötigt man mindestens die Version 0.7.12. In den meisten aktuellen Linux Distributionen ist bereits eine neuere Version enthalten. Bei vielen etwas älteren Distributionen wie z.B. Ubuntu 16.04 ist die in den Paketquellen enthaltene Version jedoch veraltet. Man sollte sich daher mit den folgenden Befehlen direkt die neueste Version von den Entwicklern installieren:</p>
+
+<pre>
+$ sudo add-apt-repository ppa:duplicity-team/ppa
+$ sudo apt-get update
+$ sudo apt-get install duplicity
+
+$ duplicity --version 
+duplicity 0.7.13.1
+</pre>
+
+<h3>Registrierung eines Backblaze Accounts mit B2 Cloud Speicher</h3>
+
+<p>Bevor das erste Backup anlegt werden kann, muß man sich bei Backblaze einen Account für den B2 Cloud Speicher besorgen. Dieser lässt sich direkt auf der Webseite von <a href="https://www.backblaze.com/b2/cloud-storage.html#af9tht" target="_blanc" rel="nofollow noopener noreferrer">Backblaze registrieren</a>. Als kleines Startgeschenk erhält man die ersten 10 GB Speicher kostenlos und kann damit gefahrlos das Backupverfahren testen. Wie diese Registrierung abläuft, haben wir im Artikel <a href="/backblaze-einfach-guenstig-backupspeicher/">Backblaze, der einfache und günstige Backupspeicher</a> beschrieben.</p>
+
+<img decoding="async" width="1024" height="505" src="/wp-content/uploads/2019/04/backblaze-bucket-anlegen-1024x505.png" alt="privaten Backblaze Bucket anlegen" class="alignleft size-large wp-image-5835" srcset="/wp-content/uploads/2019/04/backblaze-bucket-anlegen-1024x505.png 1024w, /wp-content/uploads/2019/04/backblaze-bucket-anlegen-300x148.png 300w, /wp-content/uploads/2019/04/backblaze-bucket-anlegen-768x379.png 768w, /wp-content/uploads/2019/04/backblaze-bucket-anlegen.png 1240w" sizes="(max-width: 1024px) 100vw, 1024px" />
+
+<p>Sobald man seinen Account registriert und mit einer Handynummer verifiziert hat, kann man sich seinen ersten privaten Bucket im eigenen Account anlegen. Anschließend erzeugt man sich einen <a href="https://help.backblaze.com/hc/en-us/articles/224991568-Where-can-I-find-my-Account-ID-and-Application-Key" target="_blank" rel="nofollow noopener noreferrer">Application Key und notiert diesen zusammen mit der eigenen Account ID</a>. Damit hat man alles, was man benötigt, um das erste Backup einzurichten.</p>
+
+<h3>Erster Backup-Lauf des Home-Verzeichnisses</h3>
+
+<p>Obwohl duplicity nicht zwangsläufig für seine Einfachheit bekannt ist, ist der Einstieg in diesem Fall ziemlich einfach. Um beispielsweise ein Backup des eigenen Home-Verzeichnisses anzufertigen, genügt es, den folgenden Befehl im Terminal einzugeben. Account-ID, Application-Key und Bucket müssen natürlich entsprechend angepasst werden.</p>
+
+<pre>
+$ duplicity ~ b2://[account id]:[application key]@[B2 bucket name]
+</pre>
+
+<p>duplicity Backups werden im Standard mit PGP und einem Passwort verschlüsselt, weshalb man dieses jedes Mal eingeben muss. Das erste Backup dauert je nach Datenmenge eine ganze Weile, wobei am Ende duplicity eine Statistik anzeigt, wieviele Daten gespeichert wurden und wie lange der Vorgang gedauert hat. Alle folgenden Backups sind dann inkrementelle Backups und laufen entsprechend schneller ab.</p>
+
+<pre>
+--------------[ Sicherungsstatistiken ]--------------
+StartTime 1555023727.21 (Fri Apr 12 01:02:07 2019)
+EndTime 1555023727.22 (Fri Apr 12 01:02:07 2019)
+ElapsedTime 0.01 (0.01 seconds)
+SourceFiles 2
+SourceFileSize 43498 (42.5 KB)
+NewFiles 2
+NewFileSize 43498 (42.5 KB)
+DeletedFiles 0
+ChangedFiles 0
+ChangedFileSize 0 (0 bytes)
+ChangedDeltaSize 0 (0 bytes)
+DeltaEntries 2
+RawDeltaSize 39402 (38.5 KB)
+TotalDestinationSizeChange 36838 (36.0 KB)
+Errors 0
+-----------------------------------------------------
+</pre>
+
+<h3>Wiederherstellung der Daten</h3>
+
+<p>Ein Backup ist nur so gut, wie sein Restore. Deshalb sollten man genau wissen, wie man im Zweifel seine Daten wieder aus dem Backup zurückholen kann. Um ein Verzeichnis aus dem Backup mit duplicity wiederherzustellen, genügt der folgende Befehl:</p>
+
+<pre>
+$ duplicity restore --file-to-restore [Verzeichnis oder Datei aus dem Backup] b2://[account id]:[application key]@[B2 bucket name] [Wiederherstellungspfad]
+</pre>
+
+<p>Der Platzhalter [Verzeichnis oder Datei aus dem Backup] steht für den Name des wiederherzustellenden Verzeichnisses bzw. der wiederherzustellenden Datei aus dem gesicherten Verzeichnisbaum. So kann duplicity einzelne Dateien, einzelne Ordner oder auch das gesamte Backup wieder aus dem Backup zurückholen. Durch ein paar zusätzliche Parameter lassen sich sogar Daten aus älteren Backupläufen wieder herstellen. An Stelle von [Wiederherstellungspfad] gibt man einen Ordner an, in dem die aus dem Backup zurückgeholten Dateien bzw. Ordner gespeichert werden sollen. Nach Eingabe des Verschlüsselungspassworts startet duplicity mit dem Download der Daten aus dem Backup.</p>
+
+<h3>Einfache Lösung, vielfältige Möglichkeiten</h3>
+
+<p>Dies ist nur ein Teil der Möglichkeiten, die man mit duplicity hat. So könnte man darüber nachdenken, das Backup mit Hilfe eines Cronjobs täglich laufen zu lassen, den GPG-Schlüssel schon in der Konfigurationsdatei zu hinterlegen oder Daten nach z.B. 90 Tagen automatisch wieder löschen zu lassen. Eine sinnvolle Ergänzung zu duplicity ist die Software <a href="https://duply.net/" target="_blank" rel="noopener noreferrer">duply</a>, welche die Kommandozeilenbefehle nochmals vereinfacht. Weil wir von all diesen Funktionen begeistert sind, setzen wir auf unseren Servern <a href="/homie">Homie</a> und <a href="/fellow">Fellow</a> auch auf duplicity und duply als Backupsoftware ein. Gerne unterstützen wir auch bei individuellen Konfigurationen von duplicity / duply. </p>

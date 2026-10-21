@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="de">
+<head>
+	<meta http-equiv="Cache-control" content="private">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="datamate" />
+	<!-- === Stylesheets === -->
+	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/style.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/dark.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/swiper.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/font-icons.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/animate.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/magnific-popup.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/responsive.css" type="text/css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+	<![endif]-->
+
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/colors.php?color=4b8b2a" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/custom.css" type="text/css" />
+	<link rel="stylesheet" href="https://www.datamate.org/wp-content/themes/datamate-theme/css/custom-help.css" type="text/css" />
+
+	<!-- === Favicon === -->
+	<link rel="icon" href="https://www.datamate.org/wp-content/uploads/2017/05/cropped-datamate-logo-500x500.png" type="image/png" sizes="64x64">
+	<!-- Hotjar Tracking Code for www.datamate.org -->
+	<script>
+	    (function(h,o,t,j,a,r){
+	        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+	        h._hjSettings={hjid:851473,hjsv:6};
+	        a=o.getElementsByTagName('head')[0];
+	        r=o.createElement('script');r.async=1;
+	        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+	        a.appendChild(r);
+	    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+	</script>
+</head>
+<body class="stretched side-header no-transition">
+
+	<div id="wrapper" class="clearfix">
+	<header id="header" class="no-sticky dark">
+	<div id="header-wrap">
+		<div class="container clearfix">
+			<div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
+			<div id="logo">
+				<a href="/hilfe" class="standard-logo"><img src="/wp-content/uploads/2017/09/logo-white.png" alt="datamate"></a>
+				<a href="/hilfe" class="retina-logo"><img src="/wp-content/uploads/2017/09/logo-white.png" alt="datamate"></a>
+			</div>
+
+			<nav id="primary-menu">
+				<ul>
+					<li><a href="/hilfe/uebersicht"><div><i class="icon-line2-home"></i> Übersicht</div></a></li>
+					<li><a href="/hilfe/benutzer"><div><i class="icon-line2-users"></i> Benutzer</div></a></li>
+					<li><a href="/hilfe/dienste"><div><i class="icon-line2-grid"></i> Dienste</div></a></li>
+					<li><a href="/hilfe/wartung"><div><i class="icon-line2-wrench"></i> Wartung</div></a></li>
+					<li><a href="/"><div><i class="icon-line-power"></i> zu datamate.org</div></a></li>
+				</ul>
+			</nav>
+
+		</div>
+	</div>
+</header><!-- #header end -->
+
+
+<section id="content">
+<div class="content-wrap">
+
+
+<div class="container clearfix help">
+	
+	<div class="heading-block nobottomborder">
+		<h2>Diensteverwaltung</h2>
+	</div>
+	
+	<div class="tabs side-tabs responsive-tabs clearfix">
+
+		<ul class="tab-nav navbar-right clearfix col-sm-4 col-sm-offset-1 last_col subnav">
+			<li><a href="#tab-diensteverwaltung">Diensteverwaltung im Cockpit</a></li>
+			<li><a href="#tab-inbetriebnahme-dienste">Inbetriebnahme von Diensten</a></li>
+			<li><a href="#tab-konfiguration-zugriff-vpn">Konfiguration des Zugriffs per VPN</a></li>
+			<li><a href="#tab-freigabe-dienste-internet">Freigabe von Diensten ins Internet</a></li>
+			<li><a href="#tab-konfiguration-dyndns">Konfiguration des DynDNS-Updaters</a></li>
+			<li><a href="#tab-konfiguration-lokaler-zugriff">Konfiguration des lokalen Zugriffs</a></li>
+			<li><a href="#tab-konfiguration-systembenachrichtigungen">Konfiguration der Systembenachrichtigungen</a></li>
+			<li><a href="#tab-konfiguration-postausgangsserver">Konfiguration des Postausgangsservers</a></li>
+			<li><a href="#tab-einrichtung-systembackups">Konfiguration der Systembackups</a></li>
+			
+		</ul>
+
+		<div class="tab-container">
+			<div class="tab-content clearfix" id="tab-diensteverwaltung">
+				<p><strong>Dienste</strong> sind Computerprogramme, die für andere Geräte im Netzwerk Anwendungen zur Verfügung stellen oder Aufgaben ausführen. Anders als Programme haben Dienste häufig keine eigene graphische Benutzeroberfläche (auch GUI für Graphical User Interface). Auf die Dienste ohne eigenes Frontend greift man mit geeigneten Anwendungsprogrammen, sogenannten Clients, zu. Microsoft Outlook und Mozilla Thunderbird sind beispielsweise zwei Clients für die Aufgaben-, Kalender- und Adressbuchsynchronisation. Outloook und Thunderbird werden auf dem PC des Anwenders gestartet, nutzen aber einen zentralen Serverdienst zum Speichern der Termine und Kontakte.</p>
+				
+				<h4>Dienste auf den datamate Servern</h4>
+				<p>Homie und Fellow bieten genau solche zentralen Dienste an, die Ihren persönlichen Geräten wie z.B. Notebook oder Smartphone zusätzliche Fähigkeiten verleihen. Lediglich das Cockpit selbst sowie Benno (seit Cockpit 2.1), Seafile und WordPress verfügen über eine eigene GUI. Auf Fellow arbeitet mit VirtualBox ein weiterer Dienst, der über eine graphische Benutzeroberfläche verfügt. </p>
+			</div>
+			<div class="tab-content clearfix" id="tab-inbetriebnahme-dienste">
+				<h3>Inbetriebnahme von Diensten</h3>
+				<p>Die Inbetriebnahme eines Dienstes erfolgt grundsätzlich nach folgendem Muster: Zunächst wird der Dienst im Cockpit konfiguriert. Danach wird der Dienst gestartet. Nach dem Start stehen die Funktionen des Dienstes zur Verfügung.<p>
+				
+					<div class="style-msg successmsg">In manchen Fällen sind auch Vorbereitungsmaßnahmen außerhalb des Cockpits notwendig. Auf diese wird separat hingewiesen.
+					</div>
+
+				<p>Konfiguration und Start/Stop der Dienste der datamate Server erfolgt im Bereich <i>DIENSTE</i>. Nur Benutzer mit Administratorberechtigungen für das datamate Cockpit haben Zugriff auf diesen Bereich.</p> 
+				
+				<h4>Konfiguration von Diensten</h4>
+				<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2020/04/Dienste-Datenaustausch_1280x949.jpg" alt="Konfiguration von Diensten im Bereich DIENSTE des datamate Cockpits" width="1024" style="margin-top:5px;" />
+				<p>Die Konfiguration ist die Einstellung notwendiger Parameter für den störungsfreien Betrieb sowie die Einstellung gewünschter Verhaltensweisen. Die Konfiguration der Dienste erfolgt per Klick auf das Einstellungen-Icon am Ende der Zeile. Je nach Art des Dienstes gibt es mehr oder weniger Konfigurationsparameter. (Der dargestellte Dienst für Dateisynchronisation und -hosting bietet vergleichsweise viele Konfigurationsmöglichkeiten.) </p>
+
+					<div class="style-msg successmsg">Die Aktivierung der E-Mail-Benachrichtigung ist erst nach der <a href="/hilfe/dienste/?tab=5">Konfiguration des Postausgangsservers</a> möglich.
+					</div>
+					
+				<h4>Start/Stop von Diensten</h4>
+				<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2020/04/Dienste_1280x808.jpg" alt="Start/Stop von Diensten im Bereich DIENSTE des datamate Cockpits" width="1024" style="margin-top:5px;"/>
+				<p>Ob ein Dienst bereits läuft oder aktuell gestoppt ist, meldet der Status-Schalter. Mit einem Klick auf den Schalter startet ein Dienst bzw. wird er gestoppt. Bis die Aktion vom Server abgeschlossen wurde, wird der Schalter halbtransparent dargestellt.</p>
+					
+					<div class="style-msg successmsg">Das Cockpit sowie die Firewall, das Backup sowie das Benutzer- und Gruppenverzeichnis laufen standardmässig, um grundlegende Netzwerk-Funktionen bzw. eine gute Nutzererfahrung sicherzustellen. Diese Dienste können nicht manuell gestartet und gestoppt werden. Ihre Status-Schalter sind daher dauerhaft halbtransparent und inaktiv.
+					</div>
+				
+				<p>Dateien sowie Termine, Kontakte und Aufgaben-Funktionen sind direkt ins Cockpit integriert. Beim Start des entsprechenden Dienstes erweitert sich das Navigationsmenü auf der linken Seite automatisch um die dazugehörigen Elemente. Beim Stopp des Dienstes verschwinden die Elemente wieder.</p>
+			</div>
+
+			<div class="tab-content clearfix" id="tab-konfiguration-zugriff-vpn">
+				<h3>Konfiguration des Zugriffs per VPN</h3>
+				<p>Die Dienste der datamate Server sind aus Sicherheitsgründen standardmäßig nur aus dem lokalen Netzwerk zu erreichen, d.h. auf die Serverdienste läßt sich nur dann zugreifen, wenn sich das anfragende Geräte wie z.B. ein Computer oder ein Smartphone im (W)LAN des Servers befindet. Der Server Zugriff aus anderen Netzwerken bzw. über das Internet ist nur mit einer erweiterten  Konfiguration möglich. </p>
+				<p>Eine Möglichkeit, um auch über das Internet auf die Server zuzugreifen, ist die Technik Virtual Private Network (VPN). VPN vergrößert das Heimnetzwerk virtuell um das Gerät, das eine VPN-Verbindung aufbaut. Mit einer VPN-Verbindung lassen sich sämtliche Serverdienste nutzen, als ob sich das anfragende Gerät im (W)LAN des Servers befindet.</p>
+					<div class="style-msg successmsg">
+						Die Alternative zum Zugriff per VPN ist die <a href="/hilfe/dienste/?tab=2">Internet-Freigabe von Diensten</a>. Durch eine solche Freigabe lassen sich die Serverdienste direkt über das Internet und ohne VPN-Verbindung nutzen. Im datamate Blog-Beitrag <a href="/blog/vom-netzwerkspeicher-zur-privaten-cloud-ortsunabhaengiger-zugriff-auf-homie-und-fellow/" target="_blank" rel="noopener noreferrer">Vom Netzwerkspeicher zur private Cloud &#8211; ortsunabhängiger Zugriff auf Homie und Fellow</a> werden die beiden Zugriffsoptionen mit ihren Vor- und Nachteilen gegenüber gestellt.
+					</div>
+				<h4>VPN auf den datamate Servern</h4>
+				<p>Die datamate Server bieten mit OpenVPN eine leistungsfähige VPN-Lösung. Der Datentransfer über die VPN-Verbindung ist verschlüsselt und damit privat und sicher. Voraussetzung für den Zugriff per VPN ist die Konfiguration des VPN-Servers und die Erstellung und Verteilung von VPN-Zertifikaten auf die Clients.</p>
+				
+					<div class="style-msg successmsg">
+						Die Erstellung und Verteilung von VPN-Zertifikaten wird im Hilfe-Beitrag <a href="/hilfe/benutzer/?tab=8">Anlage und Download von VPN-Zertifikaten</a> erläutert.
+					</div>
+				
+				<h4>Einrichtung von VPN</h4>
+				<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2019/05/Konfiguration-Konfiguration-Zugriff-VPN_1281x712-1024x569.jpg" alt="Einrichtung des VPN-Servers über die VPN-Einstellungen" width="1024" />
+				<p>Die Konfiguration des VPN-Servers erfolgt über die Einstellungen im Bereich <i>DIENSTE</i>. Mit einem Klick auf das Einstellungen-Icon öffnet sich der Konfigurationsassistent für den VPN-Zugriff.</p>
+				<p> 
+					<div class="style-msg successmsg">
+						Damit VPN-Verbindungsanfragen über das Internet nicht von einer Firewall blockiert werden, müssen die entsprechenden Ports geöffnet werden:
+						<ul class="nobottommargin">
+							<li>Die datamate Server verwalten die Ports der internen Firewall selbständig. Der Port 1194, der von OpenVPN verwendet wird, wird automatisch beim Start des OpenVPN-Dienstes geöffnet und beim Stop wieder geschlossen.</li>
+							<li>Die Firewall-Regeln im Internet Gateway bzw. Router (z.B. Fritz!Box, Speedport, EasyBox) <u>müssen manuell angepasst werden</u>. Der Port 1194 (TCP und UDP) muss geöffnet und an die IP-Adresse des Servers weitergeleitet werden. </li>
+						</ul>
+					</div>
+		
+				<p>Die VPN-Konfiguration bietet drei weitere Einstellungsmöglichkeiten, um die VPN-Verbindung auf die individuellen Bedürfnisse anzupassen: </p>
+				<ul>
+					<li class="bottommargin-sm"><i>Authentifizierung zusätzlich per Login?</i><br/>
+					Über diesen Schalter wird die Zwei-Faktor-Authentifizierung aktiviert. Der Aufbau einer VPN-Verbindung erfordert dann zusätzlich zum VPN-Zertifikat auch die Eingabe von Benutzername und Passwort.</li>
+					<li class="bottommargin-sm"><i>Zugriff auf lokales Netzwerk per VPN erlauben?</i><br/>
+					Diese Einstellung ermöglicht bei einer aktiven VPN-Verbindung den Zugriff auf weitere Ressourcen im Heimnetzwerk. Beispiele für solche Netzwerkressourcen sind Netzwerkdrucker, Netzwerkspeicher sowie freigegebene Ordner und Drucker. Ist diese Funktion nicht aktiviert, kann auch mit VPN-Verbindung nicht über das Internet auf Geräte im lokalen Netzwerk zugegriffen werden.</li>
+					<li class="bottommargin-sm"><i>Gesamten Datenverkehr über den VPN-Kanal routen?</i><br/>
+					Dieser Schalter legt fest, welche Netzwerkaufrufe über die VPN-Verbindung geleitet werden. Standardmäßig werden Anfragen an Ressourcen im Internet (z.B. Webseiten) auch bei bestehenden aktiven VPN-Verbindungen direkt und ohne Umweg über das Heimnetzwerk ins Internet geroutet. Wird der Schalter aktiviert, werden alle Anfragen zunächst über den VPN-Kanal ins Heimnetzwerk geleitet und erst von dort an die angefragte Adresse geschickt. Als Absender der Anfragen erscheint so das Heimnetzwerk.</li>
+				</ul>
+				<p>Änderungen an der VPN-Konfiguration sind im Nachhinein nicht uneingeschränkt möglich. Bei einer Änderung der Einstellung <i>Authentifizierung zusätzlich per Login?</i> müssen die Zertifikate von den Nutzern neu herunter geladen werden. Die beiden anderen Werte verändern das VPN-Zertifikat nicht, weshalb Änderungen dieser Einstellungen keine Erneuerung der Zertifikate erfordert.</p>
+			</div>
+			
+			
+
+			
+			<div class="tab-content clearfix" id="tab-freigabe-dienste-internet">
+				<h3>Freigabe von Diensten ins Internet</h3>
+				<p>Die Dienste der datamate Server sind aus Sicherheitsgründen standardmäßig nur aus dem lokalen Netzwerk zu erreichen, d.h. auf die Serverdienste läßt sich nur dann zugreifen, wenn sich das anfragende Geräte wie z.B. ein Computer oder ein Smartphone im (W)LAN des Servers befindet. Der Server Zugriff aus anderen Netzwerken bzw. über das Internet ist nur mit einer erweiterten Konfiguration möglich. </p>
+				<p>Wer die Funktionen der datamate Server als bequeme Webdienste (wie z.B. Dropbox und Gmail) nutzen will, der kann dies über eine Freigabe ins Internet erreichen. Die Anmeldung an den Diensten ist dann direkt von jedem beliebigen Internetanschluss &#8211; per Browser oder Client &#8211; möglich.</p>									
+				
+					<div class="style-msg successmsg">
+						Die Alternative zur Internet-Freigabe von Diensten ist der <a href="/hilfe/dienste/?tab=1">Zugriff per VPN</a>. Über VPN-Verbindungen lassen sich die Serverdienste nutzen, ohne diese für jeden sichtbar und erreichbar ins Internet freizugeben. Im datamate Blog-Beitrag <a href="/blog/vom-netzwerkspeicher-zur-privaten-cloud-ortsunabhaengiger-zugriff-auf-homie-und-fellow/" target="_blank" rel="noopener noreferrer">Vom Netzwerkspeicher zur private Cloud &#8211; ortsunabhängiger Zugriff auf Homie und Fellow</a> werden die beiden Zugriffsoptionen mit ihren Vor- und Nachteilen gegenüber gestellt.
+					</div> 
+					
+				<h4>Internetfreigabe auf den datamate Servern</h4>
+				<p>Auf Homie und Fellow können fünf Dienste ins Internet freigegeben werden:</p>
+				<ul>
+					<li>Dateisynchronisation und -hosting</li>
+					<li>Aufgaben-, Kalender- und Adressbuchsynchronisation</li>
+					<li>Webhosting</li>
+					<li>Fileshare (entfernt mit Cockpit 2.1)</li>
+					<li>Cockpit</li>
+					<li>E-Mail Archivierung (seit Cockpit 2.1)</li>
+				</ul>
+				<p>Der Zugriff auf ins Internet freigegebene Dienste erfolgt grundsätzlich über <a href="https://de.wikipedia.org/wiki/Domain_(Internet)#Subdomain">Subdomains</a>. Die dafür verwendeten Subdomains können frei gewählt werden. In der nachfolgenden Liste wird für einige Dienste eine typische Subdomain dargestellt:</p>
+				<ul>
+					<li>Dateisynchronisation und -hosting: <strong>cloud.beispiel.de</strong></li>
+					<li>Aufgaben-, Kalender- &#038; Adressbuchsynchronisation: <strong>cal.beispiel.de</strong></li>
+					<li>Webhosting: <strong>www.beipiel.de</strong> oder <strong>beispiel.de</strong></li>
+					<li>Cockpit: <strong>cockpit.beispiel.de</strong></li>
+					<li>Benno: <strong>benno.beispiel.de</strong></li>
+				</ul>
+				<p>Der Zugriff auf Dienste mit dienstindividuellen URLs sieht nicht nur professionell aus, sondern hat auch technische Vorteile: Eine Subdomain wird bei Einrichtung automatisch mit einem <a href="https://de.wikipedia.org/wiki/Let%E2%80%99s_Encrypt">SSL-Zertifikat von Let&#8217;s Encrypt</a> abgesichert. Dies erlaubt den verschlüsselten Zugriff auf den Dienst ohne die Warnhinweise bei den sonst verwendeten selbst-erstellten SSL-Zertifikaten.</p>
+
+				<div class="style-msg successmsg">
+						Ein Dienst lässt sich theoretisch auch über eine DynDNS-Adresse oder eine feste IP-Adresse ins Internet freigeben. Die Freigabe über DynDNS- und feste IP-Adressen hat aber zwei Nachteile:
+						<ul class="nobottommargin">
+							<li>IP-Adressen werden von Let&#8217;s Encrypt überhaupt nicht und DynDNS-Adressen nur eingeschränkt unterstützt.</li>
+							<li>Für jeden Dienst wird eine eigene DynDNS- bzw. feste IP-Adresse benötigt. Das Cockpit erlaubt nicht die mehrfache Verwendung ein und derselben Freigabe-URL.</li>
+						</ul>
+						Die nachfolgende Anleitung erläutert daher nur die Freigabe über Subdomains.
+					</div>
+							
+			
+				<h4>Einrichtung der Internetfreigabe</h4>
+
+				<p>Die Einrichtung der Internetfreigabe ist abhängig von der Art des Internetanschlusses, an dem der Server betrieben wird. Bei einem Internetanschluss mit fester IP-Adresse kann Schritt 1 übersprungen werden.</p>
+				
+					<div class="style-msg successmsg">
+						Damit Zugriffe auf Serverdienste über das Internet nicht von einer Firewall blockiert werden, müssen die entsprechenden Ports geöffnet werden:
+						<ul class="nobottommargin">
+							<li>Die datamate Server verwalten die Ports der internen Firewall selbständig. Benötigte Ports werden automatisch bei Bedarf geöffnet und wieder geschlossen.</li>
+							<li>Die Firewall-Regeln im Internet Gateway bzw. Router (z.B. Fritz!Box, Speedport, EasyBox) <u>müssen manuell angepasst werden</u>. Der direkte Zugriff aus dem Internet per Subdomain erfordert die Öffnung der Ports 80 und 443 (TCP und UDP) und die Weiterleitung an die IP-Adresse des Servers.</li>
+						</ul>
+					</div>
+					<br /><br />
+				
+				<strong>1. Einrichtung eines DynDNS-Kontos</strong>				
+				<p>Beim Betrieb eines datamate Servers an einem Internetanschluss mit dynamischer IP-Adresse, muss ein DynDNS-Konto erstellt und der DynDNS-Updater eingerichtet werden. Das Vorgehen ist im Hilfe-Beitrag <a href="/hilfe/dienste/?tab=3">Konfiguration des DynDNS-Updaters</a> beschrieben.</p>
+				
+				<strong>2. Vorbereitung der Subdomains</strong>
+				<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2017/09/Konfiguration-Konfiguration-ZugriffSubdomains_1280-1024x503.png" alt="Konfiguration des Zugriffs über Subdomains - Konfiguration der DNS-Einträge" width="1024" />
+				<p>Die Einrichtung und Konfiguration der Subdomains, über die der Zugriff erfolgen soll, erfolgt in der Domain-Verwaltung des Domain-Hosters. In der Domain-Verwaltung müssen die Subdomains zunächst erstellt und dann mit <a href="https://de.wikipedia.org/wiki/Domain_Name_System">DNS-Informationen</a> versehen werden. (Die Abbildung zeigt die Verwaltung der DNS-Einträge bei United Domains. Bei anderen Hostern sieht das Interface anders aus.)</p>
+				<p>Die für die Subdomains notwendigen DNS-Einstellungen unterscheiden sich, je nachdem ob der Server an einem Internetanschluss mit statischer oder dynamischer IP-Adresse betrieben wird bzw. ob ein DynDNS-Dienst verwendet wird (siehe Schritt 1): <p />
+				<ul>
+					<li class="bottommargin-sm">Anschluss mit fester IP-Adresse<br />
+					Für die Subdomains müssen <a href="https://de.wikipedia.org/wiki/A_Resource_Record" target="_blank" rel="noopener noreferrer">A-Records</a> erstellt werden. Diese müssen auf die feste IP-Adresse des Internetanschlusses verweisen.</li>
+					<li class="bottommargin-sm">Anschluss mit dynamischer IP-Adresse<br />
+					Für die Subdomains müssen <a href="https://de.wikipedia.org/wiki/CNAME_Resource_Record" target="_blank" rel="noopener noreferrer">CNAME-Einträge</a> erstellt werden. Die CNAME-Einträge müssen auf einen erstellten DynDNS-Host verweisen.</li>
+				</ul>
+				<p>Änderungen an den DNS-Einstellungen einer Domain wird normalerweise innerhalb weniger Minuten wirksam. Je nach Anbieter und Umständen kann es aber auch länger dauern.</p>
+
+				<strong>3. Konfiguration des Zugriffs</strong>
+				<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2019/05/Konfiguration-Freigabe-Dienste-Internet_1281x468-1024x374.jpg" alt="Konfiguration der Internetfreigabe über die Dienste-Einstellungen" width="1024" />
+				<p>Die Konfiguration der Internet-Freigabe erfolgt schließlich über die Einstellungen des jeweiligen Dienstes im Bereich DIENSTE. Mit einem Klick auf das Einstellungen-Icon öffnet sich der Konfigurationsassistent.</p>
+				<p>In der Zeile <i>Freigabe-URL</i> muss nun die für den Dienst vorgesehene Freigabeadresse (z.B. www.beispiel.de) eingegeben werden. Die Eingabe erfolgt ohne &#8220;http://&#8221; oder &#8220;https://&#8221;. Die Internetfreigabe wird mit Klick auf <i>Änderungen speichern</i> abgeschlossen.</p>
+				<p>Die eingegebene Freigabe-URL wird nicht validiert, d.h. jeder Wert kann dort eintragen werden. Für gültig eingerichtete Subdomains wird ein Let&#8217;s Encrypt SSL-Zertifikate beantragt und automatisiert in den Webserver eingebunden. Ein knapper Hinweis gibt Auskunft darüber, ob die Beantragung erfolgreich war oder nicht. Im Erfolgsfall erfolgt von nun ab der Zugriff auf den Dienst über eine im Browser mit einem grünen Schloß abgesicherte Verbindung.</p>
+					
+					<div class="style-msg successmsg">
+					Ungeachtet des Freigabestatuses kann im (W)LAN des Servers immer auch über die lokale IP-Adresse des Servers auf dessen Dienste zugegriffen werden.	
+					</div>
+				
+				
+			</div>
+
+			<div class="tab-content clearfix" id="tab-konfiguration-dyndns">
+				<h3>Konfiguration des DynDNS-Updaters</h3>
+				<p>Server werden normalerweise an Internetanschlüssen mit einer festen IP-Adresse betrieben, d.h. die öffentliche IP-Adresse des Internetanschlusses wechselt nicht. Der Server-Zugriff aus dem Internet an Internetanschlüssen mit dynamischer, also wechselnder, IP-Adresse ist nur in Kombination mit einem DynDNS-Dienst möglich.</p>
+
+					<div class="style-msg successmsg">
+						Feste IP-Adressen sind häufig Standard bei Geschäftskundenanschlüssen. Die dynamische Vergabe von IP-Adressen ist bei (Verbraucher-)Internetanschlüssen die Regel. Feste IP-Adressen gibt es dort bestenfalls als kostenpflichte Zusatzleistungen. Wenn ein Internetanschluss mit fester IP-Adresse (IPv4) vorliegt, dann geht die IP-Adresse aus dem Anschlussvertrag oder dem Kundenportal des Anschlussanbieters hervor. Im Zweifelsfall sollte von einer dynamischen IP-Adresse ausgegangen und ein DynDNS-Konto angelegt werden.
+					</div>
+
+				<p><a href="https://de.wikipedia.org/wiki/Dynamisches_DNS">DynDNS</a> ist eine Technik, die den zuverlässigen Zugriff auf Servern an Internetanschlüssen mit dynamischen IP-Adressen erlaubt. DynDNS ist nichts anderes als ein kontinuierlich und in sehr hoher Frequenz aktualisiertes Auskunftsverzeichnis für IP-Adressen, analog einem Telefonbuch.<br/> 
+				Die zwei zentralen Komponenten von DynDNS sind die DynDNS-Hosts als Auskunftsstellen und die DynDNS-Updater als Aktualisierungsdienste. Ein DynDNS-Host ist eine Internetadresse (z.B. beispiel.spdns.de), deren Verweis auf eine IP-Adresse dynamisch angepasst werden kann. Auf welche IP-Adresse der DynDNS-Host verweist, bestimmt der DynDNS-Updater. Der DynDNS-Updater ist ein Programm, das das lokale Netzwerk des Servers überwacht und dem DynDNS-Host nach jedem Wechsel der öffentlichen IP-Adresse des Internetanschlusses diese neue Adresse zusendet. So referenziert der DynDNS-Host immer auf die aktuelle IP-Adresse des Internetanschlusses und macht so den Zugriff auf den Server möglich.<br />
+				Bekannte DynDNS-Anbieter sind <a href="https://www.noip.com/" target="_blank" rel="noopener noreferrer">No-IP</a> und <a href="https://spdyn.de/" target="_blank" rel="noopener noreferrer">spDYN</a>. Die Anlage eines kostenlosen DynDNS-Hosts ist dort in wenigen Augenblicken gemacht.</p>
+				
+				<h4>DynDNS auf den datamate Servern</h4>
+				<p>Die datamate Server bieten mit ddclient einen zuverlässigen DynDNS-Updater, so dass die Server auch an Internetanschlüssen mit dynamischer IP-Adresse zuverlässig betrieben werden können. Die beiden DynDNS-Anbieter spDYN und No-IP werden unterstützt.</p>
+				
+					<div class="style-msg successmsg">
+						Fritz!Boxen verfügen über einen integrierten DynDNS-Updater, der alternativ verwendet werden kann. Der Fritz!Box DynDNS-Updater unterstützt andere DynDNS-Anbieter als der DynDNS-Updater der datamate Server. Die Konfiguration erfolgt in der Weboberfläche der Fritz!Box über Internet > Freigaben > DynDNS.
+					</div>
+					
+				<h4>Einrichtung des DynDNS-Updaters</h4>
+				<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2019/05/Konfiguration-Konfiguration-DynDNS_1281x618-1024x494.jpg" alt="Einrichtung des DynDNS-Updaters über die DynDNS-Einstellungen" width="1024" />
+				
+				<p>Die Konfiguration des DynDNS-Updaters erfolgt über dessen Einstellungen im Bereich <i>DIENSTE</i>. Mit einem Klick auf das Einstellungen-Icon des Dienstes öffnet sich der Konfigurationsassistent. In jedem Fall muss der genutzte DynDNS-Dienst ausgewählt und der angelegte DynDNS-Host sowie Login-Name und Passwort des DynDNS-Kontos eingegeben werden.</p>
+				<p>Wird Homie an einem Dual-Stack lite Internetanschluss betrieben oder erhält der Internetrouter nur eine IPv6-Adresse, dann muss die Art des Internetanschlusses auf IPv6 geändert werden. Soll der Internetzugang über ein anderes Netzwerkinterface als über den Standard-Netzwerkadapter erfolgen, dann muss auch das Netzwerkinterface geändert werden.</p>
+				
+					<div class="style-msg successmsg">
+						Die Erreichbarkeit der Serverdienste per DynDNS aus dem lokalen Netzwerk ist leider keine Selbstverständlichkeit. Um gleichermaßen aus dem Internet wie aus dem lokalen Netzwerk per DynDNS-Adresse auf die Serverdienste zugreifen zu können, ist ein Router mit NAT-Loopback-Unterstützung erforderlich. Unterstützt der Router diese Technik nicht, dann werden Anfragen an die DynDNS-Adresse aus dem lokalen Netzwerk mit Fehlern quittiert. Im Blog-Beitrag <a href="https://www.datamate.org/blog/nat-loopback-oder-wie-dyndns-fuers-interne-netzwerk-fit-gemacht-werden-kann/" target="_blank" rel="noopener noreferrer">NAT-Loopback oder „wie DynDNS fürs interne Netzwerk fit gemacht werden kann“</a> wird die NAT-Loopback Thematik ausführlicher beleuchtet. 
+					</div>
+					
+				<p>Bei erfolgreicher Konfiguration des DynDNS-Updaters wird unmittelbar eine Aktualisierungsnachricht an den DynDNS-Host geschickt. Außerdem prüft der DynDNS-Updater von nun an fortlaufend, ob sich die IP-Adresse des Internetanschlusses geändert hat. Im Wechselfall wird eine Aktualisierung der IP-Adresse an den DynDNS-Dienst gesendet.<p>
+				<p>Für eine manuelle Aktualisierung dient der Schalter <i>Sofortige Aktualisierung erzwingen?</i>. Wird dieser Schalter auf umgelegt und die Einstellungen gespeichert, dann wird eine Aktualisierung versendet, unabhängig davon ob beim DynDNS-Dienst bereits die aktuelle IP-Adresse des Internetanschlusses vorliegt.
+			</div>
+			
+		<div class="tab-content clearfix" id="tab-konfiguration-lokaler-zugriff">
+				<h3>Konfiguration des lokalen Zugriffs</h3>
+				
+				<p>Grundsätzlich ist die Erzeugung eines eigenen Stammzertifikats nur eine Notlösung. Wenn man die Möglichkeit hat die Dienste von Homie und Fellow über eine öffentliche (Sub-)Domain freizugeben, dann sollte man dies tun und diese Adresse mit einem Let&#8217;s Encrypt Zertifikat verstehen. Ein eigenes Stammzertifikat ist dann sinnvoll, wenn man Homie und Fellow nur im lokalen Netzwerk betreibt.</p>
+				
+				<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2020/04/Benutzerprofil-Profil-Stammzertifikat_1280x746.jpg" alt="Einrichtung eines Stammzertifikats über das datamate Cockpit" width="1024" style="margin-top:5px;" />
+
+				<p>Seit der Cockpit Version 1.4 bieten Homie und Fellow die Möglichkeit die verwendeten Informationen der Zertifizierungsstelle und des selbst erzeugten Zertifikats zu verändern. Im Tab <i>Stammzertifikat</i> im Bereich KONFIGURATION kann ein Administrator unter anderem den eigenen Firmennamen und den Ort angeben und damit ein neues Zertifikat für den Server erstellen. Daraufhin hat dann jeder User des Cockpits die Möglichkeit in seinem eigenen Bereich dieses Stammzertifikat herunterzuladen. Im folgenden gehe ich davon aus, dass diese Datei bereits auf den Computer heruntergeladen wurde.</p>
+			
+				<h4>Import des Stammzertifikats in Google Chrome (Version 80)</h4>
+				
+				<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2020/04/Chrome-Einstellungen-DatenschutzSicherheit.jpg" alt="Import eines Stammzertifikats in Google Chrome" width="1024" style="margin-top:5px;"  />
+
+				<p>Am einfachsten findet man den gewünschten Bereich, wenn man in den Einstellungen von Google Chrome nach <i>Zertifikat</i> sucht. Unter dem Menüpunkt <strong>Zertifikate verwalten</strong> befindet sich die Verwaltung von Zertifikaten und vertrauenswürdigen Zertifizierungsstellen. Man wählt den Tab <strong>Zertifizierungsstellen</strong> und klickt anschließend auf <strong>Importieren</strong>. Anschließend wählt man die bereits heruntergeladene <i>Stammdatenzertifikat.pem</i> aus und bestätigt durch das Setzen der drei Haken, das man der Zertifizierungsstelle das Vertrauen ausspricht. Anschließend muss noch den Browser neu starten um ab sofort beim Aufruf des Cockpits von Homie oder Fellow ein grünes HTTPS-Zertifikat angezeigt zu bekommen.</p>
+
+				<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2019/04/chrome-zertifizierungsstelle-vertrauen-1024x681.png" alt="Man muss der Zertifizierungsstelle sein Vertrauen aussprechen"/>
+
+				<h4>Import des Stammzertifikats in Firefox (Version 65)</h4>
+				<p>Auch bei Firefox gestaltet sich der Import der Zertifizierungsstelle nicht als besonders schwierig. Auch in diesem Browser sucht man am Einfachsten in den Einstellungen nach <i>Zertifikat</i> und landet sofort an der richtigen Stelle.</p>
+
+				<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2020/04/Firefox-Zertifikate_1280x467.jpg" alt="Import eines Stammzertifikats in Firefox" width="1024" style="margin-top:5px;"/>
+
+				<p>Auch in Firefox wählt man den Tab <strong>Zertifizierungsstellen</strong> und importiert das zuvor heruntergeladene Stammdatenzertifikat. Auch bei Firefox muss man das Vertrauen durch das Setzen von zwei Haken bestätigen und dann den Browser neu starten. Danach gelingt der Aufruf des Cockpits ohne störenden Warnhinweis.</p>
+
+				<h4>Import des Stammzertifikats in iOS (Version 12.1)</h4>
+				<img decoding="async" loading="lazy" width="600" height="338" src="https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikats-import.png" alt="iOS fragt vor dem Zertifikatsimport um Erlaubnis"  class="alignleft size-medium wp-image-5625" style="margin-right: 20px;" srcset="https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikats-import.png 600w, https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikats-import-300x169.png 300w" sizes="(max-width: 600px) 100vw, 600px" />
+
+				<p>Um unter iOS das Stammzertifikat zu importieren, genügt es im Cockpit auf den Download zu klicken. iOS erkennt, dass es sich um eine Zertifizierungsdatei handelt und fragt direkt um Erlaubnis, ob die passende Einstellungsseite geöffnet werden darf. Wenn man dies bestätigt, genügen zwei Klick auf <strong>Installieren</strong> um die Zertifizierungsstelle im System zu verankern. Ab sofort erhält man keinen Warnhinweis mehr beim Aufruf der datamate Cockpits &#8211; selbst wenn man über die IP-Adresse darauf zugreift.</p>
+
+				<img decoding="async" loading="lazy" width="1024" height="603" src="https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikatsbestätigung-1024x603.png" alt="Mit wenigen Klicks ist die Zertifizierungsstelle beglaubigt" class="alignleft size-large wp-image-5626" srcset="https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikatsbestätigung-1024x603.png 1024w, https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikatsbestätigung-300x177.png 300w, https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikatsbestätigung-768x452.png 768w, https://www.datamate.org/wp-content/uploads/2019/04/ios-zertifikatsbestätigung.png 1200w" sizes="(max-width: 1024px) 100vw, 1024px" />
+			</div>
+				
+			<div class="tab-content clearfix" id="tab-konfiguration-systembenachrichtigungen">
+				<h3>Konfiguration der Systembenachrichtigungen</h3>
+				<p>Systembenachrichtigungen dienen dazu, Administratoren über wichtige Systemereignisse und Statuswerte auf dem Laufenden zu halten. Das Risiko von Funktionsausfällen und Datenverlust durch unbemerkte kritische Systemzustände wird so deutlich reduziert.</p>
+				
+				<h4>Systembenachrichtigungen auf den datamate Server</h4>
+				<p>Die datamate Server bieten umfangreiche Systembenachrichtigungsfunktionen, um den Administrator über den Systemstatus auf dem Laufenden zu halten.</p>
+
+					<div class="style-msg successmsg">
+						Häufige und umfangreiche Benachrichtigungen sind gerade nach Inbetriebnahme des Servers hilfreich, um das System &#8220;kennen zu lernen&#8221;. Hat man nach einiger Zeit ein &#8220;Gefühl&#8221; für das Gerät bekommen, kann die Frequenz reduziert werden. Eine vollständige Deaktivierung der Benachrichtigungen sollte jedoch nur in absoluten Ausnahmefällen erfolgen. 
+					</div>
+			
+				<h4>Einrichtung der Systembenachrichtigungen</h4>
+				<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2019/05/Konfiguration-Konfiguration-Systembenachrichtigungen_1281x808-1024x646.jpg" alt="Einrichtung der Systembenachrichtigungen" width="1024"/>
+				<p>Die Einstellungen für die Systembenachrichtigungen befinden sich im Tab <i>Benachrichtigungen</i> im Bereich <i>KONFIGURATION</i>. Die Frequenz der Benachrichtigungen wird über das Dropdown-Feld festgelegt; der Umfang der Benachrichtigungen über die Schalter darunter. Die Systemchecks sind Statuswerte zur Kontrolle des Systemzustands. Wird die Dienstüberwachung aktiviert, dann meldet das System in jeder Benachrichtigung den Status der ausgewählten Dienste.</p>
+				
+					<div class="style-msg successmsg">
+						Da Systembenachrichtigungen per E-Mail versendet werden, muss vor Aktivierung der Systembenachrichtigung die Konfiguration des <a href="/hilfe/dienste/tab=6">Postausgangsservers</a> vorgenommen werden.
+					</div>
+			</div>		
+		
+			<div class="tab-content clearfix" id="tab-konfiguration-postausgangsserver">
+				<h3>Konfiguration des Postausgangsservers</h3>
+				<p>Zum Versand von E-Mails ist entweder ein vollständiger E-Mail-Server oder Zugriff auf einen E-Mail-Konto notwendig. </p>
+				
+				<h4>Mail-Versand auf den datamate Servern</h4>
+				<p>Die datamate Server verfügen über keinen eigenen Mailserver zum Versand von E-Mails. Stattdessen werden Benachrichtigungen an einen externen Postausgangsserver zur Übermittlung übergeben.</p>
+				<p>Mehrere Dienste der datamate Server unterstützen den Versand von E-Mails an die Benutzer zur Benachrichtigung über bestimmte Ereignisse. Auch &#8220;Systembenachrichtigungen&#8221; über den Systemstatus werden per E-Mail versendet. Voraussetzung für E-Mail-Benachrichtigungen ist daher die Konfiguration eines SMTP-Servers.</p>
+
+				
+					<div class="style-msg successmsg">
+						Selbst verwaltete SMTP-Server wie auch solche von großen Mail-Providern können für den Versand von E-Mail-Benachrichtigungen verwendet werden. Die Mailserver von Anbietern wie Gmail, GMX und Posteo haben gegenüber eigenen Mailservern den Vorteil hoher Verfügbarkeit und geringen Blacklisting-Risikos. Unabhängig von der Art des verwendeten SMTP-Servers müssen die Postfacheinstellungen den Versand über externe/unsichere Clients erlauben.
+					</div>
+				
+				<h4>Einrichtung des Mail-Versands</h4>
+				<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2019/05/Konfiguration-Konfiguration-SMTP-Server_1281x701-1024x560.jpg" alt="Einrichtung des SMTP-Servers für den Versand von Systembenachrichtigungen" width="1024" />
+				<p>Die Mailserver-Konfiguration als Voraussetzung für den Versand von E-Mail-Benachrichtigungen erfolgt im Tab <i>SMTP-Konto</i> im Bereich <i>KONFIGURATION</i>. Benötigt werden die Adresse des SMTP-Servers und der dazugehörige Port, Login-Name sowie Passwort. Der Verbindungsaufbau zum Mailserver erfolgt grundsätzlich über das STARTTLS-Protokoll, das verschlüsselte Verbindung unterstützt.</p>
+				<p>Der SMTP-Server wird automatisch nach erfolgreichen Test-Versand aktiviert. Ohne erfolgreichen Test werden die Servereinstellungen nicht aktiviert.</p>
+				<p>Aktuell werden nur E-Mailpostfächer unterstützt bei denen die E-Mailadresse dem Benutzernamen entspricht. Konten mit einem separaten Login funktionieren nicht zuverlässig.</p>
+					
+			</div>	
+			
+			<div class="tab-content clearfix" id="tab-einrichtung-systembackups">
+				<h3>Konfiguration der Systembackups</h3>
+				<p>Die Verwendung hochwertiger Hardware, kontinuierliche Systemüberwachung und regelmäßige Wartung helfen, Datenverlust zu vermeiden. Eine Garantie bieten sie nicht. Aus diesem Grund sind Backups unverzichtbar zum Schutz der Daten. </p>
+				
+				<h4>Backups auf den datamate Server</h4>
+				<p>Mit duplicity und duply bieten die datamate Server eine flexible und leistungsfähige Backup-Lösung. Als lokale Backupspeicher werden USB-Festplatten unterstützt. Außerdem werden Netzwerkspeicher unterstützt, die per FTP, SSH, S3 und B2 angesprochen werden können &#8211; unabhängig davon, ob sie sich im lokalen Netzwerk oder ausserhalb befinden. Auch werden mehrere parallele Backups auf unterschiedliche Backup-Ziele unterstützt. Gerade eine Kombination aus lokalem und remote Backup bietet schnelle Datenwiederherstellung bei kleinen Schadensereignissen (z.B. Ausfall des Datenträgers) und hohe Sicherheit bei Großschadensereignissen (z.B. Brand, Wasserschaden oder Diebstahl). Zum Schutz vertraulicher Daten können die Backups verschlüsselt und zur Einsparung von Speicherplatz komprimiert werden.</p>
+				
+				<p>Der datamate Blog-Beitrag <a href="/duplicity-duply-datensicherung-auf-die-verlass-ist/">duplicity/duply: Datensicherung auf die Verlass ist</a> stellt die Funktions- und Arbeitsweise von duplicity und duply ausführlich vor. Zusammengefasst: Einmal pro Monat legt die Backup-Software ein Vollbackup an. In dem Zeitraum dazwischen erfolgen inkrementelle Backups. Inkrementell bedeutet, dass nur geänderte Daten gesichert werden. Dies reduziert den Speicherbedarf. Eine Backup-Kette besteht aus dem Vollbackup und den darauf aufbauenden inkrementellen Backups. Mit einem neuen Vollbackup wird die angefangene, offene Backup-Kette geschlossen und eine neue Backup-Kette erstellt.</p>
+				
+					<div class="style-msg successmsg">
+						Seafile verfügt über einen Online-Papierkorb und eine einfache und leicht zu nutzende Versionierungsfunktion. In den meisten Fällen lassen sich so verlorene Dateien durch die Nutzer selbst wiederherstellen. Die Wiederherstellung von Daten aus dem Backup ist meist nur bei großen Schadensereignisse nötig. Das datamate Team hilft dabei gerne.
+					</div>	
+				
+				<h4>Einrichtung des Backups</h4>
+				<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2019/05/Konfiguration-Konfiguration-Backup_1281x771-1024x616.jpg" alt="Einrichtung eines Backups über die Backup-Einstellungen" width="1024" />
+								
+				<p>Die Einrichtung der Datensicherung erfolgt über die Backup-Einstellungen im Bereich <i>DIENSTE</i>. Ein Klick auf das Einstellungen-Icon öffnet den Assistenten zur Konfiguration des Backups.</p>
+				
+				<p>Die Konfiguration der Cloud-Backups erfolgt auf identische Art und Weise für die unterschiedlichen Backupziele. Neben dem Speicherziel müssen die Authentifizierungsdaten für das Backup-Ziel eingegeben werden.</p>
+				
+				<p>Die Backup-Konfiguration bietet vier weitere Einstellungsmöglichkeiten, um die Backup-Durchführung an die individuellen Bedürfnisse anzupassen: </p>
+				<ul>
+					<li class="bottommargin-sm"><i>Backup verschlüsseln?</i><br/>
+					Über diesen Schalter kann die Verschlüsselung des Backups aktiviert bzw. deaktiviert werden. Bei externen Speichern wie S3 und B2 ist die Verschlüsselung standardmäßig aktiv.  Die Verschlüsselung erfolgt mit <a href="https://de.wikipedia.org/wiki/Pretty_Good_Privacy">PGP</a>, das als sicher gilt und damit vertrauliche Daten in der Cloud und auf externen Datenträgern zuverlässig vor dem Zugriff Dritter schützt. Der PGP-Schlüssel, mit dem die Daten verschlüsselt werden, wird bei Einrichtung eines verschlüsselten Backups automatisch erzeugt. Um Daten aus der Sicherung wiederherzustellen, ist er zwingend erforderlich. Ohne Schlüssel ist das Backup für den Eigentümer genauso wertlos wie für Dritte. Die Backup-Konfiguration inkl. PGP-Schlüssel sollte daher auf jeden Fall über die Backup-Einstellungen heruntergeladen und separat aufbewahrt bzw. ausgedruckt werden.</li>
+					<li class="bottommargin-sm"><i>Backup komprimieren?</i><br/>
+					Dieser Schalter aktiviert bzw. deaktiviert die Komprimierung des Backups. Die Komprimierung reduziert den benötigten Speicherbedarf im Backup-Speicher. Die Kompressionsrate und damit der eingesparte Speicherplatz ist stark abhängig von den gesicherten Dateien. </li>
+					<li class="bottommargin-sm"><i>Maximales Alter der Backups?</i><br/>
+					Über dieses Auswahlfeld wird festgelegt, wie viele Backup-Ketten im Backup-Speicher gespeichert bleiben bzw. nach welchem Zeitraum alte Vollbackups wieder entfernt werden. </li>
+					<li class="bottommargin-sm"><i>Ausführungszeitpunkt</i><br/>
+					Über diese Einstellungen wird festgelegt, an welchen Tagen und zu welchem Zeitpunkt das Backup laufen soll. An den ausgewählten Daten wird das Backup automatisch vom System ausgeführt.</li>
+				</ul>
+				<p>Ein einmal angelegter Backup-Job kann nicht mehr geändert werden. Soll ein Backup-Job geändert werden, so muss der bestehende gelöscht und ein neuer eingerichtet werden. Bei der Löschung des Backup-Jobs werden bereits gesicherte Daten im Backup-Speicher <u>nicht</u> gelöscht. Dies muss manuell erfolgen. 
+				
+				<h4>Überwachung des Backups</h4>
+				<!--<p>SCREENSHOT</p>-->
+				<p>Bei der Einrichtung wird nicht überprüft, ob mit den angegebenen Zugangsdaten ein Backup erstellt werden kann. Dies sollte über die Schaltfläche <i>Verbindung prüfen</i> erfolgen. Nur wenn diese Überüfung ohne Fehlermeldung abgeschlossen wurde, wird das Backup erfolgreich laufen können.</p>
+	
+				<!--<p>SCREENSHOT</p>-->
+				<p>Der Tab <i>Backup</i> im Bereich <i>REPORTING</i> bietet einen Überblick über den Backup-Status. Dieser sollte regelmäßig überprüft werden, um sicherzustellen, dass das Backup nicht aus Versehen aus dem Tritt gekommen ist. Ein erfolgreicher Backup-Lauf wird mit einem Haken-Icon dargestellt.</p> 
+				<p>Das Backup erstellt bei jedem Lauf eine Zeile in der Tabelle. Die Spalte <i>Backupziel</i> beschreibt den Backup-Job, der die Zeile erzeugt hat. (Bei mehreren verwendeten Backup-Zielen können aus diesem Grund auch mehrere Zeilen pro Tag erscheinen.) Die Spalten <i>#Dateien</i> und <i>Größe</i> stellt die Gesamtanzahl der zu sichernden Dateien und deren Gesamtgröße dar. Die Spalten <i>#Neu</i> und <i>#Geändert</i> beschreiben die tatsächlich gesicherten Dateien. Bei inkrementellen Backups weichen diese Zahlen stark voneinander ab, da anders als beim Vollbackup unveränderte Dateien nicht erneut gesichert werden. </p>
+				<h4>Datenwiederherstellung aus dem Backup</h4>
+				<p>Die Wiederherstellung von Daten aus dem Backup erfolgt mit den dokumentierten Befehlen von duplicity bzw. duply. Die im Tab <i>Backup</i> herunterladbare Textdatei listet auf, welche Dateien und welche Versionen aus dem Backup wiederhergestellt werden können.</p>
+				
+			</div>
+
+			<!--<div class="tab-content clearfix" id="tab-konfiguration-router-firewall">
+				<h3>Anpassung der Firewall-Regeln bei Routern</h3>
+			
+				<p>Die Firewall-Regeln können nicht über das Cockpit erfolgen, sondern müssen im Internet-Gateway bzw. Router (z.B. Fritz!Box, Speedport EasyBox) erfolgen.</p>
+				<p>Der direkte Internetzugriff auf den Server erfordert in jedem Fall eine Weiterleitung des Ports 443 (TCP und UDP) an die IP-Adresse des Servers. Soll der Zugriff per Subdomain erfolgen, muss auch der Port 80 (TCP und UDP) an den Server weitergeleitet werden.</p>
+				
+				<img decoding="async" src="https://www.datamate.org/wp-content/uploads/2018/04/Portfreigaben_Verwaltung_FritzBox_1024x509.png" alt="Verwaltung von Portfreigaben in Fritz!Boxen von AVM" width="1024" class="alignnone size-full wp-image-4384" srcset="https://www.datamate.org/wp-content/uploads/2018/04/Portfreigaben_Verwaltung_FritzBox_1024x509.png 1024w, https://www.datamate.org/wp-content/uploads/2018/04/Portfreigaben_Verwaltung_FritzBox_1024x509-300x149.png 300w, https://www.datamate.org/wp-content/uploads/2018/04/Portfreigaben_Verwaltung_FritzBox_1024x509-768x382.png 768w" sizes="(max-width: 1024px) 100vw, 1024px" />
+				
+				<p>Die Abbildung zeigt die Verwaltung von Portweiterleitungen in Fritz!Boxen mit dem aktuellen Fritz!OS. Bei anderen Routern sieht das Interface anders aus.</p>
+								
+					<div class="style-msg successmsg">
+						Existieren im Netzwerk weitere Geräte, die Netzwerkports blockieren, dann müssen diese ebenfalls <u>manuell bearbeitet</u> werden.<br/>						
+						Die Firewall des Servers wird <u>automatisch</u> durch das Cockpit angepasst. Bei Freigabe eines Dienstes ins Internet wird der benötigte Port geöffnet; wird die Freigabe entzogen, wird der Port geschlossen. Den Portstatus der internen Firewall findet man im Bereich <i>DIENSTE</i> in den Einstellungen der Firewall.
+					</div>
+			</div>-->
+		</div>
+
+	</div>
+	
+</div></div>
+</section>
+
+	</div><!-- #wrapper end -->
+
+	<div id="gotoTop" class="icon-angle-up"></div>
+	<!-- minified by https://javascript-minifier.com/ -->
+	<script type="text/javascript" src="https://www.datamate.org/wp-content/themes/datamate-theme/js/canvas.js"></script>
+
+	
+<script type="text/javascript">
+  $.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results !== null){
+      return results[1];
+    }
+    return 0;
+  }
+
+  $(document).ready(function() {
+    var tab = $.urlParam('tab');
+    console.log("Setze den Tab " + $.urlParam('tab') + " auf aktiv");
+    $( ".tabs" ).tabs({ active: $.urlParam('tab') });
+  });
+</script>
+
+
+</body>
+</html>

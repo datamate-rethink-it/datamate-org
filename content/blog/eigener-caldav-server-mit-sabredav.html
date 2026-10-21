@@ -1,0 +1,73 @@
++++
+title = "Teil 1: Der eigene CalDAV-Server mit sabre/dav"
+titel_html = "Teil 1: Was ist sabre/dav?"
+ueberschrift = "Teil 1: Der eigene CalDAV-Server mit sabre/dav"
+beschreibung = "Mit sabre/dav kann man seine Termine, Aufgaben und Kontakte auf all seinen Geräten synchron halten. Die Daten sind dabei auf dem eigenen Server gespeichert."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/06/teil1_was_ist_sabredav.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/eigener-caldav-server-mit-sabredav/"
+canonical = "https://www.datamate.org/eigener-caldav-server-mit-sabredav/"
+og_bild_breite = "1920"
+og_bild_hoehe = "1275"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2017-07-15T09:56:29+00:00"
+geaendert = "2025-02-21T08:10:42+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "3 Minuten"
+beitragsbild = "/wp-content/uploads/2017/06/teil1_was_ist_sabredav.jpg"
+bild_breite = 1920
+bild_hoehe = 1275
+bild_beschriftung = "Teil 1: Was ist sabre/dav"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Teil 1: Der eigene CalDAV-Server mit sabre/dav", item = ""}]
+wortzahl = 581
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["software"]
+schlagwoerter = ["CalDAV", "CardDAV", "Kontaktsynchronisation", "sabre/dav", "Termin-", "Tutorial"]
+wp_id = 237
+slug = "eigener-caldav-server-mit-sabredav"
+url = "/eigener-caldav-server-mit-sabredav/"
+date = "2017-07-15T11:56:29"
+lastmod = "2025-02-21T09:10:42"
+datum_utc = "2017-07-15T09:56:29+00:00"
+geaendert_utc = "2025-02-21T08:10:42+00:00"
++++
+						<p>Die meisten Menschen sind es heute gewohnt, Ihre Kontakte, Termine und Aufgaben mit verschiedenen Geräten zu synchronisieren. Im Hintergrund wird dies von cleveren Serverdiensten ermöglicht, die die Daten verarbeiten, speichern und auf Anfrage an andere Geräte übermitteln. Dabei nutzen sie die weit verbreitete Standards wie <i>WebDAV</i>, <i>CalDAV</i> und </i>CardDAV</i>.</p>
+
+<p>sabre/dav ist ein solcher Serverdienst. Der große Unterschied ist jedoch, dass die eigenen Daten nicht auf Servern von Google und co. gespeichert werden, sondern auf dem eigenen Server, den man sich mit etwas Know-how und Geduld selbst aufbauen kann, da das Framework unter einer OpenSource Lizenz von <a href="https://github.com/fruux/sabre-dav" target="_blank" rel="noopener">Github</a> heruntergeladen weden kann.</p>
+
+<p>Die folgende Artikelserie soll dabei helfen einen schnellen und einfacheren Einstieg in sabre/dav zu ermöglichen. Jeder der Grundkenntnisse in PHP mitbringt, sollte nach der Lektüre der folgenden Artikel seinen eigenen CalDAV-/CardDAV-Server aufbauen können, der die gleichen Funktionen bietet, wie man Sie von iCloud oder Google Calendar gewohnt ist.</p>
+
+<span id="more-237"></span>
+
+<h2>Woher kommt sabre/dav?</h2>
+
+<p>sabre/dav ist eine Entwicklung der Firma <a href="https://www.fruux.com/de" target="_blank" rel="noopener">fruux</a> aus Münster, die kommerzielle Synchronisationslösungen und individuelle Dienstleistungen auf Basis von sabre/dav anbietet. Wer sabre/dav nur mal schnell ausprobieren will, kann sich unter dem <a href="https://fruux.com/account/register/" target="_blank" rel="noopener">folgenden Link</a> einen kostenlosen Testaccount anlegen, mit dem man zwei Geräte synchronisieren kann.</p>
+	
+<p>Der Chefentwickler von fruux <a href="https://evertpot.com/" target="_blank" rel="noopener">Evert Pot</a> arbeitete die letzten 10 Jahre fast ununterbrochen an sabre/dav. Leider hat Evert Pot im März 2017 angekündigt sein Engagement in Bezug auf sabre/dav einzustellen. Grund genug um engagierten Entwicklern den Einstieg in diesen CalDAV/CardDAV-Serverdienst so einfach wie möglich zu machen.</p>
+
+<h2>Welche Funktionen bietet sabre/dav?</h2>
+
+<p>Ein eigener sabre/dav-Server ermöglicht es Termine, Aufgaben und Kontakte auf allen seinen Geräten synchron zu halten. Sobald man auf einem der Geräte einen Eintrag anlegt oder verändert, wird diese Änderung an den sabre/dav-Server geschickt. Dieser speichert die Änderung und verteilt diese anschließend an alle anderen Geräte. So hat man immer auf allen seinen Geräten den gleichen Datenstand.</p> 
+
+<p>Darüber hinaus kann man mit sabre/dav auch seine Kalender und Aufgabenlisten an Andere freigeben. Ich beispielsweise teile meine Kalender mit meiner Frau, wobei Sie meine Termine nur einsehen jedoch nicht bearbeiten kann. Umgekehrt macht Sie es genauso, so dass ich immer auf dem Laufenden bin, welche Termine Sie gerade in Ihrem iPhone eingetragen hat.</p>
+
+<p>sabre/dav arbeitet komplett plattformunabhängig und nutzt weit verbreitete Standards. So kann ich die Termine meiner Frau sowohl auf meinem Android Handy, meinem iPad oder in Thunderbird ansehen. Für jedes Betriebssystem gibt es passende Software oder die nötigen Apps, die eine Synchronisation ermöglichen.</p>
+
+<h2>Ausblick auf diese Artikelserie zum sabre/dav-Framework</h2>
+
+In den folgenden Tagen werden in diesem Blog weitere Artikel zu sabre/dav veröffentlicht werden. Geplant sind aktuell Artikel zu den folgenden Themen und sobald diese veröffentlich sind, werde ich diese hier verlinken:
+<ul style="padding-left: 20px;">
+	<li><a href="/blog/installation-caldav-server-ubuntu/">Installation eines sabre/dav-Servers unter Ubuntu Server</a></li>
+	<li><a href="/blog/benutzerverwaltung-authentifizierung-sabredav/">Benutzerverwaltung und -authentifizierung</a></li>
+	<li><a href="/blog/teil-4-synchronisation-mit-sabredav/">Synchronisation mit verschiedenen Clients</a></li>
+	<li>Funktionsübersicht von sabre/dav</li>
+	<li>Programmierung eines eigenen PHP-Clients</li>
+</ul>
+
+<p>Obwohl sabre/dav das weltweit am häufigsten verwendete WebDAV-Framework ist und auch bekannte Softwarelösungen wie OwnCloud und Baikal darauf aufbauen, ist sabre/dav für kaum jemanden ein Begriff, da sabre/dav ein Framework von Entwicklern für Entwickler ist.</p>
+
+<p>Ich hoffe, mit der folgenden Serie Interessierten einen schnellen und einfacheren Einstieg zu ermöglichen, so dass jeder der Grundkenntnisse in PHP mitbringt, seine iCloud- oder Google Calendar Alternative aufbauen kann.</p>

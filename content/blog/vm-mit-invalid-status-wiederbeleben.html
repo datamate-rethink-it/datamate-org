@@ -1,0 +1,73 @@
++++
+title = "VM mit invalid status wiederbeleben"
+titel_html = "VM mit invalid status wiederbeleben | datamate"
+ueberschrift = "VM mit invalid status wiederbeleben"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_typ = "article"
+og_url = "https://www.datamate.org/vm-mit-invalid-status-wiederbeleben/"
+canonical = "https://www.datamate.org/vm-mit-invalid-status-wiederbeleben/"
+veroeffentlicht = "2015-09-23T12:41:33+00:00"
+geaendert = "2025-02-21T08:10:55+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "2 Minuten"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "VM mit invalid status wiederbeleben", item = ""}]
+wortzahl = 400
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["uncategorized"]
+schlagwoerter = []
+wp_id = 4429
+slug = "vm-mit-invalid-status-wiederbeleben"
+url = "/vm-mit-invalid-status-wiederbeleben/"
+date = "2015-09-23T14:41:33"
+lastmod = "2025-02-21T09:10:55"
+datum_utc = "2015-09-23T12:41:33+00:00"
+geaendert_utc = "2025-02-21T08:10:55+00:00"
++++
+						<p>VirtualBox ist eine fantastische Software um virtuelle Maschinen zu installieren und zu nutzen. Wer einmal erlebt hat, wie einfach es ist eine Testumgebung für ein neues Projekt aufzusetzen, will diesen Luxus in der Zukunft nicht wieder missen. Doch manchmal gibt es Situationen in denen einen VirtualBox zur Verzweiflung bringt. Da beenden sich virtuelle Maschinen ohne erkennbaren Grund, ein RAID-Verbund ist plötzlich nicht mehr synchron oder eine virtuelle Maschine hat plötzlich den Status &#8220;stopped&#8221; oder &#8220;stopping&#8221; und lässt sich einfach nicht mehr wiederbeleben.</p>
+
+<p>Dieser Artikel erklärt, wie man mit dem letzten Problem unter Linux umgeht. Wenn der Status einer virtuelle Maschine von VirtualBox nicht mehr geändert werden kann ist guter Rat teuer. Hier hilft die folgende Lösung um die Maschine zuverlässig zu beenden um Sie dann wiederbeleben zu können.</p>
+
+<span id="more-4429"></span>
+
+<h2>Ausgangslage</h2>
+<p>Es ist VirtualBox und phpVirtualBox auf einem Ubuntu Server 14.04.02 LTS installiert. Es laufen mehrere virtuelle Maschinen und irgendwann stellt man fest, dass eine der Maschinen (iS-TEST in unserem Beispiel) nicht mehr erreichbar ist bzw. den Dienst quittiert hat. Virtualbox (egal ob die Desktopversion oder phpVirtualBox) zeigen für diese virtuelle Maschine den Status &#8220;stopping&#8221; an. Die Vorschau zeigt ein schwarzes Bild bzw. die Konsole von phpVirtualBox reagiert nicht mehr. Die virtuelle Maschine lässt sich nicht mehr ausschalten und auch nicht starten. Sämtliche Aktionsmöglichkeiten sind ausgegraut.</p>
+
+<h2>Was ist zu tun um die VM wiederzubeleben?</h2>
+<p>In diesem Fall hilft nur der Weg über das Terminal bzw. per SSH über die Kommandozeile. Mit den folgenden Befehlen kann die virtuelle Maschine zuverlässig beendet werden, so dass diese danach wieder gestartet werden kann. Ziel ist somit ein Neustart der virtuellen Maschine, die den Status &#8220;stopping&#8221; hat.</p>
+
+<p>Wir gehen im folgenden Beispiel davon aus, dass wir bereits per SSH verbunden sind und der User unter der VirtualBox läuft auch vbox heißt. Der folgende Befehl liefert sämtliche virtuelle Maschinen:</p>
+
+<pre>
+$ VBoxManage list vms
+
+"iS-DEV" {e943b696-7493-42bf-8fa8-96c4d2786058}
+"iS-TEST" {f6c26f9f-4b55-49c7-aed6-784caea3f898}
+</pre>
+
+<p>Natürlich kann man versuchen den Status der virtuellen Maschinen auch nochmal über die Konsole zu verändern, dies wird aber wahrscheinlich keinen Erfolg bringen.</p>
+<pre>
+$ VBoxManage controlvm iS-TEST resume
+
+VBoxManage: error: Cannot resume the machine as it is not paused (machine state: Stopping)
+VBoxManage: error: Details: code VBOX_E_INVALID_VM_STATE (0x80bb0002), component Console, interface IConsole, callee nsISupports
+VBoxManage: error: Context: "Resume()" at line 120 of file VBoxManageControlVM.cpp
+</pre>
+
+<p>Deshalb kümmern wir uns nun darum die virtuelle Maschine &#8220;iS-TEST&#8221; auszuschalten. Dies machen wir indem wir die Prozess-ID ermitteln und diesen Prozess dann beenden.</p>
+
+<pre>
+$ ps -ef
+
+vbox     30743  1149  1 Sep15 ?        00:31:10 /usr/lib/virtualbox/VBoxHeadless --comment iS-TEST --startvm f6c26f9f-4b55-49c7-
+</pre>
+
+<p>Die Prozess-ID ist somit die 30743 und kann mit dem kill Befehl beendet werden.</p>
+
+<pre>
+$ kill 30743
+</pre>
+
+<p>Danach hat die virtuelle Maschinen den Status &#8220;aborted&#8221; und kann wie gewohnt neu gestartet werden.</p>

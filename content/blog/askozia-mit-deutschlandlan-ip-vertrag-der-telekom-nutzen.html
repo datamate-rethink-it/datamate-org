@@ -1,0 +1,105 @@
++++
+title = "Askozia mit DeutschlandLAN IP Vertrag der Telekom nutzen"
+titel_html = "Askozia mit DeutschlandLAN IP Vertrag der Telekom nutzen | datamate"
+ueberschrift = "Askozia mit DeutschlandLAN IP Vertrag der Telekom nutzen"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/04/askozia-telefoniecenter-telekom.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/askozia-mit-deutschlandlan-ip-vertrag-der-telekom-nutzen/"
+canonical = "https://www.datamate.org/askozia-mit-deutschlandlan-ip-vertrag-der-telekom-nutzen/"
+veroeffentlicht = "2016-09-26T06:20:52+00:00"
+geaendert = "2025-02-21T08:10:48+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "5 Minuten"
+bild_breite = 1064
+bild_hoehe = 591
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Askozia mit DeutschlandLAN IP Vertrag der Telekom nutzen", item = ""}]
+wortzahl = 1005
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["uncategorized"]
+schlagwoerter = []
+wp_id = 4510
+slug = "askozia-mit-deutschlandlan-ip-vertrag-der-telekom-nutzen"
+url = "/askozia-mit-deutschlandlan-ip-vertrag-der-telekom-nutzen/"
+date = "2016-09-26T08:20:52"
+lastmod = "2025-02-21T09:10:48"
+datum_utc = "2016-09-26T06:20:52+00:00"
+geaendert_utc = "2025-02-21T08:10:48+00:00"
+lightbox = true
++++
+						<p>Immer wieder werden wir gefragt, ob man die asterisk-basierte Telefonanlage <a href="https://www.ionas-server.com/askozia">Askozia</a> an einem DeutschlandLAN IP-Anschluss der Deutschen Telekom betreiben kann. Diese Frage ist tatsächlich eine sehr gute, denn auch wenn die Telekom bei den DeutschlandLAN-Tarifen von SIP-Trunking Anschlüssen redet und die Askozia einen solchen zur Anbindung an das Fernmeldenetz benötigt, ist die Nutzung eines solchen Vertrags an der Askozia PBX nicht ganz einfach. Dabei ist es egal, ob es sich um einen Start, Voice/Data S oder Voice/Data M Vertrag aus der Familie der DeutschlandLAN IP-Tarife handelt.</p>
+
+<p>Wir haben mit der Einrichtung von DeutschlandLAN Tarifen an der Askozia schon einige Erfahrung gesammelt, denn unser ionas-Server Small Business bringt die leistungsfähige Askozia standardmässig als Telefonielösung mit. In der folgenden Anleitung erklären wir die notwendigen Einstellungen, um die Askozia mit dem Telekom-Anschluss zu verheiraten. Die Schritte sollten aber auch auf andere Asterisk-basierte Telefonanlagen übertragbar sein. Sind die Einstiegshürden erstmal überwunden, stehen sämtliche Funktionen der Askozia-Telefonanlage bzw. der Asterisk-Telefonanlage in Kombination mit den drei zur Verfügung gestellten Rufnummern der Telekom zur Verfügung. </p>
+
+<span id="more-4510"></span>
+
+<h2>Warum ist DeutschlandLAN IP von der Telekom ein Sonderfall?</h2>
+
+<p>Die Telekom ist bestrebt, es den eigenen Kunden so einfach wie möglich zu machen. Dies beinhaltet beispielsweise die Autokonfiguration von Speedports sowie die Übermittlung von erlaubten Anschlüssen und Telefonen an einer Internetleitung an den Speedport. Wenn man z.B. im Telefoniecenter der Telekom sein Passwort ändert, wird diese Einstellungsänderung direkt an den Speedport übermittelt.</p>
+
+<p>Diese Vorkonfiguration von Diensten und die automatische Bereitstellung von Informationen an vorkonfigurierte Telekomgeräte macht somit die Nutzung von Telekomdiensten denkbar einfach. Im Gegenzug verhindert Sie aber auch relativ zuverlässig die Nutzung von fremder Hard- und Software. Die Anwender haben häufig keine andere Wahl als sich selbst in Anwenderforen austauschen bzw. die notwendigen Informationen zusammenzusuchen.</p>
+
+<p>Um somit die VoIP-Telefonanlage der Askozia mit einem DeutschlandLAN IP Anschluß der Telekom zu verwenden, sind sowohl Einstellungen in den Telekom eigenen Webseiten sowie der Telefonanlage selbst notwendig. Die folgende Anleitung sollte Ihnen aber helfen, sämtliche Hindernisse zu überwinden.</p>
+
+<h2>1. Entfernen aller Umleitungen und Blockierungen im Telefoniecenter der Telekom</h2>
+
+<div id="attachment_1094" style="width: 310px" class="wp-caption alignleft"><a href="/wp-content/uploads/2018/04/askozia-telefoniecenter-telekom.png" data-slb-active="1" data-slb-asset="2978759516" data-slb-internal="0" data-slb-group="4510"><img aria-describedby="caption-attachment-1094" decoding="async" src="/wp-content/uploads/2018/04/askozia-telefoniecenter-telekom.png" alt="Deaktivierung sämtlicher Weiterleitungen oder Blockierungen im Telefoniecenter" width="300" height="167" class="size-medium wp-image-1094" /></a><p id="caption-attachment-1094" class="wp-caption-text">Deaktivierung sämtlicher Weiterleitungen oder Blockierungen im Telefoniecenter</p></div>
+
+<p>Als erstes müssen im Telefoniecenter der Telekom sämtliche Umleitungen und Blockierungen von Rufnummern entfernt werden. Werden diese Einschränkungen nicht entfernt, können Anrufe nicht bis zur Telefonanlage weitergeleitet werden. In der Konsequenz wird dadurch die Nutzung der entsprechenden Rufnummer an einer Asterisk-Telefonanlage verhindert.</p>
+
+<p>Loggen Sie sich also im <a href="https://telefoniecenter.t-online.de/fcc">Telefoniecenter der Telekom</a> ein und entfernen Sie für alle Rufnummern die Rufannahmeeinstellungen, Anrufweiterleitungen oder -blockierungen bzw. -rufannahmen. Wichtig: Für den Login benötigen Sie die <i>T-Online-Nummer</i> und Ihr <i>persönliches Kennwort</i>.</p>
+
+<h2>2. Deaktivierung von MyLogin im Kundencenter</h2>
+
+<div id="attachment_1098" style="width: 310px" class="wp-caption alignleft"><a href="/wp-content/uploads/2018/04/telekom-kundencenter.png" data-slb-active="1" data-slb-asset="2564967547" data-slb-internal="0" data-slb-group="4510"><img aria-describedby="caption-attachment-1098" decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/telekom-kundencenter.png" alt="Startseite des Telekom Kundencenter" width="300" height="160" class="size-medium wp-image-1098" /></a><p id="caption-attachment-1098" class="wp-caption-text">Startseite des Telekom Kundencenter</p></div>
+
+<p>Als nächstes loggen Sich sich im <a href="https://www.telekom.de/hilfe/kundencenter">Telekom Kundencenter</a> ein. Auch hier benötigen Sie für den Login Ihre <i>T-Online-Nummer</i> und Ihr <i>persönliches Kennwort</i>. </p>
+
+<p>Suchen Sie nach dem Login im Kundencenter den Bereich &#8216;Kundencenter Festnetz&#8217; und dort nach dem Link <i>Telefonie Einstellungen vornehmen</i>. Klicken Sie diesen an und warten Sie bis die Seite neu geladen wurde. (Jenachdem welches Vertragspaket Sie bei der Telekom gebucht haben, kann die erste Seite des Kundencenters bei Ihnen anders aussehen.) </p>
+
+&nbsp;
+
+<div id="attachment_1099" style="width: 310px" class="wp-caption alignleft"><a href="/wp-content/uploads/2018/04/suche-my-login.png" data-slb-active="1" data-slb-asset="2114817987" data-slb-internal="0" data-slb-group="4510"><img aria-describedby="caption-attachment-1099" decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/suche-my-login.png" alt="Suche nach MyLogin im Telekom Kundencenter" width="300" height="133" class="size-medium wp-image-1099" /></a><p id="caption-attachment-1099" class="wp-caption-text">Suche nach MyLogin im Telekom Kundencenter</p></div>
+
+<p>Die Webseite verändert sich nun und bietet Ihnen auch eine Suchzeile im rechten oberen Eck. Tragen Sie dort <i>MyLogin</i> ein und bestätigen Sie die Suche mit der <i>Return-Taste</i>. In den Suchergebnissen sehen Sie nun einen Punkt <i>Login-Einstellungen</i>. Klicken Sie diesen an.</p>
+
+&nbsp;
+
+&nbsp;
+
+<div id="attachment_1100" style="width: 310px" class="wp-caption alignleft"><a href="/wp-content/uploads/2018/04/my-login-deaktiviert.png" data-slb-active="1" data-slb-asset="2385415541" data-slb-internal="0" data-slb-group="4510"><img aria-describedby="caption-attachment-1100" decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/my-login-deaktiviert.png" alt="Deaktivierung von MyLogin im Telekom Kundencenter" width="300" height="106" class="size-medium wp-image-1100" /></a><p id="caption-attachment-1100" class="wp-caption-text">Deaktivierung von MyLogin im Telekom Kundencenter</p></div>
+
+<p>Nun sind Sie endlich in den richtigen Einstellungen. Deaktivieren Sie den <i>automatischen Login</i> durch Auswahl der entsprechenden Auswahlbox. Bleibt diese als Komfortfunktion gedachte Einstellung aktiv, kann sich die Askozia nicht an dem VoIP-Trunk der Telekom anmelden.</p>
+
+<p>Nun sind alle Einstellungen in den Systemen der Telekom abgeschlossen. Als nächstes sind die Einstellungen in der Askozia an der Reihe.</p>
+
+<h2>3. Konfiguration von DeutschlandLAN IP in der Askozia</h2>
+
+<p>Sollten Sie die Askozia nicht bereits auf die neueste Version aktualisiert haben, ist jetzt der richtige Zeitpunkt, dies zu tun. Die vollständige Konfiguration von DeutschlandLAN IP Verträgen der Deutschen Telekom ist erst mit Version 4.1.5 in der Askozia hinzugekommen. Vergessen Sie nicht, vor dem Update ein Backup Ihrer Konfiguration durchzuführen.</p>
+
+<div id="attachment_1113" style="width: 310px" class="wp-caption alignleft"><a href="/wp-content/uploads/2018/04/askozia-deutschlandLAN.png" data-slb-active="1" data-slb-asset="3965716809" data-slb-internal="0" data-slb-group="4510"><img aria-describedby="caption-attachment-1113" decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/askozia-deutschlandLAN.png" alt="DeutschlandLAN als Provider in der Askozia eintragen" width="300" height="163" class="size-medium wp-image-1113" /></a><p id="caption-attachment-1113" class="wp-caption-text">DeutschlandLAN als Provider in der Askozia eintragen</p></div>
+
+<p>Als nächstes wechseln Sie zum Navigationspunkt <i>Provider</i>, den Sie in der Seitennavigation unter <i>Accounts</i> finden. Dort legen Sie einen neuen Provider an und wählen als Voreinstellung <i>t-online Deutschland LAN</i> aus. Dies führt dazu, dass bereits einige Felder im Provider mit Informationen gefüllt werden und die Einrichtung leichter von der Hand geht.</p>
+
+<p>Ein paar Anpassungen gilt es aber dennoch manuell vorzunehmen: Tragen Sie die <i>Hauptrufnummer ihres Anschlußes</i> als Benutzername und das <i>persönliche Kennwort</i> als Passwort ein. Dann öffnen Sie den Abschnitt <i>Advanced Options</i> und tragen Sie die folgenden Informationen ein:</p>
+
+<ul>
+<li>Public Access = [X]</li>
+<li>Register Separately = [X]</li>
+<li>Qualify Frequency = 600</li>
+<li>Qualify = 600</li>
+<li>NAT = never attempt NAT mode</li>
+<li>Session Timer = refuse</li>
+<li>Manual Attributes = <i>leeren Sie dieses Feld</i></li>
+</ul>
+
+<p>Wenn Sie nun den Provider speichern, sollten Sie nach kurzer Zeit einen grünen Punkt vor dem Namen des Providers sehen. Dies zeigt, dass die Askozia sich erfolgreich mit der Telekom verbunden hat. </p>
+
+<h2>Wenn die Einrichtungshürden überwunden sind</h2>
+
+<p>Nun können Sie die Askozia in beliebiger Art und Weise konfigurieren und auf sämtliche Funktionalitäten zurückgreifen. Auch wenn die Hürden zur ersten Konfiguration eines DeutschlandLAN IP Anschlusses der Telekom abschreckend wirken möchten, so betreuen wir zahlrieche Kunden, die mit diesem Vertrag zuverlässig telefonieren und arbeiten können.</p>
+
+<p>Haben Sie Fragen zum DeutschlandLAN IP Vertrag der Telekom, zur Askozia oder zu unserem ionas-Server Small Business? Dann rufen Sie uns an über die +49 6131 3270777. Wir beraten Sie gerne und helfen Ihnen, Ihre VoIP-Telefonanlage in Ihrem Unternehmen zu implementieren.</p>

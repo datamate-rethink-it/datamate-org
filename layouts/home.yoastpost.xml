@@ -1,0 +1,1 @@
+{{- partial "urlset.html" (where site.RegularPages "Section" "blog") -}}

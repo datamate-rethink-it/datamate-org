@@ -1,0 +1,12 @@
+{{- /* Die Autorenbox unter jedem Beitrag. Im WordPress stand der Text in
+       der Benutzerverwaltung, hier in data/autoren.json. */ -}}
+{{- $a := index hugo.Data.autoren .Params.autor_kurz -}}
+                  <!-- Post Author Info	============================================= -->
+<div class="team team-list clearfix">
+	<div class="team-image" style="width: 96px;">
+			</div>
+	<div class="team-desc">
+		<div class="team-title"><span>geschrieben von</span><h4 class="nobottommargin">{{ $a.name }}</h4></div>
+		<div class="team-content">{{ $a.beschreibung }}</div>
+	</div>
+</div>

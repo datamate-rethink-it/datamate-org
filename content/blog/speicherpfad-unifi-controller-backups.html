@@ -1,0 +1,70 @@
++++
+title = "Speicherpfad des Unifi Controller Backups ändern"
+titel_html = "Speicherpfad des Unifi Controller Backups ändern | datamate"
+ueberschrift = "Speicherpfad des Unifi Controller Backups ändern"
+beschreibung = "Die Konfigurationsdatei des Unifi Controllers sollte regelmäßig gesichert werden. Der Artikel erklärt, wie man den Speicherpfad des Backups konfiguriert."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2019/10/unifi-controller.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/speicherpfad-unifi-controller-backups/"
+canonical = "https://www.datamate.org/speicherpfad-unifi-controller-backups/"
+og_bild_breite = "1460"
+og_bild_hoehe = "1036"
+og_bild_typ = "image/png"
+veroeffentlicht = "2019-10-01T20:37:56+00:00"
+geaendert = "2025-02-21T08:10:03+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "2 Minuten"
+beitragsbild = "/wp-content/uploads/2019/10/unifi-controller.png"
+bild_breite = 1460
+bild_hoehe = 1036
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Speicherpfad des Unifi Controller Backups ändern", item = ""}]
+wortzahl = 356
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["praktische-anwendungsfaelle", "software", "unsere-produkte"]
+schlagwoerter = ["Backup", "Fellow", "Homie", "Netzwerk", "Ubiquiti", "Unifi"]
+wp_id = 6251
+slug = "speicherpfad-unifi-controller-backups"
+url = "/speicherpfad-unifi-controller-backups/"
+date = "2019-10-01T22:37:56"
+lastmod = "2025-02-21T09:10:03"
+datum_utc = "2019-10-01T20:37:56+00:00"
+geaendert_utc = "2025-02-21T08:10:03+00:00"
+lightbox = true
++++
+						<p>Wenn man Zuhause oder im Büro auf Netzwerktechnik von Ubiquiti setzt, benötigt man zwingend zur Konfiguration einen Unifi Controller. Dieser kann entweder in Form eines Cloud Keys oder eines installieren Cloud Controllers bereit gestellt werden. Für alle Besitzer eines Homies oder Fellows liegt es nahe, den Cloud Controller auf dem Ubuntu Serversystem zu installieren und die aktuelle Konfiguration des Unifi Controllers in das automatische Backup des datamate Cockpits aufzunehmen. Dieser Artikel beschreibt, wie man den Speicherort des automatischen Unifi Controller Backups unter Ubuntu Linux ändert und ist somit für <a href="/homie">Homie</a> und <a href="/fellow">Fellow</a> als auch alle anderen Debian-basierten Linux Distributionen gültig.</p>
+
+<span id="more-6251"></span>
+
+<h2>Keine Änderung des Speicherorts im Unifi Controller</h2>
+
+<a href="/wp-content/uploads/2019/10/settings.auto_backup.png" data-slb-active="1" data-slb-asset="1708872200" data-slb-internal="0" data-slb-group="6251"><img decoding="async" width="1437" height="673" src="/wp-content/uploads/2019/10/settings.auto_backup.png" alt="Unifi Controller Auto Backup" class="alignleft size-medium wp-image-6252" srcset="/wp-content/uploads/2019/10/settings.auto_backup.png 1437w, /wp-content/uploads/2019/10/settings.auto_backup-300x141.png 300w, /wp-content/uploads/2019/10/settings.auto_backup-768x360.png 768w, /wp-content/uploads/2019/10/settings.auto_backup-1024x480.png 1024w" sizes="(max-width: 1437px) 100vw, 1437px" /></a>
+
+<p>In den Einstellungen des Unifi Controllers findet man den Reiter <i>Auto Backup</i>. In diesem Bereich kann man festlegen, wie häufig und wieviele Backups angelegt werden. Diese Backups werden normalerweise an den folgenden Stellen gespeichert:</p>
+
+<ul style="padding-left: 20px;">
+<li>/data/autobackup (bei Cloud Keys)</li>
+<li>{data.dir}/backup/autobackup (bei Software Installationen)</li>
+</ul>
+<p>Leider bietet der Unifi Controller aber keine direkte Möglichkeit, den Speicherpfad zu ändern.</p>
+
+<h2>Backupziel bequem per Konfigurationsdatei ändern</h2>
+<p>Die Änderung des Backuppfads muss in der Datei <i>system.properties</i> vorgenommen werden. Die Datei findet sich typischerweise im Verzeichnis <i>/var/lib/unifi</i>. In dieser Datei genügt die Ergänzung des folgenden Parameters, um das Backup zukünftig an diesem Speicherort abzuspeichern:</p>
+
+<code><pre>autobackup.dir=/some/path/</pre></code>
+
+<p>Es ist natürlich darauf zu achten, dass der Unifi Systembenutzer Schreibrechte auf diesen Ordner hat, da ansonsten das Backup dort nicht angelegt werden kann. Im Falle von Homie und Fellow kann man also die folgenden Befehle verwenden, um das regelmäßige Konfigurationsbackup des Unifi Controllers in den normalen Backuplauf aufzunehmen:</p>
+
+<code><pre>
+$ mkdir /media/disk/unifi_backup
+$ chown unifi: /media/disk/unifi_backup
+$ echo "autobackup.dir=/media/disk/unifi_backup/" >> /var/lib/unifi/system.properties</pre></code>
+
+<p>Mit diesen drei Befehlen wird zuerst ein neues Verzeichnis angelegt, dieses dann mit den entsprechenden Berechtigungen versehen und zu guter Letzt wird der neue Speicherort in der Konfigurationsdatei hinzugefügt.</p>
+
+<h2>Zuverlässige Sicherung der Unifi Controller Konfiguration</h2>
+
+<p>Mit diesen einfachen Schritten hat man die Konfiguration des Unifi Controllers in den regelmäßigen Backuplauf von Homie und Fellow aufgenommen. Wer mehr über die Möglichkeiten der <i>system.properties</i> erfahren möchte, findet zusätzliche Informationen auf den <a href="https://help.ubnt.com/hc/en-us/articles/205202580" target="_blank" rel="noopener noreferrer">Hilfeseiten von Unifi</a>.</p>

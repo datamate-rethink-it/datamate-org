@@ -1,0 +1,57 @@
++++
+title = "Kontaktsynchronisation unter Mac OS El Capitan mit CardDAV"
+titel_html = "Kontaktsynchronisation unter Mac OS El Capitan mit CardDAV | datamate"
+ueberschrift = "Kontaktsynchronisation unter Mac OS El Capitan mit CardDAV"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/04/Bildschirmfoto-2015-10-14-um-11.36.36.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/kontaktsynchronisation-unter-mac-os-el-capitan-mit-carddav/"
+canonical = "https://www.datamate.org/kontaktsynchronisation-unter-mac-os-el-capitan-mit-carddav/"
+veroeffentlicht = "2015-10-13T20:48:59+00:00"
+geaendert = "2025-02-21T08:10:55+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "3 Minuten"
+bild_breite = 533
+bild_hoehe = 474
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Kontaktsynchronisation unter Mac OS El Capitan mit CardDAV", item = ""}]
+wortzahl = 478
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["anleitungen"]
+schlagwoerter = []
+wp_id = 4437
+slug = "kontaktsynchronisation-unter-mac-os-el-capitan-mit-carddav"
+url = "/kontaktsynchronisation-unter-mac-os-el-capitan-mit-carddav/"
+date = "2015-10-13T22:48:59"
+lastmod = "2025-02-21T09:10:55"
+datum_utc = "2015-10-13T20:48:59+00:00"
+geaendert_utc = "2025-02-21T08:10:55+00:00"
+lightbox = true
++++
+						<a href="/wp-content/uploads/2018/04/Bildschirmfoto-2015-10-14-um-11.36.36.png" data-slb-active="1" data-slb-asset="1408968607" data-slb-internal="0" data-slb-group="4437"><img decoding="async" class="alignnone size-medium wp-image-314" src="/wp-content/uploads/2018/04/Bildschirmfoto-2015-10-14-um-11.36.36.png" alt="Bildschirmfoto 2015-10-14 um 11.36.36" width="300" height="267" style="float:Left;padding: 0px 20px 0px 0px" /></a>
+
+<p>Seit dem 30. September 2015 ist das neue Betriebssystem von Apple mit dem Namen El Capitan auf dem Markt. Wie bei jedem Launch einer neuen Software gibt es auch bei El Capitan hier und da Startschwierigkeiten. Ein aus unserer Sicht besonders ärgerliches Problem ist das geänderte Verhalten der Kontakte App bei der Kontaktsynchronisation mit einem fremden Server. Das mag bei einer einfachen Synchronisation mit iCloud oder Gmail nicht weiter tragisch sein, problematisch wird es wenn man seinen eigenen Webserver nutzt, um Kontakte zu synchronisieren. In diesem kurzen Artikel erläutern wir den Fehler, gehen auf den Grund ein und zeigen auf, wie sich der Fehler vergleichsweise einfach beheben lässt.</p>
+
+<span id="more-4437"></span>
+<h2>Ursachen der Synchronisationsprobleme mit CardDAV</h2>
+<p>Apple verwendet in der neuen Version einen PROPFIND Request, um Daten vom Server zu erhalten. Der PROPFIND Request selbst ist nicht das Problem, denn damit kann jeder Webserver umgehen. Das Problem ist, dass alle solche Anfragen der Kontakte App, an den Server auf die Adresse <strong>/.well-known/carddav</strong> laufen. Die Kontakte App ignoriert schlicht und einfach den in den App-Einstellungen eingegebenen Pfad des Anwenders für die Kontaktsynchronisation. Wir setzen bei unserem ionas-Server auf DAViCal, welches Aufrufe auf den Pfad &#8220;/dav/caldav.php&#8221; erwartet. So sind wir auf dieses Problem gestoßen.</p>
+
+<p>Natürlich kann man davon ausgehen, dass Apple diesbezüglich bald ein Update herausbringt, welches das Problem behebt. Doch was macht man in der Zwischenzeit? Was ist, wenn man auf die Kontaktsynchronisation angewiesen ist?</p>
+<h2>Lösungsansatz Redirect</h2>
+<p>Eine vorübergehende Lösung für das Problem ist ein serverseitiger Redirect im Webserver. Dieser Redirect sorgt dafür, dass die fehlerhaften Anfragen auf den korrekten Pfad weitergeleitet werden. Wichtig ist dabei, dass man seine neue Konfiguration an die richtige Stelle schreibt.</p>
+<h3>Konfiguration des Webservers NGINX</h3>
+<p>In den Server Block der NGINX default Datei fügen Sie folgende Zeile ein:</p>
+<pre>rewrite ^/.well-known/carddav /PFAD_ZUR_DAVICAL.PHP permanent;
+rewrite ^/.well-known/login.php /PFAD_ZUR_DAVICAL.PHP permanent;</pre>
+<p>Wichtig: Der String &#8220;PFAD_ZUR_DAVICAL.PHP&#8221; muß natürlich Ihrem Serverpfad entsprechen. Danach den NGINX Server neu starten und die Synchronisation der Kontakte funktioniert wieder einwandfrei.</p>
+<h3>Konfiguration des Webservers Apache</h3>
+<p>Apache verarbeitet die Redirect Kommandos anders als NGINX. Wenn Sie einen Apache Webserver nutzen, fügen Sie folgende Zeile in die .htaccess Datei ein.</p>
+<pre>RewriteRule ^/.well-known/carddav(.*) /PFAD_ZUR_DAVICAL.PHP$1 [R]
+RewriteRule ^/.well-known/login.php /PFAD_ZUR_DAVICAL.PHP$1 [R]</pre>
+<p>Danach den Apache Server neu Starten und die Synchronisation des Adressbuches sollte danach wieder zuverlässig funktionieren. (Für NGINX haben wir den Code getestet, für Apache hatten wir keine Möglichkeit dies zu tun.)</p>
+<h2>Fazit</h2>
+<p>In den seltensten Fällen kommt eine neue Software ohne Probleme auf den Markt. Das gilt besonders für neue Betriebssysteme, wobei Microsoft einen deutlich schlechteren Ruf hat als Apple. Aber auch Apple zeigt in diesem Fall mal wieder, dass seine Entwickler anscheinend keine Probleme damit haben, gängige Standards ohne Ankündigung zu ändern.</p>
+
+<p>Es ist jedoch beruhigend zu wissen, dass man mit etwas Einfallsreichtum auch bei solchen Problemen zu einer Lösung kommt.</p>

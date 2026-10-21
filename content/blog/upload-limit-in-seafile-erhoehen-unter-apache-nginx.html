@@ -1,0 +1,143 @@
++++
+title = "Upload Limit in Seafile erhöhen unter Apache und Nginx"
+titel_html = "Upload Limit in Seafile erhöhen unter Apache und Nginx | datamate"
+ueberschrift = "Upload Limit in Seafile erhöhen unter Apache und Nginx"
+beschreibung = "In diesem Beitrag zeigen wir Ihnen kurz und bündig, wie sie auch für die Benutzung im Browser das Upload Limit in Seafile erhöhen"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_typ = "article"
+og_url = "https://www.datamate.org/upload-limit-in-seafile-erhoehen-unter-apache-nginx/"
+canonical = "https://www.datamate.org/upload-limit-in-seafile-erhoehen-unter-apache-nginx/"
+veroeffentlicht = "2016-04-22T13:51:08+00:00"
+geaendert = "2025-02-21T08:10:52+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "5 Minuten"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Upload Limit in Seafile erhöhen unter Apache und Nginx", item = ""}]
+wortzahl = 827
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["seafile"]
+schlagwoerter = ["apache", "nginx", "seafile", "upload"]
+wp_id = 2887
+slug = "upload-limit-in-seafile-erhoehen-unter-apache-nginx"
+url = "/upload-limit-in-seafile-erhoehen-unter-apache-nginx/"
+date = "2016-04-22T15:51:08"
+lastmod = "2025-02-21T09:10:52"
+datum_utc = "2016-04-22T13:51:08+00:00"
+geaendert_utc = "2025-02-21T08:10:52+00:00"
++++
+						<p><img decoding="async" class="size-medium wp-image-618 alignright" style="padding: 20px;" src="/wp-content/uploads/2017/10/Seafile-logo.png" alt="Seafile Logo" />Als Dateiaustauschplattform und für die Synchronisation von Dateien eignet sich <a href="/seafile">Seafile</a> sowohl im Einzelbenutzerbetrieb als auch für Arbeitsgruppen hervorragend als <a href="/dropbox-alternative">Alternative zu Dropbox</a> oder Google Drive. Mit dem Seafile Client können Dateien beliebiger Größe mit dem Server synchronisiert werden. Wer jedoch Dritten einen Upload über das Webinterface Seahub ermöglichen möchte, der stößt möglicherweise schnell an die Grenzen des Webservers. In diesem Artikel beschreiben wir, wie Sie das Upload Limit in Seafile mit Hilfe der <i>max_upload_size</i> Direktive verändern und was Sie dabei beachten müssen.</p>
+
+<span id="more-2887"></span>
+
+<h2>Änderung des Upload Limits in Seafile in zwei Schritten</h2>
+<p>Um die maximal zugelassene Größe für einen Upload über das Webinterface Seahub in Seafile zu verändern, müssen sowohl Änderungen in der Seafile- als auch in der Webserver-Konfiguration vorgenommen werden. Zunächst erklären wir die Konfigurationsänderungen von Seafile und erläutern dann, welche Anpassungen am Webserver vorzunehmen sind. Wir gehen in diesem Artikel auf den Apache Webserver und seinen stärksten Konkurrenten Nginx ein.</p>
+
+<h3>1. Anpassung der Seafile Server-Konfiguration</h3>
+<p>Die Anpassung des File Size Limits erfolgt über die Konfigurationsdatei des Seafile-Webservers. Soll die maximale Dateigröße für Uploads zum Beispiel auf 100MB verkleinert werden, so muss in der Config-Datei Folgendes ergänzt werden:</p>
+
+<pre>[fileserver]
+max_upload_size=100
+</pre>
+
+<p>Ist der Eintrag für <i>[fileserver]</i> in der Konfigurationsdatei bereits vorhanden, dann muss dieser natürlich nur um die entsprechende Option erweitert werden. Da die Größe von Seafile ausschließlich in Megabyte zugelassen wird, ist außer der Zahl nichts weiter hinzuzufügen. Nach einem Neustart wird diese Änderung aktiv.</p>
+
+<p>Zur Erhöhung des Uploadlimits sind analoge Einträge notwendig. Möchte man zum Beispiel eine maximale Dateigröße von 3GB zulassen, dann muss <i>max_upload_size</i> einfach auf den Wert 3072 gesetzt werden.</p>
+
+<p>Wie in der <a href="http://manual.seafile.com">Seafile Dokumentation</a> beschrieben, müssen die Einstellungsänderungen in der Datei <i>seafile.conf</i> vorgenommen werden, welche sich bis zur Seafile Version 4 noch im Ordner &#8220;seafile-data&#8221; befand, ab Version 5 aber mit allen anderen Konfigurationsdateien in den Ordner &#8220;conf&#8221; verschoben wurde. Einige Tests zeigten, dass scheinbar eine Fallback-Funktion besteht, die den gleichen Eintrag auch in der Datei ccnet.conf akzeptiert, sollte in der seafile.conf kein Eintrag vorhanden sein.</p>
+	
+<h3>2. Anpassung der Webserver-Konfiguration</h3>
+
+<p>Abhängig vom eingesetzten Webserver muss die maximal zulässige Größe des <i>HTTP Request Body</i> ebenfalls angepasst werden.</p>
+
+<h4>2a. Apache Webserver</h4>
+<p style="text-align: justify;">Bei Apache Webservern regelt die <i>LimitRequestBody</i> Direktive die maximale Größe des HTTP Requests. Dieser Wert ist bei Apache standardmäßig auf den Wert „0“ eingestellt, was „keine Begrenzung“ bedeutet. (Hinweis: Der Vollständigkeit wegen soll an dieser Stelle erwähnt werden, dass der maximal zulässige Wert erst ab Apache Version 2.2 wirklich unbegrenzt ist. Bei den Vorgängerversionen lag das Limit bei 2Gigabyte.)
+Eine Standardinstallation gemäß Seafile Manual mit der genannten Anpassung sähe folgendermaßen aus:</p>
+
+<pre>&lt;VirtualHost *:80&gt;
+ServerName www.myseafile.com
+DocumentRoot /var/www
+Alias /media /home/user/haiwen/seafile-server-latest/seahub/media
+
+RewriteEngine On
+
+&lt;Location /media&gt;
+Require all granted
+&lt;/Location&gt;
+
+#
+# seafile fileserver
+#
+ProxyPass /seafhttp http://127.0.0.1:8082
+ProxyPassReverse /seafhttp http://127.0.0.1:8082
+RewriteRule ^/seafhttp - [QSA,L]
+LimitRequestBody 104857600
+
+#
+# seahub
+#
+SetEnvIf Request_URI . proxy-fcgi-pathinfo=unescape
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+ProxyPass / fcgi://127.0.0.1:8000/
+&lt;/VirtualHost&gt;
+</pre>
+&nbsp;
+
+<h4>2b. Nginx Webserver</h4>
+
+<p>Beim Einsatz von Nginx wird die Begrenzung durch das Modul <i>client_max_body_size</i> konfiguriert. Der gewünschte Wert wird in diesem Fall in Megabyte angegeben. Die Kennzeichnung mit &#8220;M&#8221; für Megabyte ist dennoch obligatorisch. Für 2GB entspräche dies also „2048M“.</p>
+
+<p>Das Seafile Handbuch enthält bereits eine vollständige Nginx-Konfiguration:</p>
+<pre>server {
+  listen 80;
+  server_name www.myseafile.com;
+
+  proxy_set_header X-Forwarded-For $remote_addr;
+
+  location / {
+    fastcgi_pass 127.0.0.1:8000;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_param PATH_INFO $fastcgi_script_name;
+    fastcgi_param SERVER_PROTOCOL $server_protocol;
+    fastcgi_param QUERY_STRING $query_string;
+    fastcgi_param REQUEST_METHOD $request_method;
+    fastcgi_param CONTENT_TYPE $content_type;
+    fastcgi_param CONTENT_LENGTH $content_length;
+    fastcgi_param SERVER_ADDR $server_addr;
+    fastcgi_param SERVER_PORT $server_port;
+    fastcgi_param SERVER_NAME $server_name;
+    fastcgi_param REMOTE_ADDR $remote_addr;
+
+    access_log /var/log/nginx/seahub.access.log;
+    error_log /var/log/nginx/seahub.error.log;
+    fastcgi_read_timeout 36000;
+  }
+
+  location /seafhttp {
+    rewrite ^/seafhttp(.*)$ $1 break;
+    proxy_pass http://127.0.0.1:8082;
+    client_max_body_size 0;
+    proxy_connect_timeout 36000s;
+    proxy_read_timeout 36000s;
+    proxy_send_timeout 36000s;
+    send_timeout 36000s;
+  }
+
+  location /media {
+    root /home/user/haiwen/seafile-server-latest/seahub;
+  }
+}
+</pre>
+
+<h2>Sicherheitshinweis: Gefahr durch höheres Seafile-Upload Limit</h2>
+
+<p>Bevor Einstellungen an Seafile und auch am Webserver verändert werden, um das Upload Limit in Seafile zu erhöhen, sollte zunächst genau überlegt werden, ob der Vorteil, der durch die Änderung erzielt werden soll, die Nachteile überwiegt. Eine Veränderung der zulässigen Größe für einen HTTP Request Body hat zur Folge, dass große Requests nicht mehr sofort verworfen, sondern zunächst vollständig vom Webserver empfangen werden. Die Erhöhung des File Size Limits in Seafile machen einen Webserver somit leicht angreifbar, da er bereits mit einer geringen Anzahl gleichzeitiger Anfragen in die Knie gezwungen werden kann. Auch ist die Wahl des passenden Timeouts eine schwierige Aufgabe, da die schwankende Bandbreite oder systeminterne Prozesse die Fertigstellung eines Uploads beeinflussen können.</p>
+
+<h2>Fazit</h2>
+
+<p>Eine moderate Erhöhung des Upload Limits in Seafile ist ohne weiteres möglich. Mehr als eine Ergänzung in der Seafile-Konfigurationsdatei und eine Anpassung der der Webserver-Einstellungen sind nicht notwendig.</p>
+
+<p>Wenn man das File Size Limit in Seafile deutlich erhöht, dann kann es dennoch bei großen Uploads zu Abbrüchen kommen. In diesen Fällen gilt es, Buffering und Timeouts des Webservers so zu konfigurieren, dass ihm genügend Zeit für Empfang und Verarbeitung der Daten zur Verfügung bleibt. In manchen Webservern sind die dazu notwendigen Konfigurationseinstellungen aber erst ab höheren Versionen verfügbar. Den jeweiligen Webserver gilt es jedoch mit Bedacht zu konfigurieren, da man damit ein nicht geringes Sicherheitsrisiko eingeht.</p>
+
+<p>Für Fragen rund um Seafile steht Ihnen das ionas-Team gerne an 7 Tagen die Woche zur Verfügung: +49 (0)6131 3270777. Wenn Sie Seafile privat oder in Ihrem Unternehmen nutzen möchten, dann haben wir mit unseren ionas-Servern eine komfortable Implementierungsoption.</p>

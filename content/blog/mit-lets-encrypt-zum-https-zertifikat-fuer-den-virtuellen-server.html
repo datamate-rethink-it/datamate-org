@@ -1,0 +1,158 @@
++++
+title = "Mit Let’s Encrypt zum HTTPS-Zertifikat für den virtuellen Server"
+titel_html = "Mit Let&#039;s Encrypt zum HTTPS-Zertifikat für den virtuellen Server | datamate"
+ueberschrift = "Mit Let&#8217;s Encrypt zum HTTPS-Zertifikat für den virtuellen Server"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/04/certificate_authority_lets_encrypt.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/"
+canonical = "https://www.datamate.org/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/"
+veroeffentlicht = "2016-07-20T09:20:34+00:00"
+geaendert = "2025-02-21T08:10:51+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "3 Minuten"
+bild_breite = 790
+bild_hoehe = 667
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Mit Let&#8217;s Encrypt zum HTTPS-Zertifikat für den virtuellen Server", item = ""}]
+wortzahl = 591
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["uncategorized"]
+schlagwoerter = []
+wp_id = 4490
+slug = "mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server"
+url = "/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/"
+date = "2016-07-20T11:20:34"
+lastmod = "2025-02-21T09:10:51"
+datum_utc = "2016-07-20T09:20:34+00:00"
+geaendert_utc = "2025-02-21T08:10:51+00:00"
+lightbox = true
++++
+						<p>Bis vor wenigen Monaten war der Erwerb eines sicheren (d.h. grünen HTTPS-Zertifikats) noch eine teure Angelegenheit. Privatpersonen oder kleinere Firmen scheuten die Investition von mindestens 100 € pro Jahr und Domain und gaben sich mit dem ungesicherten http oder einem selbst signierten Zertifikat zufrieden. Doch seit dem 12. April 2016 ist dieser Zustand nun vorbei. Mit Hilfe von <i>Let&#8217;s Encrypt</i> kann sich nun jeder ein sicheres Zertifikat für seine Domains und auch Subdomains besorgen.</p>
+
+<p>In diesem Artikel wollen wir ein paar Hintergründe zu <i>Let&#8217;s Encrypt</i> liefern und am Ende zeigen, wie Beantragung und Verlängerung von <i>Let&#8217;s Encrypt</i>-Zertifikaten unter Ubuntu funktioniert. Wir werden dabei auf das offizielle Tool <i>certbot</i> und die Authorisierungsmethode <i>standalone</i> von <i>Let&#8217;s encrypt</i> eingehen.</p>
+
+<span id="more-4490"></span>
+<h2>Ein bisschen Geschichtswissen zu Let&#8217;s Encrypt</h2>
+<p>Spätestens seit den Snowden-Enthüllungen im Jahre 2013 ist klar, dass weltweit der Internetverkehr abgefangen und ausgewertet wird. Kaum ein Jahr später, im November 2014, erblickte die <i>Internet Security Research Group (ISRG)</i> das Licht der Welt und versprach freie und sichere SSL-Zertifikate für alle Serverbetreiber. Gründungsmitglieder der ISRG waren Branchengrößen wie die Mozilla Corporation, Cisco Systems, Akamai Technologies, die Electronic Frontier Foundation, IdenTrust sowie Forscher der University of Michigan. Die ISRG sprach in ihrem ersten Blogeintrag am 18. November 2014 davon, dass &#8220;alle verschlüsseln sollten&#8221; und dass &#8220;die Herausforderung in den Zertifikate liegt&#8221;.<p>
+<blockquote><i>Vital personal and business information flows over the Internet more frequently than ever, and we don’t always know when it’s happening. It’s clear at this point that encrypting is something all of us should be doing. Then why don’t we use TLS (the successor to SSL) everywhere? Every browser in every device supports it. Every server in every data center supports it. Why don’t we just flip the switch?</i>
+
+The challenge is server certificates. The anchor for any TLS-protected communication is a public-key certificate which demonstrates that the server you’re actually talking to is the server you intended to talk to. For many server operators, getting even a basic server certificate is just too much of a hassle. The application process can be confusing. It usually costs money. It’s tricky to install correctly. It’s a pain to update.
+
+Let’s Encrypt is a new free certificate authority, built on a foundation of cooperation and openness, that lets everyone be up and running with basic server certificates for their domains through a simple one-click process.
+(aus dem Blogeintrag <a href="https://letsencrypt.org/2014/11/18/announcing-lets-encrypt.html" target="_blank" rel="noopener">https://letsencrypt.org/2014/11/18/announcing-lets-encrypt.html</a>)</blockquote>
+<p>Das ursprüngliche angepeilte Ziel des Go-Lives der ISRG vom zweiten Quartal 2015 wurde zwar verfehlt, aber mittlerweile ist Let&#8217;s Encrypt für den produktiven Betrieb geeignet.</p>
+<h2>Pro und Contra von HTTPS</h2>
+<p>Wenn man seine Webseite per HTTPS ausliefert, profitieren die Seitenbesucher und man selbst. Der Vorteil für die Kunden ist der offensichtliche: Sie können dank SSL-/TLS-Zertifikate nun verschlüsselt mit der Webseite kommunizieren.  Man selbst wird durch einen kleinen Boost des Google Webseiten-Ranking belohnt. Natürlich kann sich mit der zunehmenden Verbreitung von HTTPS-Zertifikaten dieser positive Ranking-Faktor nivellieren, aktuell ist die Verwendung von einem Zertifikat jedoch definitiv ein Plus im Bewertungsalgorithmus von Google.</p>
+
+<p>Zusätzlich lässt sich sagen, dass ein grünes Schloss in der URL-Leiste auch Vertrauen bei den Besuchern einer Webseite schafft und ab sofort eher zum Standard als zur Ausnahme gehören sollte.</p>
+
+<p>Grundsätzlich gibt es kein Argument, was gegen den Einsatz eines HTTPS-Zertifikats spricht. Die Ladegeschwindigkeit der Seite bleibt gleich, jeder Browser kann damit umgehen und auch sonst will einfach kein Grund dagegen einfallen.</p<
+<h2>Wie funktioniert Let&#8217;s Encrypt?</h2>
+<p>Im Zentrum von <i>Let&#8217;s Encrypt</i> steht eine Zertifizierungsstelle (Certificate Authority oder CA), die Domain-Inhabern kostenlos ein SSL-Zertifikat ausstellt. Dabei handelt es sich um <i>Domain-Validated-Zertifikate</i>, die für die meisten Zwecke ausreichen. Um so ein Zertifikat zu erhalten, muss man gegenüber der CA lediglich beweisen, dass man eine Domain (oder auch Subdomain) unter Kontrolle. Wenn man diesen Nachweis erbringen kann, dann erhält man ein Zertifikat. Hierfür gibt es verschiedene Methoden, auf die wir im späteren Verlauf des Textes noch eingehen werden.</p>
+
+<div id="attachment_939" style="width: 800px" class="wp-caption alignleft"><a href="/wp-content/uploads/2018/04/certificate_authority_lets_encrypt.png" data-slb-active="1" data-slb-asset="801117108" data-slb-internal="0" data-slb-group="4490"><img aria-describedby="caption-attachment-939" decoding="async" class="size-full wp-image-939" src="/wp-content/uploads/2018/04/certificate_authority_lets_encrypt.png" alt="Die ausgestellten Zertifikate der &quot;Let's Encrypt Authority X3&quot; werden von den gängigen Browsern akzeptiert." width="790" /></a><p id="caption-attachment-939" class="wp-caption-text">Die ausgestellten Zertifikate der &#8220;Let&#8217;s Encrypt Authority X3&#8221; werden von den gängigen Browsern akzeptiert.</p></div>
+
+<p>Das besondere an diesen Zertifikaten ist, dass die Client Authority von Let&#8217;s Encrypt automatisch von jedem Browser akzeptiert wird. Ganz im Gegensatz zu selbst erzeugten Zertifikaten. Hier ist man selbst die eigene CA, welche aber von keinem Browser als vertrauenswürdig akzeptiert wird und daher vermutet jeder Browser ein Risiko hinter dem Aufruf einer Seite mit einem selbst signierten Zertifikat.</p>
+
+<p>Dazu muss man wissen, dass jedes Betriebssystem eine Liste von beglaubigten CAs verwaltet. Diese Liste gibt an, welchem Aussteller eines Zertifikats automatisch vertraut wird und welchem nicht. Da natürlich nur wenige Firmen diesen Status des Vertrauens genießen, ließ man sich die Beglaubigung eines Zertifikats bisher gut bezahlen. Mit der <i>Let&#8217;s Encrypt Authority</i> ist aber nun auch eine Zertifizierungsstelle in der Liste jedes Browsers und Betriebssystems enthalten, die eben kein Geld für die Beglaubigung der Zertifikate verlangt.</p>
+
+<p>Die zweite Besonderheit ist der automatische Beglaubigungsprozess, welches es ermöglicht ohne menschliches Eingreifen auf Seiten der CA <i>Let&#8217;s-Encrypt-Zertifikate</i> zu erstellen. Um dies zu erreichen, installiert man auf seinem Server den <i>Let&#8217;s-Encrypt-Client</i>, der über das <i>Automated Certificate Management Environment, kurz ACME</i> für eine bestimmte Domain oder Subdomain ein Zertifikat anfordert. Die CA stellt dem Server daraufhin eine Aufgabe, welche der Client erfüllen muss, um die Hoheit über die Domain zu beweisen. Dies kann zum Beispiel eine Datei sein, die auf dem Webserver angelegt werden und über die Domain erreichbar sein muss (=webroot validation). Alternativ kann auch anstelle des Webservers ein Dienst gestartet werden, der auf einem entsprechenden Port lauscht und eine Anfrage der CA beantwortet (=standalone validation). Für den Webserver Apache gibt es sogar ein eigenes Modul, welches nicht nur das Zertifikat beantragt, sondern auch gleich in die Konfiguration mit einbindet. Die Entwickler sprechen jeweils von einem eigenen Plugin, welches eine andere Art der Domainhoheit nutzt.</p>
+
+<p>Sobald diese Aufgabe vom Client gelöst wurde, holt sich der Client das Zertifikat ab. 90 Tage lang ist dieses Zertifikat gültig und muss innerhalb dieser Zeit erneuert werden. Diese kurze Lebenszeit dient der Sicherheit, da es den Domainbesitzer zwingt, regelmäßig die Hoheit über die Domain zu beweisen. Natürlich läuft auch der Erneuerungsprozess automatisch ab.</p>
+<h2>Let&#8217;s Encrypt &#8211; ganz konkret</h2>
+<p>Nachdem Sie nun verstanden haben, was <i>Let&#8217;s Encrypt</i> ist und wie es funktioniert, wollen wir Ihnen zeigen, wie Sie Ihre Domain oder Ihren virtuellen Server mit einem grünen SSL-Zertifikat ausstatten. Wir gehen von einem virtuellen Server mit Ubuntu und nginx als Webserver aus. Aufgrund der guten <a href="https://certbot.eff.org/docs/" target="_blank" rel="noopener">Dokumentation des eingesetzten <i>certbots</i></a> sollte es Ihnen jedoch möglich sein, diese Anleitung auch auf andere Browser oder Betriebssysteme zu übertragen. Eine zentrale Voraussetzung ist jedoch, dass Sie auf Ihrem Server einen Root-Zugriff haben, da Sie sonst die notwendige Installation des <i>certbots</i> sowie der Konfiguration des Webservers nicht vornehmen können.</p>
+
+<p>Als Beispiel für den folgenden Text beziehen wir uns auf unseren virtuellen Server bei Host-Europe, auf dem sowohl die Domain <i>www.ionas.com</i> als auch <i>www.ionas-server.com</i> gehostet werden. Bisher hatten wir zwar ein HTTPS-Zertifikat für die beiden Hauptdomains, jedoch war uns der Kauf eines wildcard-Zertifikats für beliebige Subdomains zu teuer. Nun möchten wir mit <i>Let&#8217;s Encrypt</i> die Subdomain <i>https://cloud.ionas.com</i> absichern. Eine weitere Besonderheit ist, dass die Domain <i>cloud.ionas.com</i> gar nicht auf den Webspace bei Host-Europe liegen soll, sondern auf einen ionas-Server Small Business bei uns im lokalen Netzwerk. Dies macht die Angelegenheit zwar etwas komplizierter, verdeutlicht aber gleichzeitig die vielfältigen Einsatzmöglichkeiten von <i>Let&#8217;s Encrypt</i>. Um <i>Let&#8217;s Encrypt</i> für den normalen Webspace bei Host-Europe zu nutzen, muss man einfach nur ein paar vorbereitende Schritte weglassen und würde auch zum gewünschten Ergebnis kommen. Legen wir also los.</p>
+<h2>Schritte 1: Weiterleitung von Anfragen an https://cloud.ionas.com einrichten</h2>
+<p>Unsere Domain <a href="https://www.ionas.com" target="_blank" rel="noopener">www.ionas.com</a> verwalten wir über Plesk, ein Server-Administrationstool, welches unser Domain-Hoster <i>Host-Europe</i> zur Verfügung stellt. Wir passen die DNS-Einstellungen für <i>ionas.com</i> an und fügen einen neuen CNAME-Eintrag hinzu.</p>
+
+<div id="attachment_951" style="width: 860px" class="wp-caption alignleft"><a href="/wp-content/uploads/2018/04/cname-eintrag-in-plesk.png" data-slb-active="1" data-slb-asset="1622041110" data-slb-internal="0" data-slb-group="4490"><img aria-describedby="caption-attachment-951" decoding="async" class="size-full wp-image-951" src="/wp-content/uploads/2018/04/cname-eintrag-in-plesk.png" alt="Durch den CNAME-Eintrag werden Anfragen an cloud.ionas.com an den ionas-Server im lokalen Netzwerk weitergeleitet." width="850" /></a><p id="caption-attachment-951" class="wp-caption-text">Durch den CNAME-Eintrag werden Anfragen an https://cloud.ionas.com an den ionas-Server in unserem lokalen Netzwerk weitergeleitet.</p></div>
+
+<p>Wenn die Subdomain auf den Webspace des virtuellen Servers bei Host-Europe zeigen soll, hätten wir hier die IP-Adresse des virtuellen Servers eingetragen. Da wir jedoch auf einen ionas-Server Small Business im lokalen Netzwerk unseres Büros zeigen wollen, verweisen wir auf Adresse <i>ionas.spdns.de</i>.</p>
+
+<p><i>ionas.spdns.de</i> ist ein DynDNS-Eintrag, hinter dem sich wiederum eine Umleitung auf die IP-Adresse unseres Büros verbirgt. Die Aktualisierung des DynDNS-Eintrags übernimmt dankenswerter der Small Business gleich selber.</p>
+
+<p>Nach diesen Änderungen würden HTTPS-Anfragen an <i>cloud.ionas.com</i> bis zu unserem Router im Büro kommen. Von diesem werden Sie solange verworfen, bis wir im Router eine Portweiterleitung für den generischen HTTPS Port 443 eintragen. Ist dies geschehen &#8211; und auch die Firewall des ionas-Servers für den Port 443 geöffnet -, erreichen die Browseranfragen den Webserver des ionas-Servers Small Business. Kommen wir nun zur Einrichtung des Zertifikats auf dem Webserver.</p>
+<h2>Schritt 2: Let&#8217;s Encrypt Client installieren und Zertifikat anfordern</h2>
+<p>Als nächstes benötigen wir einen Root-Shell auf dem ionas-Server. Auf dieser installieren wir den offiziellen <i>Certbot ACME-Client</i> mit den folgenden Befehlen:</p>
+<pre>cd /usr/local/bin
+git clone https://github.com/certbot/certbot
+cd certbot
+</pre>
+<p>Wir empfehlen die Installation des Tools unter <i>/usr/local/bin</i>, weil dort unter Ubuntu Programme hingehören, die nicht über die eigene Paketquellen installiert wurden. Natürlich können Sie <i>Certbot</i> auch an jedem anderen beliebigen Ort installieren.</p>
+
+<p>Als nächstes kommen wir zur Zertifikatsanforderung. Üblicherweise wird dieses per <i>webroot-Plugin</i> angefordert, bei dem die CA nach einer Datei auf dem Server sucht. Dies erfolgt üblicherweise über den Port 80, d.h. es würde nach einer Datei <i>http://cloud.ionas.com/.well-known/acme-challenge</i> gesucht werden. Da wir jedoch nur den Port 443 (d.h. https://) auf den ionas-Server weitergeleitet und freigegeben haben, wird diese Authentifizierung nicht funktionieren. Deshalb verwenden wir die <i>standalone</i>-Authentifizierung, welche verlangt, dass wir den aktuellen nginx-Webserver für kurze Zeit deaktivieren. Diese Methode startet selber eine Art Webserver und beantwortet nur die Anfrage der CA. Deshalb deaktivieren wir zuerst den Webserver mit den folgenden Befehlen, bevor wir das Zertifikat anfordern.</p>
+<pre>service nginx stop
+./certbot-auto certonly --standalone --rsa-key-size 4096 -d cloud.ionas.com --standalone-supported-challenges tls-sni-01
+</pre>
+<p>Im Folgendenden nun die Parameter mit der jeweiliger Erklärung:
+<ul>
+ 	<li><strong>certbot-auto</strong>: dies ist der Name des <i>Let&#8217;s Encrypt Clients</i>.</li>
+ 	<li><strong>certonly</strong>: es wird nur das Zertifikat angefordert. Der Webserver wird nicht automatisch konfiguriert oder verändert.</li>
+ 	<li><strong>&#8211;standalone</strong>: die von uns gewählte Authentifizierungsmethode.</li>
+ 	<li><strong>&#8211;rsa-key-size 4096</strong>: erhöht die Sicherheit, indem die Länge für den zu generierenden RSA Private Key auf 4096 Bits festgelegt wird. Standard sind 2048 Bit.</li>
+ 	<li><strong>-d cloud.ionas.com</strong>: dies ist die Domain oder Subdomain, für die das Zertifikat beantragt werden soll. Gleichzeitig mehrere Domains und Subdomains anzugeben, ist natürlich möglich.</li>
+ 	<li><strong>&#8211;standalone-support-challenges tls-sni-01</strong>: dieser Parameter teilt der CA mit, dass die Anfrage auf dem Port 443 und nicht auf dem Port 80 erfolgen soll.</li>
+</ul></p>
+<p>Nach Eingabe Ihrer E-Mailadresse und der einmaligen Zustimmung zu den Nutzungsbedingungen wird das gewünschte Zertifikat vom ACME-Server abgeholt und in dem Verzeichnis <i>/etc/letsencrypt/live/cloud.ionas.com</i> gespeichert. In Summe liegen dort bei einer erfolgreichen Anforderung vier verschiedene Dateien:</p>
+<ul>
+ 	<li>cert.pem (das öffentliche Zertifikat)</li>
+ 	<li>chain.pem (die sogenannte Keychain)</li>
+ 	<li>fullchain.pem (entspricht cert.pem + chain.pem)</li>
+ 	<li>privkey.pem (der private Schlüssel)</li>
+</ul>
+<p>Damit haben Sie alles, um <i>Let&#8217;s Encrypt</i> in Ihrem Webserver einzubauen.</p>
+<h2>Schritt 3: Webserver nginx starten und konfigurieren</h2>
+<p>Nachdem wir nun die Zertifikate erhalten haben, können wir nginx wieder starten.</p>
+<pre>service nginx start
+</pre>
+<p>Nun müssen wir nur noch die erhaltenen Zertifikate einbinden, um eine grüne URL mit vertrauenswürdigem SSL-Zertifikat zu erhalten.
+Eine Minimalkonfiguration des nginx-Webservers könnte z.B. so aussehen:</p>
+<pre>server {
+  listen 443;
+  server_name cloud.ionas.com;
+  index index.php;
+  allow all;
+
+  ssl on;
+  ssl_certificate /etc/letsencrypt/live/cloud.ionas.com/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/cloud.ionas.com/privkey.pem;
+  ssl_session_timeout 5m;
+
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers "HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES";
+  ssl_prefer_server_ciphers on;
+
+  location / {
+    root /var/www;
+    index index.php;
+  }
+}
+</pre>
+<p>Sobald der Webserver neu gestartet wurde, können wir überprüfen, ob das Zertifikat richtig eingebunden wurde. Wichtig ist, dass Sie nur beim Aufruf von https://cloud.ionas.com ein grünes Zertifikat sehen können.</p>
+
+<strong>Wichtige Hinweise:</strong>
+
+<p>1) Wenn Sie die lokale IP-Adresse (z.B. 192.168.7.3) verwenden, werden Sie auch weiterhin einen Zertifikatsfehler erhalten, da das Zertifikat nur für cloud.ionas.com beantragt wurde und eben nicht für die lokale IP-Adresse.</p>
+
+<p>2) Aufgrund der geforderten Domainhoheit merkt man spätestens jetzt, das <i>Let&#8217;s Encrypt</i> nicht für lokale IP-Adressen oder DynDNS-Adressen verwendet werden kann. In beiden Fällen kann man die Domainhoheit eben nicht nachweisen.</p>
+
+<p>3) Aus Sicherheitsgründen verweigern die meisten Router den Aufruf von https://cloud.ionas.com aus dem gleichen lokalen Netzwerk. Besitzer einer Fritz!Box können sich freuen, weil diese automatisch die Anfrage richtig im lokalen Netzwerk auflöst. Besitzer anderer Router müssen hier entweder entsprechende Einträge in der jeweiligen HOSTS-Dateien der Clients vornehmen oder prüfen, ob Ihr Router eventuell eine lokale DNS-Auflösung beherrscht. Dieses Thema an dieser Stelle weiter auszuführen, würde definitiv den Rahmen sprengen, aber gerne stehen wir auch für diese Fragen mit Rat und Tat zur Seite.</p>
+
+
+<h2>Schritt 4: Zertifikat automatisch per Cronjob erneuern lassen</h2>
+<p>Nun haben wir unseren virtuellen Server mit einem vertrauenswürdigen SSL-Zertifikat ausgestattet. Da das Zertifikat nur 90 Tage gültig ist, sollte man dieses automatisch aktualisieren lassen.</p>
+
+<p>Dafür bietet sich der folgende Cronjob-Eintrag an:</p>
+<pre>0 0 * * * /usr/local/bin/certbot/certbot-auto renew --standalone --pre-hook "service nginx stop" --post-hook "service nginx start" >> /var/log/letsencrypt.log
+</pre>
+<p>Der Befehl wird täglich zur Geisterstune ausgeführt. Es wird der <i>certbot</i> mit dem Parameter <i>renew</i> aufgerufen. Gleichzeitig sorgen wir durch die <i>pre-hook</i> und <i>post-hook</i> dafür, dass zum Zeitpunkt der Anfrage der Webserver gestoppt wird.</p>
+
+<p>Das Ergebnis des Befehls schreiben wir dabei fortlaufend in eine Logdatei mit Namen letsencrypt.log. Das schöne an diesem Befehl ist, dass der ACME-Client nur aktiv wird, wenn das Zertifikat in weniger als 30 Tagen abläuft. Wenn das Zertifikat noch länger gültig ist, legt der <i>Certbot</i> sich automatisch wieder schlafen.
+<h2>Automatisierte Konfiguration mit ionas-Server Cockpit 3.4</h2>
+Das Beantragen von <i>Let&#8217;s Encrypt</i> Zertifikaten ist nicht schwer und erlaubt es, eigene virtuelle Server und Domains wirkungsvoll abzusichern. Gleichzeitig können private Home-Server oder Business-Server wie die ionas-Server zu vollwertigen Private Clouds aufgewertet werden.</p>
+
+<p>Wir sind so begeistert von den Möglichkeiten, dass wir mit dem kommenden Cockpit-Update die Konfiguration von <i>Let&#8217;s Encrypt</i> über die Weboberfläche des ionas-Server möglich machen werden. Jeder unser Kunden wird z.B. die eigenen Seafile-Daten mit einem grünen SSL-Zertifikat ins Internet freigeben können. Seien Sie also gespannt auf das nächste ionas-Server Cockpit Update 3.4.</p>

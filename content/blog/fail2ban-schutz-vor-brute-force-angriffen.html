@@ -1,0 +1,187 @@
++++
+title = "Fail2Ban – Schutz vor Brute-Force-Angriffen"
+titel_html = "Fail2Ban - WordPress und Odoo gegen Brute-Force absichern"
+ueberschrift = "Fail2Ban &#8211; Schutz vor Brute-Force-Angriffen"
+beschreibung = "WordPress Blogs und andere Webdienste auf privaten Servern sind beliebte Angriffsziele von Hackern. Mit Fail2Ban lassen sich WordPress, Seafile und andere private Cloud Dienste einfach und effektiv gegen Brute-Force Angriffe absichern. Wir zeigen anhand von WordPress und Odoo 11 wie&#039;s geht."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_typ = "article"
+og_url = "https://www.datamate.org/fail2ban-schutz-vor-brute-force-angriffen/"
+canonical = "https://www.datamate.org/fail2ban-schutz-vor-brute-force-angriffen/"
+veroeffentlicht = "2015-06-03T12:27:57+00:00"
+geaendert = "2025-02-21T08:10:56+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "8 Minuten"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Fail2Ban &#8211; Schutz vor Brute-Force-Angriffen", item = ""}]
+wortzahl = 1437
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["software"]
+schlagwoerter = []
+wp_id = 4427
+slug = "fail2ban-schutz-vor-brute-force-angriffen"
+url = "/fail2ban-schutz-vor-brute-force-angriffen/"
+date = "2015-06-03T14:27:57"
+lastmod = "2025-02-21T09:10:56"
+datum_utc = "2015-06-03T12:27:57+00:00"
+geaendert_utc = "2025-02-21T08:10:56+00:00"
++++
+						<p>Dank WordPress ist es heute ein Kinderspiel, seinen eigenen Blog zu betreiben. Ein virtueller Server ist schnell gemietet und WordPress ist häufig bereits vorinstalliert. Doch Vorsicht! Hacker und Skriptkiddies durchsuchen tagtäglich das Internet nach möglichen Angriffszielen und ein virtueller Server mit SSH-Zugang oder der Login zum Adminbereich des WordPress-Blogs sind gern gesehene Angriffsziele. Wenn die Angreifer keine Sicherheitslücken finden, die Sie sofort ausnutzen können, probieren sie es mit der Brechstange. Beim sogenannten <a href="https://de.wikipedia.org/w/index.php?title=Brute-Force-Methode" target='_blank' rel="noopener"><i class="fa fa-wordpress"></i> Brute-Force-Angriff</a> werden einfach so lange Zugangsdaten ausprobiert, bis man durch Zufall den &#8220;admin&#8221;-Account geknackt hat. Angesichts billig verfügbarer Rechenleistung ist so ein virtueller Einbruch schnell passiert, wenn man keine sicheren Passwörter verwendet. Die Sicherheitssoftware Fail2Ban, die in diesem Artikel im Mittelpunkt steht, bietet darüber hinaus zusätzlichen Schutz. Nach einer kurzen Zusammenfassung der Funktionsweise von Fail2Ban erklären wir die Konfiguration von Fail2Ban für die zwei Webdienste <strong>WordPress</strong> und <strong>Odoo</strong>. Für eine eher allgemeinen Beschreibung der Funktionsweise von Fail2Ban empfehlen wir den Artikel <a href='/fail2ban'>F2B: Automatisches System zur Erkennung und Verhinderung von Systemeinbrüchen</a>.</p>
+
+<span id="more-4427"></span>
+
+
+<h2>Wie wird Fail2Ban eingesetzt?</h2>
+
+<p>Jeder Loginversuch auf einer Webseite oder über SSH wird in einem Linux-System in Log-Dateien protokolliert. Für WordPress wird z.B. folgender Log-Eintrag dokumentiert:</p>
+<pre>
+91.127.182.18 - - [01/Jul/2015:00:31:26 +0200] "POST /wissen/wp-login.php HTTP/1.1" 200 
+1556 "https://www.ionas.com/wissen/wp-login.php"
+"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0"
+</pre>
+<p>Diese Zeile besagt, dass jemand am 1. Juli 2015 von der IP-Adresse 91.127.182.18 auf die Seite &#8220;wp-login.php&#8221; zugegriffen hat. Der Aufruf erfolgte mit einem Firefox Browser der Version 38.</p>
+
+<p>Fail2Ban macht sich diese Log-Dateien zunutze. Es überwacht die Logs und blockiert (englisch &#8220;banned&#8221;) weitere Zugriffe des Angreifers, wenn eine definierte Anzahl an nicht-erfolgreichen Zugriffen überschritten wird. Die Anzahl der zulässigen Zugriffsversuche und die &#8220;Ban&#8221;-Dauer lässt sich frei konfigurieren. Fail2Ban ist somit ein automatisches System zum Erkennen und Verhindern von Systemeinbrüchen durch die Analyse von Log-Dateien.</p>
+
+<h2>Warum Fail2Ban?</h2>
+
+<p>Wir von datamate nutzen selbst WordPress, um die Seite, die Sie gerade lesen, zu verwalten. Dessen Adminbereich soll über das Internet verfügbar sein, damit wir von jedem Ort mit Internetzugang an der Webseite arbeiten und neue Artikel schreiben zu können. Damit ist unsere WordPress-Instanz akut von Brute-Force-Angriffen bedroht.</p>
+
+<p>Wir haben uns mehrere Sicherungsmöglichkeiten angesehen. Neben Fail2Ban gibt es z.B. mit Stockade, Denyhosts und OSSEC weitere Dienste, die ähnliche Funktionen bieten. Erstere beiden sind leider nicht zu empfehlen, weil sie seit Jahren nicht mehr weiter entwickelt werden. <a href='http://www.ossec.net/' target='_blank' rel="noopener"><i class='fa fa-external-link'></i>OSSEC</a> macht auf den ersten Blick einen guten Eindruck und bietet eine ausführliche Dokumentation. Dass wir uns für Fail2Ban entschieden haben, liegt an dessen großer Robustheit und Verbreitung. Beim Ubuntu-Server lässt sich Fail2Ban auch direkt aus den offiziellen Paketquellen installieren.</p>
+
+<h2>Allgemeines Vorgehen mit Fail2Ban</h2>
+<p>Egal, ob WordPress, Odoo (ehemals OpenERP) oder ein anderer Dienst mit Fail2Ban geschützt werden soll, die folgenden vier Schritte sind durchzuführen:
+<ul>
+<li>Identifikation der Log-Datei der zu sichernden Applikation</li>
+<li>Erstellung einer Fail2Ban-Filterregel</li>
+<li>Test der Filterregel</li>
+<li>Aktivierung der Filterregel</li>
+</ul>
+
+<p>Um diese graue Theorie zu verdeutlichen, zeigen wir das Vorgehen für WordPress und Odoo.</p>
+
+<h2>Schutz von WordPress mit Fail2Ban</h2>
+<b>Identifikation der Log-Datei der zu sichernden Applikation</b>
+<p>Webserver wie nginx oder Apache dokumentieren grundsätzlich alle Zugriffe auf WordPress. Sie unterscheiden im Logging jedoch nicht zwischen erfolgreichen und fehlerhaften Logins unterschieden. Der Nachteil: Fail2Ban kann nur die Anzahl aller Loginversuche überwachen, nicht nur der erfolglosen. Das kann schon mal dazu führen, dass auch legitime Nutzer ge-&#8220;banned&#8221; werden.</p>
+
+<p>Dieses Manko wird mit der Installation des WP-Plugins <i>WP Fail2Ban</i> beseitigt. Nach der Installation dieses Plugins werden alle Zugriffsversuche in die Log-Datei /var/log/auth.log geschrieben und es wird zwischen erfolgreichen und abgelehnten Zugriffen unterschieden:</p>
+
+<pre>
+Jul  1 09:59:55 www wordpress(www.ionas-server.com)[19713]: Authentication failure for MrX from 37.148.137.78
+Jul  1 10:00:08 www wordpress(www.ionas-server.com)[19731]: Accepted password for ChristophDyllick from 37.148.137.78
+</pre>
+
+<b>Erstellung einer Fail2Ban-Filterregel</b>
+<p>Nun muss die Fail2Ban-Filterregel so erstellt, dass die Log-Einträge richtig erfasst werden. In dem Fall machen wir es uns einfach und laden einfach eine passende Regel herunter. (Am Odoo-Beispiel weiter unten zeigen wir, wie man eine Filterregel selbst schreiben kann.)</p>
+
+<pre>
+$ cd /etc/fail2ban/filter.d
+$ wget https://plugins.svn.wordpress.org/wp-fail2ban/trunk/filters.d/wordpress-hard.conf
+</pre>
+
+<b>Test der Filterregel</b>
+<p>Nach der Vorbereitung nun zur Action! Wir prüfen, ob die Filterregel greift. Der Befehl hierfür lautet:</p>
+<pre>
+$ fail2ban-regex /var/log/auth.log /etc/fail2ban/filter.d/wordpress.conf
+</pre>
+
+<p>Der Befehl ist quasi selbsterklärend: Der Befehl prüft die auth.log mit der Filterregel wordpress.conf. Die Ausgabe wiederum ist nicht so selbsterklärend. Dennoch: Am Ende sollte folgende Zeile stehen:</p>
+<pre>
+Success, the total number of match is 1
+</pre>
+<p>Fail2Ban kann die Filterregel also interpretieren. Um ganz sicher zu gehen, dass alles richtig funktioniert, sollte ein fehlerhafter Login provoziert und dann der regex-Befehl erneut ausgeführt werden. Die Anzahl der Treffer sollte dann logischerweise um 1 angestiegen sein.</p>
+
+<b>Aktivierung der Filterregel</b>
+<p>Nun ist die Filterregel definiert. Was noch fehlt ist die Instruktion an Fail2Ban, die Regel auch anzuwenden. Dafür dienen die sogenannten Jails. Diese legt man in der Datei /etc/fail2ban/jail.conf mit dem Editor der Wahl an:</p>
+
+<pre>
+[wordpress]
+enabled = true                   
+filter = wordpress               
+logpath = /var/log/auth.log      
+port = http,https                
+maxretry = 5                      
+findtime = 10800                                                   
+bantime = 86400          
+</pre>
+
+<p>Individuell anpassbar sind die Parameter maxretry, findtime und bantime:
+<ul>
+	<li>maxretry: Anzahl der zulässigen Zugriffsversuche</li>
+	<li>findtime: überwachte Zeitdauer in Sekunden</li>
+	<li>bantime: Sperrzeit in Sekunden bei einem Ban</li>
+</ul>
+
+<p>Mit der obigen Beispielregel werden also Zugriffe von einer IP-Adresse für 86400 Sekunden (=24h) gesperrt, wenn innerhalb von 10800 Sekunden (=3h) fünf nicht-autorisierte Logins von dieser erfolgen. Nach einem Neustart von Fail2Ban wird die neue Filterregel aktiviert.</p>
+
+<pre>
+$ /etc/init.d/fail2ban restart
+$ /etc/init.d/fail2ban status
+$ tail -f /var/log/fail2ban.log
+</pre>
+
+<p>Nach Ausführung des Befehls enthält die Log-Datei von Fail2Ban die folgende Meldung:</p>
+<pre>
+2015-07-01 10:28:32,666 fail2ban.jail   : INFO   Jail 'wordpress' started
+</pre>
+<p>WordPress profitiert nun vom wachsamen Auge von Fail2Ban.</p>
+
+<h2>Schutz des CRM-Systems Odoo 11</h2>
+<p>Als nächstes wollen wir das Open-Source CRM-System Odoo (ehemals OpenERP) mit Fail2Ban absichern. Auch hier gehen wir nach dem benannten Schema vor.</p>
+<b>Identifikation der Log-Datei der zu sichernden Applikation</b>
+<p>Für Odoo gibt es leider kein Plugin, welches die fehlgeschlagenen Zugriffsversuche detailliert in die /var/log/auth.log schreibt. Daher ist es notwendig, nginx oder Apache so zu konfigurieren, dass die Zugriffsversuche entsprechend geloggt werden. Unter nginx reicht dazu der folgende Eintrag in die dazugehörige CONF-Datei unter /etc/nginx/sites-available:</p>
+
+<pre>
+access_log    /var/log/nginx/odoo.access.log;
+</pre>
+
+<p>Bei jeden Zugriffsversuch (egal ob erfolgreich oder nicht-erfolgreich) wird nun folgender Log-Eintrag erzeugt:</p>
+<pre>
+93.241.204.176 - - [09/Sep/2018:13:28:05 +0200] "POST /web/login HTTP/1.1" 303 215 "https:/datamate.org/web/login" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:62.0) Gecko/2010
+0101 Firefox/62.0"
+</pre>
+
+<b>Erstellung einer Fail2Ban-Filterregel</b>
+<p>Fail2Ban muss also per Filterdatei nach <strong>/web/login</strong> suchen. Die folgende odoo.conf unter /etc/fail2ban/filter.d tut das:</p>
+<pre>
+# fail2ban filter configuration for odoo (on nginx)
+[Definition]
+
+failregex = <HOST> .* /web/login .*
+ignoreregex =
+
+# Author: Ralf Dyllick-Brenzinger (www.datamate.org)
+</pre>
+
+<p>Schauen wir uns den Aufbau der Filterdatei von Fail2Ban nochmals etwas genauer an: Hinter fail2regex definieren wir mittels eines oder mehrerer regulärer Ausdrücke (jeweils in einer neuen Zeile) die Regeln, die auf einen fehlerhaften Loginversuch verweisen. Mit ignoreregex können wir dementsprechend ebenfalls via regulärer Ausdrücke definieren, welche Einträge zu ignorieren sind. Wichtig ist, dass mit <strong>&lt;HOST></strong> Fail2Ban mitgeteilt wird, wo es in dem Log-Eintrag die IP findet, die es sperren soll. Weitere Information zur Definition der Filterregeln gibts im <a href="https://www.fail2ban.org/wiki/index.php/MANUAL_0_8">Manual</a> von Fail2Ban.</p>
+
+<p>Hinweis: Bei anderen Odoo Versionen können die Logs anders aussehen. Dann muss logischerweise die Filterregel auch anders aussehen.</p>
+
+<b>Aktivierung der Filterregel</b>
+<p>Als nächstes aktivieren wir die Filterregel in Fail2Ban durch Einfügen in die jail.conf von Fail2Ban:</p>
+
+<pre>
+[nginx-odoo]
+enabled = true
+port    = http,https
+filter  = odoo
+logpath = /var/log/nginx/odoo.access.log
+maxretry = 30
+findtime = 1200                                                   
+bantime = 6000        
+</pre>
+
+<p>Nach einem <strong>systemctl restart fail2ban</strong> ist auch Odoo 11 mit Hilfe von Fail2Ban vor Brute-Force-Angriffen geschützt. Den Regeltest, den wir hier übersprungen haben, können wir nun direkt über den Weblogin von Odoo nachholen. Nach der im Parameter maxretry definierten Anzahl an Login-Versuchen sollte Odoo nicht mehr reagieren und keine weiteren Zugriffe ermöglichen.</p>
+
+<h2>Achtung: Fail2Ban hinter Proxys oder Zugriffe aus einem Büro</h2>
+<p>Fail2Ban merkt sich Zugriffsversuche und ordnet diese einer IP-Adresse zu. Bei Einsatz eines vorgeschalteten Proxy sollte Fail2Ban nicht verwendet werden. Der Proxy würde dafür sorgen, dass alle Zugriffe mit der IP des Proxys gespeichert werden und sobald in Summe zu viele fehlgeschlagene Zugriffsversuche aufgetreten sind, ist das Gesamtsystem für alle Anwender gesperrt. Die Seite wäre dann nicht mehr erreichbar.</p>
+
+<p>Ähnlich verhält es sich, wenn mehrere Mitarbeiter über die gleiche externe IP auf ein System zugreifen. Die Problematik wird an einem typischen Szenario deutlich: 10 Mitarbeiter loggen sich morgens zum Arbeitsbeginn in Odoo ein. Dies wären 10 Zugriffe von ein und derselben IP-Adresse. Aus diesem Grund bietet Fail2Ban eine Whitelisting-Möglichkeit. Dazu lassen sich in der Datei <strong>/etc/fail2ban/jail.conf</strong> IP-Adressen definieren, die von Fail2Ban ignoriert werden. Mit dem Paramater <strong>ignoreip</strong> können entweder Subnetzwerke oder einzelne IPs von der Prüfung ausnehmen. Mehrere IP-Adressen werden durch Leerzeichen getrennt eingegeben.</p>
+<pre>
+ignoreip = 127.0.0.1 192.168.1.0/24 8.8.8.8
+</pre>
+
+<p>Wie Sie sehen ist Fail2Ban ein sehr einfaches und mächtiges Tool um Linux-Systeme vor Brute-Force-Angriffen zu schützen. Dies ist der Grund warum wir bei datamate Fail2Ban auf <a href="/homie">Homie</a> und <a href="/fellow">Fellow</a> standardmässig einsetzen, um die installierten Webdienste vor unerlaubten Zugriffen zu schützen.</p>
+
+<p>Fragen oder Probleme bei der Einrichtung und Konfiguration von Fail2Ban? Wir helfen gerne an 365 Tagen im Jahr von 9 bis 19 Uhr. Unsere Telefonnummer: +49 (0)6131 3270777.</p>

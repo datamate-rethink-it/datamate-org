@@ -1,0 +1,42 @@
+{
+  "aco": {
+    "beschreibung": "",
+    "name": "Andreas Conrad",
+    "person_id": "https://www.datamate.org/#/schema/person/c8f6cf7ac93f4fd33a93d3775e8f4959"
+  },
+  "admin": {
+    "beschreibung": "Christoph ist Gründer und Chefentwickler von datamate. Er ist ein absoluter Linux-Fan und hat schon früh seine Leidenschaft für Technik und Programmierung entdeckt. Seine langjährige Erfahrung als Unternehmensberater spürt man regelmäßig, wenn er nach optimalen Lösungen für die Kunden sucht. Wenn er nicht gerade den Tennisplatz unsicher macht oder bei Overwatch sein Liga-Ranking verbessert, verbringt Christoph seine Freizeit mit seiner Frau und seinen drei Kindern.",
+    "name": "Christoph Dyllick-Brenzinger",
+    "person_id": "https://www.datamate.org/#/schema/person/871495303b4e9fc8efd66c3237355b20"
+  },
+  "csc": {
+    "beschreibung": "",
+    "name": "Chris Schütz",
+    "person_id": ""
+  },
+  "dennis-frueh": {
+    "beschreibung": "",
+    "name": "Dennis Früh",
+    "person_id": ""
+  },
+  "griffel": {
+    "beschreibung": "",
+    "name": "Esther Acason",
+    "person_id": ""
+  },
+  "htr": {
+    "beschreibung": "",
+    "name": "Hannah Truxa",
+    "person_id": "https://www.datamate.org/#/schema/person/71d0e6e777e5936053163262eae052c3"
+  },
+  "oja": {
+    "beschreibung": "",
+    "name": "Oliver Jakobi",
+    "person_id": ""
+  },
+  "rdb": {
+    "beschreibung": "",
+    "name": "Ralf Dyllick-Brenzinger",
+    "person_id": "https://www.datamate.org/#/schema/person/ffc67710a50bbd7d665dcb79c92cc461"
+  }
+}

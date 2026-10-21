@@ -1,0 +1,90 @@
++++
+title = "Linux Server Backup mit restic und duplicity"
+titel_html = "Linux Server Backup mit restic und duplicity | datamate"
+ueberschrift = "Linux Server Backup mit restic und duplicity"
+beschreibung = "Linux Anwender haben verschiedene Möglichkeiten, um Datensicherungen durchzuführen. Wir werfen einen Blick auf zwei der beliebtesten: duplicity und restic."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2020/03/backup-restic-vs-duplicity.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/linux-server-backup-mit-restic-und-duplicity/"
+canonical = "https://www.datamate.org/linux-server-backup-mit-restic-und-duplicity/"
+og_bild_breite = "1600"
+og_bild_hoehe = "1067"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2020-03-03T23:35:49+00:00"
+geaendert = "2025-02-21T08:10:01+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "6 Minuten"
+beitragsbild = "/wp-content/uploads/2020/03/backup-restic-vs-duplicity.jpg"
+bild_breite = 1600
+bild_hoehe = 1067
+bild_beschriftung = "Backuptools Restic und Duplicity"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Linux Server Backup mit restic und duplicity", item = ""}]
+wortzahl = 1129
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["anleitungen", "software"]
+schlagwoerter = ["backblaze", "Backup", "Duplicity", "duply", "Fellow", "Homie", "restic"]
+wp_id = 6570
+slug = "linux-server-backup-mit-restic-und-duplicity"
+url = "/linux-server-backup-mit-restic-und-duplicity/"
+date = "2020-03-04T00:35:49"
+lastmod = "2025-02-21T09:10:01"
+datum_utc = "2020-03-03T23:35:49+00:00"
+geaendert_utc = "2025-02-21T08:10:01+00:00"
+lightbox = true
++++
+						<p>Bei Backupprogrammen haben Nutzer die Qual der Wahl. Kostenlose, open-source Lösungen konkurrieren mit kostenpflichtigen, kommerziellen Tools, neben Kommandozeilenprogrammen gibt es solche mit graphischen Benutzeroberflächen und auch bei der Backupmethodik gibt es ganz unterschiedliche Ansätze. Die Auswahl sollte also gut überlegt sein, schließlich vertraut man darauf, dass man im Ernstfall auch an alle seine Daten wieder ran kommt bzw. den eigenen Server ohne Datenverlust wieder aufsetzen kann. In der Vergangenheit hat unser <a href="/homie">Home Server Homie</a> und unser <a href="/fellow">Small Business Server Fellow</a> auf duplicity in Kombination mit duply als Backuplösung vertraut. Mit dem Cockpit 2.0 haben wir duplicity/duply durch restic ersetzt. In diesem Artikel beschreiben wir die Unterschiede dieser beiden kommandozeilenbasierten open-source Lösungen und damit auch die Gründe für den Wechselentscheid.</p>
+
+<span id="more-6570"></span>
+
+
+<h2>duplicity &#8211; encrypted bandwidth-efficient backup using the rsync algorithm</h2>
+<p><a href="http://duplicity.nongnu.org/">duplicity</a> erblickte im Jahre 2002 mit der Version 0.1 das Licht der Welt. Die konstante Weiterentwicklung seitdem resultiert in der aktuellen Version 0.8.11 (Stand Februar 2020), die für Linux, BSD und macOS zur Verfügung steht und  mit vielen bekannten Linux Distributionen wie Ubuntu, Debian und Fedora ausgeliefert wird. Auch unter Windows lässt sich duplicity in Form von <a href="https://cygwin.com/">Cygwin</a> verwenden. Die Versionsnummer 0.x sollte auch nicht zu voreiligen Schlüssen verleiten. duplicity ist ein zuverlässiges Programm, das im Produktiveinsatz seine Leistungsfähigkeit unter Beweis gestellt hat.</p>
+
+<p>duplicitys Backups bestehen aus Vollbackups mit nachfolgenden inkrementellen Backups. Die inkrementellen Backups enthalten nur die Dateien, die sich seit dem letzten Backuplauf verändert haben bzw. neu inzugekommen sind. In Backupsprech sind das sogenannte <a href="/backupmethoden-im-vergleich/">forward deltas</a>. Eine zusammengehörde Abfolge aus einem Voll- und dazugehörigen inkrementellen Backups ist eine Backup-Kette bzw. eine backup chain im englischen Original.  (Eine detaillierte Beschreibung der Arbeitsweise von  duplicity sowie der grundlegenden Kommandozeilenbefehlen gibt es in unserem Blog-Artikel <a href="/duplicity-duply-datensicherung-auf-die-verlass-ist/">duplicity/duply: Datensicherung auf die Verlass ist</a>.)</p>
+
+<p>Während des Backupvorgangs prüft duplicity mit Hilfe des <a href="https://de.wikipedia.org/wiki/Rsync">rsync-Algorithmus</a> auf Dateiänderungen seit des letzten Laufs. Geänderte und gelöschte Dateien werden dann in tar-Archive gepackt, ggf. komprimiert und/oder verschlüsselt und anschließend in ein gewünschtes Zielverzeichnis geschrieben. Beim Zielsystem beschränkt sich duplicity nicht nur auf den lokalen Datenspeicher, sondern kann die tar-Archive auch in Cloud Storages wie Amazon S3, Backblaze, Dropbox, Microsoft OneDrive/Azure schreiben. All diese Vorgänge erfolgen streng sequenziell, d.h. solange Dateien gepackt werden, werden keine Daten gespeichert; wenn tar-Dateien geschrieben werden, werden keine Dateien gepackt.</p>
+
+<a href="/wp-content/uploads/2018/01/FunktionsweiseDuply.png" data-slb-active="1" data-slb-asset="2428480381" data-slb-internal="0" data-slb-group="6570"><img decoding="async" width="1997" height="854" src="/wp-content/uploads/2018/01/FunktionsweiseDuply.png" alt="Backupverfahren von duplicity" class="alignnone size-full wp-image-3381" srcset="/wp-content/uploads/2018/01/FunktionsweiseDuply.png 1997w, /wp-content/uploads/2018/01/FunktionsweiseDuply-300x128.png 300w, /wp-content/uploads/2018/01/FunktionsweiseDuply-768x328.png 768w, /wp-content/uploads/2018/01/FunktionsweiseDuply-1024x438.png 1024w" sizes="(max-width: 1997px) 100vw, 1997px" /></a>
+
+<p>duplicity erzeugt drei Arten von Dateien im Zielverzeichnis:</p>
+<ul style="padding-left: 20px;">
+<li>Die <strong>Manifest-Datei</strong> enthält Informationen über die gesicherten Dateien und deren Position in den gesicherten tar-Archiven.</li>
+<li><strong>Difftar</strong> nennt duplicity die tar-Archive. Diese haben immer die gleiche Größe (z.B. 200 MB) und werden fortlaufend mit vol1 bis voln nummeriert.</li>
+<li><strong>Sigtar</strong>-Dateien enthalten die Prüfsummen der gesicherten Backup-Dateien. Diese Prüfsummen werden für die Änderungsprüfung benötigt.</li>
+</ul>
+
+<p>duplicity komprimiert die Difftar-Archive auf Wunsch mit gzip und verschlüsselt sämtliche Dateien mit GnuPG. So kann man seine Backups auch auf Cloud-Speichern ablegen, ohne die Vertraulichkeit der Daten zu kompromitieren.</p>
+
+<p>Der Ansatz von duplicity ist sicher und zuverlässig. Bei Verzicht auf die optionale Verschlüsselung und Komprimierung erreicht man mit duplicity auch gute <a href="/geschwindigkeitsoptimierung-von-duplicity/" target="_blank" rel="noopener noreferrer">Schreibraten</a>. Andererseits hat duplicity ein paar inhärente Nachteile:</p>
+
+<ul style="padding-left: 20px;">
+<li>Ein Fehler in der Backup-Kette macht nachfolgenden Backups quasi wertlos.</li>
+<li>Zum Schutz vor Korruption sollten mehrere Backup-Ketten vorgehalten werden. Dies multipliziert den Backupspeicherplatz.</li>
+<li>Die sequenzielle Abarbeitung ist zeitaufwändig.</li>
+<li>Die regelmäßigen Vollbackups erfordern viel Geduld.</li>
+<li>Die Datenwiederherstellung &#8211; insbesondere bei vielen inkrementellen Backups &#8211; dauert lange.</li>
+</ul>
+
+
+<h2>restic &#8211; Backups done right!</h2>
+<p>Im Vergleich zu duplicity ist <a href="https://restic.net/" target="_blank" rel="noopener noreferrer">restic</a> ein Jungspund. Gemäß <a href="https://github.com/restic/restic/blob/master/CHANGELOG.md" target="_blank" rel="noopener noreferrer">Changelog auf Github</a> wurde es erstmalig im Jahre 2017 mit der Version 0.6 veröffentlicht. Der Designansatz von restic unterscheidet sich grundsätzlich von duplicity, da nicht mehr fortlaufend Voll- und inkrementelle Backups gesichert werden, sondern die zu sichernden Daten als zerteilte Datenblöcke in einem Repository aufbewahrt werden. Dieses Datenmodell macht restic zu einem nahen Verwandten von Git und <a href="/seafile">Seafile</a>.</p>
+
+<p>Das zentrale Ziel dieses Ansatzes ist die Vermeidung von doppelten Inhalten, die Beschleunigung des Backupvorgehens und eine fortlaufende Sicherung in Form von Snapshots. Man könnte fast sagen, dass jeder Backuplauf von restic ein Vollbackup ist, wobei restic selbst jede Sicherung als einen Snapshot bezeichnet.</p>
+
+<p>Man kann sich die restic Sicherung am ehesten wie einen Setzkasten vorstellen, bei dem jedes Objekt nur einmal vorkommt. Bei einem Backuplauf wird zunächst jede Datei in kleine Datenblöcke zerteilt und deren Prüfsummen berechnet. Diese werden dann verwendet, um zu prüfen, ob die Datenblöcke im  Setzkasten bereits existieren. Wenn nicht, dann werden Sie übertragen. Bei einer Dateiänderung muss somit nicht die gesamte Datei erneut gesichert werden, sondern lediglich der Datenblock mit dem veränderten Teil. Dabei ist es für restic nicht erforderlich, dass die neu hinzugekommene Datenblöcke auf dem Speichermedium in der Nähe der dazugehörigen Blöcke gespeichert werden. restic kümmert sich darum, dass aus den Datenblöcken jederzeit wieder Dateien zusammengesetzt werden können. Ein Snapshot enthält somit die Informationen, welche Dateien zum damaligen Zeitpunkt gesichert wurden und aus welchen Datenblöcken die einzelnen Dateien bestehen.</p>
+
+<p>restic Repositories sind immer verschlüsselt. Gleichzeitig unterstützt restic eine beeindruckende Vielzahl an Speicherzielen wie Amazon S3, Backblaze, Google Cloud und Microsoft Azure. restic bietet darüber hinaus noch weitere spannende Fähigkeiten. Backupläufe können mit frei gewählten Tags versehen werden und jeder Snapshots kann zu jedem Zeitpunkt lokal gemountet werden. So wird die Wiederherstellung von einzelnen oder allen Daten zum Kinderspiel.</p>
+
+<a href="/wp-content/uploads/2020/03/restic-befehle.jpg" data-slb-active="1" data-slb-asset="4035209148" data-slb-internal="0" data-slb-group="6570"><img decoding="async" loading="lazy" width="747" height="645" src="/wp-content/uploads/2020/03/restic-befehle.jpg" alt="Restic Befehle und Optionen" class="alignnone size-full wp-image-6574" srcset="/wp-content/uploads/2020/03/restic-befehle.jpg 747w, /wp-content/uploads/2020/03/restic-befehle-300x259.jpg 300w" sizes="(max-width: 747px) 100vw, 747px" /></a>
+
+<p>Bei restic entfallen praktisch alle Nachteile von duplicity: restic arbeitet schnell und effizient; restic benötigt deutlich weniger Speicherplatz auf dem Backupziel; ein Restore mit restic &#8211; egal ob einzelne Dateien oder der gesamte Umfang &#8211; erfolgt extrem schnell, da kein aufwändiges Zusammensetzen der Dateien aus den Difftars notwendig ist. Selbst wenn einzelne Datenblöcke im Repository von restic beschädigt sein sollten, hat dies keinen Einfluss auf den Gesamtzustand des Backups. Die Datei, zu der der fehlende oder beschädigte Datenblock gehört, lässt sich vielleicht nicht mehr herstellen, alle anderen Dateien sind davon aber nicht betroffen.</p>
+
+
+<h2>Backups so einfach und schnell wie noch nie</h2>
+<p>restic ist ein vergleichsweise neues Backuptool, welches jedoch in kürzester Zeit eine große Fangemeinde erworben hat. Auch uns haben die Vorteile von restic überzeugt. Die Geschwindigkeit, die Zuverlässigkeit und der geringe Speicherbedarf auf dem Backupziel in Kombination mit einer guten Dokumentation und einfachen Bedienung machen restic zu einem optimalen Backuptool für Linux Server.</p>
+ 
+<p>Mit dem <a href="/update-cockpit-2-0/">Cockpit 2.0</a> steht nun restic auch allen Besitzern eines datamate Servers als Backuptool zur Verfügung. Die Schritte zum Erstellen eines Backups im Cockpit sind identisch geblieben &#8211; die Technik im Hintergrund ist gänzlich neu. Einmal eingerichtet übernimmt restic die Sicherung des gesamten Servers.</p>

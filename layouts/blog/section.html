@@ -1,0 +1,43 @@
+{{- /*
+  Blog-Uebersicht unter /blog/, zehn Beitraege je Seite.
+
+  Im alten Theme setzte blog-page.php sowohl 'paged' als auch 'offset' -
+  mit Schrittweite 20 bei zehn angezeigten Beitraegen. Dadurch erschien nur
+  jeder zweite Zehnerblock: 70 der 137 Beitraege waren ueber die Uebersicht
+  nie erreichbar. Hier erscheinen alle.
+*/ -}}
+{{ define "main" }}
+{{- $beitraege := where site.RegularPages "Section" "blog" -}}
+{{- $p := .Paginate $beitraege 10 -}}
+{{- with .Params.kopfbild }}
+<div class="blog-header" style="background-image: url({{ . }}); height: 395px; background-position: center; background-size:cover; ">
+
+  <div class="blog-heading-middle">
+		<div class="container clearfix text-center dark" style="text-shadow: 1px 1px 2px black;">
+			<h1 style="font-size: 24px; text-transform: uppercase; font-weight: 400; margin: 0px;">datamate Blog</h1>
+		</div>
+	</div>
+
+</div>
+{{- end }}
+<div class="section" id="content">
+    <div>
+        <div class="container clearfix" id="blog">
+            <div class="heading-block">
+                <h1>datamate Blog</h1>
+            </div>
+            <div class="row clearfix">
+                <div class="col-sm-8">
+            {{ range $p.Pages }}{{ partial "beitragsliste.html" (dict "seite" . "stil" "kurz") }}
+
+            {{ end }}
+{{ partial "blaettern.html" . }}
+                </div>
+{{ partial "seitenleiste.html" . }}
+
+</div>
+
+</div>
+</div>
+</div>
+{{ end }}

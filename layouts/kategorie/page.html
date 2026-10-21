@@ -1,0 +1,27 @@
+{{- /* Kategoriearchiv, 20 Beitraege je Seite wie im WordPress. */ -}}
+{{ define "main" }}
+{{- $slugs := .Params.kategorie_mit -}}
+{{- $beitraege := where (where site.RegularPages "Section" "blog") "Params.kategorien" "intersect" $slugs -}}
+{{- $p := .Paginate $beitraege 20 -}}
+<div class="section" id="content">
+    <div>
+        <div class="container clearfix" id="blog">
+
+            <div class="heading-block"><h1>Kategorie: {{ .Title }}</h1></div>
+
+            <div class="row clearfix">
+
+                <div class="col-sm-8">
+        {{ range $p.Pages }}{{ partial "beitragsliste.html" (dict "seite" . "stil" "lang") }}
+
+        {{ end }}
+{{ partial "blaettern.html" . }}
+                </div>
+{{ partial "seitenleiste.html" . }}
+
+</div>
+
+</div>
+</div>
+</div>
+{{ end }}

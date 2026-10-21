@@ -1,0 +1,155 @@
++++
+title = "Virtualbox Fehler nach Update von Ubuntu 16.04"
+titel_html = "Virtualbox Fehler nach Update von Ubuntu 16.04 | datamate"
+ueberschrift = "Virtualbox Fehler nach Update von Ubuntu 16.04"
+beschreibung = "Seit einem Ubuntu Update startet Virtualbox nicht mehr? Dann liegt ggf. eine Inkompatibilität zwischen Ubuntu und Virtualbox vor. Wir haben die Lösung."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2019/04/virtualbox.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/virtualbox-fehler-nach-ubuntu-update/"
+canonical = "https://www.datamate.org/virtualbox-fehler-nach-ubuntu-update/"
+og_bild_breite = "1920"
+og_bild_hoehe = "1280"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2019-04-10T11:06:05+00:00"
+geaendert = "2025-02-21T08:10:06+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "5 Minuten"
+beitragsbild = "/wp-content/uploads/2019/04/virtualbox.jpg"
+bild_breite = 1920
+bild_hoehe = 1280
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Virtualbox Fehler nach Update von Ubuntu 16.04", item = ""}]
+wortzahl = 530
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["praktische-anwendungsfaelle", "software"]
+schlagwoerter = ["Cockpit", "Fellow", "virtualbox"]
+wp_id = 5816
+slug = "virtualbox-fehler-nach-ubuntu-update"
+url = "/virtualbox-fehler-nach-ubuntu-update/"
+date = "2019-04-10T13:06:05"
+lastmod = "2025-02-21T09:10:06"
+datum_utc = "2019-04-10T11:06:05+00:00"
+geaendert_utc = "2025-02-21T08:10:06+00:00"
++++
+						<p>In den letzten Tagen häuften sich bei uns die Anrufe von frustrierten Virtualbox-Anwendern, die Virtualbox nach einem Ubuntu Update nicht mehr benutzen konnten. Ursache für die auftretenden Probleme ist eine Inkompatibilität zwischen dem neuesten Ubuntu Kernel und Virtualbox, welches aus den Paketquellen von Ubuntu 16.04 kommt. Folge der Inkompatibilität ist, dass Virtualbox die notwendigen Kernel-Module nicht mehr erzeugen kann und sich daher auch nicht mehr starten lässt. Voraussichtlich wird sich das Problem mit einem neuen Kernel irgendwann von selbst lösen, will man bis dahin aber nicht auf Virtualbox verzichten, muss man Hand anlegen. Wir zeigen Euch, wie Ihr Virtualbox wieder zum Laufen kriegt.</p>
+
+<span id="more-5816"></span>
+<h2>Wie ist das Fehlerbild?</h2>
+<p>Wenn Ihr auf Eurem Rechner Virtualbox nach einem Ubuntu Update nicht mehr starten könnt, dann ist es wahrscheinlich, dass der Linux Kernel mit Virtualbox inkompatibel ist. Dies ist die Fehlermeldung beim Start des Virtualbox Treibers mit systemd:</p>
+
+<pre>
+root@dein-server:/# systemctl status vboxdrv
+● vboxdrv.service - VirtualBox Linux kernel module
+   Loaded: loaded (/usr/lib/virtualbox/vboxdrv.sh; enabled; vendor preset: enabled)
+   Active: failed (Result: exit-code) since Tue 2019-04-09 15:28:58 CEST; 20h ago
+
+Apr 09 15:28:46 fellow systemd[1]: Starting VirtualBox Linux kernel module...
+Apr 09 15:28:47 fellow vboxdrv.sh[824]: vboxdrv.sh: Starting VirtualBox services.
+Apr 09 15:28:47 fellow vboxdrv.sh[824]: vboxdrv.sh: Building VirtualBox kernel modules.
+Apr 09 15:28:58 fellow vboxdrv.sh[824]: vboxdrv.sh: failed: Look at /var/log/vbox-setup.log to find out what went wrong.
+Apr 09 15:28:58 fellow systemd[1]: vboxdrv.service: Control process exited, code=exited status=1
+Apr 09 15:28:58 fellow systemd[1]: Failed to start VirtualBox Linux kernel module.
+Apr 09 15:28:58 fellow systemd[1]: vboxdrv.service: Unit entered failed state.
+Apr 09 15:28:58 fellow systemd[1]: vboxdrv.service: Failed with result 'exit-code'.
+</pre>
+
+<p>Auch ein Aufruf von Virtualbox über die Konsole führt zu einer Fehlermeldungen, nämlich dieser:</p>
+
+<pre>
+root@dein-server:/# virtualbox --version
+WARNING: The vboxdrv kernel module is not loaded. Either there is no module
+         available for the current kernel (4.4.0-145-generic) or it failed to
+         load. Please recompile the kernel module and install it by
+
+           sudo /sbin/vboxconfig
+
+         You will not be able to start VMs until this problem is fixed.
+</pre>
+
+<p>Folgt man dem Hinweis aus der Fehlermeldung und erzeugt die Kernelmodule neu, dann schlägt dies fehl und im Fehlerlog von Virtualbox taucht dann typischerweise dieser Fehler auf:</p>
+
+<pre>
+root@dein-server:/# vboxconfig
+vboxdrv.sh: Stopping VirtualBox services.
+vboxdrv.sh: Starting VirtualBox services.
+vboxdrv.sh: Building VirtualBox kernel modules.
+vboxdrv.sh: failed: Look at /var/log/vbox-setup.log to find out what went wrong.
+
+root@dein-server:/# tail -f /var/log/vbox-setup.log
+scripts/Makefile.build:285: recipe for target '/tmp/vbox.0/r0drv/linux/memobj-r0drv-linux.o' failed
+make[2]: *** [/tmp/vbox.0/r0drv/linux/memobj-r0drv-linux.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+  if [ "-pg" = "-pg" ]; then if [ /tmp/vbox.0/r0drv/linux/initterm-r0drv-linux.o != "scripts/mod/empty.o" ]; then ./scripts/recordmcount  "/tmp/vbox.0/r0drv/linux/initterm-r0drv-linux.o"; fi; fi;
+  if [ "-pg" = "-pg" ]; then if [ /tmp/vbox.0/r0drv/linux/alloc-r0drv-linux.o != "scripts/mod/empty.o" ]; then ./scripts/recordmcount  "/tmp/vbox.0/r0drv/linux/alloc-r0drv-linux.o"; fi; fi;
+  if [ "-pg" = "-pg" ]; then if [ /tmp/vbox.0/r0drv/linux/memuserkernel-r0drv-linux.o != "scripts/mod/empty.o" ]; then ./scripts/recordmcount  "/tmp/vbox.0/r0drv/linux/memuserkernel-r0drv-linux.o"; fi; fi;
+Makefile:1454: recipe for target '_module_/tmp/vbox.0' failed
+make[1]: *** [_module_/tmp/vbox.0] Error 2
+/tmp/vbox.0/Makefile.include.footer:101: recipe for target 'vboxdrv' failed
+make: *** [vboxdrv] Error 2
+</pre>
+
+<p>Sieht bei Euch die Fehlermeldung ähnlich aus, dann liegt hier vermutlich die besprochene Inkompatibilität vor. Die weitere Prüfung schafft Sicherheit.</p>
+
+
+<h2>Woran erkenne ich, dass es sich um diese Inkompatibilität von Ubuntu und Virtualbox handelt?</h2>
+
+<p>Wir konnten die Inkompatibilität bei vielen Ubuntu 16.04 LTS Server Systemen beobachten. Konkret bei Kernel Versionen 4.4.0.14x im Zusammenspiel mit Virtualbox 5.2.26 aus den Paketquellen. Die installierten Versionen kann man mit dem folgenden Befehlen über die Kommandozeile ermitteln:
+
+<pre>
+root@dein-server:/# lsb_release -a
+Ubuntu 16.04.5 LTS
+
+root@dein-server:/# uname -a
+Linux fellow 4.4.0-145-generic #171-Ubuntu SMP Tue Mar 26 12:43:40 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+
+root@dein-server:/# vboxmanage --version
+... 5.2.26-128414~Ubuntu~xenial ...
+</pre>
+
+<p>Liegt diese Kombination aus Ubuntu Kernel und Virtualbox Version vor, dann ist die Fehlfunktion von Virtualbox offensichtlich. Andererseits gibt es mit ziemlicher Sicherheit auch andere Kombinationen betroffen. Im Netz berichten <a href="https://askubuntu.com/questions/1126591/virtualbox-error-after-last-ubuntu-software-update" target="_blank" rel="noopener">zahlreiche User von diesem Problem</a>.</p> 
+
+<h2>Wie kann man diese Inkompatibilität beheben?</h2>
+
+<p>Willst Du nich auf einen neuen Kernel oder ein neues Virtualbox in den Ubuntu Paketquellen warten, dann gibt es nach unserem aktuellen Kenntnisstand zwei Möglichkeiten, mit der Situation umzugehen:</p>
+<ul style="padding-left: 20px;">
+	<li>Downgrade des Linux-Kernels</li>
+	<li>Upgrade von Virtualbox</li>
+</ul>
+
+<h2>Installation des aktuellen Virtualbox Testbuilds</h2>
+
+<p>Wir verfolgen typischerweise den zweiten Ansatz: ein Upgrade von Virtualbox. Konkret installieren wir einen Virtualbox-Testbuild. Diese Version ist neuer als die Version aus den Ubuntu- oder Oracle-Paketquellen und weisst keine Funktionsprobleme auf. Die Installation ist dabei denkbar einfach. Zuerst wird das alte Virtualbox deinstalliert und dann der neue Testbuild installiert. Anschließend werden noch die Guest-Extensions installiert und schon kann man wieder loslegen.  Ein weiterer Vorteil dieser Option: Sie ist ohne einen Neustart des Servers möglich.</p>
+<p><strong>Wichtig:</strong> Die existierenden virtuellen Maschinen müssen nicht exportiert und wieder importiert werden. Die Deinstallation des alten Virtualbox hat keinen Einfluss auf existierende virtuelle Maschinen.</p>
+
+<img decoding="async" width="1024" height="740" src="/wp-content/uploads/2019/04/virtualbox-testbuilds-1024x740.png" alt="Testbuilds erhält man auf der Seite von Virtualbox" class="alignleft size-large wp-image-5820" srcset="/wp-content/uploads/2019/04/virtualbox-testbuilds-1024x740.png 1024w, /wp-content/uploads/2019/04/virtualbox-testbuilds-300x217.png 300w, /wp-content/uploads/2019/04/virtualbox-testbuilds-768x555.png 768w, /wp-content/uploads/2019/04/virtualbox-testbuilds.png 1146w" sizes="(max-width: 1024px) 100vw, 1024px" />
+<p>Die jeweils aktuellste Version erhält man auf der <a href="https://www.virtualbox.org/wiki/Testbuilds" target="_blank" rel="noopener">Seite von Virtualbox</a>.</p>
+
+<pre>
+root@dein-server:/# apt-get remove virtualbox-5.2   # ggf. die richtige Version verwenden
+root@dein-server:/# wget https://www.virtualbox.org/download/testcase/VirtualBox-5.2.27-129913-Linux_amd64.run   # aktuellste Version von Virtualbox Webseite holen
+root@dein-server:/# chmod +x VirtualBox-5.2.27-129913-Linux_amd64.run
+root@dein-server:/# ./VirtualBox-5.2.27-129913-Linux_amd64.run
+root@dein-server:/# wget https://www.virtualbox.org/download/testcase/Oracle_VM_VirtualBox_Extension_Pack-5.2.27-129741.vbox-extpack
+root@dein-server:/# vboxmanage extpack install Oracle_VM_VirtualBox_Extension_Pack-5.2.27-129741.vbox-extpack
+root@dein-server:/# vboxmanage list extpacks
+Extension Packs: 1
+Pack no. 0:   Oracle VM VirtualBox Extension Pack
+Version:      5.2.27
+Revision:     129741
+Edition:      
+Description:  USB 2.0 and USB 3.0 Host Controller, Host Webcam, VirtualBox RDP, PXE ROM, Disk Encryption, NVMe.
+VRDE Module:  VBoxVRDP
+Usable:       true 
+</pre>
+
+<p>Wichtig ist, dass die Guest-Extension auch bei dem Linux User angezeigt wird, unter dem Virtualbox läuft (im Folgenden der User vbox). Ggf. ist es notwendig, vorhandene virtuelle Maschinen zu stoppen und dann die Dienste neu zu starten, um die Gast-Erweiterungen auch diesem User verfügbar zu machen.</p>
+
+<pre>
+vbox@dein-server:/# vboxmanage controlvm VM-NAME acpipowerbutton
+root@dein-server:/# systemctl restart vboxdrv vboxweb-service
+</pre>
+
+<p>Nun sollten die virtuellen Maschinen sich wieder wie gewohnt starten lassen.</p>

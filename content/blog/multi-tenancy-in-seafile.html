@@ -1,0 +1,82 @@
++++
+title = "Multi-Tenancy in Seafile"
+titel_html = "Multi-Tenancy in Seafile | datamate"
+ueberschrift = "Multi-Tenancy in Seafile"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/06/High_rise.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/multi-tenancy-in-seafile/"
+canonical = "https://www.datamate.org/multi-tenancy-in-seafile/"
+og_bild_breite = "1280"
+og_bild_hoehe = "853"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2018-06-06T17:20:42+00:00"
+geaendert = "2025-02-21T08:10:08+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Ralf Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "4 Minuten"
+beitragsbild = "/wp-content/uploads/2018/06/High_rise.jpg"
+bild_breite = 1280
+bild_hoehe = 853
+bild_beschriftung = "Seafile Multi Tenancy abstrakt"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Multi-Tenancy in Seafile", item = ""}]
+wortzahl = 882
+autor = "Ralf Dyllick-Brenzinger"
+autor_kurz = "rdb"
+kategorien = ["praktische-anwendungsfaelle", "seafile"]
+schlagwoerter = ["API", "Multi-Tenancy", "seafile"]
+wp_id = 5053
+slug = "multi-tenancy-in-seafile"
+url = "/multi-tenancy-in-seafile/"
+date = "2018-06-06T19:20:42"
+lastmod = "2025-02-21T09:10:08"
+datum_utc = "2018-06-06T17:20:42+00:00"
+geaendert_utc = "2025-02-21T08:10:08+00:00"
++++
+							<p>Mit Multi-Tenancy ist es möglich, Seafiles File Sharing Funktionen in einer Seafile Professional Server Instanz mehreren Organisationen anzubieten. Die Organisationen oder Tenants (englisch für Mieter) teilen sich die Ressourcen des Servers, sind aber organisatorisch isoliert. Datei- und Ordnerfreigaben sind an Angehörige der gleichen Organisation möglich; Freigaben an Angehörige anderer Organisationen, wie es bei der <a href="https://manual.seafile.com/deploy_pro/multi_institutions.html">Multi-Institutions</a> Funktion möglich ist, ist bei Multi-Tenancy nicht möglich. In diesem Artikel beschreiben wir Zielgruppe, Einsatz und Verwaltung des Multi-Tenancy Features von Seafile.</p>
+
+<span id="more-5053"></span>
+
+<h2>Zielgruppe von Seafile in Multi-Tenancy</h2>
+	<p>Multi-Tenancy richtet sich an Hosting Provider, die in einer Server Instanz mehrere Kunden verwalten wollen. Gegenüber einer &#8220;ein Kunde, ein System&#8221;-Politik bietet Multi-Tenancy Vorteile bei Installation, Wartung und Lizenzverwaltung. 
+
+	<p>Gerade für Hosting Anbieter, die ein &#8220;eigenes&#8221; File Sharing Produkt anbieten wollen, ist Multi-Tenancy attraktiv. Die Weboberfläche von <a href="/seafile" title="Seafile File Cloud">Seafile</a> als auch die Clients lassen sich weitgehend modifizieren und durchgehend an das eigene Design anpassen. Der individuellen Gestaltung steht somit ebenso wenig im Weg wie der Erfüllung von Corporate Design Richtlinien. Auch für solche Hosting Anbieter, die Seafiles Sync &#038; Share Funktionen in Ihre bestehenden Webangebote integrieren wollen, ist Multi-Tenancy einen Blick wert. Ein bestehendes E-Mail Produkt, nur um ein Beispiel zu nennen, kann mittels Web API problemlos um Seafiles File Cloud Funktionen erweitert werden.</p> 
+
+	<p>Mit Multi-Tenancy lässt sich auch das aufwändige Handling der Seafile Lizenzdateien vereinfachen. Das Multi-Tenancy System arbeitet mit einer einzigen Seafile Lizenzdatei unabhängig der gehosteten Organisationen. Anders als bei kundenindividuellen Installationen lassen sich so Schwankungen in der Nutzeranzahl besser ausgleichen und erfordern nicht zwangsläufig einen Austausch der Lizenzdatei.</p>
+
+	<p>Anders herum bietet sich Multi-Tenancy nicht für solche Fälle an, in denen Kunden eine individuelle, an Ihre Anforderungen angepasste File Cloud benötigen (z.B. Anwendung der Corporate Colors, Einbettung des Firmenlogos). Der Look von Seahub, dem Web-Interface von Seafile, lässt sich zwar sehr weitgehend individualisieren, Logo, Schriftarten, Color Code sowie Hintergrundbild des Logins werden aber auf Systemebene festgelegt und sind nicht für jeden einzelnen Tenant individuell anpassbar. Gleiches gilt, wenn der Kunde auf eine technische Separierung der Datenhaltung besteht.</p>
+
+<h2>Multi-Tenancy im Einsatz</h2>
+	<p>Abgesehen von Benutzerrestriktionen, die sich aus der Software Lizenz ergeben, kennt ein Seafile Multi-Tenancy System keine Limits bezüglich der gehosteten Organisationen. (Wenn die Anzahl der aktiven Nutzer die Nutzer gemäß Lizenzdatei überschreitet, verweigert der Seafile Server den Start.)  Eine ausreichend performante Plattform vorausgesetzt, kann eine Seafile Instanz Duzende oder auch Hunderte Organisationen mit Tausenden Nutzern managen.</p>
+
+	<p>Grundsätzlich gilt: Der System Administrator (System Admin) legt eine Organisation neu an und weist die organisationsspezifischen Limits (z.B. Quota, Benutzer) zu. Der erste Benutzer der Organisation ist der Administrator der Organisation (Org Admin). Seine Rolle ist die fortlaufende Benutzeradministration in der von ihm verantworteten Organisation.</p> 
+
+	<p>Die fortlaufende Verwaltung der Organisation kann über Seahub, die graphische Benutzeroberfläche von Seafile, oder per API erfolgen. Mit der Erweiterung der APIs im <a href="/blog/seafile-professional-server-6-3">Seafile Professional Server 6.3</a> stehen nun auch alle notwendigen Aufrufe zur Verfügung, um die Verwaltung eines Multi-Tenant Systems in bestehende Verwaltungstools zu integrieren und eine nutzungsabhängige Abrechnung zu realisieren.</p>
+
+<h3>Verwaltung per Web API</h3>
+	<p>Auf Organisations- sowie auf Benutzerebene stehen dem System Administrator POST, GET, PUT und DELETE Calls zur Verfügung. Auf Organisationslevel hat er damit Zugriff auf die folgenden Funktionen:</p>
+	<ul>
+		<li>Mit dem <strong>POST</strong> Call wird eine neue Organisation und deren Org Admin angelegt. Mit dem POST Call übergibt der System Admin außerdem Disk Quota in MB und das Benutzerlimit.</li>
+		<li>Mittels <strong>GET</strong> Call werden Status Informationen der Organisation abgerufen, darunter gesetzte Quota, Quota Usage, registrierte aktive Nutzer und die ID des Org Admins.</li>
+		<li>Nutzungsparameter der Organisation wie Benutzerlimit und Disk Quota lassen sich über den <strong>PUT</strong> Call modifizieren. Ebenfalls per PUT kann der Aktivitätsstatus oder der Name einer Organisation geändert werden.</li>
+
+<!--Lässt sich auch die E-Mail/das Passwort des Org Admins ändern bzw. der Org Admin selbst?-->
+
+		<li>Die Löschung einer Organisation erfolgt per <strong>DELETE</strong> Call.</li>
+	</ul>
+
+	<p>Durch die Programiersprachenunabhängigkeit der API-Calls sind die Hürden für die Integration der Tenant-Verwaltung und Abrechnung innerhalb bestehender Strukturen gering. Mitsamt der analogen Aufrufe auf Benutzerebene bieten sich Hostern somit umfangreiche Möglichkeiten, unterschiedliche Abrechnungsmodelle umzusetzen. Klassische, benutzerbasierte Preismodelle lassen sich ebenso umsetzen wie speicher- oder traffic-basierte Preismodelle.</p>
+
+	<img decoding="async" src="/wp-content/uploads/2018/06/Multi-Tenancy_Seafile.png" alt="Multi Tenancy in Seafile" width="2123" class="alignnone size-full wp-image-5117" srcset="/wp-content/uploads/2018/06/Multi-Tenancy_Seafile.png 2123w, /wp-content/uploads/2018/06/Multi-Tenancy_Seafile-300x139.png 300w, /wp-content/uploads/2018/06/Multi-Tenancy_Seafile-768x356.png 768w, /wp-content/uploads/2018/06/Multi-Tenancy_Seafile-1024x475.png 1024w" sizes="(max-width: 2123px) 100vw, 2123px" />
+
+<h3>Verwaltung über Seahub</h3>
+	<p>Über die graphische Benutzeroberfläche Seahub kann der System Admin einer neu angelegten Organisation nur eine Quota für den Datenspeicher zuweisen. Ein Benutzerlimit kann er nicht definieren. </p>
+	<p>Der System Admin kann kein Nutzer in der Organisation anlegen oder diese verwalten. In der Benutzerverwaltung kann er fortlaufend die registrieren Nutzern pro Organisation und deren Speicherbedarf überwachen.</p>
+
+<h2>Aktivierung von Multi-Tenancy</h2>
+	<p>Die Aktivierung von Multi-Tenancy ist durch Parameter-Anpassungen in den Konfigurationsdateien seafile.conf und seahub_settings.py ohne Klimzüge gemacht. Das <a href="https://manual.seafile.com/deploy_pro/multi_tenancy.html">Seafile Manual</a> enthält die Details. Nur der Vollständigkeit halb sei hier nochmals erwähnt: Multi-Tenancy ist ein exklusives Feature des Seafile Server Professional Edition. (Der <a href="/seafile/editionenvergleich/">Featurevergleich von Community und Professional Edition</a> stellt die weiteren funktionalen Unterschiede zwischen den Editionen übersichtlich dar.)</p>
+
+<h2>Wenn File Cloud, dann Seafile!</h2>
+	<p>Seafile ist die leistungsfähigste File Cloud am Markt. Mit Multi-Tenancy, Customizing-Möglichkeiten und leistungsfähiger API ist es die Lösung der Wahl für die Erweiterung bestehender Webservices um Sync &#038; Share Funktionen.</p>
+	<p>Das datamate Team steht für eine detaillierte Beratung gerne zur Verfügung. Auch eine beschränkte Testlizenz können wir auf Nachfrage zur Verfügung stellen. </p>

@@ -1,0 +1,276 @@
++++
+title = "Teil 2: Installation eines CalDAV-Servers unter Ubuntu"
+titel_html = "Teil 2: Installation eines CalDAV-Servers unter Ubuntu | datamate"
+ueberschrift = "Teil 2: Installation eines CalDAV-Servers unter Ubuntu"
+beschreibung = "In 2.Teil dieser Serie wird sabre/dav auf dem eigenen Server installiert. Als Basis kommt ein Ubuntu Server 16.04 mit nginx, php7 und mysql zum Einsatz."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/06/teil2_installation_sabredav.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/installation-caldav-server-ubuntu/"
+canonical = "https://www.datamate.org/installation-caldav-server-ubuntu/"
+og_bild_breite = "1920"
+og_bild_hoehe = "1275"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2017-07-17T10:21:25+00:00"
+geaendert = "2025-02-21T08:10:41+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "9 Minuten"
+beitragsbild = "/wp-content/uploads/2017/06/teil2_installation_sabredav.jpg"
+bild_breite = 1920
+bild_hoehe = 1275
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Teil 2: Installation eines CalDAV-Servers unter Ubuntu", item = ""}]
+wortzahl = 1116
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["software"]
+schlagwoerter = ["CalDAV", "CardDAV", "Kontaktsynchronisation", "sabre/dav", "Termin-", "Tutorial"]
+wp_id = 257
+slug = "installation-caldav-server-ubuntu"
+url = "/installation-caldav-server-ubuntu/"
+date = "2017-07-17T12:21:25"
+lastmod = "2025-02-21T09:10:41"
+datum_utc = "2017-07-17T10:21:25+00:00"
+geaendert_utc = "2025-02-21T08:10:41+00:00"
++++
+						<p>Nach der <a href="/blog/eigener-caldav-server-mit-sabredav/">Einführung zu sabre/dav im ersten Teil dieser Artikelserie</a>, soll in diesem zweiten Teil die Installation eines eigenen sabre/dav-Server unter Ubuntu Server 16.04 beschrieben werden. Neben sabre/dav selbst benötigt man dafür zusätzlich einen Webserver mit PHP-Support sowie eine MySQL-Datenbank.</p>
+
+<p>Am Ende des Artikels werden alle Bestandteile installiert sein und Sie mit einem eigenen Server zur Synchronisation von Terminen, Kontakten und Aufgaben zwischen Ihren Geräten belohnt.</p>
+
+<span id="more-257"></span>
+
+<h2>Installation von Webserver, PHP und MySQL-Datenbank</h2>
+
+<h3>Installation von nginx mit PHP Support</h3>
+
+<p>Die folgenden Schritte wurden unter Ubuntu Server 16.04 getestet und beschreiben die Installation des Webservers Nginx, der benötigten Programmiersprache PHP sowie der MySQL-Datenbank. Sämtliche Befehle werden mit sudo-Rechen ausgeführt. Die Befehle sollten ohne Schwierigkeiten auf andere Linux-Varianten übertragbar sein, jedoch ist es möglich, dass der ein oder andere Befehl eventuell angepasst werden muss. Um diese Fehlerquelle auszuschließen, probieren Sie doch Ihre erste Installation in einer virtuellen Maschine mit Ubuntu Server 16.04.
+	
+<pre><code class="hljs">apt-get update
+apt-get upgrade
+apt-get install nginx php-fpm php-xml php-mbstring
+</code></pre>
+
+<p>Nach der Installation wird Nginx automatisch gestartet. Um sicher zu gehen, dass der Webserver auch tatsächlich läuft, kann man den Status des Dienstes mit <strong>systemd</strong> überprüfen.</p>
+
+<pre><code class="hljs">systemctl status nginx
+
+# liefert den Output:
+nginx.service - A high performance web server and a reverse proxy server
+Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+Active: active (running) since Mon 2017-05-18 16:14:00 EDT; 4min 2s ago
+Main PID: 6857 (nginx)
+  CGroup: /system.slice/nginx.service
+      ├─6857 nginx: master process /usr/sbin/nginx -g daemon on; master_process on
+      └─6858 nginx: worker process
+</code></pre>
+
+<p>Wenn man nun einen beliebigen Browser öffnet und in der Adresszeile die IP-Adresse des Servers eingibt, sollte man von nginx begrüßt werden. Die eigene IP ermittelt man am einfachsten mit dem Kommandozeilenbefehl <strong>ifconfig.</strong>
+<img decoding="async" src="/wp-content/uploads/2017/07/welcome_nginx.png" alt="" width="577" height="212" class="alignnone size-full wp-image-355" srcset="/wp-content/uploads/2017/07/welcome_nginx.png 577w, /wp-content/uploads/2017/07/welcome_nginx-300x110.png 300w" sizes="(max-width: 577px) 100vw, 577px" />
+</p>
+
+<p>Ich greife nun vorweg, dass wir sabre/dav später im Verzeichnis <strong>/var/www/sabredav</strong> installieren werden, und passe direkt die Konfigurationsdateien von nginx an.</p>
+
+<pre><code class="hljs"># zuerst leere ich die Datei
+echo "" > /etc/nginx/sites-available/default
+
+# nun bearbeiten wir die Konfiguration
+nano /etc/nginx/sites-available/default
+
+# tragen Sie den folgenden Inhalt ein. 
+server {
+    listen 80 default_server;
+    server_name _;
+    root /var/www/sabredav/;
+    index server.php;
+    rewrite (.*) /server.php$uri break;
+
+    location ~ ^(.+\.php)(.*)$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $request_filename;
+        fastcgi_index server.php;
+        include fastcgi_params;
+        }
+}
+
+# speichern Sie die Datei und verlassen Sie den Editor
+# nun prüfen wie die Konfigurationsdatei und starten nginx neu
+nginx -t
+
+# folgendes Ergebnis sollte angezeigt werden
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+# Laden Sie die Konfiguration in nginx
+nginx -s reload
+</code></pre>
+
+<p>Manche Leute mögen sich nun fragen, warum wir gerade <i>server.php</i> und nicht <i>index.php</i> verwenden? Ich orientiere mich hierbei an einer Empfehlung des Entwicklers Evert Pot, der <a href="http://sabre.io/dav/baseuri/" target="_blanc" rel="noopener">ganz klar davon abrät</a> die Datei <i>index.php</i> zu nennen.
+
+<h3>Anlage einer MySQL-Datenbank und eines eigenen Users</h3>
+
+<p>Obwohl sabre/dav-Server auch ohne eigene Datenbank Dateien verwalten kann, macht der Einsatz von MySQL als Speicherbackend und für die Benutzerauthentifizierung sehr viel Sinn. Mit den folgenden Befehlen wird eine MySQL-Datenbank angelegt und ein passender User angelegt</p>
+
+<pre><code class="hljs nginx">apt-get install mysql-server mysql-client php-mysql
+# während der Installation wählt man ein Root-Passwort für die MySQL-Datenbank
+# Hinweis: das ist nicht das root-Passwort von Ubuntu sondern das Root-Passwort der Datenbank
+
+mysql -u root -p -e "CREATE DATABASE sabredav"
+mysql -u root -p -e "CREATE USER 'sabredav'@'localhost' IDENTIFIED BY 'MYSQL-PW-DES-USERS-SABREDAV';"
+mysql -u root -p -e "GRANT ALL PRIVILEGES ON sabredav . * TO 'sabredav'@'localhost';" 
+mysql -u root -p -e "FLUSH PRIVILEGES;"
+# Nach Eingabe der Befehle werden Sie aufgefordert ein Passwort einzugeben. Hier müssen Sie das MYSQL-Root-Passwort eingeben.
+
+# Als letzte testen wir die Datenbankverbindung mit dem eben angelegten MySQL-User sabredav
+mysql -u sabredav -p"PASSWORT-DES-USERS-SABREDAV-OHNE-LEERZEICHEN"
+# Wichtig: zwischen dem Parameter -p und Ihrem Passwort darf kein Leerzeichen eingegeben werden.
+# Wenn der Login erfolgreich war, verändert sich die Kommandozeile von root@... zu mysql>
+
+# mit quit verlassen Sie wieder die MySQL-Konsole.
+mysql> quit;
+</pre></code>
+
+<p>Alle notwendigen Voraussetzungen sind damit erfüllt. Für einen ersten Testserver ist dies vollkommen ausreichend. Für eine produktive Maschine sollte man natürlich noch den Webserver per SSL-Zertifikat absichern, die Firewall <strong>ufw</strong> konfigurieren, den Brute-Force-Schutz <strong>fail2ban</strong> installieren und die MySQL-Datenbank per <strong>mysql_secure_installation</strong> absichern. Dieses Thema wird jedoch in einem anderen Artikel beleuchtet werden.
+
+<h2>Installation von sabre/dav 3.2 unter Ubuntu 16.04</h2>
+
+<p>Die nun folgende Anleitung basiert und übernimmt viele Stellen der Anleitung von Evert Pot von der Webseite <a href="http://sabre.io/dav" target="_blank" rel="noopener">sabre.io/dav</a>. Gleichzeitig werde ich an vielen Stellen umfangreiche Ergänzungen oder Erklärungen liefern, um auch Einsteigern einen leichteren Einstieg zu ermöglichen. Denn wie bereits in Teil 1 geschrieben: sabre/dav ist ein Framework von einem Entwickler für andere Entwickler. Diese Anleitung hat einen anderen Anspruch und soll auch anderen Gruppen den Einsteig erleichtern.</p>
+
+<pre><code class="hljs">curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+mkdir /var/www/sabredav
+cd /var/www/sabredav
+composer require sabre/dav ~3.2.0
+mkdir /var/www/sabredav/{data,public}
+chmod a+rwx data public
+</code></pre>
+
+<p>Mit diesen wenigen Zeilen Code wird sabre/dav per PHP-Paketmanager "composer" installiert und im Verzeichnis /var/www/sabredav angelegt. Neben der Installation per <strong>composer</strong> gibt es noch die Möglichkeit sabre/dav direkt von Github zu beziehen, was jedoch keine Abhängigkeiten prüft und auch eine spätere Aktualisierung von sabre/dav etwas schwerer macht.</p>
+
+<h2>Konfiguration von sabre/dav in der server.php</h2>
+
+<p>Mit der Installation des Frameworks liegen nun alle notwendigen Dateien auf der Festplatte des Servers. Um nun einen einfachen WebDAV basierten Dateiserver aufzusetzen, legt man eine <strong>server.php</strong> im Hauptverzeichnis (d.h. /var/www/sabredav/server.php) an und kopiert folgende Inhalte in die Datei. Wenn Sie die gleiche Datei und Ordnerstruktur verwenden, werden Sie nur das MySQL-Root-Passwort ändern müssen. Bei anderen Ordnerstrukturen, muss ggf. die Variable $baseUri angepasst werden, damit sabre/dav richtig geladen werden kann.</p>
+
+<pre><code class="hljs">&lt;?php
+date_default_timezone_set('Europe/Berlin');
+$baseUri = '/';
+$pdo = new \PDO('mysql:dbname=sabredav;host=127.0.0.1', 'sabredav', 'MYSQL-PW-DES-USERS-SABREDAV');
+$pdo-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+require_once 'vendor/autoload.php';
+
+$authBackend      = new \Sabre\DAV\Auth\Backend\PDO($pdo);
+$principalBackend = new \Sabre\DAVACL\PrincipalBackend\PDO($pdo);
+$carddavBackend   = new \Sabre\CardDAV\Backend\PDO($pdo);
+$caldavBackend    = new \Sabre\CalDAV\Backend\PDO($pdo);
+
+$nodes = [
+    new \Sabre\CalDAV\Principal\Collection($principalBackend),
+    new \Sabre\CalDAV\CalendarRoot($principalBackend, $caldavBackend),
+    new \Sabre\CardDAV\AddressBookRoot($principalBackend, $carddavBackend),
+];
+
+$server = new \Sabre\DAV\Server($nodes);
+if (isset($baseUri)) $server-&gt;setBaseUri($baseUri);
+
+$server-&gt;addPlugin(new \Sabre\DAV\Auth\Plugin($authBackend));
+$server-&gt;addPlugin(new \Sabre\DAV\Browser\Plugin()); 
+$server-&gt;addPlugin(new \Sabre\CalDAV\Plugin());
+$server-&gt;addPlugin(new \Sabre\CardDAV\Plugin());
+$server-&gt;addPlugin(new \Sabre\DAV\Sync\Plugin());
+
+$server-&gt;exec();
+</code></pre>
+
+<p>Speichern Sie die Datei. Als nächstes werden wir die nötigen MySQL-Datenbankstrukturen laden, damit sabre/dav direkt lauffähig ist. Geben Sie hierfür die folgenden Befehle in der Konsole ein</p>
+
+<pre><code class="hljs">cd /var/www/sabredav/vendor/sabre/dav/examples/sql
+cat mysql.* | mysql -u sabredav -p -D sabredav -h 127.0.0.1
+
+# die nun erzeugte Datenbankstruktur kann man sich natürlich auch ansehen
+mysql -u sabredav -p
+mysql> use sabredav;
+mysql> show tables;
++-----------------------+
+| Tables_in_sabredav    |
++-----------------------+
+| addressbookchanges    |
+| addressbooks          |
+| calendarchanges       |
+| calendarinstances     |
+| calendarobjects       |
+| calendars             |
+| calendarsubscriptions |
+| cards                 |
+| groupmembers          |
+| locks                 |
+| principals            |
+| propertystorage       |
+| schedulingobjects     |
+| users                 |
++-----------------------+
+14 rows in set (0.00 sec)
+
+mysql> select * from users;
+mysql> quit;
+</code></pre>
+
+<h2>Erster Aufruf von sabre/dav per Browser</h2>
+
+<p>Nun kommt der Moment der Wahrheit. Wenn Sie erneut die IP-Adresse des Servers in einem beliebigen Browser aufrufen, sollten Sie zur Eingabe von Benutzername und Passwort aufgefordert werden. Geben Sie hier zweimal <i>admin</i> ein um zur Weboberfläche von sabre/dav zu gelanden.
+	
+<img decoding="async" src="/wp-content/uploads/2017/07/sabredav-startbildschirm-1024x716.png" alt="" width="1024" class="alignnone size-large wp-image-371" srcset="/wp-content/uploads/2017/07/sabredav-startbildschirm-1024x716.png 1024w, /wp-content/uploads/2017/07/sabredav-startbildschirm-300x210.png 300w, /wp-content/uploads/2017/07/sabredav-startbildschirm-768x537.png 768w, /wp-content/uploads/2017/07/sabredav-startbildschirm.png 1145w" sizes="(max-width: 1024px) 100vw, 1024px" />
+</p>
+
+<h2>Was tun bei Fehlern?</h2>
+
+<p>Sollten Sie nicht den Login von sabre/dav sehen oder der Login scheitern, sollten Sie zuerst die folgenden Punkte überprüfen. Diese stellen unserer Erfahrung nach die häufigsten Fehlerquellen dar:</p>
+
+<ul style="padding-left: 20px;">
+	<li>Prüfen Sie per <i>systemctl</i>, ob Nginx und der MySQL-Server laufen.</li>
+	<li>Prüfen Sie die Einstellungen in der <i>/var/www/sabredav/server.php</i>. Häufige Fehler sind ein falsche MySQL-Passwort des Users sabredav, eine falsche BaseUri oder fehlende Berechtigungen für den User www-data: auf den Ordner /var/www/sabredav.</li>
+	<li>Prüfen Sie mit <i>tail</i> die Log-Dateien von Nginx unter <i>/var/log/nginx</i></li>
+	<li>Prüfen Sie, ob Ihr erster User in der MySQL-Datenbank wirklich gespeichert wurde. Verbinden Sie sich hierfür mit <i>mysql -u sabredav -p</i> mit der Datenbank und lassen Sie sich den User anzeigen. Bedenken Sie, dass das Passwort in der MySQL-Datenbank nicht im Klartext eingetragen wird.</li>
+	<li>Prüfen Sie, ob der User <i>www-data</i> Zugriff auf die Dateien unter <i>/var/www/sabredav</i> hat.</li>
+</ul>
+
+<h2>Ergebnis: ein eigener CalDAV/CardDAV-Server</h2>
+
+<p>Sie können stolz auf sich sein. Sie haben es geschafft einen eigenen Synchronisationsserver für Termine, Aufgaben und Kontakte auf Ihrem Server zu installieren. Ab sofort kümmert sich sabre/dav um die Synchronisation Ihrer privaten Daten.</p>
+
+<p>Zwar müssen Sie sich noch selbst um die Verwaltung der User und deren Berechtigungen kümmern, doch wie das geht, werden Sie im nächsten Teil erfahren. Aber eines kann ich Ihnen versichern. Ihre Reise mit sabre/dav hat gerade erst begonnen und die vielleicht größte Hürde haben Sie bereits genommen.</p>
+
+<hr/>
+
+<h2>Nachtrag: sabre/dav in einem Unternverzeichnis</h2>
+
+<p>Von einem Leser kam die Nachfrage, ob man sabre/dav auch in einem Unterverzeichnis betreiben kann. Dies ist möglich, wobei es von den Entwicklern nicht empfohlen wird. Diese schreiben <a href="http://sabre.io/dav/service-discovery/" target="_blank" rel="noopener">It's wise to make sure that a Cal/CardDAV server runs on the root of a server</a>. Wir können bestätigen, dass es besser ist sabre/dav im Root-Verzeichnis zu betreiben, weil dann die Konfiguration der Clients teilweise deutlich einfacher ist. Gleichzeitig konnten wir jedoch neben einem größeren Aufwand keine Funktionseinschränkungen feststellen.</p>
+
+<p>Mit der folgenden nginx-Konfiguration ist es möglich auch sabre/dav in einem Unterverzeichnis zu betreiben:</p>
+
+<pre><code class="hljs">location /dav {
+        #root /var/www;
+        root /var/www/;
+        index server.php;
+
+        rewrite ^ /dav/server.php$uri;
+}
+
+location ~ ^/dav/(.+\.php)(.*)$ {
+        root /var/www;
+        index server.php;
+
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $request_filename;
+        fastcgi_index server.php;
+        include fastcgi_params;
+}
+</code></pre>
+
+<p>Die oben aufgeführte Konfiguration geht davon aus, dass sabre/dav im Verzeichnis /var/www/dav liegt und der Aufruf per Browser über das Verzeichnis <i>/dav</i> erfolgt. Neben der nginx-Konfiguration muss man zusätzlich noch die <i>baseUri</i> in der server.php anpassen. </p>
+
+<pre><code class="hljs">$baseUri = '/dav';
+</code></pre>
+
+<p>Danach ist sabre/dav auch über das Unterverzeichnis <i>/dav</i> erreichbar.</p>

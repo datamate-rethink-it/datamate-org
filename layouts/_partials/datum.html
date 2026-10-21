@@ -1,0 +1,12 @@
+{{- /* Deutsches Datum. Go kennt keine deutschen Monatsnamen, Hugos
+       :date_long haengt an der Spracheinstellung - hier steht es
+       ausgeschrieben, damit es nicht von Umgebung abhaengt.
+       Aufruf: partial "datum.html" (dict "datum" .Date "stil" "lang") */ -}}
+{{- $monate := slice "Januar" "Februar" "März" "April" "Mai" "Juni" "Juli"
+    "August" "September" "Oktober" "November" "Dezember" -}}
+{{- $m := index $monate (sub (int (.datum.Format "1")) 1) -}}
+{{- if eq .stil "kurz" -}}
+{{- .datum.Day }}.{{ $m }} {{ .datum.Year }}
+{{- else -}}
+{{- .datum.Day }}. {{ $m }} {{ .datum.Year }}
+{{- end -}}

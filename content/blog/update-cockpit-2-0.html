@@ -1,0 +1,123 @@
++++
+title = "datamate Cockpit 2.0 ist nun verfügbar!"
+titel_html = "datamate Cockpit 2.0 ist nun verfügbar! | datamate"
+ueberschrift = "datamate Cockpit 2.0 ist nun verfügbar!"
+beschreibung = "Das datamate Cockpit 2.0 mit neuen Funktionen und zahlreichen Funktionsverbesserungen ist für Homie und Fellow verfügbar. Testen Sie es auf privatecloud.de!"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2020/02/cockpit-update-2.0.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/update-cockpit-2-0/"
+canonical = "https://www.datamate.org/update-cockpit-2-0/"
+og_bild_breite = "1920"
+og_bild_hoehe = "1280"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2020-02-27T14:13:58+00:00"
+geaendert = "2025-02-21T08:10:01+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "6 Minuten"
+beitragsbild = "/wp-content/uploads/2020/02/cockpit-update-2.0.jpg"
+bild_breite = 1920
+bild_hoehe = 1280
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "datamate Cockpit 2.0 ist nun verfügbar!", item = ""}]
+wortzahl = 1181
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["unsere-produkte"]
+schlagwoerter = ["Cockpit", "datamate", "mailarchiv", "seafile"]
+wp_id = 6555
+slug = "update-cockpit-2-0"
+url = "/update-cockpit-2-0/"
+date = "2020-02-27T15:13:58"
+lastmod = "2025-02-21T09:10:01"
+datum_utc = "2020-02-27T14:13:58+00:00"
+geaendert_utc = "2025-02-21T08:10:01+00:00"
+lightbox = true
++++
+						<p>Sag Hallo zum neuen datamate Cockpit 2.0. Die Version 2.0 bringt Deinem Homie und Fellow neue Funktionen und eine Vielzahl kleiner Verbesserungen. Ein paar alte Zöpfe werden mit dem Cockpit 2.0 auch abgeschnitten: Wenig genutzte Tools werden aus dem Cockpit entfernt und überholte Funktionen durch moderne Lösungen ersetzt. Details zu den Neuerungen des Releases 2.0 erfährst Du in diesem Artikel. Ein Changelog findet sich am Ende des Textes. Interessenten der private Cloud Server von datamate können das neue Cockpit ab sofort auf cockpit.privatecloud.de testen.</p>
+
+<span id="more-6555"></span>
+
+<h2>Neues und modernes Backupverfahren</h2>
+<p>Die bisherige Backup-Lösung <a href="http://duplicity.nongnu.org/" target="_blank" rel="noopener noreferrer">duplicity</a> wird im Cockpit 2.0 durch <a href="https://restic.net/" target="_blank" rel="noopener noreferrer">restic</a> zu ersetzen. Obwohl die Einrichtung eines Backups und das Look&#038;Feel im Cockpit praktisch identisch bleibt, stehen <a href="/linux-server-backup-mit-restic-und-duplicity/">Restic und duplicity für zwei gänzlich unterschiedliche Herangehensweisen in Bezug auf Ihr zugrundeliegendes Backupverfahren</a>. Bei duplicity kann man von einem Backupverfahren der alten Schule sprechen: es werden regelmäßige Vollbackups mit anschließenden inkrementellen Backups angefertigt und auf ein beliebiges Backupmedium gespeichert. Sämtliche Tätigkeiten laufen sequenziell ab. Zuerst werden die zu sichernden Daten gesichtet, dann gepackt, verschlüsselt und dann übertragen. Erst wenn dieser Zyklus für ein Datenpaket abgearbeitet ist, startet der nächste Zyklus. Diese strikte Zirkularität und die regelmäßigen Vollbackups haben bei vielen unserer Kunden Probleme gemacht. Mit zunehmender Datenmengen oder bei langsamen Datenleitung kam es häufig vor, dass das monatliche Vollbackup viele Stunden oder sogar Tage liefen. Während dieser Zeit ist es Störereignissen wie z.B. DSL-Zwangstrennung ausgesetzt, die zu Abbrüchen führen können.</p> 
+
+<p>Mit restic gehören diese Probleme der Vergangenheit an. Der gesamte Designansatz von Restic zielt darauf ab, schnell, einfach und effizient zu sein. Durch fortlaufende Snapshots werden regelmäßige Vollbackups überflüssig. Auch die parallele Abarbeitung der verschiedenen Backupsschritte reduziert die benötigte Backupzeit erheblich. Trotz dieser Vorteile ist Restic ein ausgefeiltes Tool, welches erst vor Kurzem in der c&#8217;t und der <a href="https://www.heise.de/select/ix/2019/11/1919009242648998447" target="_blank" rel="noopener noreferrer">iX</a> positiv erwähnt wurde.</p>
+
+<a href="/wp-content/uploads/2020/02/neues-restic-backup.png" data-slb-active="1" data-slb-asset="2791308094" data-slb-internal="0" data-slb-group="6555"><img decoding="async" width="1295" height="569" src="/wp-content/uploads/2020/02/neues-restic-backup.png" alt="Neues Backup mit Restic" class="alignnone size-full wp-image-6559" srcset="/wp-content/uploads/2020/02/neues-restic-backup.png 1295w, /wp-content/uploads/2020/02/neues-restic-backup-300x132.png 300w, /wp-content/uploads/2020/02/neues-restic-backup-768x337.png 768w, /wp-content/uploads/2020/02/neues-restic-backup-1024x450.png 1024w" sizes="(max-width: 1295px) 100vw, 1295px" /></a>
+
+<h2>Benno-Mailarchiv löst Mailcow als E-Mailarchiv ab</h2>
+<p>Nicht nur das Backupprogramm wurde ausgetauscht, ein Wechsel steht auch bei der E-Mail-Archivierungslösung an. Für mehr Zuverlässigkeit, Kompatibilität und Funktionen macht Mailcow Platz für Benno-Mailarchiv.</p>
+
+<p>Mehrere Gründe haben den Abschied von Mailcow notwendig werden lassen. Da waren zum einen wiederkehrende Probleme mit der zuverlässigen Funktion. Gerade Office 365 Benutzer hatten Mühe, Mailcows Archivkonten in Outlook einzubinden. Eine effiziente Mail-Archivierung war damit nicht möglich. Hinzu kam die Entscheidung der Entwickler, Mailcow nur noch als Docker Container anzubieten. Docker passt aber nicht in das aktuelle Designkonzept von Homie und Fellow.<br/>
+
+<!--Mailcow ist eigentlich ein vollwertiger Mailserver und kein E-Mailarchiv. Deshalb ist es nicht verwunderlich, dass dieses Tool ein absolutes Schattendasein in der Softwareausstattung von Homie und Fellow geführt hat. -->
+
+<a href="/wp-content/uploads/2020/02/Screenshot-Benno-1280-x-800px.png" data-slb-active="1" data-slb-asset="2057523486" data-slb-internal="0" data-slb-group="6555"><img decoding="async" loading="lazy" width="1280" height="800" src="/wp-content/uploads/2020/02/Screenshot-Benno-1280-x-800px.png" alt="Benno Mailarchiv" class="alignnone size-full wp-image-6566" srcset="/wp-content/uploads/2020/02/Screenshot-Benno-1280-x-800px.png 1280w, /wp-content/uploads/2020/02/Screenshot-Benno-1280-x-800px-300x188.png 300w, /wp-content/uploads/2020/02/Screenshot-Benno-1280-x-800px-768x480.png 768w, /wp-content/uploads/2020/02/Screenshot-Benno-1280-x-800px-1024x640.png 1024w" sizes="(max-width: 1280px) 100vw, 1280px" /></a>
+
+<p>Mit <a href="https://www.benno-mailarchiv.de/" target="_blank" rel="noopener noreferrer">Benno-Mailarchiv</a> verfügt das datamate Cockpit 2.0 über einen mehr als würdigen Nachfolger. Benno-Mailarchiv ist ein einfach zu bedienendes System für die revisionssichere Archivierung der eigenen IMAP-Konten. Einmal über das Cockpit eingebunden, werden sämtliche E-Mails in einem festgelegten Interval abgerufen und in Benno archiviert. Über die Benno-eigene Weboberfläche lassen sich die archivierten E-Mails mit leistungsfähigen Filtern durchsuchen und die aufgefundenen drucken und/oder weiterleiten.<br/>
+<p>Für die private Nutzung ist Benno-Mailarchiv kostenlos nutzbar. Für den kommerziellen Einsatz wird eine kostenpflichtige Lizenz benötigt, die man bei uns erwerben kann. Je fünf Mailboxen kosten 80 € im Jahr und ermöglichen die revisionssichere Ablage beliebig vieler E-Mails.</p>
+
+<h2>Fileshare und Samba nicht mehr im Cockpit</h2>
+<p>Das von uns selbst entwickelte Fileshare ist in die Jahre gekommen. Gegenüber dem immer leistungsfähiger werdenden Seafile bot es zuletzt keinen Mehrwert mehr. Aus diesem Grund haben wir uns entschieden, es mit der Version 2.0 vollständig zu entfernen. Bei einem Update von 1.4 wird es vom System entfernt. Bestehende Share-Links werden ungültig.</p>
+
+<p>Eine ähnliche Situation liegt bei Samba vor. <a href="/samba-netzlaufwerke-auf-dem-ionas-server">Samba</a> bietet nur noch bei Nischenanwendungen einen Vorteil gegenüber Seafile. Da uns der Zusatznutzen von ungeschützen Netzlaufwerken im Vergleich zum leistungsfähigen SeaDrive Client zu gering erscheint, wird mit dem Cockpit 2.0 auch Samba aus dem Cockpit entfernt. Anders als bei Fileshare haben wir uns aber gegen eine vollständige Deaktivierung entschieden. Mit dem Update von Version 1.4 wird im Cockpit die Konfigurationsmöglichkeit der Samba Shares entfernt. Eingerichtete Netzlaufwerke können damit nicht mehr direkt im Cockpit verwaltet werden (und neue auch nicht angelegt werden), sie bleiben aber bestehen und können weiter verwendet werden. Konfigurationsänderungen müssen über die Kommandozeile erfolgen. Neue Systeme enthalten Samba nicht mehr.</p>
+
+<h2>Keine Cockpit Lizenz mehr</h2>
+<p>Mit 2.0 verabschieden wir uns auch von der Notwendigkeit einer Lizenz für das Cockpit. Die Nutzung des Cockpits mit all seinen Funktionen erfordert nun keinen Schlüssel mehr. Dies ist ein weiterer Schritt in Richtung eines quelloffenen datamate Cockpits, welches durch jeden technisch interessierten installiert und von Kooperationspartnern für eigene Produkte verwendet werden kann. In den kommenden Wochen werden wir weitere Details bekannt geben. </p>
+
+<h2>Mehr Speed durch PHP 7.3</h2>
+<a href="/wp-content/uploads/2020/02/php-performance-messung.jpg" data-slb-active="1" data-slb-asset="567295088" data-slb-internal="0" data-slb-group="6555"><img decoding="async" loading="lazy" src="/wp-content/uploads/2020/02/php-performance-messung.jpg" alt="Mehr Geschwindigkeit durch PHP 7.3" width="597" height="240" class="alignnone size-full wp-image-6563" srcset="/wp-content/uploads/2020/02/php-performance-messung.jpg 597w, /wp-content/uploads/2020/02/php-performance-messung-300x121.jpg 300w" sizes="(max-width: 597px) 100vw, 597px" /></a>
+<p>Mit dem neuen Cockpit haben wir auch nochmals an der Geschwindigkeitsschraube gedreht. Durch Umstellung auf PHP 7.3 arbeitet es durchschnittlich 25% schneller als PHP 7.0 bei geringerem Ressourcenbedarf. Dies führt zu einem spürbar schnellere Cockpit und mehr Spaß bei der Arbeit. Zu ähnlichen Ergebnissen kommt die Firma <a href="https://www.phoronix.com/scan.php?page=news_item&#038;px=PHP-7.3-Performance-Benchmarks" target="_blank" rel="noopener noreferrer">Phoronix</a>, die sogar einen durchschnittlichen Geschwindigkeitszuwachs von 31 % gemessen hat. </p>
+
+<h2>Mehr Auswahl beim Betriebssystem</h2>
+<p>Das Cockpit 2.0 unterstützt neben Ubuntu Server 16.04 nun auch Ubuntu Server 18.04. Ein Upgrade des Serverbetriebssystems von Ubuntu 16.04 auf 18.04 ist ab heute schon möglich und sollte bis zum End-of-live von Ubuntu 16.04 im April 2021 durchgeführt werden.</p>
+
+<p>Ob in der nahen Zukunft weitere Betriebssysteme, wie z.B. Debian 10, hinzukommen, wird noch intern diskutiert.</p>
+
+<h2>Version 2.0 kann man ausprobieren</h2>
+<p>Das Cockpit 2.0 bietet vielfältige Optimierungen und Veränderungen gegenüber dem Cockpit 1.4.1. Probiere es am Besten gleich auf <a href="https://cockpit.privatecloud.de" target="_blank" rel="noopener noreferrer">cockpit.privatecloud.de</a> aus und verschaffe Dir Deinen eigenen Eindruck. Du wirst sofort merken, wieviel schneller sich das Cockpit anfühlt und an wievielen Details Verbesserungen vorgenommen wurden. Solltest Du noch keinen Account haben, dann registriere Dich jetzt und hole Dir einen <a href="https://www.privatecloud.de/registrierung/" target="_blank" rel="noopener noreferrer">Testaccount</a>.</p>
+
+<h2>Unterstütze Dienste</h2>
+<ul style="padding-left: 20px;">
+<li>Seafile (getestet mit CE 7.0.5 &#038; PE 7.0.11)</li>
+<li>sabre/dav (getestet mit 3.2)</li>
+<li>WordPress (getestet mit 5.2 &#038; 5.3)</li>
+<li>Benno (getestet mit 2.8.2)</li>
+<li>OpenVPN (getestet mit 2.3.10)</li>
+<li>ddclient (getestet mit 3.8.1)</li>
+<li>Fail2ban (getestet mit 0.9.3)</li>
+<li>Virtualbox inkl. Guest Additions (getestet mit 5.2.26)</li>
+<li>OpenLDAP (getestet mit 2.4.42)</li>
+<li>UFW (getestet mit 0.35)</li>
+<li>restic (getestet mit 0.9.6)</li>
+</ul>
+
+<h2>Changelog 2.0.0</h2>
+<ul style="padding-left: 20px;">
+<li>[new] Installation von Benno-Mailarchiv</li>
+<li>[new] Unterstützung für die Betriebssysteme Ubuntu 16.04 und 18.04</li>
+<li>[new] IPv6-Unterstützung für alle Dienste</li>
+<li>[new] Entfernung der Passwort-Vergessen Funktion auf der Seafile Login-Seite</li>
+<li>[new] Tabellen scrollen horizontal bei kleinen Auflösungen</li>
+<li>[new] Aktivierung-/Deaktivierungsmöglichkeit für Seafile eigene Einstellungen</li>
+<li>[change] Optimierung der Darstellung bei kleinen Display-Auflösungen</li>
+<li>[change] Umstellung von duplicity auf restic für Backup</li>
+<li>[change] Update von PHP7.0 auf PHP7.3</li>
+<li>[change] Verzicht auf Cockpit Lizenz</li>
+<li>[change] Entfernung aller Funktionen von Fileshare</li>
+<li>[change] Entfernung von Samba bei Neusystemen / Entfernung der Samba-Konfigurationsmöglichkeit bei Update</li>
+<li>[change] Optimierung der Cockpit-Berechtigungen</li>
+<li>[change] Deaktivierung der USV-Überwachung</li>
+<li>[change] Deaktivierung der bisherigen E-Mail-Archivlösung Mailcow</li>
+<li>[fix] Korrektur Anzeigefehler im Bereich Neuigkeiten aufgrund Caching</li>
+<li>[fix] Fehlerquelle beim Ermitteln der eigenen IP-Adresse behoben</li>
+<li>[fix] Keine LDAP-Fehler bei unbekannter Erweiterung des LDAP-Schemas</li>
+<li>[fix] Automatischer Neustart des Webservers bei Erneuerung eines Let&#8217;s Encrypt Zertifikats</li>
+<li>[fix] Termine ohne Zeitzone führen nicht mehr zu einem Fehler</li>
+</ul>
+
+<h3>Changelog 2.0.1</h3>
+<ul style="padding-left: 20px;">
+<li>[fix] Installation von php7.3-imap als Voraussetzung für Benno-Mailarchiv</li>
+</ul>

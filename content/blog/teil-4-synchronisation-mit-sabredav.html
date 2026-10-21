@@ -1,0 +1,160 @@
++++
+title = "Teil 4: Synchronisation mit sabre/dav"
+titel_html = "Teil 4: Synchronisation mit sabre/dav | datamate"
+ueberschrift = "Teil 4: Synchronisation mit sabre/dav"
+beschreibung = "In diesem Artikel zu sabre/dav geht es um die Einrichtung der Synchronisation von verschiedenen Clients (eM-Client, iPhone und Thunderbird)."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/07/sabredav4_fähigkeiten.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/teil-4-synchronisation-mit-sabredav/"
+canonical = "https://www.datamate.org/teil-4-synchronisation-mit-sabredav/"
+og_bild_breite = "1920"
+og_bild_hoehe = "1277"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2017-08-24T08:28:01+00:00"
+geaendert = "2025-02-21T08:10:13+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "6 Minuten"
+beitragsbild = "/wp-content/uploads/2017/07/sabredav4_fähigkeiten.jpg"
+bild_breite = 1920
+bild_hoehe = 1277
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Teil 4: Synchronisation mit sabre/dav", item = ""}]
+wortzahl = 1156
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["software"]
+schlagwoerter = ["CalDAV", "CardDAV", "datamate", "Kontaktsynchronisation", "sabre/dav", "Termin-"]
+wp_id = 277
+slug = "teil-4-synchronisation-mit-sabredav"
+url = "/teil-4-synchronisation-mit-sabredav/"
+date = "2017-08-24T10:28:01"
+lastmod = "2025-02-21T09:10:13"
+datum_utc = "2017-08-24T08:28:01+00:00"
+geaendert_utc = "2025-02-21T08:10:13+00:00"
+lightbox = true
++++
+						<p>Nachdem in den vorherigen Artikeln dieser Serie der eigene sabre/dav-Server erklärt und dann installiert wurde, geht es in diesem Teil nun um die Synchronisation mit verschiedenen Desktop- und mobilen Clients. Die Synchronisation soll beispielhaft mit <a href="http://de.emclient.com/" target="_blank" rel="noopener">eM-Client</a> <i class="icon-windows3"></i>, den iPhone Standardapps <i class="icon-apple"></i> sowie mit <a href="https://www.thunderbird-mail.de/" target="_blank" rel="noopener">Thunderbird</a> <i class="icon-windows3"></i> <i class="icon-apple"></i> <i class="icon-linux"></i> gezeigt werden. </p>
+
+<p>Sie werden dabei feststellen, dass die Clients unterschiedlich konfiguriert werden müssen, da die verschiedenen Programme auf unterschiedliche Art die Informationen vom CalDAV / CardDAV Server abfragen. Nach dem Lesen dieses Artikels werden Sie wissen, wie die verschiedenen Programme konfiguriert werden müssen und worauf man achten muss.</p>
+
+<span id="more-277"></span>
+
+<h2>Datenstruktur von sabre/dav</h2>
+
+<p>Es gibt zwei verschiedene Arten, wie man Termine, Kontakte und Aufgaben mit sabre/dav synchronisieren kann. Ein großer Teil der Clients benötigt für die Synchronisation lediglich die Serveradresse sowie die Zugangsdaten, um danach selbstständig die gesamte Konfiguration vom Server abzurufen. D.h. der Client kann selbstständig aus dem sogenannten <i>Principals</i>-Objekt ermittelt, welche Kalender, Adressbücher und Aufgabenlisten dem jeweiligen Benutzer gehören und welche Kalender ggf. von anderen Benutzern an diesen freigegeben wurden.</p>
+
+<p>Daneben gibt es leider noch Clients, die mit dieser Art der Berechtigungsermittlung nicht umgehen können. In diesen Clients muss man die jeweiligen Kalender und Adressbücher eines Benutzers direkt über die zugehörige URL ansprechen. Dies macht die Ersteinrichtung und Administration deutlich komplizierter, weil man deutlich mehr Informationen benötigt und man bei Änderungen wie z.B. einem neu angelegten Kalender oder einer neuen Freigabe immer wieder die Synchronisation in den Clients anpassen muss.</p>
+
+<a href="/wp-content/uploads/2017/08/sabredav-datenstruktur.png" data-slb-active="1" data-slb-asset="2003883673" data-slb-internal="0" data-slb-group="277"><img decoding="async" src="/wp-content/uploads/2017/08/sabredav-datenstruktur-300x231.png" alt="" width="300" height="231" class="alignleft size-medium wp-image-1496" style="padding: 0 20 20 0px;" alt="Datenstruktur von sabre/dav mit principals, addressbooks und calendars" srcset="/wp-content/uploads/2017/08/sabredav-datenstruktur-300x231.png 300w, /wp-content/uploads/2017/08/sabredav-datenstruktur.png 493w" sizes="(max-width: 300px) 100vw, 300px" /></a> 
+
+<p>Genau dies, soll auch der Screenshot zeigen: die einen Clients suchen im Ordner <i>principals</i> nach dem Benutzer und finden dort alle Berechtigungen und URLs zu den einzelnen Adressbüchern und Kalendern des Benutzers. Andere Clients hingegen ignorieren das <i>principals</i> Verzeichnis und der Anwender muss für jeden Kalender- und jede Adressbuchsynchronisation die vollständige URL eintragen. Wenn Sie die folgenden drei Einrichtungsbeispiele ansehen, werden Sie verstehen, was damit gemeint ist.</p>
+
+<h2>Synchronisation von sabre/dav mit eM-Client</h2>
+
+<img decoding="async" loading="lazy" src="/wp-content/uploads/2017/08/em-client-win2-300x210.png" alt="" width="300" height="210" class="alignleft size-medium wp-image-1498" alt="Termin- und Kontaktsynchronisation mit eM-client und sabre/dav" style="padding: 0 20 20 0px;" srcset="/wp-content/uploads/2017/08/em-client-win2-300x210.png 300w, /wp-content/uploads/2017/08/em-client-win2.png 673w" sizes="(max-width: 300px) 100vw, 300px" /></a>
+
+<p><a href="http://de.emclient.com/" target="_blank" rel="noopener">eM-client</a> gehört zu der ersten Gruppe von DAV-Clients, weshalb die Einrichtung der Synchronisation wirklich spielend einfach ist. Bei der Anlage eines neuen Kontos bietet eM-Client direkt die Möglichkeit unter <i>Kalender</i> ein neues <i>CalDAV</i>-Konto einzurichten. Im folgenden Eingabefenster erwartet dann em-Client lediglich die Angabe der Serveradresse sowie den Benutzernamen und das Passwort. eM-Client holt sich daraufhin selbst vom Server die verfügbaren Kalender des Benutzers und zeigt diese an.</p>
+
+<p>eM-Client bietet aber noch mehr Komfort und prüft automatisch, ob der Anwender auch Zugriff auf ein Adressbuch hat. Sollte der Anwender ein eigenes Adressbuch haben, wird dieses auch direkt eingebunden. Die Einrichtung eines zusätzlichen CardDAV-Kontos kann somit entfallen.</p>
+
+<p>Bei jeder zukünftigen Synchronisation prüft eM-Client nun, ob sich die Berechtigungen des Anwenders verändert haben. Wenn beispielsweise der Anwender einen weiteren Kalender anlegt oder ein Kalender für Ihn freigegeben wird, aktualisiert eM-Client automatisch die Anzeige und bietet den Kalender und die Termine zu Anzeige an.</p>
+
+<style>
+.highlight-box{
+	font-size: 16px;
+    background-color: #f1fbef;
+    padding: 30px 30px 14px;
+    margin-bottom: 1.5em;
+    border-left: 2px solid #43c35e;
+}
+</style>
+
+<div class="highlight-box">
+<h3>Zusammenfassung für eM-Client</h3>
+<p><strong>Betriebssystem:</strong> &nbsp; <i class="icon-windows3"></i><br/>
+<strong>DAV-Support:</strong> &nbsp; <i class="icon-ok"></i><br/>
+<strong>Zugriff per:</strong> &nbsp; http(s)://IP-oder-URL (unter der sabre/dav erreichbar ist)
+</p>
+</div>
+
+<h2>Synchronisation von sabre/dav mit dem iPhone</h2>
+
+<p>Auch Apple hat ein Herz für CalDAV und CardDAV und so unterstützen alle Betriebssysteme aus Cupertino dieses Protokoll. Auch das iPhone erkennt automatisch mit Hilfe des <i>Principals</i>-Objekts sämtliche Kalender des Benutzers, so dass es genügt ein CalDAV Konto anzulegen um damit Zugriff auf sämtliche Kalender zu erhalten.</p>
+
+<a href="/wp-content/uploads/2017/08/ios-neueskonto.jpg" data-slb-active="1" data-slb-asset="406059245" data-slb-internal="0" data-slb-group="277"><img decoding="async" loading="lazy" width="1024" height="382" src="/wp-content/uploads/2017/08/ios-neueskonto-1024x382.jpg" class="size-large wp-image-1503" alt="Einrichtung der Kalendersynchronisation unter iOS" srcset="/wp-content/uploads/2017/08/ios-neueskonto-1024x382.jpg 1024w, /wp-content/uploads/2017/08/ios-neueskonto-300x112.jpg 300w, /wp-content/uploads/2017/08/ios-neueskonto-768x286.jpg 768w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
+
+<p class="topmargin-sm">Die Konfiguration erfolgt unter <i>Einstellungen / Mail, Kontakte, Kalender / Account hinzufügen</i>. Das iPhone erwartet sowohl die Serveradresse, einen Benutzernamen, ein Passwort und eine Beschreibung, die man beliebig wählen kann.</p>
+
+<p>Sobald der Account gespeichert ist, sind die Termine der eigenen und der für einen freigegebenen Kalender in der Kalender App sichtbar.</p>
+
+<p>Leider legt das iPhone nicht automatisch die Adressbuchsynchronisation an, wie eM-Client das tun. Jedoch ist auch die Adressbuchsynchronisation schnell eingerichtet in dem man ein weiteres <i>CardDAV-Konto</i> hinzufügt.</p>
+
+<div class="highlight-box">
+<h3>Zusammenfassung für das iPhone</h3>
+<p><strong>Betriebssystem:</strong> &nbsp; <i class="icon-apple"></i><br/>
+<strong>DAV-Support:</strong> &nbsp; <i class="icon-ok"></i><br/>
+<strong>Zugriff per:</strong> &nbsp; http(s)://IP-oder-URL (unter der sabre/dav erreichbar ist)
+</p>
+</div>
+
+<h2>Termine und Kontakte in Thunderbird</h2>
+
+<p>Thunderbird beherrscht leider nicht von Hause aus die Synchronisation von Terminen, Kontakten und Aufgaben mit einem CalDAV- oder CardDAV-Server. Um diese Fähigkeit nutzen zu können, muss man noch zwei zusätzliche Addons installieren. Neben <a href="https://addons.mozilla.org/de/thunderbird/addon/lightning/" target="_blank" rel="noopener">Lightning</a>, welches mittlerweise zur Standardinstalltion von Thunderbird gehört und diesem den Umgang mit Terminen und Aufgaben beibringt, benötigt man den <a href="https://sogo.nu/files/downloads/SOGo/Thunderbird/sogo-connector-31.0.5.xpi" target="_blank" rel="noopener">SOGo-Connector</a> um Thunderbird auch CalDAV und CardDAV sprechen zu lassen.</p>
+
+<p>Laden Sie die beiden xpi-Dateien herunter und installieren Sie diese in Thunderbird. Insbesondere wenn Sie Firefox als Browser verwenden, müssen Sie aufpassen, da auch Firefox xpi-Dateien als Addon-Dateien interpretiert.</p>
+
+<p>Sobald die beiden Addons installiert sind und Thunderbird neu gestartet wurde, kann man mit der Einrichtung der Synchronisation beginnen.</p>
+
+<a href="/wp-content/uploads/2017/08/thunderbird-termine1.png" data-slb-active="1" data-slb-asset="2224684881" data-slb-internal="0" data-slb-group="277"><img decoding="async" loading="lazy" src="/wp-content/uploads/2017/08/thunderbird-termine1.png" alt="Thunderbird braucht zusätzliche Addons für die Synchronisation mit per CalDAV und CardDAV" width="640" height="360" class="alignleft size-full wp-image-1507" srcset="/wp-content/uploads/2017/08/thunderbird-termine1.png 640w, /wp-content/uploads/2017/08/thunderbird-termine1-300x169.png 300w" sizes="(max-width: 640px) 100vw, 640px" /></a>
+
+<p>Thunderbird gehört nun leider zur Gruppe der Client-Lösungen, die nicht mit der <i>Principals</i>-Struktur umgehen können. Stattdessen ist es notwendig für jeden Kalender und für jedes Adressbuch eine eigene Synchronisation einzurichten. Was im privaten Umfeld vielleicht noch akzeptabel ist, kann im Unternehmenseinsatz mit sich ständig wechselnden Kalenderfreigaben schnell unübersichtlich und vielleicht sogar Fehleranfällig werden.</p>
+
+<div class="highlight-box">
+<h3>Zusammenfassung für Thunderbird</h3>
+<p><strong>Betriebssystem:</strong> &nbsp; <i class="icon-windows3"></i> <i class="icon-apple"></i> <i class="icon-linux"></i><br/>
+<strong>DAV-Support:</strong> &nbsp; kostenlose Addons notwendig<br/>
+<strong>Zugriff per:</strong> &nbsp; http(s)://IP-oder-URL/calendar/BENUTZERNAME/KALENDERURI
+</p>
+</div>
+
+<p>Um nun die Synchronisation einrichten zu können, müssen Sie für alle Kalender den vollständigen Pfad ermitteln. Dies machen Sie entweder mit Hilfe der Weboberfläche von sabre/dav oder direkt über die Datenbank.</p>
+
+<h3>Identifikation der richtigen URI</h3>
+
+<p>Die Datenstruktur von sabre/dav folgt dem folgenden Schema:</p>
+
+<pre><code class="hljs">sabre/dav
+    - addressbooks
+        - benutzer1
+  	        - addresses
+        - benutzer2
+	        - addresses
+		    - ad743645-1b11-6889-898aa-6743ace12211
+			    - a.vcf
+			    - b.vcf
+    - calendars
+	    - benutzer1
+		    - cfc80623-b1dd-4889-88fe-caa9de79902d
+			    - a.ics
+			    - b.ics
+			- ...
+		- benutzer2
+			- ...
+	- principals
+	    - benutzer1
+		- benutzer2
+</code></pre>
+
+<p>Anhand dieser Struktur lässt sich nun einfach nachvollziehen, wie die Synchronisationsurl hergeleitet wird. Diese lautet nämlich beispielsweise </i>http(s)://IP-ODER-URL/calendars/benutzer2/cfc80623-b1dd-4889-88fe-caa9de79902d</i> und bildet den vollständigen Pfad bis zum Kalender des Anwenders ab. Sollte man nun eine Lese- oder Schreibberechtigung auf den Kalender eines anderen Nutzers haben (Delegation ist hier das Stichwort), dann muss man auch hier den vollständigen Pfad angeben. D.h. die URL enthält einen fremden Benutzernamen und die URI des gewünschten Kalenders.</p>
+
+<p>Natürlich können Sie die URI der jeweiligen Kalender und Adressbücher auch direkt aus der MySQL-Datenbank auslesen. Wie das geht, haben Sie bereits im <a href="/blog/benutzerverwaltung-authentifizierung-sabredav/">vorherigen Artikel</a> erfahren.</p>
+
+<p>Mit dem Wissen der richtigen URL ist nun auch unter Thunderbird die Anlage der Synchronisation ein Kinderspiel. Wechseln Sie auf die Kalenderansicht, machen Sie einen Rechtsklick im Bereich der angezeigten Kalender und legen Sie einen neuen Kalender im Netzwerk an.</p>
+
+<h2>Fazit: Termine und Kontakte immer auf allen Geräten gleich</h2>
+
+<p>Mit der eingerichteten Synchronisation von Terminen, Kontakten und Aufgaben haben Sie nun mit jedem ihrer Geräte immer Zugriff auf alle Ihre privaten Informationen und dabei das gute Gefühl, dass Sie ab sofort Herr über Ihre Daten sind.</p>
+
+<p>Natürlich ist diese Synchronisation erst der Anfang. In den kommenden Artikeln wird es um weitere Funktionen von sabre/dav sowie die Entwicklung eines eigenen Webclients gehen.</p>

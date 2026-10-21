@@ -1,0 +1,82 @@
++++
+title = "Backblaze, der einfache und günstige Backupspeicher"
+titel_html = "Backblaze, der einfache und günstige Backupspeicher | datamate"
+ueberschrift = "Backblaze, der einfache und günstige Backupspeicher"
+beschreibung = "Der Onlinespeicher Backblaze wurde mit dem datamate Cockpit 1.4 als zusätzliches Backupziel aufgenommen. Der Artikel erläutert, wie man einen Bucket anlegt."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2019/04/backblaze-online-speicher.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/backblaze-einfach-guenstig-backupspeicher/"
+canonical = "https://www.datamate.org/backblaze-einfach-guenstig-backupspeicher/"
+og_bild_breite = "1920"
+og_bild_hoehe = "1280"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2019-04-13T09:15:13+00:00"
+geaendert = "2025-02-21T08:10:05+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "3 Minuten"
+beitragsbild = "/wp-content/uploads/2019/04/backblaze-online-speicher.jpg"
+bild_breite = 1920
+bild_hoehe = 1280
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Backblaze, der einfache und günstige Backupspeicher", item = ""}]
+wortzahl = 628
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["praktische-anwendungsfaelle"]
+schlagwoerter = ["Backup", "cloud", "Fellow", "Homie", "privatecloud"]
+wp_id = 5813
+slug = "backblaze-einfach-guenstig-backupspeicher"
+url = "/backblaze-einfach-guenstig-backupspeicher/"
+date = "2019-04-13T11:15:13"
+lastmod = "2025-02-21T09:10:05"
+datum_utc = "2019-04-13T09:15:13+00:00"
+geaendert_utc = "2025-02-21T08:10:05+00:00"
+lightbox = true
++++
+						<p>Backblaze bietet einen Terabyte Cloud Speicher ab 5$ pro Monat an und lässt damit andere Anbieter wie z.B. Amazon S3, Microsoft Azure oder Google Cloud als überteuerte Luxusanbieter aussehen. Backblaze ist aber mehr als nur Billigheimer: Die Registrierung und Verwaltung des Backblaze Onlinespeichers ist vorbildlich kundenfreundlich. Während man bei Amazon S3 das Gefühl nicht los wird, dass man im fortgeschrittenen Stadium eines Informatikstudium sein muss, um einen Account einzurichten, so ist ein Backblaze Konto in weniger als einer Minute erstellt und eingerichtet. Uns hat Backblaze überzeugt. Aus diesem Grund haben wir uns mit der <a href="/update-cockpit-1-4/">Version 1.4 des datamate Cockpits</a> entschieden, Backblaze als Backup-Speicherziel aufzunehmen. In diesem Artikel zeigen wir, wie schnell und einfach ein Backblaze Bucket angelegt ist. Ist dies erledigt, ist das Backup von <a href="/homie">Homie</a> und <a href="/fellow">Fellow</a> ein Kinderspiel.</p>
+
+<span id="more-5813"></span>
+
+<h3>Registrierung eines Accounts bei Backblaze</h3>
+
+<a href="/wp-content/uploads/2019/04/backblaze-1-registrierung.png" data-slb-active="1" data-slb-asset="346327111" data-slb-internal="0" data-slb-group="5813"><img decoding="async" width="1024" height="610" src="/wp-content/uploads/2019/04/backblaze-1-registrierung-1024x610.png" alt="Registrierung bei Backblaze" class="alignleft size-large wp-image-5857" srcset="/wp-content/uploads/2019/04/backblaze-1-registrierung-1024x610.png 1024w, /wp-content/uploads/2019/04/backblaze-1-registrierung-300x179.png 300w, /wp-content/uploads/2019/04/backblaze-1-registrierung-768x457.png 768w, /wp-content/uploads/2019/04/backblaze-1-registrierung.png 1459w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
+
+<p>Los geht es auf der Webseite von Backblaze. Für das Backup von Homie und Fellow wird der <a href="https://www.backblaze.com/b2/cloud-storage.html#af9rzp" target="_blank" rel="noopener noreferrer">Backblaze B2 Cloud Storage</a> benötigt. Auf der Produktseite angekommen, kann man sich direkt für den kostenlosen Probeaccount registieren. Die ersten 10 Gigabyte Onlinespeicher gibt es für Neukunden kostenlos.</p>
+
+<a href="/wp-content/uploads/2019/04/backblaze-2-telefonverifikation.png" data-slb-active="1" data-slb-asset="366713354" data-slb-internal="0" data-slb-group="5813"><img decoding="async" loading="lazy" width="1024" height="610" src="/wp-content/uploads/2019/04/backblaze-2-telefonverifikation-1024x610.png" alt="Registrierung der Telefonnummer" class="alignleft size-large wp-image-5856" srcset="/wp-content/uploads/2019/04/backblaze-2-telefonverifikation-1024x610.png 1024w, /wp-content/uploads/2019/04/backblaze-2-telefonverifikation-300x179.png 300w, /wp-content/uploads/2019/04/backblaze-2-telefonverifikation-768x457.png 768w, /wp-content/uploads/2019/04/backblaze-2-telefonverifikation.png 1459w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
+
+<p>Nach der Registrierung folgt die Verifikation der Handynummer. Dieser Schritt kann zwar theoretisch übersprungen werden, Backblaze setzt aber die Verifikation der Nummer für die Anlage des ersten Buckets voraus. Daher lohnt es sich, diesen Schritt unmittelbar vorzunehmen. Man erhält eine SMS-Pin aufs Handy und muss diese auf der Webseite eingetragen. Ist das erledigt, lässt sich der Backupspeicher konfigurieren.</p>
+
+<a href=""><a href="/wp-content/uploads/2019/04/backblaze-3-übersicht.png" data-slb-active="1" data-slb-asset="205269243" data-slb-internal="0" data-slb-group="5813"><img decoding="async" loading="lazy" width="1024" height="610" src="/wp-content/uploads/2019/04/backblaze-3-übersicht-1024x610.png" alt="Übersicht des Backblaze Accounts" class="alignleft size-large wp-image-5855" srcset="/wp-content/uploads/2019/04/backblaze-3-übersicht-1024x610.png 1024w, /wp-content/uploads/2019/04/backblaze-3-übersicht-300x179.png 300w, /wp-content/uploads/2019/04/backblaze-3-übersicht-768x457.png 768w, /wp-content/uploads/2019/04/backblaze-3-übersicht.png 1459w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
+
+<h3>Anlage des ersten Buckets</h3>
+
+<p>Beim Backblaze Cloud Speicher heißen die Ordner der höchsten Hierarchieebene <a href="https://www.backblaze.com/b2/docs/buckets.html" target="_blank" rel="noopener noreferrer">Buckets</a>. (Aus technischer Sicht sind Buckets virtuelle Container und demnach mehr als einfach Ordner. Für die Einrichtung des Buckets bzw. des Backups ist das ohne weitere Bedeutung.) Bis zu 100 Buckets lassen sich in einem Account anlegen. Für das Backup von Fellow bzw. Homie benötigen wir aber nur einen. </p>
+
+<a href="/wp-content/uploads/2019/04/backblaze-4-sicherheitsschlüssel.png" data-slb-active="1" data-slb-asset="3996255203" data-slb-internal="0" data-slb-group="5813"><img decoding="async" loading="lazy" width="1024" height="610" src="/wp-content/uploads/2019/04/backblaze-4-sicherheitsschlüssel-1024x610.png" alt="Sicherheitsschlüssel von Backblaze für den Zugriff auf die Backupdaten" class="alignleft size-large wp-image-5854" srcset="/wp-content/uploads/2019/04/backblaze-4-sicherheitsschlüssel-1024x610.png 1024w, /wp-content/uploads/2019/04/backblaze-4-sicherheitsschlüssel-300x179.png 300w, /wp-content/uploads/2019/04/backblaze-4-sicherheitsschlüssel-768x457.png 768w, /wp-content/uploads/2019/04/backblaze-4-sicherheitsschlüssel.png 1459w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
+
+<p>Wir wechseln also in den Navigationspunkt <strong>Buckets</strong>. Dort kann man sowohl den ersten Speichercontainer als auch die notwendigen Zugangsdaten erzeugen. Für den Zugriff auf die Backblaze Buckets benötig man sowohl eine Account ID als auch einen Application Key. Diese Zugangsdaten sind gut zu notieren. Der Application Key wird nur einmal angezeigt und kann später nicht wieder eingesehen werden. Verliert man ihn, muss man einen neuen erzeugen und diesen dann in der Backupkonfiguration von Homie oder Fellow eintragen.</p>
+
+<a href="/wp-content/uploads/2019/04/backblaze-5-Bucketanlage.png" data-slb-active="1" data-slb-asset="3863717244" data-slb-internal="0" data-slb-group="5813"><img decoding="async" loading="lazy" width="1024" height="610" src="/wp-content/uploads/2019/04/backblaze-5-Bucketanlage-1024x610.png" alt="Anlage eines Buckets" class="alignleft size-large wp-image-5853" srcset="/wp-content/uploads/2019/04/backblaze-5-Bucketanlage-1024x610.png 1024w, /wp-content/uploads/2019/04/backblaze-5-Bucketanlage-300x179.png 300w, /wp-content/uploads/2019/04/backblaze-5-Bucketanlage-768x457.png 768w, /wp-content/uploads/2019/04/backblaze-5-Bucketanlage.png 1459w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
+
+<p>Als Nächstes folgt die Anlage des ersten Buckets und ggf. eines Unterordners. Die Verwaltung der Daten ist übersichtlich und intuitiv gestaltet, so dass man keine Schwierigkeiten haben sollte, mit der Weboberfläche von Backblaze zurechtzukommen. Mit diesen Informationen bewaffnet, ist auf Seiten des Onlinespeichers Backlaze alles startklar, um das Backup von Homie und Fellow zu sichern.</p>
+
+<p>Der Rest der Einrichtung des Backups erfolgt dann im Cockpit von Homie und Fellow gemäß Anleitung in der datamate Hilfe. Aus dem Backblaze Konto sollte man &#8211; nochmals zusammengefasst &#8211; diese Informationen mitnehmen:</p>
+
+<ul style="padding-left: 20px;">
+	<li>Account ID</li>
+	<li>Application Key</li>
+	<li>Bucket Name inkl. ggf. des gewünschten Unterordners</li>
+</ul>
+
+<h3>Backblaze kann noch viel mehr</h3>
+
+<a href="/wp-content/uploads/2019/04/backblaze-7-Reports.png" data-slb-active="1" data-slb-asset="2195008468" data-slb-internal="0" data-slb-group="5813"><img decoding="async" loading="lazy" width="1024" height="610" src="/wp-content/uploads/2019/04/backblaze-7-Reports-1024x610.png" alt="Reports bei Backblaze" class="alignleft size-large wp-image-5851" srcset="/wp-content/uploads/2019/04/backblaze-7-Reports-1024x610.png 1024w, /wp-content/uploads/2019/04/backblaze-7-Reports-300x179.png 300w, /wp-content/uploads/2019/04/backblaze-7-Reports-768x457.png 768w, /wp-content/uploads/2019/04/backblaze-7-Reports.png 1459w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
+
+<p>Mit der Einrichtung eines Buckets haben wir logischerweise nur an der Oberfläche der Möglichkeiten von Backblaze gekratzt. Wer ein bisschen weiter im  Backblaze Benutzerkonto stöbert, wird schnell feststellen, dass die übersichtlichen Reports eine gute Übersicht über das verwendete Datenvolumen ermöglichen und man so die Kosten für die Datenspeicherung gut überwachen und limitieren kann.</p>
+
+<a href="/wp-content/uploads/2019/04/backblaze-8-Limitierungen.png" data-slb-active="1" data-slb-asset="1828208866" data-slb-internal="0" data-slb-group="5813"><img decoding="async" loading="lazy" width="1024" height="610" src="/wp-content/uploads/2019/04/backblaze-8-Limitierungen-1024x610.png" alt="Kostenüberwachung bei Backblaze" class="alignleft size-large wp-image-5850" srcset="/wp-content/uploads/2019/04/backblaze-8-Limitierungen-1024x610.png 1024w, /wp-content/uploads/2019/04/backblaze-8-Limitierungen-300x179.png 300w, /wp-content/uploads/2019/04/backblaze-8-Limitierungen-768x457.png 768w, /wp-content/uploads/2019/04/backblaze-8-Limitierungen.png 1459w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
+
+<p>Backblaze ist aus unserer Sicht ein Paradebeispiel für einen hochspezialisierten Anbieter, der den Kundennutzen und die Anwenderfreundlichkeit in den Mittelpunkt stellt. Wer sich für Backblaze entscheidet, erhält einen einfachen, zuverlässigen und günstigen Online- bzw. Backupspeicher. Wer mehr Funktionen benötigt, der wird vermutlich mit Amazon S3 glücklich, dann aber zu deutlich höheren Kosten und mehr Einarbeitungsaufwand.</p>

@@ -1,0 +1,57 @@
++++
+title = "Buddy Downgrade: Vom Dual-Boot System zur reinen Windows Maschine"
+titel_html = "Buddy Downgrade: Vom Dual-Boot System zur reinen Windows Maschine | datamate"
+ueberschrift = "Buddy Downgrade: Vom Dual-Boot System zur reinen Windows Maschine"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/10/workstation-405768_1280.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/buddy-downgrade-vom-dual-boot-system-zur-reinen-windows-maschine/"
+canonical = "https://www.datamate.org/buddy-downgrade-vom-dual-boot-system-zur-reinen-windows-maschine/"
+og_bild_breite = "1280"
+og_bild_hoehe = "863"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2017-10-08T18:37:13+00:00"
+geaendert = "2025-02-21T08:10:13+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Ralf Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "2 Minuten"
+beitragsbild = "/wp-content/uploads/2017/10/workstation-405768_1280.jpg"
+bild_breite = 1280
+bild_hoehe = 863
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Buddy Downgrade: Vom Dual-Boot System zur reinen Windows Maschine", item = ""}]
+wortzahl = 449
+autor = "Ralf Dyllick-Brenzinger"
+autor_kurz = "rdb"
+kategorien = ["anleitungen", "software"]
+schlagwoerter = []
+wp_id = 2445
+slug = "buddy-downgrade-vom-dual-boot-system-zur-reinen-windows-maschine"
+url = "/buddy-downgrade-vom-dual-boot-system-zur-reinen-windows-maschine/"
+date = "2017-10-08T20:37:13"
+lastmod = "2025-02-21T09:10:13"
+datum_utc = "2017-10-08T18:37:13+00:00"
+geaendert_utc = "2025-02-21T08:10:13+00:00"
++++
+						<p>Buddy als Dual Boot-System mit Ubuntu 16.04 und Windows 10 kombiniert die Sicherheit und Stabilität des Open Source Betriebssystems mit der Einsatzvariabilität von Windows. Nicht jeder jedoch benötigt das Betriebssystem auf Basis des Linux-Kernels. Wenn man es nicht braucht, dann kann man es vom System verbannen und den Speicherplatz dem Windows System zuschlagen. In diesem Beitrag erklären wir, wie man das ohne großen Aufwand macht.</p>
+
+<span id="more-2445"></span>
+
+<h2>Downgrade mit Bordmittel</h2>
+<p>Alles was man zur Umwandlung von <a href="/buddy">Buddy</a> in eine Single-Boot System benötigt, ist bereits auf ihm installiert. Umfassende Administrator-Kenntnisse geschweige denn Linux-Erfahrung ist nicht notwendig.</p>
+<p>WICHTIG: Das Downgrade ist nicht reversibel.</p>
+<img decoding="async" width="1598" height="816" src="/wp-content/uploads/2017/10/Datenträgerverwaltung.png" alt="Aufruf der Datenträgerverwaltung" class="alignnone size-full wp-image-2446" srcset="/wp-content/uploads/2017/10/Datenträgerverwaltung.png 1598w, /wp-content/uploads/2017/10/Datenträgerverwaltung-300x153.png 300w, /wp-content/uploads/2017/10/Datenträgerverwaltung-768x392.png 768w, /wp-content/uploads/2017/10/Datenträgerverwaltung-1024x523.png 1024w" sizes="(max-width: 1598px) 100vw, 1598px" />
+<p>Zentrales Werkzeug zum Downgrade von Buddy ist die Windows-Datenträgerverwaltung. Der schnellste Weg in die Datenträgerverwaltung ist per Ausführen-Dialog mit der Tastenkombination Windows + R. Mit dem Befehl <code>diskmgmt.msc</code> wird die Datenträgerverwaltung aufgerufen. Alternativ kann man die Datenträgerverwaltung mit einem Rechtsklick auf den Start-Button aufrufen. Im oberen Drittel findet sich die Datenträgerverwaltung. Beide Möglichhkeiten sind in der Abbildung oben dargestellt.</p>
+<p>In der Datenträgerverwaltung sieht man die Partitionen des Datenträgers. <a href="https://de.wikipedia.org/wiki/Partition_(Datentr%C3%A4ger)">Partitionen</a> sind &#8211; vereinfacht gesprochen &#8211; abgegrenzte Teile auf einem Datenträger, die vom Betriebssystem als separate Datenträger behandelt werden, sogenannte logische Datenträger. Im oben Teil werden die Partitionen in einer Listenansicht angezeigt, im unteren Teil in graphischer Darstellung. Wichtig ist, dass die graphische Darstellung nicht maßstabsgetreu ist.
+
+<h2>Ubuntu-Partitionen löschen</h2>
+<p>Ein Betriebssystem verwendet aus systemtechnischen Gründen normalerweise mehrere Partitionen. Windows hat auf Buddy drei Partitionen, Ubuntu Linux zwei. Die Bezeichnungen der Linux Partitionen sind <strong>Datenträger 0 Partition 5</strong> und <strong>Datenträger 0 Partition 6</strong>.</p>
+<p>Zur Beseitigung von Linux vom Datenträger müssen die beiden Linux Partitionen nun gelöscht werden. Dies geht einfach per Rechtsklick auf die entsprechende Partition. </p>
+<p>WICHTIG: Wird eine Partition gelöscht, gehen alle Daten auf der Partition verloren. Daher sollten alle Daten vorab gesichert werden. Vorsicht bei der Auswahl der Partition: Nicht aus Versehen eine Windows-Partition auswählen!</p>
+
+<h2>Freien Speicherplatz zuweisen</h2>
+<p>Der Speicherplatz der ex-Linux Partitionen wird nun als unzugeordneter Speicherplatz angezeigt. Dieser kann entweder der Datenpartition <strong>Windows_Ubuntu</strong>, dem Laufwerk C:, also der Systemlaufwerk der Windows Installation, oder teils-teils zugewiesen werden. Das grundsätzliche Vorgehen ist identisch: Mit Rechtsklick auf die zu vergrößernde Partition wird die Partition per <strong>Volume erweitern&#8230;</strong> vergrößert.<p>
+
+<h2>Downgrade abschließen</h2>
+<p>Ist der durch die Löschung der beiden Linux-Partitionen freigewordene Speicher verteilt, sollte Buddy neu gestartet werden. Buddy sollte ohne Umwege über den Boot-Manager Grub direkt in Windows starten. Aus einem Dual-Boot Buddy wurde ein Singel-Boot Buddy.</p> 
+<p>Wer keine separate Datenpartition wünscht, kann die diese im gleichen Verfahren wie hier beschrieben entfernen und dem Laufwerk C: zuschlagen.</p>

@@ -1,0 +1,92 @@
++++
+title = "LDAP Login und Authentifizierung in Odoo einrichten"
+titel_html = "LDAP Login und Authentifizierung in Odoo einrichten | datamate"
+ueberschrift = "LDAP Login und Authentifizierung in Odoo einrichten"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/04/openldap_logo3-1.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/ldap-login-und-authentifizierung-in-odoo-einrichten/"
+canonical = "https://www.datamate.org/ldap-login-und-authentifizierung-in-odoo-einrichten/"
+veroeffentlicht = "2015-11-01T01:10:09+00:00"
+geaendert = "2025-02-21T08:10:54+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "4 Minuten"
+bild_breite = 296
+bild_hoehe = 200
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "LDAP Login und Authentifizierung in Odoo einrichten", item = ""}]
+wortzahl = 831
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["uncategorized"]
+schlagwoerter = []
+wp_id = 4449
+slug = "ldap-login-und-authentifizierung-in-odoo-einrichten"
+url = "/ldap-login-und-authentifizierung-in-odoo-einrichten/"
+date = "2015-11-01T02:10:09"
+lastmod = "2025-02-21T09:10:54"
+datum_utc = "2015-11-01T01:10:09+00:00"
+geaendert_utc = "2025-02-21T08:10:54+00:00"
+lightbox = true
++++
+						<a href="/wp-content/uploads/2018/04/openldap_logo3-1.png" data-slb-active="1" data-slb-asset="4290001385" data-slb-internal="0" data-slb-group="4449"><img decoding="async" src="/wp-content/uploads/2018/04/openldap_logo3-1.png" alt="zentrale Benutzeranmeldung per LDAP in Odoo" width="296" height="200" class="size-full wp-image-367" /></a>
+
+<p>Für fast jede webbasierte Softwarelösung benötigt man eine Authentifizierung und somit auch einen eigenen Benutzeraccount. Bei Webdiensten im Internet ist dies unvermeidbar, da jede Webseite von einem unterschiedlichen Anbieter stammt. </p>
+
+<p>In einer Firma lohnt es sich einen zentralen Login für sämtliche Dienste zu schaffen. Das Zauberwort heißt hierbei LDAP und steht für &#8220;Lightweight Directory Access Protocol&#8221;. Auf Deutsch bedeutet das soviel wie &#8220;leichtgewichtiges Verzeichniszugriffsprotokoll&#8221; und ermöglicht einen Benutzernamen und ein Passwort für sämtliche Zugänge. Natürlich kann für jeden Mitarbeiter individuell gesteuert werden, auf welche Dienste er Zugriff hat. Die Anlage und Pflege des Benutzeraccounts erfolgt jedoch nur an einer Stelle.</p>
+
+<p>Lesen Sie in diesem Artikel, wie Sie <a href='https://www.ionas-server.com/odoo'>Odoo</a> (ehemals OpenERP) konfigurieren müssen, damit Sie Ihren OpenLDAP-Server für die Zugriffskontrolle von Odoo nutzen können. Es ist dabei egal, ob Sie OpenERP 7, Odoo 8 oder Odoo 9 verwenden. Das Vorgehen ist immer das Gleiche.</p>
+
+<span id="more-4449"></span>
+
+<p>Die Idee ist einfach und bestechend. In der Firma gibt es ein zentrales Benutzerverzeichnis. Sämtliche Webdienste nutzen keine eigene Benutzerverwaltung sondern fragen stattdessen beim zentralen Benutzerverzeichnis an. Der Verzeichnisdienst antwortet dem anfragenden Webdienst, ob der Benutzer existiert, ob der Login korrekt ist und über welche Berechtigung der Benutzer verfügt. <a href='http://www.openldap.org/'>OpenLDAP</a> ist so ein zentraler Verzeichnisdienst und ist als weit verbreitete OpenSource Lösung auf jedem Linuxserver einfach zu installieren.</p>
+
+<p>Im Folgenden gehe ich davon aus, dass der Verzeichnisdienst die folgende Struktur hat:</p>
+<ol>
+<li>Für jeden Benutzer gibt es einen Benutzeraccount. Dieser enthält sämtliche Informationen über die Person. D.h. Name, Position, Abteilung, Telefondurchwahl sowie den Login und das Passwort.</li>
+<li>Für jeden Webdienst gibt es eine Benutzergruppe. Nur, wenn ein Benutzer dieser Gruppe zugeordnet ist, darf er den Dienst nutzen.</li>
+</ol>
+
+<p>In der folgenden Grafik ist dies dargestellt. Auf der linken Seite sieht man die verschiedenen Gruppen und die Benutzeraccounts. Auf der rechten Seite sieht man die Details der Gruppe <i>odoo</i>. Man sieht, dass nur die Benutzer <i>admin</i> und <i>cdb</i> auf Odoo zugreifen dürfen. Die anderen Benutzer <i>rdb</i> und <i>ionas</i> haben keinen Zugriff.</p>
+
+<a href="/wp-content/uploads/2018/04/ldap2.png" data-slb-active="1" data-slb-asset="2058091503" data-slb-internal="0" data-slb-group="4449"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/ldap2.png" alt="LDAP Benutzer und Gruppen" width="963" height="577" class="size-full wp-image-369" /></a><p class="wp-caption-text">LDAP Benutzer und Gruppen</p>
+
+<p>Wenn man diese LDAP-Struktur in OpenLDAP aufgebaut hat, ist es ein leichtes Odoo entsprechend zu konfigurieren. Es sind lediglich drei Schritte dafür notwendig.</p>
+
+<h2>1. Anlage eines Template-Users</h2>
+
+<p>Wenn ein Benutzer sich bei OpenERP bzw. Odoo anmeldet, schaut Odoo zuerst in der lokalen Datenbank nach. Wenn dort kein Benutzer gefunden wird, erfolgt die Anfrage bei allen hinterlegten LDAP Servern. Wenn dieser bestätigt, dass der Benutzer existiert und die notwendige Berechtigung besitzt, wird in der lokalen Datenbank von Odoo ein Benutzer ohne Passwort angelegt. Das leere Passwort sorgt auch in Zukunft dafür, dass jeder Loginversuch gegen die LDAP-Datenbank geprüft wird. Trotzdem ist es notwendig, dass in Odoo ein lokaler Benutzer angelegt wird um Objekte einer Benutzer-ID zuordnen zu können.</p>
+
+<p>Somit legt man zuerst einen Template-User in Odoo an. Sämtliche Eigenschaften und Berechtigungen, die dieser Template-User hat, werden automatisch jedem neuen LDAP-User zugeordnet. Seien Sie deshalb vorsichtig, welche Berechtigungen Sie diesem Benutzer zuweisen.</p>
+
+<a href="/wp-content/uploads/2018/04/odoo_ldap_template_user.png" data-slb-active="1" data-slb-asset="1734978580" data-slb-internal="0" data-slb-group="4449"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/odoo_ldap_template_user.png" alt="Template-User für LDAP in Odoo" width="1013" height="695" class="size-full wp-image-377" /></a><p class="wp-caption-text">Template-User für LDAP in Odoo</p>
+
+<p>Der Template-User muss übrigens nicht dauerhaft aktiv bleiben. Sobald Sie diesen in Schritt 3 mit LDAP verknüpft haben, können Sie den Template-User in Odoo auf <i>inaktiv</i> setzen.</p>
+
+<h2>2. Installation der LDAP-Authentifizierungs App</h2>
+
+<p>Als nächstes muss die LDAP-Authentifizierungs App installiert werden. Hierzu sucht man unter Einstellungen / Odoo Apps nach &#8220;LDAP&#8221;. Es ist wichtig, dass der Suchfilter &#8220;Featured&#8221; entfernt wird, da sonst die LDAP App nicht gefunden wird. Ein Klick auf &#8220;Install&#8221; genügt um die App zu installieren. Wenn &#8220;Install&#8221; ausgegraut ist, dann wurde die App bereits installiert.</p>
+
+<a href="/wp-content/uploads/2018/04/ldap_app_in_odoo.png" data-slb-active="1" data-slb-asset="4182665985" data-slb-internal="0" data-slb-group="4449"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/ldap_app_in_odoo.png" alt="Installation der LDAP-Authentification App in Odoo" width="1013" height="417" class="size-full wp-image-378" /></a><p class="wp-caption-text">Installation der App &#8220;Authentication via LDAP&#8221; in Odoo</p>
+
+<h2>3. Konfiguration der Odoo LDAP App</h2>
+
+<p>Als letztes folgt nun die Konfiguration der LDAP App in Odoo. Die Einstellungen des LDAP-Servers findet man bei den Unternehmensinformationen im Reiter &#8220;Konfiguration&#8221;. Man legt einen neuen LDAP-Server an und füllt die entsprechenden Konfigurationsparameter aus.</p>
+
+<ul>
+<li><strong>LDAP-Server</strong>, <strong>Port</strong> und <strong>Passwort</strong> sind selbsterklärend. </li>
+<li>Die <strong>binddn</strong> zeigt auf den User, der über die notwendige Berechtigung verfügt auf das LDAP-Verzeichnis zuzugreifen. Dies ist typischerweise der Admin-User.</li>
+<li>Bei der <strong>LDAP base</strong> gibt man an, wo im Benutzerverzeichnis die Benutzer zu finden sind. </li>
+<li>Der LDAP-Filter ist mit Sicherheit das schwierigste Feld. Man kann über diesen Filter definieren, ob sich die Benutzer mit Ihrer E-Mail oder mit Ihrer User-ID anmelden müssen und zu welcher Gruppe die Benutzer gehören müssen. Zwei mögliche Angaben könnten z.B. sein:<br/>
+(&#038;(mail=%s)(memberOf=cn=odoo,ou=groups,dc=ionas,dc=lan))<br/>
+(&#038;(uid=%s)(memberOf=cn=odoo,ou=groups,dc=ionas,dc=lan))</li>
+<li>Aktivieren Sie <strong>Erzeuge Benutzer</strong></li>
+<li>Bei Benutzervorlage wird der vorher angelegte Template User ausgewählt.</li>
+</ul>
+
+
+
+<a href="/wp-content/uploads/2018/04/ldap_konfiguration_in_odoo.png" data-slb-active="1" data-slb-asset="3077264625" data-slb-internal="0" data-slb-group="4449"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/ldap_konfiguration_in_odoo.png" alt="LDAP-Einstellungsmöglichkeiten in Odoo" width="1012" height="472" class="size-full wp-image-379" /></a><p class="wp-caption-text">LDAP-Einstellungsmöglichkeiten in Odoo</p>
+
+<p>Klicken Sie auf &#8220;Schließen&#8221; und speichern Sie danach die geänderten Unternehmensdaten. Der LDAP-Server ist damit eingerichtet und jeder zukünftige Loginversuch in Odoo fragt beim LDAP-Server an. Nun wissen Sie auch, wie wir auf dem ionas-Server Home und ionas-Server Small Business die zentrale Benutzerauthentifizierung realisiert haben.</p>

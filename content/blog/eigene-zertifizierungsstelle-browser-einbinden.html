@@ -1,0 +1,69 @@
++++
+title = "Root-Zertifikat im Browser einbinden – so geht’s"
+titel_html = "Root-Zertifikat im Browser einbinden - so geht&#039;s | datamate"
+ueberschrift = "Root-Zertifikat im Browser einbinden &#8211; so geht&#8217;s"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2019/04/zertifikate-sichern-webseiten.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/eigene-zertifizierungsstelle-browser-einbinden/"
+canonical = "https://www.datamate.org/eigene-zertifizierungsstelle-browser-einbinden/"
+og_bild_breite = "2000"
+og_bild_hoehe = "1125"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2019-04-09T20:48:00+00:00"
+geaendert = "2025-02-21T08:10:06+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "4 Minuten"
+beitragsbild = "/wp-content/uploads/2019/04/zertifikate-sichern-webseiten.jpg"
+bild_breite = 2000
+bild_hoehe = 1125
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Root-Zertifikat im Browser einbinden &#8211; so geht&#8217;s", item = ""}]
+wortzahl = 745
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["praktische-anwendungsfaelle", "software", "unsere-produkte"]
+schlagwoerter = ["https", "lets encrypt", "Server", "verschlüsselung", "webserver", "zertifikate"]
+wp_id = 5469
+slug = "eigene-zertifizierungsstelle-browser-einbinden"
+url = "/eigene-zertifizierungsstelle-browser-einbinden/"
+date = "2019-04-09T22:48:00"
+lastmod = "2025-02-21T09:10:06"
+datum_utc = "2019-04-09T20:48:00+00:00"
+geaendert_utc = "2025-02-21T08:10:06+00:00"
++++
+						<p>Verschlüsselte Kommunikation im Internet basiert auf Vertrauen. Auf dem Vertrauen in die HTTPS-Zertifikate, mit denen der gesamte Datenaustausch zwischen Client und Server verschlüsselt wird. Zertifikate, die von unseren Browsern als vertrauenswürdig gestuft werden, werden ohne Rückfrage akzeptiert. Zertifikate, die unser Browser als mögliches Risiko einschätzt, führen zu der folgenden Fehlermeldung, die wahrscheinlich jeder schon einmal gesehen und dann einfach weggeklickt hat.</p>
+
+<p>Auch auf Homie und Fellow kommt es zu dieser Fehlermeldung, weil das Zertifikate für den Datenaustausch im lokalen Netzwerk vom Server selbst erzeugt wurden und somit dem Browser nicht vertrauenswürdig erscheint. Doch Homie und Fellow bieten ab der Version 1.4 eine einfache Lösung um zukünftig auch diese Zertifikate als glaubwürdig zu behandeln und diese Fehlermeldung gar nicht erst entstehen zu lassen. Mehr zu den Hintergrunden erfahren Sie in diesem Artikel.</p>
+
+<span id="more-5469"></span>
+
+<img decoding="async" width="898" height="610" src="/wp-content/uploads/2019/04/selbst-signiertes-zertifikat.png" alt="" class="size-full wp-image-5609" srcset="/wp-content/uploads/2019/04/selbst-signiertes-zertifikat.png 898w, /wp-content/uploads/2019/04/selbst-signiertes-zertifikat-300x204.png 300w, /wp-content/uploads/2019/04/selbst-signiertes-zertifikat-768x522.png 768w" sizes="(max-width: 898px) 100vw, 898px" />
+
+<h2>Hintergrundwissen zu Zertifikaten und Verschlüsselung</h2>
+
+<p>Bevor ich erkläre, wie man aus einem roten durchgestrichenen HTTPS-Zertifikat bei Homie und Fellow zu einem grünen Schloss kommt, möchte ich ein paar Hintergrundinformationen liefern. Wen das nicht interessiert, der kann direkt zu den folgenden Anleitungen springen, in denen ich erkläre, wie man das Stammzertifikat von Homie und Fellow auf den jeweiligen Client bekommt:</p>
+<ul style="padding-left: 20px">
+	<li><a href="https://datamate.org/hilfe/konfiguration/?tab=1">Google Chrome</a></li>
+	<li><a href="https://datamate.org/hilfe/konfiguration/?tab=2">Firefox</a></li>
+	<li>Internet Explorer (coming soon)</li>
+	<li>Microsoft Edge (coming soon)</li>
+	<li><a href="https://datamate.org/hilfe/konfiguration/?tab=3">iOS</a></li>
+	<li>Android (coming soon)</li>
+</ul>
+
+<h3>Warum kommt es überhaupt zu dieser Fehlermeldung?</h3>
+
+<p>HTTP bzw. HTTPS ist die Sprache des Internets. Während bei HTTP der gesamte Datenverkehr unverschlüsselt durch die Leitungen geht, wird bei HTTPS (das &#8220;s&#8221; steht für secure) der gesamte Datenverkehr mit Hilfe von Zertifikaten verschlüsselt. Wer genauer wissen will wie das funktioniert, dem kann ich nur <a href="https://de.wikipedia.org/wiki/Hypertext_Transfer_Protocol_Secure" target="_blank" rel="noopener">diesen Artikel auf Wikipedia</a> empfehlen. Für diesen Artikel ist es jedoch nicht entscheidend zu wissen, wie HTTPS funktioniert, sondern wie HTTPS-Zertifikate erstellt werden bzw. warum es gute und weniger gute HTTPS-Zertifikate gibt.</p>
+
+<p>HTTPS-Zertifikate sind am Ende nichts anderes als lange Zeichenketten, die für die Verschlüsselung zwischen Client und Server verwendet werden. Grundsätzlich kann jeder Computer solche Zertifikate für jede beliebige Webseite selbst erzeugen. Doch die Browser überprüfen sehr genau, wer ein Zertifikat erstellt hat und ob das Zertifikat zu der angezeigten Webseite passt. Dafür ist in jedem Browser eine Liste von vertrauenswürdigen Zertifizierungsstellen hinterlegt, wobei die grundsätzliche Annahme ist: wenn ein Zertifikat von einer vertrauenswürdigen Zertifizierungsstelle erstellt wurde, dann vertraut der Browser darauf, dass man diesem Zertifikat auch vertrauen kann.</p>
+
+<p>Wenn Sie also z.B. die Seite <a href="https://www.datamate.org" target="_blank" rel="noopener">https://www.datamate.org</a> aufrufen, fragt der Browser nach dem verwendeten Zertifikat. Der Browser liefert das Zertifikat, in dem steht, dass dieses Zertifikat für die Domain datamate.org gilt und von der <a href="https://letsencrypt.org/de/" target="_blank" rel="noopener">Let&#8217;s Encrypt Authority</a> erstellt wurde. Man spricht hierbei von <a href="https://letsencrypt.org/de/certificates/" target="_blank" rel="noopener">der Kette des Vertrauens</a>. Weil der Browser der Zertifizierungsstelle vertraut, vertraut er auch dem Zertifikat, welches die Echtheit von datamate.org bestätigt. Sollte irgendjemand es schaffen Sie nicht auf die originale datamate.org, sondern auf irgendeine Betrügerwebseite zu schleusen, wird das Zertifikat nicht zur Domain passen und der Browser wird Ihnen den bekannten Fehler präsentieren.</p>
+
+<h3>Was hat das mit Homie und Fellow zu tun?</h3>
+
+<p>HTTPS konnte sich in den letzten Jahren immer weiter durchsetzen. Während man früher für die Erstellung von Zertifikaten Geld bezahlen musste, ist es insbesondere Google mit seinem <a href="https://transparencyreport.google.com/https/overview" target="_blank" rel="noopener">Transpareny Report</a> und eben auch der <a href="https://letsencrypt.org/isrg/" target="_blank" rel="noopener">Internet Security Research Group</a>, die hinter Let&#8217;s Encrypt steht, zu verdanken, dass heutzutage jeder kostenlos und mit wenig Aufwand ein verifiziertes Zertifikat erstellen kann. Die einzige Voraussetzung dafür ist, dass man die Domain für die man das Zertifikat erstellt unter Kontrolle hat und dies auch nachweisen kann. Ein Server wie Homie und Fellow werden im lokalen Netzwerk jedoch beim ersten Aufruf nicht über ihre URL, sondern über Ihre IP-Adresse angesprochen. Für lokale IP-Adressen kann man jedoch kein Zertifikat verifizieren lassen und da das Zertifikat von Server selbst erzeugt wird, ist die Zertifizierungsstelle auch nicht im Browser als vertrauenswürdig hinterlegt.</p>
+
+<h3>Was kann man also tun?</h3>
+<p>Der Trick ist ganz einfach. Man muss dem Browser einfach nur mitteilen, dass diese neue Zertifizierungsstelle (also Homie oder Fellow selbst) vertrauenswürdig ist und schon ist auch das damit erzeugte Zertifikat vertrauenswürdig. Die Fehlermeldung beim Aufruf verschwindet und aus dem roten durchgestrichenen HTTPS wird ein grünes Schloss. Nach dieser Text über die Hintergründe lohnt sich ein Blick auf die konkreten Anleitungen für die verschiedenen Browser.</p>

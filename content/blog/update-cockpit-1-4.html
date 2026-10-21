@@ -1,0 +1,138 @@
++++
+title = "Cockpit 1.4 ist da! Höhere Ladegeschwindigkeit, erweiterter Kalender und bessere Backups"
+titel_html = "Cockpit 1.4 ist da! Höhere Ladegeschwindigkeit, erweiterter Kalender und bessere Backups | datamate"
+ueberschrift = "Cockpit 1.4 ist da! Höhere Ladegeschwindigkeit, erweiterter Kalender und bessere Backups"
+beschreibung = "datamate Cockpit 1.4 seit Ostern 2019 verfügbar. Neben zahlreichen Detailverbesserungen ist das neue Cockpit auch schlanker und schneller geworden."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2019/04/cockpit-1.4.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/update-cockpit-1-4/"
+canonical = "https://www.datamate.org/update-cockpit-1-4/"
+og_bild_breite = "1920"
+og_bild_hoehe = "1280"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2019-04-21T22:52:23+00:00"
+geaendert = "2025-02-21T08:10:04+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "8 Minuten"
+beitragsbild = "/wp-content/uploads/2019/04/cockpit-1.4.jpg"
+bild_breite = 1920
+bild_hoehe = 1280
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Cockpit 1.4 ist da! Höhere Ladegeschwindigkeit, erweiterter Kalender und bessere Backups", item = ""}]
+wortzahl = 1621
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["unsere-produkte"]
+schlagwoerter = ["Cockpit", "datamate"]
+wp_id = 5630
+slug = "update-cockpit-1-4"
+url = "/update-cockpit-1-4/"
+date = "2019-04-22T00:52:23"
+lastmod = "2025-02-21T09:10:04"
+datum_utc = "2019-04-21T22:52:23+00:00"
+geaendert_utc = "2025-02-21T08:10:04+00:00"
+lightbox = true
++++
+						<p>Für alle Nutzer von Homie und Fellow hat datamate ein kleines Ostergeschenk: Seit diesem Wochenende ist die Version 1.4 des datamate Cockpits verfügbar und kann über den Bereich Konfiguration heruntergeladen und installiert werden. Version 1.4 bringt eine Vielzahl von Verbesserungen am Webinterface von Homie und Fellow zur Steigerung der Usability mit sich. Im Zentrum der Entwicklungsarbeiten standen die Ladegeschwindigkeit des Cockpits, dessen Kalender und das Backup.</p>
+<p>Mit Version 1.4 haben wir aber auch Abschied von einigen wenig genutzen Tools genommen. Details zu den Neuerungen und Änderungen des Release 1.4 erfährst Du in diesem Artikel. Ein Changelog findet sich an dessen Ende. Interessenten der private Cloud Server von datamate können das neue Cockpit von nun ab auf <a href="https://cockpit.privatecloud.de" target="_blank" rel="noopener noreferrer">cockpit.privatecloud.de</a> testen.</p>
+
+<span id="more-5630"></span>
+
+<img decoding="async" width="717" height="560" src="/wp-content/uploads/2019/04/cockpit1.4-screens.png" alt="Das neue Cockpit Design" class="alignleft size-full wp-image-5911" srcset="/wp-content/uploads/2019/04/cockpit1.4-screens.png 717w, /wp-content/uploads/2019/04/cockpit1.4-screens-300x234.png 300w" sizes="(max-width: 717px) 100vw, 717px" />
+
+<h2>Geschwindigkeitsvorteil</h2>
+<p>Schon mit Version 1.3 haben wir die Ladegeschwindigkeit des Cockpits durch die Reduktion der Datenbankzugriffe und eine Optimierung des Javascript Codes erhöht. In Version 1.4 haben wir uns zweier weiterer Bremssteine angenommen. In Summe wurden mehr als 4.000 Zeilen Code neu geschrieben bzw. haben alten Code ersetzt. Aus unserer Sicht hat sich die Mühe gelohnt! Mit der nun erreichten Geschwindigkeit der Zugriffe sind wir sehr zufrieden.</p>
+<p>Bremsstein #1 waren wiederkehrende Aufrufe zur Prüfung des Systemstatus. Bei jedem Seitenaufruf und bei jeder -aktualisierung wurden bisher der freie, auf der Festplatte verfügbare Speicherplatz und der Aktivitätsstatus der Dienste geprüft. Diese Informationen werden nun beim ersten Cockpitaufruf zwischengespeichert und nur periodisch sowie anlassbezogen aktualisiert. Zusätzlich haben wir den gesamten Code auf Redundanzen untersucht und unnötige Datenbankaufrufe, API-Calls, und Lizenz- Statusprüfungen entfernt oder optimiert. </p>
+<p>Eine weitere Quelle für Verzögerungen im Seitenaufbau waren und sind selbst erzeugte SSL-Zertifikate. Hintergrund hier ist, dass Mozilla, Google und Co. mit ihren jüngeren Browserupdates Funktionen hinzugefügt haben, die den Aufruf von Seiten mit selbst erzeugten Zertifikaten verlangsamen. Was dem Schutz der Anwender dient und damit grundsätzlich zu begrüßen ist, bremste bei <a href="/homie">Homie</a> und <a href="/fellow">Fellow</a> den Aufruf des Cockpits über die lokale IP-Adresse massiv ab. Um dieses Problem zu umgehen, besteht nun für jeden Anwender die Möglichkeit, dem Zertifikat des Cockpits zu vertrauen und damit die unverzögerte Zugriffsgeschwindigkeit zu genießen.</p>
+
+<h2>Erweiterter Kalender</h2>
+
+<a href="/wp-content/uploads/2019/04/cockpit-kalender.png" data-slb-active="1" data-slb-asset="2837106478" data-slb-internal="0" data-slb-group="5630"><img decoding="async" loading="lazy" width="1024" height="549" src="/wp-content/uploads/2019/04/cockpit-kalender-1024x549.png" alt="der neue Kalender des Cockpits" class="size-large wp-image-5891" srcset="/wp-content/uploads/2019/04/cockpit-kalender-1024x549.png 1024w, /wp-content/uploads/2019/04/cockpit-kalender-300x161.png 300w, /wp-content/uploads/2019/04/cockpit-kalender-768x412.png 768w, /wp-content/uploads/2019/04/cockpit-kalender.png 1527w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
+
+<p>Mit dem Update 1.4. hat der Kalender im Cockpit zahlreiche neue Funktionen hinzugelernt und ist damit zu einem deutlich leistungsfähigeren Tool zum effizienten Management des Arbeitstags geworden. Kleine Symbole in der Tages- und Wochenansicht zeigen, ob in einem Termin andere Teilnehmer, Wiederholungen und Erinnerungen enthalten sind. All diese Informationen werden nun auch in der aufklappbaren Detailansicht dargestellt. Weitere kleine Detailverbesserungen sind die Anzeige der aktuellen Uhrzeit in Form einer roten Linie und die Vereinfachung des Versands von Termineinladungen. Das Cockpit nutzt nun für den Nachrichtenversand das gleiche E-Mail-Konto, das auch für die Statusupdates des Cockpits verwendet wird.</p>
+
+<h2>Neuer Backupspeicher und zusätzliche Konfigurationsoptionen</h2>
+
+<a href="/wp-content/uploads/2019/04/backup-verbindungstest.png" data-slb-active="1" data-slb-asset="3614479057" data-slb-internal="0" data-slb-group="5630"><img decoding="async" loading="lazy" width="1024" height="546" src="/wp-content/uploads/2019/04/backup-verbindungstest-1024x546.png" alt="Der neue Verbindungstest für Backups" class="alignleft size-large wp-image-5893" srcset="/wp-content/uploads/2019/04/backup-verbindungstest-1024x546.png 1024w, /wp-content/uploads/2019/04/backup-verbindungstest-300x160.png 300w, /wp-content/uploads/2019/04/backup-verbindungstest-768x410.png 768w, /wp-content/uploads/2019/04/backup-verbindungstest.png 1528w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
+
+<p>Bisher unterstützte das Cockpit FTP, SSH und Amazon S3 als remote und am USB-Port angeschlossene Datenträger als lokale Backupziele. Mit dem Update haben wir <a href="https://www.backblaze.com/#af9rzp" target="_blank" rel="noopener noreferrer">Backblaze</a> als weiteres Backupziel hinzugefügt. Backblaze ist ein amerikanischer Cloud-Speicheranbieter, der sich durch seine einfache Webadministration und günstigen Preise auszeichnet. Bei Backblaze zahlt man gerade mal 5$ pro Terabyte Backupspeicher pro Monat. Dies ist ein Viertel des Preises von Amazon S3 oder die Hälfte einer gleich großen Hetzner Storage-Box. Bezüglich Sicherheit gilt bei Backblaze das gleiche wie bei anderen Cloud-Speicherdiensten: Damit man mit der externen Sicherung nicht seine Datensouveränität aufgibt, muss das Backup verschlüsselt ausgeführt werden.</p>
+
+<p>Stichwort Verschlüsselung: Mit dem Cockpit 1.4 ist es möglich, die rechenintensive Verschlüsselung des Backups für jeden Backup-Job wahlweise zu aktivieren bzw. deaktivieren. Eine Deaktivierung bietet sich insbesondere bei Backups auf Speicherziele im lokalen Netzwerk und USB-Speicher an. Die Logik hier ist einfach: ein verschlüsseltes Backup auf einem lokalen Speicher macht wenig Sinn, wenn die Daten auf dem Server unverschlüsselt sind. Ebenfalls neu hinzugekommen ist die optionale Deaktivierung der Datenkompression bei Erstellung des Backups. Ist reichlich Backupspeicher vorhanden, dann kann man darauf verzichten und profitiert im Gegenzug von deutlich höheren Transferraten beim Backuplauf. In Zahlen: Die <a href="/geschwindigkeitsoptimierung-von-duplicity/">Backup- und Restore-Zeit reduziert sich um ca. 50%</a>.</p>
+
+<p>Neben den Backupoptionen haben wir uns auch um die Überwachungsmöglichkeiten des Backups gekümmert: Eingerichtete Backup-Jobs können nun direkt im Cockpit geprüft werden, ob sie eine Verbindung zum Backupspeicher aufbauen können. Im Falle eines Verbindungsfehlers zeigt das Cockpit das vollständige Fehlerprotokoll an. Die Ursachenforschung und Lösungsfindung wird deutlich erleichtert. Im Fall eines erfolgreichen Verbindungstests weiß man sich im guten Gefühl, dass die Daten mit dem nächsten Backuplauf zuverlässig gesichert werden.</p>
+
+<h2>Weitere Neuigkeiten für mehr Nutzungskomfort</h2>
+
+<h3>Einfache Freigabe der Dienste ins Internet</h3>
+
+<p>Den Prozess der Internetfreigabe haben wir auf Basis von Nutzerrückmeldungen komplett neu gestaltet. Sind die Voraussetzungen gegeben (d.h. Subdomain angelegt und Portweiterleitung eingerichtet), dann ist eine Freigabe mit einer einzigen Eingabe eingerichtet und ein Dienst in wenigen Sekunden über eine beliebige (Sub-)Domain erreichbar. Das Cockpit kümmert sich um den Rest. Einfacher als das geht es nicht mehr. In der Vergangenheit war es nötig, zunächst eine allgemeine Freigabe zu erzeugen und diese dann einem Dienst zuzuweisen. Erst danach konnte man in der Dienstkonfiguration die gewünschte URL eintragen und das Cockpit beauftragen, sich um Beantragung des Let&#8217;s Encrypt Zertifikats und die Öffnung der Firewall kümmern. </p>
+
+<h2>Flexible Darstellung von verschiedensten Festplattenkonfigurationen</h2>
+
+<img decoding="async" loading="lazy" width="493" height="143" src="/wp-content/uploads/2019/04/unterschiedliche-festplattenkonfigurationen.png" alt="Unterschiedliche Festplattenkonfigurationen werden vom Cockpit unterstützt" class="alignleft size-full wp-image-5905" srcset="/wp-content/uploads/2019/04/unterschiedliche-festplattenkonfigurationen.png 493w, /wp-content/uploads/2019/04/unterschiedliche-festplattenkonfigurationen-300x87.png 300w" sizes="(max-width: 493px) 100vw, 493px" />
+
+<p>Durch die rapide fallenden Preise von SSD-Festplatten wird Fellow immer häufiger mit einer Kombination aus schnellen SSDs mit großen HDD-Festplatten ausgestattet. Das Cockpit trägt diesem Umstand nun Rechnung und erfasst den Füllstand von Daten- und Systemfestplatten und zeigt diesen an. Das Cockpit erkennt die Festplattenkonfiguration automatisch und passt sich entsprechend an. Für Homie gilt übrigens das gleiche. Nur dass dort solche Kombinationen seltener sind.</p>
+
+<h2>Entfernen der Multimedia-Fähigkeiten aus dem Cockpit</h2>
+
+<p>Neben den vielfältigen Funktionsergänzungen und -erweiterungen im datamate Cockpit haben wir uns bei der Entwicklung des Cockpits 1.4 erstmals &#8211; und mit schweren Herzen &#8211; dazu entschieden, wenig genutzte Dienste aus dem Cockpit zu entfernen. Die Motivation für diesen Schritt ist der Anspruch, für jeden unterstützten Dienst guten Support bieten zu können. Diesem selbst gesetzten Ziel konnten wir zuletzt nur noch mit großer (unwirtschaftlicher) Mühe erreichen.</p>
+<p>Auf der Streichliste finden sich drei Dienste aus dem Multimedia-Bereich. Konkret wird mit Version 1.4 die Unterstützung für Steam, Kodi und ReadyMedia aus dem Cockpit entfernt. Nach dem Upgrade von 1.3 auf 1.4 werden die Dienste nicht mehr im Cockpit angezeigt, die Programme sind aber weiterhin installiert und können über die Shell administriert werden. Da diese drei Dienste nur auf Homies zum Einsatz kamen, bleibt bei den Small Business Servern Fellow das Diensteangebot unverändert. Auf neu ausgelieferten Homies werden die Dienste nicht mehr installiert sein.</p>
+<p>Eine weitere Motivation für diesen Schritt ist unsere Absicht, das Cockpit für Homie und Fellow in Hinblick auf eine zukünftige Version 2.0 zu vereinheitlichen. Während wir in der Vergangenheit mit Homie hauptsächlich Privatanwender und mit Fellow Geschäftskunden angesprochen haben, wollen wir in Zukunft diese Unterscheidung nicht mehr machen.</p> 
+
+<h2>Ausblick auf Version 2.0</h2>
+
+<p>Mit der Version 2.0 wird das datamate Cockpit und die dazugehörigen private Cloud Funktionen unabhängig von der zugrundeliegenden Maschine. Die Installation des Cockpits 2.0 wird auf Homie und Fellow genauso möglich sein wie auf einem VServer. Unsere Ambition: Die vollständige Installation der privaten Cloud von datamate auf einem System Deiner Wahl soll mit einem einzigen Befehl möglich sein.</p> 
+<p>Diese Änderung wird nicht nur für uns eine große Änderung sein, sondern auch für Dich! Mit der Version 2.0 werden wir das Cockpit in einer kostenlosen Version anbieten, die Du selbstständig auf einem Server Deiner Wahl installieren kannst. Diese kostenfreie Version wird bis zu 5 Nutzer unterstützen. Bei mehr Nutzern wird eine kostenpflichtige Lizenz notwendig. Soweit der derzeitige Planungsstand, weitere Details werden wir in den nächsten Wochen und Monaten veröffentlichen.</p>
+
+<h2>Version 1.4 kann man auch ausprobieren</h2>
+
+<p>Wir sind stolz auf die große Vielzahl an Verbesserungen gegenüber dem Cockpit 1.3. Probiere es am Besten gleich auf <a href="https://cockpit.privatecloud.de" target="_blank" rel="noopener noreferrer">cockpit.privatecloud.de</a> aus. Du wirst sofort merken, wieviel schneller sich das Cockpit anfühlt. Solltest Du noch keinen Account haben, dann registriere Dich jetzt und hole Dir einen <a href="https://www.privatecloud.de/registrierung/" target="_blank" rel="noopener noreferrer">Testaccount</a>.</p>
+
+<h2>Changelog 1.4</h2>
+<ul style="padding-left:20px;">
+
+	<!--Formulierungsstil des Changelogs: Art der Änderung in [] / Beschreibung mit Aktivität mit Nomen am Anfang.-->
+
+    <li>[new] Beschleunigung des Cockpitaufrufs durch Reduktion der Statusabfragen und optimierten Code</li>
+	<li>[new] Erstellung und Downloads des selbst-signierten Zertifikats für lokale IP-Adressen</li>
+	<li>[new] Erweiterung der Funktionen des Cockpit Kalenders</li>
+	<li>[new] Ergänzung der möglichen Backupziele mit Backblaze</li>
+	<li>[new] Erweiterung der Backupoptionen um Aktivierung/Deaktivierung von Verschlüsselung/Komprimierung</li>
+	<li>[new] Erweiterung der Statusmeldungen vorhandener Backups</li>
+	<li>[change] Umstellung des E-Mail Kontos für den Versand von Termineinladung auf E-Mail Konto für Systembenachrichtigungen</li>
+	<li>[change] Überarbeitung der Internetfreigabe von Diensten</li>
+	<li>[change] Entfernung von Steam, Kodi und ReadyMedia als unterstützte Dienste (keine Deinstallation der Dienste)</li>
+	<li>[fix] Anpassung einer Fail2ban Regel, die beim Aufruf eines Link zu einem Video zu einer IP-Sperre führte</li>
+</ul>
+
+<h2>Unterstütze Dienste</h2>
+<ul style="padding-left:20px;">
+	<li>Seafile (getestet mit CE 6.3.4 &#038; PE 6.3.12)</li>
+	<li>sabre/dav (getestet mit 3.2)</li>
+	<li>WordPress (getestet mit 4.9.8 &#038; 5.1)</li>
+	<li>Mailcow (getestet mit 0.14)</li>
+	<li>Samba (getestet mit 4.3.11)</li>
+	<li>Fileshare (getestet mit 1.2)</li>
+	<li>OpenVPN (getestet mit 2.3.10)</li>
+	<li>ddclient (getestet mit 3.8.1)</li>
+	<li>Fail2ban (getestet mit 0.9.3)</li>
+	<li>Virtualbox inkl. Guest Additions (getestet mit 5.2.18)</li>
+	<li>OpenLDAP (getestet mit 2.4.42)</li>
+	<li>UFW (getestet mit 0.35)</li>
+	<li>duplicity (getestet mit 0.7.18.2)</li>
+	<li>duply (getestet mit 2.2)</li>
+</ul>
+
+<h2>Ergänzung Update 1.4.1</h2>
+<p>Beim Ausrollen des Updates 1.4 ist noch ein Problem aufgetaucht, das kurzfristig behoben wurde. Zusätzlich haben wir noch zwei Detailverbesserung integriert, deren Entwicklung nach Freigabe von 1.4 fertig wurde und sonst erst in einem späteren Major Release den Weg ins Cockpit gefunden hätte.</p>
+
+<h2>Changelog 1.4.1</h2>
+<ul style="padding-left:20px;">
+
+	<!--Formulierungsstil des Changelogs: Art der Änderung in [] / Beschreibung mit Aktivität mit Nomen am Anfang -->
+	<li>[change] Bereinigung der Backup-Dateiliste um unrelevante Einträge zur Verkleinerung der Datei</li>
+	<li>[change] Sicherung der Seafile Version im Backup</li>
+	<li>[fix] Beseitigung Konflikt zwischen Status-E-Mail Cronjob und Backup</li>	
+</ul>

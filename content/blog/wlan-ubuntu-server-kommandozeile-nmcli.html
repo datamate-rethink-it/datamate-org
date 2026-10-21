@@ -1,0 +1,120 @@
++++
+title = "WLAN unter Ubuntu Server über die Kommandozeile einrichten"
+titel_html = "WLAN unter Ubuntu Server über die Kommandozeile einrichten | datamate"
+ueberschrift = "WLAN unter Ubuntu Server über die Kommandozeile einrichten"
+beschreibung = "Auch auf einem Ubuntu Server System ohne grafische Benutzeroberfläche lassen sich WLAN-Verbindungen konfigurieren. Hier erfährst Du wie es geht!"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/05/wifi-bash-konfigurieren-ubuntu-server.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/wlan-ubuntu-server-kommandozeile-nmcli/"
+canonical = "https://www.datamate.org/wlan-ubuntu-server-kommandozeile-nmcli/"
+og_bild_breite = "1280"
+og_bild_hoehe = "853"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2018-06-12T19:09:05+00:00"
+geaendert = "2025-02-21T08:10:07+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "4 Minuten"
+beitragsbild = "/wp-content/uploads/2018/05/wifi-bash-konfigurieren-ubuntu-server.jpg"
+bild_breite = 1280
+bild_hoehe = 853
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "WLAN unter Ubuntu Server über die Kommandozeile einrichten", item = ""}]
+wortzahl = 727
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["software"]
+schlagwoerter = ["datamate", "Edimax", "Homie", "Linux", "Ubuntu Server", "USB Dongle", "Wlan"]
+wp_id = 3494
+slug = "wlan-ubuntu-server-kommandozeile-nmcli"
+url = "/wlan-ubuntu-server-kommandozeile-nmcli/"
+date = "2018-06-12T21:09:05"
+lastmod = "2025-02-21T09:10:07"
+datum_utc = "2018-06-12T19:09:05+00:00"
+geaendert_utc = "2025-02-21T08:10:07+00:00"
++++
+						<p>Das Betriebssystem Ubuntu Server, wie es z.B. auf <a href="/homie">dem Home Server Homie</a> und <a href="/fellow">dem Small Business Server Fellow</a> von datamate zum Einsatz kommt, verzichtet auf eine grafische Benutzeroberfläche wie man sie von Desktop Betriebssystemen oder auch vom Windows Server her kennt. Die Kommandozeile, über die Änderungen am System vorgenommen werden, ist zwar in vielen Fällen für Admins mit Linux Erfahrung effizient und bequem. Es gibt aber auch solche, bei denen man eine grafische Oberfläche klar vermisst. Eine dieser Aufgaben ist die Konfiguration einer WLAN-Verbindung. In diesem Artikel berichten wir darüber, wie wir einen Homie eines Kunden mangels Ethernetanbindung mit WLAN nachgerüstet haben. Von allgemeinem Interesse ist dies, da diese Erfahrung verallgemeinerbar ist. Willst Du also unter Ubuntu Server 16.04 mit Hilfe der Kommandozeile einen <a href="https://www.amazon.de/gp/product/B003MTTJOY/ref=as_li_tl?ie=UTF8&#038;camp=1638&#038;creative=6742&#038;creativeASIN=B003MTTJOY&#038;linkCode=as2&#038;tag=datamate-21&#038;linkId=ac328826448101dfd019e3e9fba5b1b3">Edimax USB WLAN Dongle</a> einrichten, dann bist Du hier richtig!</p>
+
+<span id="more-3494"></span>
+
+<h2>Vorwort zur Hardwareauswahl</h2>
+<iframe style="width:120px;height:240px; float:left; margin-right: 15px; margin-top: 10px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&#038;OneJS=1&#038;Operation=GetAdHtml&#038;MarketPlace=DE&#038;source=ac&#038;ref=tf_til&#038;ad_type=product_link&#038;tracking_id=datamate-21&#038;marketplace=amazon&#038;region=DE&#038;placement=B003MTTJOY&#038;asins=B003MTTJOY&#038;linkId=8bc3e336334d164306523fe5cb2fbc83&#038;show_border=false&#038;link_opens_in_new_window=false&#038;price_color=333333&#038;title_color=0066c0&#038;bg_color=ffffff">
+    </iframe>
+<p>Warum wir angesichts der großen Auswahl verfügbarer WLAN Dongles gerade den Edimax Dongle gewählt haben? Der <a href="https://www.amazon.de/gp/product/B003MTTJOY/ref=as_li_tl?ie=UTF8&#038;camp=1638&#038;creative=6742&#038;creativeASIN=B003MTTJOY&#038;linkCode=as2&#038;tag=datamate-21&#038;linkId=ac328826448101dfd019e3e9fba5b1b3">Edimax WLAN Dongle</a> hat einige Pro-Argumente auf seiner Seite. Zunächst einmal ist er günstig und weit verbreitet. Die Chance, dass man bei Problemen irgendwo Hilfe findet, steigt dadurch deutlich. Das noch wichtigere Argument ist aber wohl dieses: Er wird unter Ubuntu automatisch erkannt. Sobald man den Dongle in einen freien USB-Port steckt, taucht er auch schon in der Liste der USB-Geräte auf. Damit erspart man sich unnötige Frickelei.</p>
+<p>Ein klares Contra-Argument ist seine Geschwindigkeit. Mit seiner maximalen 150Mbit/s Übertragungsrate ist der Edimax weit von Geschwindigkeitsrekorden entfernt. Daher: Habt Ihr andere WLAN Dongle unter Ubuntu Server zum Laufen gebracht, dann bitte kurze Meldung an info@datamate.org. Wir ergänzen gerne Eure Hinweise!</p>
+
+<h2>WLAN unter Ubuntu Server einrichten</h2>
+<h3>Hardware überprüfen</h3>
+
+<p>Für die nachfolgenden Erläuterungen gehen wir davon aus, dass der Server angeschaltet, der Edimax USB WLAN Dongle eingesteckt und Ubuntu Updates gemacht sind. Alle folgenden Befehle werden logischerweise als root-User ausgeführt.</p>
+
+<p>Zuallerst lassen wir uns die eingesteckten USB-Geräte anzeigen. Der Output zeigt uns an, dass das Gerät erkannt wurde. Voilà der große Vorteil des Edimax Dongles.</p>
+
+<pre style="padding: 0px;"><code>$ lsusb
+Bus 001 Device 002: ID 7392:7811 Edimax Technology Co., Ltd EW-7811Un 802.11n Wireless Adapter [Realtek RTL8188CUS]</code></pre>
+	
+<p>Der nächste Befehl zeigt, ob der USB-Dongle bereits als WLAN-Gerät erkannt wird und ob er bereits mit irgendeinem Access Point verbunden ist.</p>
+
+<pre style="padding: 0px;"><code>$ iwconfig 
+wlx74da38006865  IEEE 802.11bgn  ESSID:off/any  
+          Mode:Managed  Access Point: Not-Associated   Tx-Power=0 dBm   
+          Retry short limit:7   RTS thr=2347 B   Fragment thr:off
+          Encryption key:off
+          Power Management:on</code></pre>
+
+<h3>Software installieren</h3>
+<p>Die Konfiguration einer WLAN-Verbindung mit einer aktuellen Verschlüsselungstechnik wie z.B. WPA oder WPA2 erfolgt über den <i>network-manager</i>. Dieser ist eigentlich eine Software, die nur auf dem Desktop zum Einsatz kommt, er kann uns aber auch auf der Kommandozeile gute Dienste erweisen. Wir installieren den <i>network-manager</i> mit dem folgenden Befehl, wobei wir als Parameter <i>&#8211;no-install-recommends</i> mitgeben, um zu verhindern, dass gleich eine komplette Desktop-Umgebung mitinstalliert wird.</p>
+
+<p>Hinweis: Zu Zeiten von WEP-Verschlüsselungen konnte man die WLAN-Verbindung per <i>iwconfig</i> aufbauen. Seitdem neuere Verschlüsselungstechnologien WEP abgelöst haben, kommt man mit <i>iwconfig</i> nicht mehr weit.</p>
+
+<pre style="padding: 0px;"><code>$ apt-get --no-install-recommends install network-manager</code></pre>
+
+<h2>Schnittstelle freigeben</h2>
+
+<p>Nach der Installation des <i>network-manager</i> kann dieser mit dem folgenden Befehl gestartet werden. Danach erfolgt die Konfiguration mit Hilfe des Kommandozeilentools <i>nmcli</i>.
+	
+<pre style="padding: 0px;"><code>$ service network-manager start
+
+$ nmcli dev status
+GERÄT      TYP               STATUS
+wlan0      wifi              nicht verwaltet
+eth0       ethernet          nicht verfügbar
+lo         loopback          nicht verwaltet
+
+$ nmcli dev wifi list
+*  SSID                          MODUS  CHAN  RATE       SIGNAL  BARS  SICHERHEIT
+   Vodafone Homespot             Infra  13    54 Mbit/s  100     ▂▄▆█
+*  MeinGeheimesWLAN              Infra  60    54 Mbit/s  96      ▂▄▆█  WPA1 WPA2</code></pre>
+
+<p><i>nmcli dev status</i> listet sämtliche Netzwerkgeräte inklusive Status auf, wobei der Status <i>nicht verwaltet</i> bedeutet, dass diese Schnittstelle noch über die Konfigurationsdatei <i>/etc/network/interfaces</i> konfiguriert wird.</p>
+
+<p>Um nun den WLAN-Dongle per nmcli verwalten zu können, muss der entsprechende Abschnitt aus der <i>/etc/network/interfaces</i> entfernt oder auskommentiert werden. Nach einem Neustart taucht die Netzwerkschnittstelle auch nicht mehr unter <i>ifconfig</i> auf.</p>
+
+<h2>WLAN-Verbindung konfigurieren</h2>
+
+<p>Der <i>network-manager</i> verwaltet seine Netzwerkverbindungen bzw. jedes Device durch eine Konfigurationsdatei, die unter <i>/etc/NetworkManager/system-connections/</i> angelegt wird. Diese könnte man zwar auch händisch anlegen, einfacher geht es jedoch über die folgenden Kommandozeilenbefehle: </p>
+
+<p><strong>WICHTIG:</strong> &#8216;MeinGeheimesWLAN&#8217; und &#8216;MeinWLANPasswort&#8217; müssen natürlich entsprechend angepasst werden!</p>
+
+<pre style="padding: 0px;"><code>$ nmcli connection add type wifi ifname wlan0 ssid MeinGeheimesWLAN
+$ nmcli connection edit wlan0
+nmcli connection edit wlan0
+nmcli> goto wifi
+nmcli 802-11-wireless> set mode infrastructure 
+nmcli 802-11-wireless> back 
+nmcli> goto wifi-sec 
+nmcli 802-11-wireless-security> set key-mgmt wpa-psk 
+nmcli 802-11-wireless-security> set psk MeinWLANPasswort
+nmcli 802-11-wireless-security> save 
+nmcli 802-11-wireless-security> quit</code></pre>
+
+<p>Damit wurde die Konfigurationsdatei für diese Netzwerkschnittstelle angelegt. Die WLAN-Verbindung lässt sich ganz einfach per Befehl starten.</p>
+
+<pre style="padding: 0px;"><code>$ nmcli radio wifi on</code></pre>
+
+<h2>WLAN über die Kommandozeile ist möglich</h2>
+
+<p>Natürlich ist die Konfiguration einer WLAN-Verbindung mit Hilfe einer grafischen Benutzeroberfläche deutlich einfacher und schneller erledigt. Aber wie fast immer in der Linux-Welt gibt es Mittel und Wege, das gewünschte Ziel auch über die Kommandozeile zu erreichen. Und so ist es ohne große Schwierigkeiten auch einen Homie oder einen Fellow per WLAN mit dem lokalen Netzwerk zu verbinden.</p>
+
+<p>Sollte die Informationen aus diesem Artikel nicht ausreichen, empfehle ich als zusätzliche Lektüre die folgenden beiden Artikel: <a href="https://wiki.ubuntuusers.de/NetworkManager/NetworkManager_ohne_GUI/" target="_blank" rel="noopener">wiki.ubuntuusers.de</a>, <a href="https://wiki.siduction.de/index.php?title=Network-Manager_auf_der_Kommandozeile" target="_blank" rel="noopener">wiki.siduction.de</a>.</p>

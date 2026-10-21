@@ -1,0 +1,441 @@
++++
+title = "Installation von Keycloak für SSO unter Ubuntu 18.04"
+titel_html = "Installation von Keycloak für SSO unter Ubuntu 18.04 | datamate"
+ueberschrift = "Installation von Keycloak für SSO unter Ubuntu 18.04"
+beschreibung = "Wer für seine Applikationen wie z.B. Seafile eine Single-Sign-On Lösung sucht, sollte einen Blick auf Keycloak werfen. Wir zeigen, wie es installiert wird."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2020/01/keycloak.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/"
+canonical = "https://www.datamate.org/installation-keycloak-sso-ubuntu-18-04/"
+og_bild_breite = "1200"
+og_bild_hoehe = "784"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2020-01-20T20:48:43+00:00"
+geaendert = "2025-02-21T08:10:01+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "14 Minuten"
+beitragsbild = "/wp-content/uploads/2020/01/keycloak.jpg"
+bild_breite = 1200
+bild_hoehe = 784
+bild_beschriftung = "Identitätsdienst und SSO mit Keycloak"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Installation von Keycloak für SSO unter Ubuntu 18.04", item = ""}]
+wortzahl = 1775
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["praktische-anwendungsfaelle", "software"]
+schlagwoerter = ["Fellow", "Homie", "keycloak", "seafile", "sso"]
+wp_id = 6510
+slug = "installation-keycloak-sso-ubuntu-18-04"
+url = "/installation-keycloak-sso-ubuntu-18-04/"
+date = "2020-01-20T21:48:43"
+lastmod = "2025-02-21T09:10:01"
+datum_utc = "2020-01-20T20:48:43+00:00"
+geaendert_utc = "2025-02-21T08:10:01+00:00"
++++
+						<p>Keycloak ist eine Open Source Lösung für das Identitäts- und Zugriffsmanagement. Keycloak wird federführend von Red Hat entwickelt und zielt darauf ab, Anwendungen und Dienste ohne aufwändige Programmierarbeit sicherer zu machen. Zur Featurepalette von Keycloak gehören Single-Sign-on (SSO), Authentifizierung und Autorisierung, Anmeldung gegenüber sozialen Netzwerken, Anbindung an existierende LDAP- und Active Directory Server, Multifaktorauthentifizierung und eine zentralisierte Benutzerverwaltung. Dieser Artikel beschreibt die Installation eines Keycloak Servers unter Ubuntu 18.04 LTS.</p>
+
+<p><b>Update 7.8.2021:</b> Die Anleitung funktioniert mit einer Anpassung auch mit neueren Distributionen und Keycloak 15. Ein Dank an Stefan K. für den Hinweis.</p>
+
+<span id="more-6510"></span>
+
+<img decoding="async" src="/wp-content/uploads/2020/01/keycloak-startseite.png" alt="Keycloak Startseite" />
+
+<h2>1. Installation von Java</h2>
+
+<p>Für Keycloak ist Java 8 oder eine neuere Version erforderlich. Mit dem folgenden Befehl kann man überprüfen, ob Java installiert ist.</p>
+
+<pre>$ java -version</pre>
+
+<p>Sollte Java nicht installiert sein, wird &#8220;java: command not found&#8221; angezeigt. In diesem Fall wird Java mit folgenden Befehl installiert.</p>
+
+<pre>$ sudo apt-get update
+$ sudo apt-get install default-jre-headless -y</pre>
+
+<p>Abschließend überprüft man, ob Java (in diesem Fall Version 11) korrekt installiert wurde.</p>
+
+<pre>$ java -version
+openjdk version "1.8.0_232"
+OpenJDK Runtime Environment (build 1.8.0_232-8u232-b09-0ubuntu1~18.04.1-b09)
+OpenJDK 64-Bit Server VM (build 25.232-b09, mixed mode)</pre>
+
+<h2>2. Download und Entpacken von Keycloak</h2>
+
+<p>In diesem Artikel beschreiben wir die Installation mit Hilfe von Keycloak 8.0.1 &#8220;Standalone server distribution&#8221;. Mit großer Wahrscheinlichkeit gibt es mittlerweile eine neuere Version. Man sollte deshalb auf der <a href="https://www.keycloak.org/downloads.html" target="_blank" rel="noopener noreferrer">Keycloak-Downloadseite</a> prüfen, welches die aktuelle &#8220;stable&#8221;-Version ist. Diese sollte anstelle der Version 8.0.1 verwendet werden. Die Befehle zum Download und entpacken des Pakets müssen entsprechend angepasst werden.</p>
+
+<p>Wir werden Keycloak im Verzeichnis /opt installieren, weshalb wird das Keycloak-Paket direkt in dieses Verzeichnis herunterladen. Sämtliche Befehle werden als Root-User ausgeführt, solange es nicht explizit anders beschrieben wird.</p>
+
+<pre>$ sudo su
+cd /opt
+$ wget https://downloads.jboss.org/keycloak/8.0.1/keycloak-8.0.1.tar.gz</pre>
+
+<p>Als Erstes extrahiert man das tar-Paket und benennt das neu entstandene Verzeichnis in keycloak um. Durch diesen Speicherort wird keycloak sofort ausführbar und es müssen keine Systempfade angepasst werden.</p>
+
+<pre>$ tar -xvzf keycloak-8.0.1.tar.gz
+$ mv keycloak-8.0.1 /opt/keycloak</pre>
+
+<h2>3. User und Gruppe für Keycloak erzeugen</h2>
+
+<p>Aus Sicherheitsgründen sollte man Keycloak nicht als Root-Benutzer ausführen. Hierfür erstell man eine Gruppe <i>keycloak</i> und fügt dieser Gruppe den neuen User <i>keycloak</i> hinzu. Als Home-Verzeichnis dieses neuen Users verwendet man das Installationsverzeichnis von Keycloak.</p>
+
+<pre>$ groupadd keycloak
+$ useradd -r -g keycloak -d /opt/keycloak -s /sbin/nologin keycloak</pre>
+
+<h2>4. Anpassen der Berechtigungen für das Keycloak Installationsverzeichnis</h2>
+
+<p>Als Nächstes muss man den Besitz und die Berechtigung des Verzeichnisses /opt/keycloak anpassen. Da im Unterverzeichnis /opt/keycloak/bin auch ausführbare Scripte liegen, müssen auch hier Änderungen vorgenommen werden.</p>
+
+<pre>$ chown -R keycloak: /opt/keycloak
+$ chmod o+x /opt/keycloak/bin/</pre>
+
+<h2>5. Anlage von Konfigurations- und Systemd-Datei für Keycloak</h2>
+
+<p>Als Nächstes wird unter /etc ein Konfigurationsverzeichnis für Keycloak mit dem Namen keycloak angelegt.</p>
+
+<pre>$ cd /etc
+$ mkdir keycloak</pre>
+
+<p>Keycloak liefert bereits eine Konfigurationsdatei mit, welche man einfach kopieren kann.</p>
+
+<pre>$ cp /opt/keycloak/docs/contrib/scripts/systemd/wildfly.conf /etc/keycloak/keycloak.conf</pre>
+
+<p>Als nächstes kopiert man auch das mitgelieferte Keycloak-Startskript (launch.sh) nach /opt/keycloak/bin/ und passt die Berechtigungen entsprechend an damit das Script ausgeführt werden kann.</p>
+
+<pre>$ cp /opt/keycloak/docs/contrib/scripts/systemd/launch.sh /opt/keycloak/bin/
+$ chown keycloak: /opt/keycloak/bin/launch.sh</pre>
+
+<p>Als nächstes muss man den Keycloak-Installationspfad in launch.sh korrigieren. Hierzu öffnet man die launch.sh in einem Editor (z.B. nano) und aktualisiert den Keycloak-Installationspfad wie folgt:</p>
+
+<pre>#!/bin/bash
+
+if [ "x$WILDFLY_HOME"="x" ]; then
+    WILDFLY_HOME=<strong>"/opt/keycloak"</strong>
+fi
+
+if [[ "$1"=="domain" ]]; then
+    $WILDFLY_HOME/bin/domain.sh -c $2 -b $3
+else
+    $WILDFLY_HOME/bin/standalone.sh -c $2 -b $3
+fi
+</pre>
+
+<p>Speichern und schließen Sie die Datei.</p>
+
+<p>Als nächtes kopiert man die Systemd-Datei (wildfly.service) von /opt/keycloak/docs/contrib/scripts/systemd/ nach /etc/systemd/system/ und benennt diese in keycloak.service um.</p>
+
+<pre>$ cp /opt/keycloak/docs/contrib/scripts/systemd/wildfly.service /etc/systemd/system/keycloak.service</pre>
+
+<p>Nun öffnet man die keycloak.service in einem Editor wie nano und bearbeitet diese.</p>
+
+<pre>$ nano /etc/systemd/system/keycloak.service</pre>
+
+<p>Nehmen Sie die fett markierten Änderungen vor, oder kopieren Sie den unten stehenden Inhalt einfach so, wie er ist, und fügen Sie ihn ein.</p>
+
+<pre>[Unit]
+<strong>Description=The Keycloak Server</strong>
+After=syslog.target network.target
+Before=nginx.service
+
+[Service]
+Environment=LAUNCH_JBOSS_IN_BACKGROUND=1
+<strong>EnvironmentFile=/etc/keycloak/keycloak.conf
+User=keycloak
+Group=keycloak</strong>
+LimitNOFILE=102642
+<strong>PIDFile=/var/run/keycloak/keycloak.pid
+ExecStart=/opt/keycloak/bin/launch.sh $WILDFLY_MODE $WILDFLY_CONFIG $WILDFLY_BIND</strong>
+StandardOutput=null
+
+[Install]
+WantedBy=multi-user.target</pre>
+
+<p>Sobald die Änderungen vorgenommen wurden, speichert und schließt man diese Datei.</p>
+
+<h2>6. Aktivieren und starten von Keycloak</h2>
+
+<p>Die Systemd Manager-Konfiguration muss neu geladen und aktiviert werden. So stellt man sicher, dass der Keycloak-Dienst auch bei jedem Systemstart auch startet.</p>
+
+<pre>$ systemctl daemon-reload
+$ systemctl enable keycloak</pre>
+
+<p>Ab sofort kann man den Keycloak-Systemdienst mit dem folgenden Befehl starten.</p>
+
+<pre>$ systemctl start keycloak</pre>
+
+<p>Sobald der Dienst gestartet ist, kann der Status mit dem folgenden Befehl überprüft werden.</p>
+
+<pre>$ systemctl status keycloak</pre>
+
+<p>Wenn der Dienst erfolgreich gestartet wurde, sollte Folgendes angezeigt werden:</p>
+
+<pre>$ systemctl status keycloak
+● keycloak.service - The Keycloak Server
+   Loaded: loaded (/etc/systemd/system/keycloak.service; disabled; vendor preset
+   Active: active (running) since Fri 2020-01-20 18:10:45 CET; 24s ago
+ Main PID: 3510 (launch.sh)
+    Tasks: 125 (limit: 2317)
+   CGroup: /system.slice/keycloak.service
+           ├─3510 /bin/bash /opt/keycloak/bin/launch.sh standalone standalone.xml 0.0.0.0
+           ├─3511 /bin/sh /opt/keycloak/bin/standalone.sh -c standalone.xml -b 0.0.0.0
+           └─3611 java -D[Standalone] -server -Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m ...
+
+Jan 20 18:55:36 keycloak systemd[1]: Started The Keycloak Server.</pre>
+
+<p>Zusätzlich sollte man einen offenen Port 8080 mit Hilfe des netstat Befehls sehen können:</p>
+
+<pre>$ netstat -tulpn | grep 8080
+tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN      3611/java </pre>
+
+<p>Nun erreicht man den Keycloak Server über die URL http://&lt;server-ip&gt;:8080/auth. Sollte man die IP-Adresse des Servers nicht kennen, hilft die Eingabe des Befehls <i>ifconfig</i>.</p>
+
+<img decoding="async" src="/wp-content/uploads/2020/01/keycloak-need-local-access.png" alt="Keycloak funktioniert erstmal nur lokal." />
+
+<h2>7. Anlage des Keycloak Administrators</h2>
+
+<p>Auf der nun gezeigten Startseite von keycloak wird ersichtlich, dass das System ohne vorkonfiguriertes Administratorkonto ausgeliefert wurde. Ein solches benötigt man jedoch um Keycloak verwenden zu können. Ohne Administrator können keine neuen Realms, Benutzer oder Anwendungen angelegt werden.</p>
+
+<p>Sollte man über eine grafische Benutzeroberfläche verfügen, genügt ein Aufruf von localhost:8080 in einem Browser, um auf Keycloak zugreifen und um dort einen Administrator zu erstellen.</p>
+
+<p>Da auf einem Ubuntu Server typischerweise keine grafische Benutzeroberfläche installiert wird, muss man sich mit den mitgelieferten Bash-Skripten von Keycloak behelfen. Mit <i>add-user-keycloak.sh</i>, welches man unter /opt/keycloak/bin/ findet, kann ein entsprechendes Administratorkonto per Kommandozeile erstellen werden. Anschließend muss der Dienst neu gestartet werden.</p>
+
+<pre>$ /opt/keycloak/bin/add-user-keycloak.sh -r master -u <strong>&lt;username&gt;</strong> -p <strong>&lt;password&gt;</strong>
+$ systemctl restart keycloak</pre>
+
+<p>Wenn nun erneut die Keycloak Seite aufruft, sieht man, dass die Meldung verschwunden ist, die einen aufgefordert hat einen Administrator anzulegen. Stattdessen hat man nun die Möglichkeit sich mit der Administration Console zu verbinden.</p>
+
+<img decoding="async" src="/wp-content/uploads/2020/01/keycloak-administration-console.png" alt="Administration Console von Keycloak"/>
+
+<p>Wenn Keycloak zum ersten Mal gestartet wird, erstellt Keycloak einen vordefinierten Bereich, den sogenannten Master-Bereich (englisch Realm). Dieser Master-Bereich ist die höchste Ebene in der Hierarchie der Realms bzw. Bereiche. Administratorkonten in diesem Bereich verfügen über Berechtigungen zum Anzeigen und Verwalten aller anderen Bereiche, die auf der Serverinstanz erstellt wurden.</p>
+
+<p>Das initiale Administratorkonto ist automatisch dem Master-Realm zugeordnet. Die erste Anmeldung in der Administratorkonsole erfolgt somit auch zwangsläufig mit dem Master-Bereich.</p>
+
+<p>Doch leider ist es noch nicht so weit, denn eine weitere Schutzfunktion von Keycloak kann den Zugriff verhindern.</p>
+
+<img decoding="async" src="/wp-content/uploads/2020/01/keycloak-https-required.png" alt="Keycloak erfordert HTTPS"  />
+
+<p>Der obige Fehler wird angezeigt, wenn Keycloak auf einem V-Server oder einem Server in einer DMZ installiert wird. Keycloak akzeptiert nämlich standardmäßig nur sichere HTTPS-Verbindungen für alle externen IP-Adressen. Private IP-Adressen wie localhost, 127.0.0.1, 10.0.x.x, 192.168.x.x und 172.16.x.x könnten Keycloak auch ohne HTTPS verwenden. Wenn man Keycloak nur im lokalen Netzwerk benutzt und es sich um eine Testumgebung handelt, können die Schritte 8a und 8b übersprungen werden. Bei einem produktiven Einsatz sollte umbedingt HTTPS zum Einsatz kommen.</p>
+
+<p>Nun gibt es zwei Möglichkeiten mit dieser Situation umzugehen. Man kann entweder den Zugriff per HTTP über das Internet erlauben oder man konfiguriert einen Webserver wie z.B. nginx mit einem Let&#8217;s Encrypt Zertifikat. Beides wird in diesem Artikel gezeigt.</p>
+
+<h2>8a. Deaktivierung von SSL per Master-Konsole</h2>
+
+<p>Die Deaktivierung von SSL für den Master-Bereich ist vergleichsweise einfach, gleichzeitig jedoch nur für einen Testbetrieb empfohlen. Besser ist ein Zugriff per nginx-SSL-Proxy, wie im folgenden Abschnitt beschrieben.</p>
+
+<p>Zur Deaktivierung bedient man sich den mitgelieferten Admin-CLI-Skripten, die in der Keycloak Server-Distribution enthalten sind. Man findet diese Skripte im Verzeichnis /opt/keycloak/bin/.</p>
+
+<p>Das Linux-Skript heißt kcadm.sh. Die Admin-CLI sendet HTTP-Anforderungen an die Admin-REST-Schnittstelle und erlaubt uns die gewünschte Konfiguration. Die Zugriff auf die Rest-Schnittstelle ist geschützt und erfordert deshalb eine Authentifizierung.</p>
+
+<p>Man kann eine authentifizierte Sitzung starten, indem man man sich mit dem vorher angelegten Administrator anmeldet.</p>
+
+<pre>$ /opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user &lt;admin-username&gt; --password &lt;admin-password&gt;</pre>
+
+<p>Sobald man angemeldet ist, kann man beliebige Befehle an Keycloak übergeben. Um z.B. SSL auf dem Master-Realm zu deaktivieren, genügt die folgende Eingabe:</p>
+
+<pre>$ /opt/keycloak/bin/kcadm.sh update realms/master -s sslRequired=NONE</pre>
+
+<p>Keycloak muss anschließend nicht neu gestartet werden. Man aktualisiert einfach den Browser oder öffnet direkt die Seite http://&lt;server-ip&gt;:8080/auth/admin/.</p>
+
+<p>Dort kann man sich nun endlich mit dem <strong>admin-username</strong> und dem <strong>admin-passwort</strong> einloggen. Nun kann man je nach Bedarf neue Bereiche, Kunden, Rollen, Gruppen oder Benutzer erstellen.</p>
+
+<h2>8b. Zugriff per nginx und Let&#8217;s Encrypt Zertifikat</h2>
+
+<p>Wenn man Keycloak ernsthaft betreiben möchte, kommt die Deaktivierung von SSL nicht in Frage. Stattdessen sollte man einen Webserver wie nginx installieren und diesen mit einem gültigen HTTPS-Zertifikat versorgen. Hierfür bietet sich Let&#8217;s Encrypt an, welches ich auch bereits in vergangenen Blogeinträgen, wie z.B. bei der <a href="/ezeelogin-installation/">Installation von Ezeelogin</a> verwendet habe. </p>
+
+<p>Als erstes installiert man den Webserver nginx.</p>
+
+<pre>$ apt install nginx</pre>
+
+<p>Als nächstes fügt man die folgende Konfiguration in nginx ein. Im folgenden verwende ich der Einfachheit halter die Konfigurationsdatei unter /etc/nginx/sites-available/default. <strong>&lt;domain&gt;</strong> muss natürlich entsprechend durch die eigene URL ersetzt werden.</p>
+
+<pre>server {
+  listen 443 ssl;
+  server_name <strong>&lt;domain&gt;</strong>;
+  index index.php;
+  allow all;
+
+  ssl_certificate /etc/letsencrypt/live/<strong>&lt;domain&gt;</strong>/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/<strong>&lt;domain&gt;</strong>/privkey.pem;
+  ssl_session_timeout 5m;
+
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers "HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES";
+  ssl_prefer_server_ciphers on;
+
+  location / {
+    proxy_pass          http://localhost:8080/;
+    proxy_set_header    Host               $host;
+    proxy_set_header    X-Real-IP          $remote_addr;
+    proxy_set_header    X-Forwarded-For    $proxy_add_x_forwarded_for;
+    proxy_set_header    X-Forwarded-Host   $host;
+    proxy_set_header    X-Forwarded-Server $host;
+    proxy_set_header    X-Forwarded-Port   443;
+    proxy_set_header    X-Forwarded-Proto  https;
+  }
+}
+</pre>
+
+<p>Anschließend kann nginx neu gestartet werden und Keycloak über https://&lt;domain aufgerufen werden.</p>
+
+<pre>systemctl restart nginx</pre>
+
+<p>Leider kann man aber immer noch nicht die Administration Console aufrufen, da Keycloak teilweise Inhalte über http: und manche über https: abruft. Es ist leider notwendig keycloak explizit darauf hinzuweisen, dass man nun HTTPS: verwenden will. Ich finde dieses Verhalten etwas befremdlich, weil Keycloak ja erst explizit HTTPS verlangt hat, aber na gut. Es ist nicht wirklich schwierig Keycloak davon abzuhalten http: zu verwenden. Man öffnet mit einem Editor die passende Konfigurationsdatei und nimmt die entsprechenden Änderungen vor:</p>
+
+<pre>$ nano /opt/keycloak/standalone/configuration/standalone.xml</pre>
+
+<p>In dieser Datei sucht man nach <i>socket-binding=&#8221;http&#8221;</i>. Diese Zeile muss man ersetzen:</p>
+
+<pre><strong>Ursprünglich:</strong>
+&lt;http-listener name="default" socket-binding="http" redirect-socket="https" enable-http2="true"/&gt;
+
+<strong>Neu</strong>
+&lt;http-listener name="default" socket-binding="http" proxy-address-forwarding="true" redirect-socket="proxy-https"/&gt;</pre>
+
+<p>In der gleichen Datei muss noch eine weitere Zeile hinzugefügt werden. Hierfür springt man bis ans Ende der Datei und fügt eine weitere <i>socket-binding</i> Zeile ein.
+
+<pre>&lt;socket-binding name="proxy-https" port="443"/&gt;</pre>
+
+<p>Anschließend fehlt nur noch ein Neustart von Keycloak und endlich kann man sich in die Administration Console einloggen.</p>
+
+<img decoding="async" src="/wp-content/uploads/2020/01/keycloak-login-successful.png" alt="keycloak login erfolgreich" />
+
+<h2>9. Konfiguration der Management Console</h2>
+
+<p>Neben der Administration Console bietet Keycloak noch einen Managementbereich, in dem man diverse Aspekte des Keycloak Servers konfigurieren kann. Auch dieser Bereich ist nach einer Installation besonders geschützt und deshalb nur von der gleichen Maschine &#8211; also 127.0.0.1 &#8211; erreichbar. Dies soll aber nicht weiter stören, da man ja gerade einen nginx Server eingerichtet hat und somit auch bequem per HTTPS darauf zugreifen kann. </p>
+
+<p>Die folgende Ergänzungen können in der nginx-Konfiguration hinzugefügt werden um direkt auf die Management Console zuzugreifen:</p>
+
+<pre>server {
+  listen 443 ssl;
+  server_name <strong>&lt;domain&gt;</strong>;
+  index index.php;
+  allow all;
+
+  ssl_certificate /etc/letsencrypt/live/<strong>&lt;domain&gt;</strong>/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/<strong>&lt;domain&gt;</strong>/privkey.pem;
+  ssl_session_timeout 5m;
+
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers "HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES";
+  ssl_prefer_server_ciphers on;
+
+  location / {
+    proxy_pass          http://localhost:8080/;
+    proxy_set_header    Host               $host;
+    proxy_set_header    X-Real-IP          $remote_addr;
+    proxy_set_header    X-Forwarded-For    $proxy_add_x_forwarded_for;
+    proxy_set_header    X-Forwarded-Host   $host;
+    proxy_set_header    X-Forwarded-Server $host;
+    proxy_set_header    X-Forwarded-Port   443;
+    proxy_set_header    X-Forwarded-Proto  https;
+  }
+
+  location /management {
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    add_header Front-End-Https on;
+    proxy_pass http://127.0.0.1:9990/management;
+  }
+
+  location /console {
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    add_header Front-End-Https on;
+    proxy_pass http://127.0.0.1:9990/console;
+  }
+
+  location /error {
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    add_header Front-End-Https on;
+    proxy_pass http://127.0.0.1:9990;
+  }
+
+  location /logout {
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    add_header Front-End-Https on;
+    proxy_pass http://127.0.0.1:9990/logout;
+  }
+}</pre>
+
+<p><b>Update 7.8.2021:</b> Wenn nach dem Login eine weiße Seite erscheint, dann müssen die beiden Location-Blöcke management und console wie folgt angepasst werden:</p>
+
+<pre>
+  location /management {
+    proxy_set_header Host $host:9990;
+    proxy_set_header Origin http://$host:9990;
+    proxy_pass_request_headers on;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    add_header Front-End-Https on;
+    proxy_pass http://127.0.0.1:9990/management;
+  }
+ 
+  location /console {
+    proxy_set_header Host $host:9990;
+    proxy_set_header Origin http://$host:9990;
+    proxy_pass_request_headers on;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    add_header Front-End-Https on;
+    proxy_pass http://127.0.0.1:9990/console;
+   }</pre>
+
+
+<p>Nun sollte man die Konfiguration von nginx überprüfen und dann den Webserver neu starten.</p>
+
+<pre>$ nginx -t
+$ nginx -s reload</pre>
+
+<p>Nun sollte man über die URL https://&lt;domain&gt;/console auf die Wildfly Management Console zugreifen können.</p>
+
+<p>Um diese nutzen zu können, muss noch ein entsprechender User angelegt werden, was bequem per add-user.sh Script erfolgt.</p>
+
+<pre>$ /opt/keycloak/bin/add-user.sh
+
+What type of user do you wish to add? 
+ a) Management User (mgmt-users.properties) 
+ b) Application User (application-users.properties)
+(a): a
+
+Enter the details of the new user to add.
+Using realm 'ManagementRealm' as discovered from the existing property files.
+Username : &lt;your-username&gt;
+Password recommendations are listed below. To modify these restrictions edit the add-user.properties configuration file.
+ - The password should be different from the username
+ - The password should not be one of the following restricted values {root, admin, administrator}
+ - The password should contain at least 8 characters, 1 alphabetic character(s), 1 digit(s), 1 non-alphanumeric symbol(s)
+Password : &lt;your-password&gt;
+Re-enter Password : &lt;your-password&gt;
+What groups do you want this user to belong to? (Please enter a comma separated list, or leave blank for none)[  ]: 
+About to add user '&lt;your-username>' for realm 'ManagementRealm'
+Is this correct yes/no? yes
+Added user '&lt;your-username&gt;' to file '/opt/keycloak/standalone/configuration/mgmt-users.properties'
+Added user '&lt;your-username&gt;' to file '/opt/keycloak/domain/configuration/mgmt-users.properties'
+Added user '&lt;your-username&gt;' with groups  to file '/opt/keycloak/standalone/configuration/mgmt-groups.properties'
+Added user '&lt;your-username&gt;' with groups  to file '/opt/keycloak/domain/configuration/mgmt-groups.properties'
+Is this new user going to be used for one AS process to connect to another AS process? 
+e.g. for a slave host controller connecting to the master or for a Remoting connection for server to server EJB calls.
+yes/no? yes
+</pre>
+
+<p>Nun muss der Keycloak-Server ein letztes Mal neu gestartet werden, damit der neue Benutzer während des Startvorgangs erkannt wird.</p>
+
+<pre>$ systemctl restart keycloak</pre>
+
+<p>Wenn man nun auf die Management-Konsole zugreift, wird man aufgefordert die Zugangsdaten des neuen Benutzers anzugeben. Nach der Eingabe landet man in der WildFly Management Console.</p>
+
+<img decoding="async" src="/wp-content/uploads/2020/01/wildfly-management-console.png" alt="wildfly management console" />
+
+<h2>Weitere hilfreiche Quellen</h2>
+
+<p>Mit diesen Schritten wurde der eigene Keycloak-Server installiert und der Zugriff auf die Administrations- und Managementkonsole per Webbrowser konfiguriert. Hiermit endet dieser Artikel zur Installation und beginnt die Reise mit dem eigenen Keycloak-Server. Für Interessierte habe ich ein paar hilfreiche Quellen (die meisten auf Englisch) zusammengestellt.</p>
+
+<ul style="padding-left: 20px;">
+<li><a href="https://m.heise.de/developer/artikel/Eine-Identitaet-fuer-alles-mit-Keycloak-3834525.html?seite=all" target="_blank" rel="noopener noreferrer">c&#8217;t Artikel: Eine Identität für alles mit Keycloak</a></li>
+<li><a href="https://www.keycloak.org/docs/latest/getting_started/index.html" target="_blank" rel="noopener noreferrer">Keycloak Getting Started Guide</a></li>
+<li><a href="https://www.keycloak.org/docs/latest/server_admin/" target="_blank" rel="noopener noreferrer">Keycloak Server Administration Guide</a></li>
+<li><a href="https://www.keycloak.org/docs-api/latest/rest-api/index.html" target="_blank" rel="noopener noreferrer">Keycloak Admin REST API Guide</a></li>
+<li><a href="https://www.keycloak.org/docs/latest/server_installation/" target="_blank" rel="noopener noreferrer">Keycloak Server Installation Guide</a></li>
+<li><a href="https://www.keycloak.org/downloads.html">Keycloak Downloads Homepage</a></li>
+</ul>

@@ -1,0 +1,81 @@
++++
+title = "Import von Kundendaten in Odoo 9 in 4 Schritten"
+titel_html = "Import von Kundendaten in Odoo 9 in 4 Schritten | datamate"
+ueberschrift = "Import von Kundendaten in Odoo 9 in 4 Schritten"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/04/Aktivierung_Import_Export_CSV.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/import-von-kundendaten-in-odoo-9-in-4-schritten/"
+canonical = "https://www.datamate.org/import-von-kundendaten-in-odoo-9-in-4-schritten/"
+veroeffentlicht = "2016-04-13T09:14:39+00:00"
+geaendert = "2025-02-21T08:10:53+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "7 Minuten"
+bild_breite = 1030
+bild_hoehe = 595
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Import von Kundendaten in Odoo 9 in 4 Schritten", item = ""}]
+wortzahl = 1482
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["uncategorized"]
+schlagwoerter = []
+wp_id = 4478
+slug = "import-von-kundendaten-in-odoo-9-in-4-schritten"
+url = "/import-von-kundendaten-in-odoo-9-in-4-schritten/"
+date = "2016-04-13T11:14:39"
+lastmod = "2025-02-21T09:10:53"
+datum_utc = "2016-04-13T09:14:39+00:00"
+geaendert_utc = "2025-02-21T08:10:53+00:00"
++++
+						<p>Wer Odoo bereits von Tag 1 an in seinem Unternehmen einsetzt, der wird dieses Problem nicht haben. Alle anderen werden bei der Einführung von Odoo nicht umhin kommen, bestehende Kundenstammdaten in Odoo zu importieren. Dankenswerterweise bietet Odoo just für diesen Zweck einen Import Wizard für CSV-Dateien an. Dieser erledigt seine Aufgabe gut &#8211; wenn man seine Tücken kennt und zu meistern weiß. Tut man das nicht, dann bereitet er doch einige Kopfschmerzen. Mit dieser 4-Schritt Anleitung erläutern wir, wie man auch ohne Aspirin seine Bestandsdaten in Odoo bekommt.</p>
+<span id="more-4478"></span>
+
+<p>Die manuelle Datenübertragung ist für alle Datenbestände mit mehr als ein paar Duzend Datensätzen keine Option &#8211; der Zeitaufwand und die Gefahr von Übertragungsfehlern ist zu hoch. Odoo bietet den Datenimport mit drei Dateiformaten an: CSV, XML und YAML. CSV ist ein einfaches, kompaktes Dateiformat, das intuitiv verständlich ist. Für XML spricht, dass es das flexiblere Format ist. Es ermöglicht zum Beispiel die Löschung von Datensätzen in Odoo Datenbeständen. YAML wird für den Odoo Datenimport nur selten verwendet und gute Dokumentationen sind schwer zu finden.</p>
+
+<img decoding="async" src="/wp-content/uploads/2018/04/Aktivierung_Import_Export_CSV.png" alt="Aktivierung des Import Wizards in den Odoo Settings" width="480" height="277" class="alignnone size-medium wp-image-591" style="float:left; padding: 0px 20px 0px 0px;"/ /><p>In den meisten Fällen ist CSV trotz seiner eingeschränkten Möglichkeiten das Format der Wahl. Daher erklären wir den Import anhand dieses Formats. Ein weiterer praktischer Grund für die Popularität des CSV-Imports ist der bequeme Import-Assistent, den Odoo standardmässig für CSV-Dateien mitbringt. Für diesen Artikel gehen wir davon aus, dass dieser im Settings-Menü unter General Settings > Import/Export aktiviert ist.</p>
+
+<h2>Schritt 1: Erstellung des Importplans</h2>
+<p>Der Schlüssel zu einem erfolgreichen Datenimport in Odoo ist &#8211; wie so vieles &#8211; eine gute Vorbereitung. Man muss wissen, was man tut und was man erreichen will. Für ersteres sorgen wir mit dieser Anleitung. Das konkrete Ziel müssen Sie festlegen. Grund: Der Wunsch, Daten in Odoo zu importieren, ist nicht ausreichend konkret. Die Zielbestimmung muss sein, den Umfang der zu importierenden Daten festzulegen und ein Matching zwischen den Elemente in der bestehenden Kundendaten und den Feldern in Odoos Kundendatenbank <i>res.partner</i> herzustellen. </p>
+
+<p>Die in Odoo verfügbaren Felder und deren Bezeichnung finden Sie sehr einfach mit Hilfe des Entwicklermodus heraus. Mit aktiviertem Entwicklermodus muss man nur den Mauszeiger auf ein Feld bewegen und schon wird der Feldnamen angezeigt. Ihre Aufgabe ist es nun, sich zu überlegen, wie Sie Ihre bestehenden Kundendatenstruktur in die Datenstruktur von Odoo mappen wollen.</p>
+
+<p>Die Kundendatenbank <i>res.partner</i> einer jungfräulichen Odoo Standardinstallation verfügt bereits über alle Felder, die man von einem Kontaktverwaltungstool erwartet &#8211; und viele mehr. Korrespondenzsprache, Newsletter Opt-Out, Umsatzsteuer-ID, Zahlungsbedingungen, Kreditlimit und weitere sind standardmässig angelegt und bestehende Daten können direkt dorthin importiert werden. Geht der Umfang Ihrer Kundenstammdaten nicht über die in Odoo verfügbaren Felder hinaus, dann ist das Matching schnell gemacht.</p>
+
+<p>Haben Sie aber eine Situation, dass Ihre Datenstruktur mit der von Odoo kompatibel ist, dann müssen Sie sich entscheiden, ob Sie die entsprechenden Daten einfach nicht importieren &#8211; die schnelle, aber unsaubere Variante &#8211; oder ob Sie <i>res.partner</i> um die zusätzlichen Felder ergänzen &#8211; die aufwändige, saubere Variante. Hier nur ein Beispiel zur Verdeutlichung: Bei einem unserer Kunden hatten wir die Situation, dass jedem Kunden zwei Referenznummern zugewiesen waren. Da der Verzicht auf eine von beiden Nummern keine Option war, wurde in <i>res.partner</i> ein weiteres Felder angelegt. Die Erweiterung von Odoo um Custom Fields beschreiben wir in einem anderen Artikel.</p>
+
+<p>Zum Abschluss der Beschreibung von Schritt 1 noch ein paar klarstellende Worte zu <i>res.partner</i>. Streng genommen ist <i>res.partner</i> nicht die Kundendatenbank von Odoo. <a href="http://stackoverflow.com/questions/22927605/what-is-res-partner"><i>res.partner</i></a> enthält die Daten sämtlicher Personen und Organisationen, mit denen die Firma in Kontakt steht. Dies sind neben Kunden auch Lieferanten und Mitarbeiter. Letzteres ist für den Import aber nicht von entscheidender Bedeutung und darum bietet es sich an, <i>res.partner</i> mit der Kundendatenbank gleichzusetzen. Zumindest für diesen Artikel. </p>
+
+
+<h2>Schritt 2: Bereinigung und Serialisierung der Bestandsdaten</h2>
+<p>Schritt 2 ist in den meisten Fällen der aufwändigste Schritt beim Datenimports. Drum herum kommt man aber nicht, denn nur wenn der Import-Assistent die Daten fehlerfrei interpretieren kann, macht Odoo den Import auch mit. </p>
+
+<p>Für die Bereinigung der Bestandsdaten ist ein halb-automatisches Vorgehen mit Microsoft Excel oder einer anderem Tabellenkalkulationsprogramm in den meisten Fällen der effizienteste Weg. Mit diesen lassen sich die zu bereinigenden Daten leicht herausfiltern und manuell anpassen. Durch den intelligenten Einsatz von logischen Funktionen (z.B. if/wenn) läßt sich auch mit wenig Aufwand auch eine großen Datenmenge in Form &#8220;massieren&#8221;. Erst bei sehr großen Datensätzen lohnt der Einsatz von professioneller Software.</p>
+
+<p>Erfahrungsgemäß benötigen Telefonnummern und Daten (z.B. Geburtsdatum) aufgrund der Validierung beim Import besondere Aufmerksamkeit. Schlägt die Validierung fehl, verweigert Odoo den Import. Bei Daten muss beachtet werden, dass Excel und andere Tabellenkalkulationsprogramme diese als Ganzzahl (englisch: integer) und nicht in einem Datenformat speichern. Im Einsatz beim Kunden wurden wir mit dem Problem konfrontiert, dass Odoo Telefonnummern nicht in das benötigte internationale Format übersetzen konnten. Die inkonsequente Nutzung von Schräg-/Gedankenstichen und Leerzeichen in den Telefonnummern ist dabei unbedeutend. Odoo ignorierte diese Zeichen bei Telefonnummern konsequent. Klar sollte auch sein, dass für jeden Datensatz alle Pflichtfelder befüllt sind.</p>
+
+<p>Die Umlaute der deutschen Sprache ä, ö und ü in Groß- und Kleinschreibung sowie das ß benötigen keine Aufmerksamkeit. Die UTF-8 Zeichenkodierung der Importdatei unterstützt diese. Anders sieht es womöglich mit Sonderzeichen anderer europäischer Sprache aus. Diese müssen eventuell umgewandelt werden. Die von UTF-8 unterstützten Zeichen finden Sie in der <a href="http://www.utf8-chartable.de/">UTF-Chartabelle</a>.</p>
+
+<p>Sind die Bestandsdaten nicht &#8220;flach&#8221; sondern hierarchisch, dann muss die Bereinigung durch die Serialisierung der Daten ergänzt werden. Bei N:1-Beziehungen (z.B. Unternehmen und deren Mitarbeiter) ist die ID des übergeordneten Elements im Feld <i>parent_id</i> der untergeordneten Elemente einzutragen. Bei N:N-Beziehungen (z.B. Tags) sind die Werte einfach nur per Komma separiert in das Feld <i>category_id</i> einzugeben. Zu bedenken ist aber, dass diese Tags zuvor selbst importiert werden müssen, falls diese nicht schon in der Odoo-Datenbank für Tags <i>res_partner_category</i> vorhanden sind.</p>
+
+<p>Sind die Daten vorbereitet, dann muss die Tabelle als CSV-Datei abgespeichert und danach in eine UTF-8 kodierte Datei umgewandelt werden. Dies macht man am einfachsten mit einem Texteditor, der die Speicherung mit der UTF-8 Codierung unterstützt (z.B. der Windows-eigene Editor).</p>
+
+<h2>Schritt 3: Import mit dem Import Wizard</h2>
+<p>Ist die Importtabelle erstmal &#8220;zurechtmassiert&#8221;, dann ist der Import in Odoo eine einfache Sache. Dem Wizard sei dank. Bevor man aber weiterfährt, sollte man in den Einstellungen die Sprache auf Englisch umstellen. Das reduziert mögliches Konfliktpotential.</p>
+
+<p>Im Wizard wählt man die Importdatei aus und aktiviert die <i>File Format Options</i>. Mit der Wahl von UTF-8 als Codierung und einem Semikolon als Separator sollte Odoo in der Lage sein, im unteren Teil des Bildschirms eine Vorschau zu erstellen. Sollte dies wieder Erwarten nicht funktionieren, dann kann die Wahl des Kommas als Separator (insbesondere bei Computer mit englischer Spracheinstellung) oder ein Anführungszeichen im Feld <i>Quoting</i> die Lösung bringen. Falls das Programm die Vorschau nicht automatisch aktualisiert, dann hilft ein Klick auf den <i>Refresh-Button</i> neben dem Dateinamen der Importtabelle.</p>
+
+<img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/Odoo_Import_Wizard-1024x722.png" alt="Import von Kundendaten über den Import Wizard" width="1024" height="722" class="alignnone size-large wp-image-592" style="float:left; padding: 10px 0px 10px 0px;" /><br/>
+
+<p>Der eigentliche Sinn der Vorschau ist die komfortable Validierung des durch Odoo vorgeschlagenen Mappings der Spaltenüberschriften der Importtabelle mit den in Odoo verfügbaren Feldern. Wenn man sich bei der Verwendung der Spaltenüberschriften eng an die Namen der Zielfelder gehalten hat, dann bedarf das Mapping keiner weiteren Anpassung. Es lohnt sich aber auf jeden Fall, dieses nochmal zu prüfen.</p>
+
+<p>Den Import startet man mit einem Klick auf den Button <i>Import</i>. Der benachbarte Knopf <i>Validate</i> startet eine Überprüfung der Importtabelle, ohne Daten in <i>res.partner</i> zu schreiben. Werden bei der Validierung keine Probleme gefunden, wird dies mit einer knappen Erfolgsmeldung quittiert.</p>
+
+<h2>Schritt 4: Validierung des Imports</h2>
+<p>Auch wenn es verlockend ist, die Arbeit nach einem erfolgreichen Import als erledigt anzusehen, so empfehlen wir trotzdem eine stichprobenartige Überprüfung der neuen Datensätze. Der Teufel steckt im Detail und auch wenn Odoo beim Import keine Fehler gemeldet hat, so ist Zielerreichung nicht mit automatischer Fehlerfreiheit gleichzusetzen.</p>
+
+<p>Neben einer Überprüfung der Korrektheit der importierten Daten, so empfehlen wir zusätzlich noch eine händische Funktionsprüfung: Funktioniert z.B. die Checkbox <i>Is a company?</i> noch? Wird das Softphone per Click2Dial richtig angesprochen? Erst wenn all diese Prüfungen ohne Probleme abgeschlossen sind, kann man von einem erfolgreichen Import sprechen.</p>
+
+<h2>Importhilfe vom Profi</h2>
+<p>Stossen Sie beim Import Ihrer Bestandsdaten in Odoo trotz dieser Anleitung auf Widerstände oder haben Sie Fragen, dann rufen Sie uns an! Wir unterstützen Sie gerne beim Import von Kundendaten und anderen Daten in Odoo. Wir machen Ihnen auch gerne ein Angebot für die komplette Abwicklung einer Datenmigration. Egal, was es auch ist, für Fragen zu Odoo erreichen Sie uns unter +49 (0)6131 3270777.</p>

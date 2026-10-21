@@ -1,0 +1,119 @@
++++
+title = "Duplicity Backup auf externer Festplatte an der Fritzbox einrichten"
+titel_html = "Duplicity Backup auf externer Festplatte an der Fritzbox einrichten | datamate"
+ueberschrift = "Duplicity Backup auf externer Festplatte an der Fritzbox einrichten"
+beschreibung = "Aus einer Fritzbox und einer externen Festplatte kann man ganz einfach einen FTP-Speicher machen. Dieser kann beispielsweise Duply-Backup Daten aufnehmen."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/04/duply2.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/duplicity-backup-auf-externer-festplatte-an-der-fritzbox-einrichten/"
+canonical = "https://www.datamate.org/duplicity-backup-auf-externer-festplatte-an-der-fritzbox-einrichten/"
+veroeffentlicht = "2017-05-13T21:06:02+00:00"
+geaendert = "2025-02-21T08:10:43+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "5 Minuten"
+bild_breite = 1231
+bild_hoehe = 804
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Duplicity Backup auf externer Festplatte an der Fritzbox einrichten", item = ""}]
+wortzahl = 816
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["uncategorized"]
+schlagwoerter = []
+wp_id = 4564
+slug = "duplicity-backup-auf-externer-festplatte-an-der-fritzbox-einrichten"
+url = "/duplicity-backup-auf-externer-festplatte-an-der-fritzbox-einrichten/"
+date = "2017-05-13T23:06:02"
+lastmod = "2025-02-21T09:10:43"
+datum_utc = "2017-05-13T21:06:02+00:00"
+geaendert_utc = "2025-02-21T08:10:43+00:00"
+lightbox = true
++++
+						<p>Backups sind total unsexy. Trotzdem möchte man auf Sie nicht verzichten, wenn man Sie wirklich benötigt. Grundsätzlich empfehlen wir allen unseren Kunden zwei Backups von Ihren Produktivdaten auf dem ionas-Server zu machen. Das eine Backup sollte auf ein Speichermedium im gleichen Netzwerk geschrieben werden und das zweite Backup sollte an einen entfernten Ort geschrieben werden. So kombiniert man schnelle Zugriffe und räumliche Trennung um gegen kleine und große Katastrophen geschützt zu sein.</p>
+
+<p>Typischerweise setzen unsere Kunden diese Kombination mit einem Backup per FTP auf ein lokales NAS und ein Glacier-Backup in ein Amazon-Rechenzentrum. Doch gerade kleine Kunden haben oder benötigen keinen eigenständigen Netzwerkspeicher, wenn Sie doch Ihre Fritzbox mit einer externen Festplatte zu einem adequaten Backupziel verwandeln können.</p>
+
+<p>Der folgende Artikel erklärt die nötigen Schritte um mit Hilfe von einer externen Festplatte und einer Fritzbox einen FTP-Speicher für das Duplicity Backup im Netzwerk anzubieten. Getestet wurde das Vorgehen mit einer Fritzbox 3490 und FritzOS 6.80. Bei anderen Fritzbox oder FritzOS Versionen mag das Vorgehen minimal abweichen, jedoch sollte das Grundprinzip immer gleich sein.</p>
+
+<span id="more-4564"></span>
+
+<h2>0. Eine gute Vorbereitungen ist die halbe Miete</h2>
+
+<a href="/wp-content/uploads/2018/04/duply2.png" data-slb-active="1" data-slb-asset="1247690119" data-slb-internal="0" data-slb-group="4564"><img decoding="async" src="/wp-content/uploads/2018/04/duply2.png" alt="Aktualisieren Sie Ihre Fritzbox" width="300" height="196" class="alignleft size-medium wp-image-1870" style="padding: 35px 30px 5px 0px;" /></a>
+
+<p>Grundsätzlich empfiehlt es sich bei Fritzboxen immer diese auf den neuesten Stand zu bringen. Aktualisieren Sie FritzOS um sicherzugehen, dass auch die neuesten Sicherheitspatches installiert sind. Als nächstes müssen Sie noch die erweiterte Ansicht in der Weboberfläche aktivieren. </p>
+
+<p>Als letztes formatieren Sie die externe Festplatte mit NTFS, FAT32 oder ext2 an einem beliebigen Rechner. Es spielt übrigens überhaupt keine Rolle ob es sich um eine 2.5 oder 3.5 USB-Festplatte handelt.</p>
+
+
+<h2>1. USB-Fernanschluss für USB-Speicher in FRITZ!Box deaktivieren</h2>
+
+<a href="/wp-content/uploads/2018/04/duply3.png" data-slb-active="1" data-slb-asset="4263585300" data-slb-internal="0" data-slb-group="4564"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/duply3.png" alt="FTP-Speicher an der Fritzbox für Duplicity Backup" width="300" height="196" class="alignleft size-medium wp-image-1878" style="padding: 35px 30px 5px 0px;" /></a>
+
+<p>Der gleichzeitige Zugriff von mehreren Geräten auf einen USB-Speicher an der FRITZ!Box ist nur dann möglich, wenn dieser nicht für die Verwendung mit dem FRITZ!Box USB-Fernanschluss eingerichtet ist. Aus diesem Grund deaktivieren wir diese Funktion.</p>
+
+<p>Klicken Sie in der Benutzeroberfläche der FRITZ!Box auf <strong>&#8220;Heimnetz&#8221; > &#8220;USB-Geräte&#8221; > &#8220;USB-Fernanschluss&#8221;</strong>. Deaktivieren Sie die Option <strong>USB-Speicher</strong> und klicken Sie anschließend auf <strong>Übernehmen</strong>.</p>
+
+<h2>2. Festplatte verbinden</h2>
+
+<p>Schließen Sie die Festplatte an und diese taucht dann unter <strong>&#8220;Heimnetz&#8221; > &#8220;USB-Geräte&#8221;</strong> auf.</p>
+
+<h2>3. FritzBox Benutzer anlegen</h2>
+
+<a href="/wp-content/uploads/2018/04/duply6.png" data-slb-active="1" data-slb-asset="2915791078" data-slb-internal="0" data-slb-group="4564"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/duply6.png" alt="Fritzbox Benutzer anlegen" width="300" height="196" class="alignleft size-medium wp-image-1881" style="padding: 35px 30px 5px 0px;" /></a>
+
+<p>Als nächstes wird ein Benutzerkonto für den Zugriff auf die Festplatte benötigt. Klicken Sie in der Benutzeroberfläche der FRITZ!Box auf <strong>&#8220;System&#8221; > &#8220;FRITZ!Box-Benutzer&#8221; > &#8220;Benutzer hinzufügen&#8221;</strong> und tragen Sie in den Eingabefeldern einen Namen und ein beliebiges Kennwort für den Benutzer ein. Wählen Sie ruhig einen langen Benutzernamen und ein kompliziertes Passwort. Sie werden diese Kombination nur einmal in Duplicity eintragen und danach hoffentlich nie wieder benötigen.</p>
+
+<p>Entziehen sie als Nächstes diesem Benutzer alle Berechtigungen. Der Benutzer benötigt lediglich einen Haken bei der Option <strong>&#8220;Zugang zu NAS-Inhalten&#8221;</strong> und fügen Sie dann <strong>&#8220;Verzeichnis hinzufügen&#8221;</strong>. Wählen Sie <strong>&#8220;Alle an der FRITZ!Box verfügbaren Speicher&#8221;</strong> und speichern Sie.</p>
+
+<h2>4. FTP-Speicher aktivieren</h2>
+
+<a href="/wp-content/uploads/2018/04/duply7.png" data-slb-active="1" data-slb-asset="1895496321" data-slb-internal="0" data-slb-group="4564"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/duply7.png" alt="FTP-Speicher auf der Fritzbox aktivieren" width="300" height="212" class="alignleft size-medium wp-image-1882" style="padding: 35px 30px 5px 0px;" /></a>
+
+<p>Nachdem nun die Festplatte erkannt und ein Benutzer mit Zugriffsberechtigungen eingerichtet ist, kann der FTP-Speicher aktiviert werden. Dies geht im Bereich <strong>&#8220;Heimnetz > Speicher (NAS)&#8221;</strong>. Setzen Sie zuerst den Haken bei <strong>&#8220;Speicher (NAS) aktiv&#8221;</strong>. Dann den Haken beim USB-Speicher und zu guter Letzt den Haken bei <strong>&#8220;Zugriff über FTP aktiv&#8221;</strong>.</p>
+
+<p>Glückwunsch! Der FTP-Speicher ist eingerichtet.</p>
+
+<h2>5. Test der FTP-Verbindung</h2>
+
+<a href="/wp-content/uploads/2018/04/duply10.png" data-slb-active="1" data-slb-asset="705505175" data-slb-internal="0" data-slb-group="4564"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/duply10.png" alt="Testen Sie die FTP-Verbindung mit FileZilla" width="300" height="115" class="alignleft size-medium wp-image-1883" style="padding: 35px 30px 5px 0px;" /></a>
+
+<p>Testen Sie die FTP-Verbindung z.B. mit der Open Source Software <a href="https://filezilla-project.org/" target="_blank" rel="noopener">FileZilla</a>. Laden Sie die Software herunter und installieren Sie diese. In FileZilla geben Sie die IP-Adresse der Fritzbox (typischerweise ist dies 192.168.178.1), den Benutzernamen und das Passwor an.</p>
+
+<p>Nach der Verbindung mit FileZilla sollten Sie die Ordnerstruktur der Fritzbox und die USB-Festplatte als eigenes Verzeichnis sehen. Eventuell sehen Sie nicht den ganzen Dateibaum der Fritzbox, wenn Sie dem Benutzer nicht den vollen Zugriff auf den gesamten verfügbaren Speicher sondern nur auf ein Unterverzeichnis gegeben haben. Testen Sie den Upload einer beliebigen Datei um sicherzugehen, dass später das Duplicity Backup in diesen Ordner geschrieben werden kann.</p>
+
+<h2>6. Anlage des Duplicity Backups im ionas-Server</h2>
+
+<p>Super! Der FTP-Speicher steht nun zur Verfügung und kann für ein lokales Backup verwendet werden. Loggen Sie sich im ionas-Server Cockpit ein und wechseln Sie zu <strong>&#8220;System > Backup&#8221;</strong>. Geben Sie die IP-Adresse und die Zugangsdaten des FTP-Users an und speichern Sie. Ab sofort werden nun Ihre Daten auf die externe Festplatte an der Fritzbox gesichert. Mit Sicherheit hat diese Lösung nicht die Qualität eines Business-NAS, jedoch ist es für Selbstständige, kleine Teams oder Arbeitsgruppen eine günstige und einfache Alternative.</p>
+
+<h2>Exkurs: Manuelle Anlage eines Duplicity Backups</h2>
+
+<p>Wenn Sie keinen ionas-Server besitzen und manuell ein Duplicity-Backup mit der Hilfe von <i>duply</i> einrichten wollen, benötigen Sie die folgenden Befehle. Die Zeilen mit einer vorgestellen # sind Kommentare und müssen nicht eingetippt werden.</p>
+
+<pre>
+# legen Sie ein neues Backup unter /root/.duply/ftp-backup an:
+duply ftp-backup create
+
+# löschen Sie den gesamten Inhalt und fügen Sie die folgenden Zeilen ein:
+nano /root/.duply/ftp-backup/conf
+
+  GPG_PW='auRxBXktpaRi9Ark9Qpn'
+  TARGET='ftp://192.168.178.1/WD-Elements1078-01'
+  TARGET_USER='ftpuser'
+  TARGET_PASS='YourPassword'
+  SOURCE='/media/disk'
+  MAX_AGE=6M
+  MAX_FULL_BACKUPS=6
+  MAX_FULLBKP_AGE=1M
+  DUPL_PARAMS=" --archive-dir=/media/disk/duply-cache --full-if-older-than $MAX_FULLBKP_AGE "
+
+# testen Sie die FTP-Verbindung
+duply ftp-backup status
+
+# Legen Sie als letztes noch einen Cronjob an um das Backup regelmäßig auszuführen. 
+0 1 * * * /usr/bin/duply ftp-backup backup
+</pre>
+
+<p>Wie Sie sehen, ist es nicht schwierig eine Fritzbox und eine externe Festplatte in einen lokalen FTP-Server zu verwandeln auf dem die verschlüsselten Daten des Duplicity Backups gespeichert werden können.</p>

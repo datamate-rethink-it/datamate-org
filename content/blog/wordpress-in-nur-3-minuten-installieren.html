@@ -1,0 +1,114 @@
++++
+title = "WordPress in nur 3 Minuten installieren"
+titel_html = "Wordpress in nur 3 Minuten installieren | datamate"
+ueberschrift = "WordPress in nur 3 Minuten installieren"
+beschreibung = "Möchten Sie eine Wordpress Installation zum Testen und Rumprobieren? Das ist in 3 Minuten erledigt. Wir zeigen Ihnen welche Befehle notwendig."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_typ = "article"
+og_url = "https://www.datamate.org/wordpress-in-nur-3-minuten-installieren/"
+canonical = "https://www.datamate.org/wordpress-in-nur-3-minuten-installieren/"
+veroeffentlicht = "2016-05-18T09:39:32+00:00"
+geaendert = "2025-02-21T08:10:52+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "4 Minuten"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "WordPress in nur 3 Minuten installieren", item = ""}]
+wortzahl = 578
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["anleitungen", "software", "wordpress"]
+schlagwoerter = []
+wp_id = 4410
+slug = "wordpress-in-nur-3-minuten-installieren"
+url = "/wordpress-in-nur-3-minuten-installieren/"
+date = "2016-05-18T11:39:32"
+lastmod = "2025-02-21T09:10:52"
+datum_utc = "2016-05-18T09:39:32+00:00"
+geaendert_utc = "2025-02-21T08:10:52+00:00"
++++
+						<p>WordPress ist das beliebteste Blogsystem weltweit. Wir zeigen Ihnen in dem folgenden Beitrag wie Sie in nur 3 Minuten WordPress installieren. Natürlich ist dies nur eine Basisinstallation zum Testen, aber in kommenden Artikeln werden wir Ihnen zeigen, wie Sie ein &#8220;https&#8221;-Zertifikat im Apache Webserver hinzufügen, wie Sie die zugrunde liegende Linux-Installation weiter absichern und wie Sie WordPress über einen DynDNS-Dienst im Internet verfügbar machen können.</p>
+
+<p>Sie glauben nicht, dass dies in 3 Minuten geht? Dann schauen Sie sich das folgendes Video an&#8230;</p>
+
+<span id="more-4410"></span>
+<iframe width="500" height="375" src="https://www.youtube.com/embed/FLIxCaylwYQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+<h2>Voraussetzung für die Installation</h2>
+
+<p>Unser Ausgangspunkt ist eine &#8220;nackte&#8221; Ubuntu 14.04 Server Installation in einer virtuellen Maschine von Virtualbox. Dieser virtuellen Maschine haben wir 8 GB Festplattenspeicher und 512 MB RAM zugewiesen. Selbst diese minimalistische Hardware reicht für eine WordPress Testinstallation vollkommen aus. Einzig OpenSSH haben wir bereits während der Installation von Ubuntu installiert, damit wir per SSH auf den Server zugreifen können. </p>
+
+<p>Die nun folgenden Installationsschritte sind übrigens auf jedes andere debian-basierte Betriebssystem übertragbar. Bitte beachten Sie, dass die folgende Installation nur eine Basisinstallation ist. Es wurden keine Schritte unternommen um die Installation abzusichern. Dies erfolgt erst in einem späteren Tutorial.</p>
+
+
+<h2>WordPress und MySQL Datenbank installieren</h2>
+
+<pre>
+sudo apt-get install -y wordpress mysql-server
+</pre>
+
+<p>Diese Zeile Code reicht aus um alles notwendige auf Ihrem Server zu installieren. Ubuntu ist so intelligent um zu erkennen, dass für WordPress auch ein Webserver benötigt wird und installiert diesen selbstständig. Im Falle von Ubuntu ist es ein Apache 2.0 Webserver, welcher zusätzlich installiert wird. Zum Schluss öffnet sich noch ein Fenster in dem Sie ein Root-Passwort für Ihre MySQL-Datenbank vergeben sollen. Damit ist die Installation abgeschlossen und es fehlt nur noch die Anlage der MySQL-Datenbank und die Konfiguration von WordPress.</p>
+
+<h2>Datenbank anlegen</h2>
+
+<pre>
+mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 39
+Server version: 5.5.37-0ubuntu0.14.04.1 (Ubuntu)
+Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+mysql> create database wordpress;
+Query OK, 1 row affected (0.00 sec)
+mysql> create user wp;
+Query OK, 0 rows affected (0.00 sec)
+mysql> set password for wp = password("ionas");
+Query OK, 0 rows affected (0.00 sec)
+mysql> grant all PRIVILEGES on wordpress.* to wp@localhost identified by 'ionas';
+Query OK, 0 rows affected (0.01 sec)
+mysql> exit;
+Bye
+</pre>
+
+<p>Mit diesen Befehlen erzeugen Sie eine MySQL-Datenbank &#8220;wordpress&#8221;, einen Benutzer &#8220;wp&#8221; mit dem Passwort &#8220;ionas&#8221; und geben diesem Benutzer die benötigten Rechte um auf die Datenbank zuzugreifen. Bitte verwenden Sie niemals den MySQL-Root User für Ihre MySQL-Datenbank. Diese neu angelegte Datenbank muss nun noch in WordPress bekannt gemacht werden.</p>
+
+<h2>WordPress konfigurieren</h2>
+
+<pre>
+sudo ln -s /usr/share/wordpress /var/www/html/wordpress
+sudo cp /usr/share/wordpress/wp-config-sample.php /etc/wordpress/config-default.php
+sudo nano /etc/wordpress/config-default.php
+sudo chown -R www-data: /var/www/html/wordpress/
+</pre>
+
+<p>Mit dem ersten Befehl legen Sie einen symbolischen Link von WordPress unter /var/www/html/wordpress an. Damit ist WordPress ab sofort über einen Browser über das Unterverzeichnis /wordpress erreichbar. Wenn Sie nun jedoch &#8220;https://IP-DES-SERVERS/wordpress&#8221; aufrufen, werden Sie jedoch folgende Fehlermeldung angezeigt bekommen:</p>
+
+<i>Neither /etc/wordpress/config-default.php nor /etc/wordpress/config-localhost.php could be found.</i>
+
+<p>Dies bedeutet, dass noch keine zentrale Konfigurationsdatei für WordPress existiert. Diese müssen wir aber nicht selbst neu erstellen sondern nutzen den zweiten Befehl um eine Beispielkonfigurationsdatei an die richtige Stelle zu kopieren. Mit dem dritten Befehl öffnen wir die Konfigurationsdatei und Sie müssen nur noch die entsprechenden Werte eintragen.</p>
+
+<p>So sieht am Ende unsere Konfiguration aus. Abspeichern nicht vergessen und schon ist WordPress unter /wordpress erreichbar.</p>
+
+<pre>
+// ** MySQL settings - You can get this info from your web host ** //
+/** The name of the database for WordPress */
+define('DB_NAME', 'wordpress');
+/** MySQL database username */
+define('DB_USER', 'wp');
+/** MySQL database password */
+define('DB_PASSWORD', 'ionas');
+/** MySQL hostname */
+define('DB_HOST', 'localhost');
+</pre>
+
+<p>Der letzte Befehle setzt noch entsprechende Zugriffsberechtigungen des Apache Webservers, so dass Sie ohne Probleme Plugins installieren können. Wenn Sie diesen Befehl nicht ausführen, würden Sie bei der Installation von Plugins aufgefordert werden, FTP Zugangsdaten einzutragen. </p>
+
+<h2>Ausblick</h2>
+
+<p>In nur drei Minuten ist Ihr WordPress und somit ein vollwertiges Blogsystem einsatzbereit. So können Sie schnell und unkompliziert neue Themes und Designs ausprobieren oder beliebige WordPress Experimente starten.
+In einem kommenden Artikel werden wir Ihnen zeigen, wie Sie diese Konfiguration zusätzlich absichern, wie Sie mehrere WordPress Installation parallel betreiben und sogar wie Sie über das Internet das Blogsystem über eine dynamische Adresse erreichbar machen. </p>

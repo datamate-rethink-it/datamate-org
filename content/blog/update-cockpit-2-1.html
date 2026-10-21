@@ -1,0 +1,105 @@
++++
+title = "Das datamate Cockpit 2.1 ist da!"
+titel_html = "Das datamate Cockpit 2.1 ist da! | datamate"
+ueberschrift = "Das datamate Cockpit 2.1 ist da!"
+beschreibung = "Vielfältige neue Sicherheitsfunktionen zeichnen das neue Update 2.1 des datamate Cockpits aus. Sämtliche Details finden Sie in diesem Artikel."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2020/03/200330-cockpit-1-2-update.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/update-cockpit-2-1/"
+canonical = "https://www.datamate.org/update-cockpit-2-1/"
+og_bild_breite = "2000"
+og_bild_hoehe = "1317"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2020-03-30T17:53:21+00:00"
+geaendert = "2025-02-21T08:09:59+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "4 Minuten"
+beitragsbild = "/wp-content/uploads/2020/03/200330-cockpit-1-2-update.jpg"
+bild_breite = 2000
+bild_hoehe = 1317
+bild_beschriftung = "datamate Cockpit Update 2.1"
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Das datamate Cockpit 2.1 ist da!", item = ""}]
+wortzahl = 770
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["unsere-produkte"]
+schlagwoerter = ["2fa", "Cockpit", "datamate", "Fellow", "Homie", "Sicherheit", "Update"]
+wp_id = 6762
+slug = "update-cockpit-2-1"
+url = "/update-cockpit-2-1/"
+date = "2020-03-30T19:53:21"
+lastmod = "2025-02-21T09:09:59"
+datum_utc = "2020-03-30T17:53:21+00:00"
+geaendert_utc = "2025-02-21T08:09:59+00:00"
+lightbox = true
++++
+						<p>Die neue Version 2.1 des datamate Cockpits steht ganz im Zeichen der Sicherheit. Die Zwei-Faktor-Authentifizierung für Cockpit und Seafile minimiert das Risiko unbefugten Zugriffs auf diese beiden kritischen Anwendungen. Außerdem regelt das neue Cockpit den Zugriff auf die Benutzerdatenbank restriktiver und verfügt über optimierte SSL-Einstellungen für den Webserver. Details zu den Neuerungen des Releases 2.1 erfährst Du in diesem Artikel. Am Ende des Textes fasst ein Changelog die Änderungen zusammen.
+
+<span id="more-6762"></span>
+
+<h2>Zwei-Faktor-Authentifizierung für Seafile und Cockpit</h2>
+<p>Was bietet besseren Schutz vor unbefugtem Zutritt als eine abgeschlossene Tür? Zwei abgeschlossene Türen! Diese Idee liegt der 2-Faktor-Authentifizierung (2FA) zugrunde. 2FA lässt sich nun für Seafile, für das Cockpit oder für beides aktivieren. Ein 6-stelliger Zahlencode, der alle 30 Sekunden neu von einer App auf Handy oder Tablett erzeugt wird, ist dann zusätzlich zum Passwort nötig, um Zugriff auf Seafile und Cockpit zu bekommen.</p>
+<p>2FA für das Cockpit kann durch den Administrator verpflichtend oder den Nutzer optional aktiviert werden. Wird 2FA für das Cockpit scharf geschaltet, dann muss der Nutzer beim nächsten Login seinen Account mit einer 2FA-App verbinden. Die Einrichtung von 2FA für Seafile erfolgt in den persönlichen Einstellungen des Benutzers im Seafile Webinterface, nachdem der zweite Faktor durch den Administrator in den Diensteeinsellungen aktiviert wurde.</p>
+
+<a href="/wp-content/uploads/2020/03/2fa-cockpit.png" data-slb-active="1" data-slb-asset="877872032" data-slb-internal="0" data-slb-group="6762"><img decoding="async" width="1259" height="809" src="/wp-content/uploads/2020/03/2fa-cockpit.png" alt="Zwei-Faktor Authentifizierung im datamate Cockpit" class="alignnone size-full wp-image-6765" srcset="/wp-content/uploads/2020/03/2fa-cockpit.png 1259w, /wp-content/uploads/2020/03/2fa-cockpit-300x193.png 300w, /wp-content/uploads/2020/03/2fa-cockpit-1024x658.png 1024w, /wp-content/uploads/2020/03/2fa-cockpit-768x493.png 768w" sizes="(max-width: 1259px) 100vw, 1259px" /></a>
+
+<p>Bei der Auswahl der richtigen 2FA-App hat der Anwender die Qual der Wahl. Einen guten Überblick über die bekanntesten Apps findest Du im Artikel <a href="/die-7-besten-2fa-apps-fuer-android-und-ios/">Die sieben besten 2FA-Apps für Android und iOS</a>.</p>
+
+<h2>Besserer Schutz für den zentralen LDAP-Dienst</h2>
+
+<p>Die zentrale LDAP-Benutzerdatenbank ist eine der zentralen Komponenten auf jedem datamate Server und damit ein absolut sicherheitskritischer Dienst. Das Cockpit 2.1 schützt ihn durch zwei Maßnahmen besser vor unbefugter Manipulation: Zum einen ist der LDAP-Verzeichnisdienst grundsätzlich nur noch vom Server selbst &#8211; Stichwort localhost &#8211; und nicht mehr von anderen Rechnern aus dem lokalen Netzwerk bzw. virtuellen Maschinen möglich. Soll der Zugriff von außen erlaubt werden, muss dieser explizit im Cockpit über die Einstellungen des Dienstes OpenLDAP freigeschaltet werden.</p>
+
+<p>Die zweite Sicherheitsmaßnahme ist die automatische Deaktivierung der LDAP-Administrationsoberfläche. Bisher konnte der Webzugriff auf LDAP im Cockpit manuell aktiviert bzw. deaktiviert werden. Dies bleibt auch in der Version 2.1 so, die neue Version hat aber ein zusätzliches Feature parat: Nachts wird der Webzugriff automatisch deaktiviert. Für den Zugriff am Folgetag muss er wieder aktiviert werden. So besteht kein erhöhtes Risiko, wenn man vergisst, den Schalter auf inaktiv zu stellen.</p>
+
+<h2>A+ Rating bei SSL-Labs für das datamate Cockpit</h2>
+
+<p>Die letzte Sicherheitsverbesserung im Cockpit 2.1 betrifft den Webserver NGINX. Durch die Optimierung seiner Sicherheitseinstellungen erhalten die Web-Logins nun ein <a href="/a-plus-rating-nginx-lets-encrypt/">A+ Rating</a> beim SSL-Test von SSL-Labs.</p>
+<p>Notwendig war dafür die Entfernung von als unsicher eingestuften Verschlüsselungstechniken wie TLS 1.0. Für die allermeisten Geräte sollte dies keine Einschränkungen mit sich bringen. So werden alle Mobilgeräte und Webbrowser, die nach 2014 entwickelt wurden, ohne Probleme funktionieren. Bei Smartphones mit einem Android älter als 4.3 kann es ggf. zu funktionalen Einschränkungen kommen. Andererseits: Wer im Jahr 2020 &#8211; dem Jahr, in dem Android 9 das am weitesten verbreitete Android ist &#8211; noch Android 4.x verwendet, der muss jeden Tag wohl noch viele andere technischen Einschränkungen auf seinem Smartphone hinnehmen.</p>
+
+<a href="/wp-content/uploads/2020/03/a-plus-rating-with-nginx-letsencrypt.png" data-slb-active="1" data-slb-asset="4161076404" data-slb-internal="0" data-slb-group="6762"><img decoding="async" loading="lazy" width="1098" height="1104" src="/wp-content/uploads/2020/03/a-plus-rating-with-nginx-letsencrypt.png" alt="A+ Note bei SSL Labs mit Nginx und Lets Encrypt" class="alignnone size-full wp-image-6602" srcset="/wp-content/uploads/2020/03/a-plus-rating-with-nginx-letsencrypt.png 1098w, /wp-content/uploads/2020/03/a-plus-rating-with-nginx-letsencrypt-298x300.png 298w, /wp-content/uploads/2020/03/a-plus-rating-with-nginx-letsencrypt-1018x1024.png 1018w, /wp-content/uploads/2020/03/a-plus-rating-with-nginx-letsencrypt-150x150.png 150w, /wp-content/uploads/2020/03/a-plus-rating-with-nginx-letsencrypt-768x772.png 768w" sizes="(max-width: 1098px) 100vw, 1098px" /></a>
+
+<h2>Optimierung des OpenVPN Zertifikatsmanagement</h2>
+
+<p>Mit diesem Update haben wir eine bekannte Einschränkung des datamate Cockpits in Bezug auf VPN-Zertifikate beseitigt. Ab sofort können Zertifikate einen Namen erhalten, der bereits früher für ein anderes Zertifikat verwendet wurde. In der Vergangenheit führte dies zu einem unbrauchbarem Zertifikat. Anders ausgedrückt: Nun kannst Du das Zertifikat &#8216;ILoveDatamate&#8217; wieder und wieder ohne Probleme erzeugen 😉 .</p>
+
+<h2>Unterstütze Dienste</h2>
+<p>Das datamate Cockpit in der Version 2.1. funktioniert mit Ubuntu 16.04 und 18.04 Server-Betriebssystemen. Zum Zeitpunkt der Veröffentlichung war der Ubuntu-Kernel 4.4.0-142 verfügbar.</p>
+<ul style="padding-left: 20px;">
+<li>Seafile (getestet mit CE 7.0.5 &#038; PE 7.0.11)</li>
+<li>sabre/dav (getestet mit 3.2)</li>
+<li>WordPress (getestet mit 5.2 &#038; 5.3)</li>
+<li>Benno (getestet mit 2.8.2 &#038; 2.8.5)</li>
+<li>OpenVPN (getestet mit 2.3.10)</li>
+<li>ddclient (getestet mit 3.8.1)</li>
+<li>Fail2ban (getestet mit 0.9.3)</li>
+<li>Virtualbox inkl. Guest Additions (getestet mit 5.2.26)</li>
+<li>OpenLDAP (getestet mit 2.4.42)</li>
+<li>UFW (getestet mit 0.35)</li>
+<li>restic (getestet mit 0.9.6)</li>
+</ul>
+
+<h2 id="changelog">Changelog 2.1.0</h2>
+<ul style="padding-left: 20px;">
+<li>[new] Zwei-Faktor-Authentifizierung für das datamate Cockpit</li>
+<li>[new] Zwei-Faktor-Authentifizierung für Seafile im Cockpit aktivierbar</li>
+<li>[change] Optimierung Schutz des LDAP-Benutzerverzeichnisses</li>
+<li>[change] Optimierung des VPN-Zertifikatsmanagements</li>
+<li>[change] Optimierung der SSL-Konfiguration in NGINX</li>
+<li>[fix] Fehlende Trust-Chains werden bei der OpenVPN-Zertifikatserstellung erkannt und korrigiert</li>
+</ul>
+
+<h2>Changelog 2.1.1</h2>
+<ul style="padding-left: 20px;">
+<li>[fix] Zwei-Faktor-Authentifizierung funktioniert nun auch bei Benutzer, die vor Cockpit 1.4 angelegt wurden</li>
+<li>[fix] Prüfung des Network-Time-Protokols (NTP) korrigiert</li>
+<li>[fix] Certbot auf die neueste Version aktualisiert um Fehlermeldungen bei einem &#8220;&#8211;dry-run&#8221; unter Ubuntu 16.04 zu verhindern</li>
+</ul>
+
+<h2>Changelog 2.1.2</h2>
+<ul style="padding-left: 20px;">
+<li>[change] Textanpassungen im Bereich Zwei-Faktor-Authentifizierung</li>
+<li>[fix] Änderungen an existierenden Benutzern wurden teilweise nicht gespeichert</li>
+</ul>

@@ -1,0 +1,75 @@
++++
+title = "Vom Netzwerkspeicher zur private Cloud – ortsunabhängiger Zugriff auf Homie und Fellow"
+titel_html = "Vom Netzwerkspeicher zur private Cloud – ortsunabhängiger Zugriff auf Homie und Fellow | datamate"
+ueberschrift = "Vom Netzwerkspeicher zur private Cloud – ortsunabhängiger Zugriff auf Homie und Fellow"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/09/hammock-2779433_1280.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/vom-netzwerkspeicher-zur-privaten-cloud-ortsunabhaengiger-zugriff-auf-homie-und-fellow/"
+canonical = "https://www.datamate.org/vom-netzwerkspeicher-zur-privaten-cloud-ortsunabhaengiger-zugriff-auf-homie-und-fellow/"
+og_bild_breite = "1280"
+og_bild_hoehe = "838"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2017-09-20T15:30:23+00:00"
+geaendert = "2025-02-21T08:10:13+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "5 Minuten"
+beitragsbild = "/wp-content/uploads/2017/09/hammock-2779433_1280.jpg"
+bild_breite = 1280
+bild_hoehe = 838
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Vom Netzwerkspeicher zur private Cloud – ortsunabhängiger Zugriff auf Homie und Fellow", item = ""}]
+wortzahl = 1009
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["unsere-produkte"]
+schlagwoerter = ["Internetfreigabe", "private Cloud", "VPN"]
+wp_id = 128
+slug = "vom-netzwerkspeicher-zur-privaten-cloud-ortsunabhaengiger-zugriff-auf-homie-und-fellow"
+url = "/vom-netzwerkspeicher-zur-privaten-cloud-ortsunabhaengiger-zugriff-auf-homie-und-fellow/"
+date = "2017-09-20T17:30:23"
+lastmod = "2025-02-21T09:10:13"
+datum_utc = "2017-09-20T15:30:23+00:00"
+geaendert_utc = "2025-02-21T08:10:13+00:00"
++++
+						<p>Cloud-Komfort ohne Verlust der eigenen Privatsphäre &#8211; das bieten die private Cloud-Lösungen <a href="/homie">Homie</a> und <a href="/fellow">Fellow</a>. Unabhängig von Ort und Gerät sind die Daten über Handy und Tablet, Laptop und Desktop abrufbar &#8211; ein Gerät mit Internetzugang, mehr ist nicht nötig. Die notwendige Anmeldung an der privaten Cloud lässt sich entweder für alle im Internet freigeben oder hinter einer Firewall verbergen. Diese beiden Zugriffsoptionen und deren Vor- und Nachteile stellen wir in diesem Artikel vor.</p>
+
+<span id="more-128"></span>
+<h3>Standardeinstellung: Server als Netzwerkspeicher</h3>
+<p>Wenn Homie und Fellow im Netzwerk eingerichtet werden, dann sind deren Funktionen zunächst ausschliesslich im eigenen Netzwerk verfügbar. Geräte im lokalen Netzwerk, d.h. LAN und WLAN, können alle aktivierten Serverdienste nutzen, Zugriffe von außen hingegen sind nicht möglich. Sämtliche Verbindungsversuche über das Internet, z.B. auf <a href="/seafile">Seafile</a> als Dateiaustauschlösung, werden von der Firewall des Internet Gateways abgeblockt (siehe Abbildung).</p>
+
+<img decoding="async" src="/wp-content/uploads/2017/09/Kein_Internetzugriff_auf_Server.jpg" style="float:left;" alt="Darstellung der Standardfunktion der Netzwerk-Firewall" width="1280" />
+
+<p>In der Standardeinstellung lässt die Firewall grundsätzlich keine Anfragen aus dem Intenet ins lokale Netzwerk durch. Würde sie dies pauschal erlauben, dann wäre das ein großes Sicherheitsdefizit und eine Einladung an Fremde, sich im lokalen Netzwerk etwas genauer umzuschauen. Das lokale Netzwerk als vertrauenswürdige Umgebung wäre damit nicht durchsetzbar.</p>
+
+<p>Die hier dargestellten Vorgehensweisen zur Einrichtung des Internetzugriffs auf Homie und Fellow behalten das generelle Prinzip des lokalen Netzwerk als vertrauenswürdiges und des Internets als nicht vertrauenswürdiges Netzwerk bei, erweitern es aber partiell, dass berechtigte Personen von unterwegs per Desktop, Laptop und mobiles Geräte auf die Server zugreifen können. Beide Verfahren werden von Serveradministratoren regelmäßig eingesetzt.</p>
+
+
+<h3>Direkter Cloud Zugriff per Freigabe ins Internet</h3>
+
+<p>Den direkten Zugriff kennt man von zahlreichen Cloud-Diensten wie Google, Dropbox und GMX. Um bei Dropbox an seine Daten zu kommen, muss man nur https://www.dropbox.com aufrufen, seine E-Mail-Adresse und sein Passwort eingeben und schon ist man in seinem Konto angemeldet. Dies ist bequem und einfach.</p>
+
+<p>Diesen direkten Cloud-Zugriff gibt es bei Homie und Fellow natürlich auch. Der Login über eine Anmeldeseite erlaubt vollen Zugriff auf den gewünschten Dienst. Bei Homie ist das z.B. die Dateiaustauschlösung Seafile oder das Cockpit; bei Fellow kann man sich direkt am Customer Relationship Management System (CRM) anmelden. Unter welcher Internetadresse sich die Anmeldeseite befindet, hängt vom Internetanschluss und der Verfügbarkeit einer Domain ab. Der Inhaber der Domain beispiel.de könnte sich den Login für sein CRM unter https://crm.beispiel.de und den fürs Filesharing unter https://cloud.beispiel.de einrichten &#8211; oder irgendwelchen anderen Subdomains. Selbst ohne eine eigene Web-Domain und an einem Internetanschluss mit dynamischer IP-Adresse lässt sich ein direkter Internetzugriff per Freigabe realisieren. Die Technik dafür ist <a href="/blog/nat-loopback-oder-wie-dyndns-fuers-interne-netzwerk-fit-gemacht-werden-kann/">DynDNS</a>.</p>
+
+<p>Die technische Umsetzung erfolgt über eine sogenannte Portweiterleitung (englisch Port Forward) am Internet Gateway. Diese funktioniert wie folgt: Alle Anfragen, die am Port mit eingerichteter Weiterleitung ankommen, werden an die hinterlegte Netzwerkadresse im lokalen Netzwerk weitergeleitet. Das wäre der Server. Dieser kümmert sich dann um die eingehende Anfrage und beantwortet diese. Alle anderen Anfragen werden vom Gateway weiterhin verworfen und damit abgeblockt (siehe Abbildung). Ein Port lässt sich am besten im Zusammenspiel mit einer Netzwerkadresse veranschaulichen: Die Adresse beschreibt den Ort eines bestimmten Gebäudes, der Port das gesuchte Zimmer in jenem Gebäude.</p>
+	
+<img decoding="async" src="/wp-content/uploads/2017/09/Internetzugriff_per_Freigabe.jpg" alt="Darstellung des Serverzugriffs per Internetfreigabe" width="1280" />
+
+<p>So bequem der direkte Zugriff aus dem Internet auch ist, er hat einen gewichtigen Nachteil: Nicht nur legitime Nutzer können einen Anmeldeversuch unternehmen, jeder kann das. Nicht unsystematische Anmeldeversuche von Gelegenheitshackern oder ex-Mitarbeitern sind dabei die Gefahr. Die Gefahr geht von automatisierten Angriffen von Cyberkriminellen aus. Dabei werden unterschiedliche Kombinationen von Benutzername und Passwort systematisch und in rasender Geschwindigkeit von unterschiedlichen Computer simultan ausprobiert. Brute-Force Angriffe nennt sich das dann. Wir bei datamate erleben solche Angriffe in regelmäßigen Abständen auf unsere Blog-Seiten.<br /> 
+<p>Ohne Schutzmechanismen hat man schlechte Karten. Gerade wenn die Angreifer die Benutzernamen bekannt und die Passwörter wenig sicher sind, dann ist ein Einbruch meist nur eine Frage der Zeit. Natürlich verfügen die datamate-Server über unterschiedliche Schutzmechanismen, um solche Angriffe abzuwehren. Aber auch ausgefeilte Sicherheitssysteme bieten keinen absoluten Schutz. Ein Restrisiko bleibt immer.</p>
+
+<h3>Indirekter Cloud Zugriff via VPN</h3>
+
+<p>Die sichere, weil für außenstehende unsichtbare, Variante ist der Zugriff per virtuellem privaten Netzwerk (VPN). Bei VPN wird zwischen dem anfragenden Gerät und dem Server ein verschlüsselter Kommunikationskanal aufgebaut. Ist der VPN-Kanal einmal aufgebaut, hat man geschützten Zugang auf alle Serverdienste. kann müssen die Login-Seite nicht offen im Internet verfügbar machen. </p>
+
+<img decoding="async" src="/wp-content/uploads/2017/09/Internetzugriff_per_VPN.jpg" alt="Darstellung des Serverzugriffs per VPN-Verbindung" width="1280"/>
+	
+<p>Die Authentifizierung am VPN-Server als Empfänger der Verbindungsanfrage erfolgt mindestens mit einem Zertifikat. Die Zertifikatsdatei enthält lange Zeichenfolgen &#8211; viel länger als normale Passwörter &#8211; die wechselseitig von Server und Client überprüft werden. Nur wenn beide Seiten übereinkommen, dass man sich vertraut, wird die Verbindung aufgebaut. Sich eine VPN-Verbindung mit einem Server zu erschwindeln, ist für Dritte praktisch ausgeschlossen und eigentlich nur beim Diebstahl einer Schlüsseldatei möglich, z.B. bei Verlust eines Handys oder Laptops. Noch sicherer ist die Zwei-Faktorauthentifizierung, die neben dem Zertifikat auch noch eine Authentifizierung mit Nutzername und Passwort erfordert. </p>
+
+<p>Der Nachteil des indirekten Zugriffs per VPN ist, dass der externe Zugriff auf den Server nicht ohne Vorbereitung möglich ist. Ohne Zertifikatsdatei auf dem Gerät, keine VPN-Verbindung. Ohne eine Schlüsseldatei können legitime Nutzer genauso wenig auf den Server zugreifen können wie illegitime.</p>
+
+<h3>Unsere Empfehlung</h3>
+
+<p>Wer viel Wert auf Sicherheit legt und selten von fremden Geräten über das Internet auf seine Daten zugreifen will, für den ist die VPN-Variante die bessere Wahl. Mit einem geringen Mehraufwand erhält man einen großen Zugewinn an Sicherheit. Wir von datamate verwenden VPN für den Zugriff auf alle rein internen Systeme.<br /> 
+Ungeeignet ist der VPN-Zugriff, wenn externe bzw. wechselnde Parteien auf den Server zugreifen sollen (z.B. Geschäftspartner). In solchen Fällen müsste man den Partnern jeweils einen VPN-Zugang erstellen und einrichten.</p>

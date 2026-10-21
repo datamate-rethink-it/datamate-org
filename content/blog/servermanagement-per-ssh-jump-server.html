@@ -1,0 +1,76 @@
++++
+title = "Servermanagement per SSH Jump Server"
+titel_html = "Servermanagement per SSH Jump Server | datamate"
+ueberschrift = "Servermanagement per SSH Jump Server"
+beschreibung = "Die Verwaltung verteilter Server muss sicher und gleichzeitig bequem sein. Der Jump Server ezeelogin bietet einfachen Zugriff und hohen Schutz."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2019/10/ezeelogin-logo.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/servermanagement-per-ssh-jump-server/"
+canonical = "https://www.datamate.org/servermanagement-per-ssh-jump-server/"
+og_bild_breite = "1464"
+og_bild_hoehe = "590"
+og_bild_typ = "image/jpeg"
+veroeffentlicht = "2019-10-25T15:10:43+00:00"
+geaendert = "2025-02-21T08:10:03+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "4 Minuten"
+beitragsbild = "/wp-content/uploads/2019/10/ezeelogin-logo.jpg"
+bild_breite = 1464
+bild_hoehe = 590
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Servermanagement per SSH Jump Server", item = ""}]
+wortzahl = 799
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["aus-dem-leben-eines-startups"]
+schlagwoerter = []
+wp_id = 6270
+slug = "servermanagement-per-ssh-jump-server"
+url = "/servermanagement-per-ssh-jump-server/"
+date = "2019-10-25T17:10:43"
+lastmod = "2025-02-21T09:10:03"
+datum_utc = "2019-10-25T15:10:43+00:00"
+geaendert_utc = "2025-02-21T08:10:03+00:00"
+lightbox = true
++++
+						<p>Administratoren, die eine Vielzahl von Servern administrieren müssen, tragen viel Verantwortung: Die Server müssen gut gegen Angriffe geschützt werden, gleichzeitig sollte der Zugriff für die Mitarbeiter mit den entsprechenden Berechtigungen einfach und unkompliziert sein. Diesen Zielkonflikt aus Komfort und Sicherheit kann man mit einem SSH Gateway begegnen. Dieser Artikel beschreibt das von uns gewählte Setup mit der Jump Server Software <a href="https://www.ezeelogin.com/" target="_blank" rel="noopener noreferrer">ezeelogin</a>.</p>
+
+<span id="more-6270"></span>
+
+<h2>Komfort und Sicherheit im Widerstreit</h2>
+<p>Bei der Verwaltung verteilter Serversysteme müssen Administratoren widerstreitende Themen unter einen Hut bringen. Auf der einen Seite müssen die Server für die Administratoren einfach zu erreichen sein, um schnelle und unkomplizierte Zugriffe und damit Hilfe zu ermöglichen. Auf der anderen Seite ist es erforderlich, Serverzugriffe duch Unbefugte auszuschliessen und die Angriffsfläche gegen Hacker zu minimieren. Techniken wie Traffic Filtering per Firewall, 2-Faktorauthentifizierung und SSH-Authentifizierung per Public Key sind dafür von entscheidender Bedeutung, sie reduzieren aber auch die Flexibilität.</p>
+
+<p>Bei gewissenhafter Umsetzung erfordert die Einrichtung und Verwaltung eines sicheren Access Managements einen nicht unerheblichen Zeitaufwand. Neue Mitarbeiter müssen mit individuellen Zugangsdaten auf den Systemen ausgestattet werden; ausscheidende Mitarbeiter müssen ausgecheckt werden. Und wie häufig werden Zugriffsdaten &#8216;vergessen&#8217; und müssen wiederhergestellt werden? Die Anforerungen sind vielfältig und führen zwangsläufig zu einem Konflikt aus Sicherheit, Arbeitseffizienz und Komfort. Mit einer intelligenten Softwarelösungen und einem durchdachten Konzept kann man sich das Administratorleben aber deutlich erleichtern.</p>
+
+<h2>Jump Server als Lösung für den Widerstreit</h2>
+<p>Die Idee eines Jump Servers, der je nach Anbieter auch Jump Host, SSH Gateway oder SSH Remote Access Server genannt wird, ist einfach wie bestechend:. Die Administratoren verbinden sich nicht direkt mit dem Zielserver, sondern nutzen einen weiteren Server, um auf das Zielsystem abzuspringen. Der Jump Server in der Mitte speichert die Zugangsdaten für die Zielsysteme (Passwörter, Keys und ähnliches) und verwaltet die Berechtigungen der Benutzer. So bietet der Jump Server einem Nutzer nur solche Serververbindungen an, für die der angemeldete Benutzer berechtigt ist.</p>
+
+<p>Die Vorteile des Jump Servers sind somit:</p>
+<ul style="padding-left:3%;">
+	<li>Direkte Authentifizierung nur gegenüber dem Jump Server</li>
+	<li>Authentifizierungsinformationen für Zielsysteme nicht bei Administratoren</li>
+	<li>Berechtigungsverwaltung in einem einzelnen System statt in mehreren Zielsystemen</li>
+	<li>Eingrenzung des Zugriffs auf Zielsysteme per Firewall auf die IP-Adresse des Jump Servers </li>
+	<li>Verteidigung eines zentralen Systems einfacher als mehrerer dezentraler Systeme</li>
+</ul>
+
+<p>Natürlich birgt die Sammlung von Zugangsdaten an einem Ort auch Gefahren. So kann ein Ausfall des Jump Servers die Administratoren zu einer unerwünschten Pause zwingen. Gleichzeitig wird ein Jump Server zu einem ungleich interessanterem Ziel für Hacker. Bei einer guten Absicherung des Jump Servers überwiegen aus unserer Sicht die Vorteile die Nachteile jedoch bei weitem.</p>
+
+
+<h2>Unser Aufbau mit Hilfe von ezeelogin</h2>
+
+<a href="/wp-content/uploads/2019/10/ezeelogin-jump-server.png" data-slb-active="1" data-slb-asset="2284789033" data-slb-internal="0" data-slb-group="6270"><img decoding="async" width="1633" height="802" src="/wp-content/uploads/2019/10/ezeelogin-jump-server.png" alt="ezeelogin jump server" class="alignleft size-full wp-image-6271" srcset="/wp-content/uploads/2019/10/ezeelogin-jump-server.png 1633w, /wp-content/uploads/2019/10/ezeelogin-jump-server-300x147.png 300w, /wp-content/uploads/2019/10/ezeelogin-jump-server-768x377.png 768w, /wp-content/uploads/2019/10/ezeelogin-jump-server-1024x503.png 1024w" sizes="(max-width: 1633px) 100vw, 1633px" /></a>
+
+<p>Bei datamate verwenden wir die Jump Server Software ezeelogin (Aussprache easy-login). ezeelogin ist eine selbstgehostete Lösung, bietet vielfältige und leistungsfähige Funktionen und Sicherheitsmechanismen und unterstützt außerdem ein Hochverfügbarkeitssetup. Linux wie Windows Servern lassen sich gleichermaßen mit eezelogin verwalten. Im Rahmen unserer umfangreichen Evaluation haben wir keine andere on-premises Lösung mit einem ähnlichen Leistungsspektrum und Preis-Leistungsverhältnis angetroffen. (Dieses <a href="https://www.youtube.com/watch?v=RNXksUzlcu4">Video</a> von ezeelogin stellt die Lösung vor.)</p>
+
+<p>Die Authentifizierung der Mitarbeiter gegenüber ezeelogin erfolgt über SSH durch einen individuellen Benutzernamen und ein komplexes Passwort. Im Rahmen der obligatorischen 2-Faktorauthentifizierung (2FA) verlangt ezeelogin außerdem ein zeitlich limitiertes Einmalkennwort (englisch Time-based One-time Password oder, kurz, TOTP), das man z.B. über einen vorher registrierten Google Authenticator erzeugt. Nicht nur der Zugriff auf den Jump Server ist per 2FA abgesichert, auch der Zugriff auf die Verwaltungsoberfläche von ezeelogin ist per TOTP abgesichert. Die Software <a href="/fail2ban-automatisches-system-zur-erkennung-und-verhinderung-von-systemeinbruechen/">fail2ban</a> überwacht Zugriffslogs auf nicht erfolgreiche Loginversuche und unterbindet Brute-Force Angriffe im Ansatz.</p>
+
+<p>Die Zielsysteme sind immer so konfiguriert, dass diese grundsätzlich nur SSH-Zugriffe von den Nodes unseres Jump Server Clusters erlauben und die Authentifizierung über einen auf dem Jump Server hinterlegten SSH-Key erfolgt. So sind die Server für andere Personen aus dem Internet nicht erreichbar und auch direkte Zugriffe an den Jump Servern vorbei sind nicht möglich.</p>
+
+<p>Eine erweiterte Sicherheitsfunktion von ezeelogin ist die automatische Protokollierung sämtlicher durch den eingeloggten Administrator auf dem Zielsystem ausgeführten Befehle. So ist es jederzeit möglich, nachzuvollziehen, wer wann welche Arbeiten am Zielsystem durchgeführt hat.</p>
+
+<h2>Unsere Meinung zu ezeelogin</h2>
+
+<p>ezeelogin ermöglicht die einfache und sichere Verwaltung von verteilten Servern. Es bietet durch den konsequenten Einsatz eines zweiten Faktors und einer automatischen Dokumentation jeder SSH-Sitzung einen umfassenden Schutz, ohne dabei die Arbeit der Mitarbeiter unnötig zu verkomplizieren. Die englische Dokumentation ist umfangreich und gut verständlich. Es ist eine der wenigen Lösungen, die man on-premise betreiben und zu einem fairen Preis nutzen kann. Aus unserer Sicht gibt es derzeit keine bessere Lösung für unsere Anforderungen.</p>

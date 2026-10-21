@@ -1,0 +1,239 @@
++++
+title = "Seafile mit Fail2ban absichern"
+titel_html = "Seafile mit Fail2ban absichern | datamate"
+ueberschrift = "Seafile mit Fail2ban absichern"
+beschreibung = "Mit Fail2ban schützen Sie den Login sowie die Up- und Downloadlinks von Seafile gegen Brute-Force Angriffe. Dieser Artikel zeigt, wie es geht!"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2016/10/seafile-protect-fail2ban.jpg"
+og_typ = "article"
+og_url = "https://www.datamate.org/seafile-mit-fail2ban-absichern/"
+canonical = "https://www.datamate.org/seafile-mit-fail2ban-absichern/"
+veroeffentlicht = "2016-10-26T19:21:40+00:00"
+geaendert = "2025-02-21T08:10:47+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "11 Minuten"
+bild_breite = 260
+bild_hoehe = 202
+bild_beschriftung = "Schützen Sie Login sowie Up- und downloadlinks von Seafile mit Fail2ban."
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Seafile mit Fail2ban absichern", item = ""}]
+wortzahl = 1767
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["seafile", "software"]
+schlagwoerter = ["Authentifizierung", "Dateisynchronisation", "Dropbox Alternative", "nginx", "OpenSource", "private Cloud", "seafile", "sichere Cloud", "Zugriffsschutz"]
+wp_id = 2959
+slug = "seafile-mit-fail2ban-absichern"
+url = "/seafile-mit-fail2ban-absichern/"
+date = "2016-10-26T21:21:40"
+lastmod = "2025-02-21T09:10:47"
+datum_utc = "2016-10-26T19:21:40+00:00"
+geaendert_utc = "2025-02-21T08:10:47+00:00"
+lightbox = true
++++
+						<img decoding="async" src="/wp-content/uploads/2016/10/seafile-protect-fail2ban.jpg" alt="Schützen Sie Login sowie Up- und downloadlinks von Seafile mit Fail2ban." width="260" style="float: left; margin-left: 2%;" /> 
+
+<p><a href="/seafile">Seafile</a> ist einer der zentralen Dienste eines jeden datamate Servers. Mit Seafile lassen sich Dateien &#8211; bei 100% Datensouveränität &#8211; bequem im Unternehmen verwalten und mit externen Geschäftspartnern teilen. Die Zugriffsmöglichkeit von Externen auf Seafile exponiert das System aber auch gegenüber Brute-Force-Angriffen. Bei solchen Angriffen werden automatisiert und orchestriert tausendfach Kombinationen aus Benutzername und Passwort ausprobiert. Ist das Passwort leicht zu erraten, erhält der Angreifer Zugriff auf das System und Daten können abgegriffen werden. </p>
+
+<p>Seafile ist gegen Brute-Force-Angriffe nicht machtlos. Mit Captcha und anderen Schutzmechanismen bietet es einen Grundschutz. Das Schutzniveau von Seafile lässt sich mit ein wenig Aufwand aber noch deutlich verbessern. Darum geht es in diesem Artikel. Wir wollen zeigen, wie sich Seafile mit Hilfe des Logfile-Analysierers Fail2ban weiter absichern lässt. Das Prinzip des kleinen Programms ist denkbar einfach: Jeder Zugriffsversuch auf Seafile (egal ob ein Login-Versuch per Webbrowser bzw. per App, der Aufruf eines Up- oder Download-Links oder der Zugriff per WebDAV) wird in den Log-Dateien des Servers protokolliert. Wenn in einer gewissen Zeitspanne eine definierte Anzahl unauthentifizierte Zugriffe von einer IP-Adresse registriert werden, dann blockiert Fail2ban weitere Zugriffsversuche von dieser IP-Adresse für einen bestimmten Zeitraum. Bei geschickter Wahl dieser beiden Parameter sperrt man einen vergesslichen Mitarbeiter nicht aus, verhindert aber wirkungsvoll Brute-Force-Angriffe. Aus unserer Sicht ist diese Absicherung essentiell wichtig, sobald Seafile ins Internet freigegeben wird und sollte unter keinen Umständen ausgelassen werden.</p>
+
+<span id="more-2959"></span>
+
+<h2>Standard-Schutzmechanismen von Seafile</h2>
+
+<p>Standardmäßig verlangt Seafile nach mehreren fehlerhaften Login-Versuchen über das Webinterface Seahub die Eingabe eines Captchas. Eine solche Zusatzaufgabe ist für Menschen meist eine leicht zu lösende Aufgabe, für Computerprogramme aber &#8211; auch beim Einsatz von Mustererkennungsverfahren &#8211; weiterhin eine rechte harte Nuss. Captchas erschweren einen Einbruch mit der Brechstange ganz wesentlich und schützen daher recht zuverlässig gegen Brute-Force-Angriffe.</p>
+
+<a href="/wp-content/uploads/2016/10/seafile-captcha.jpg" data-slb-active="1" data-slb-asset="3848667501" data-slb-internal="0" data-slb-group="2959"><img decoding="async" src="/wp-content/uploads/2016/10/seafile-captcha-273x300.jpg" alt="Seafile schützt den Login nach mehreren Fehlversuchen mit einer Captcha-Eingabe." width="273" style="float:left; margin-right: 2%;"/></a>
+
+<p>Nicht in den Schutzbereich der Captchas fallen die Benutzeranmeldungsversuche in den mobile Apps sowie der Aufruf von Up- und Download-Links. Bei letzteren verlässt man sich auf die Macht der langen, zufällig erzeugten Links. Deren Länge lässt sich in den Einstellung von Seafile festlegen. Standardmäßig haben die Links eine Länge von 10 Stellen und folgen dieser Struktur:</p>
+
+<pre>
+Downloadlink: seafile-url/d/XXXXXXXXXX
+Uploadlink: seafile-url/u/XXXXXXXXXX
+</pre>
+
+<p>Da jedes X eine Zahl zwischen 0-9 oder ein Buchstabe von a-f sein kann, gibt es insgesamt 16^10 mögliche Links &#8211; jeweils für Up- und Download-Links. Ausgeschrieben sind dies rund 1.000.000.000.000 mögliche Kombinationen. Klingt auf den ersten Blick gut. Da haben Haker einiges an Ausprobiererei vor sich, bis sie &#8211; auch bei strukturiertem Ausprobieren &#8211; auf einen Treffen stossen.</p>
+
+<h2>Vertrauen ist gut &#8211; Kontrolle ist besser</h2>
+<p>In Zeiten billiger Rechenleistung sollte man sich von großen Zahlen aber nicht täuschen lassen. Auch wenn 1 Billionen mögliche Kombinationen mächtig und nach einer solider Abwehrmaßnahme von strukturierten Angriffen klingt, so empfinden wir das als eine nicht vernachlässigbare Bedrohung. Warum zeigen wir mit folgendem Beispiel.</p>
+<p>Das nachfolgende Skript probiert beispielsweise sämtliche dreistelligen Downloadlinks unter einer Domain aus, indem es die entsprechende URL per <i>curl</i> anfragt und auf den String &#8220;Sorry, but the requested page could not be found&#8221; prüft. Wenn dieser String gefunden wird, handelt es sich um eine Fehlerseite. D.h. unter dieser Adresse befindet sich kein aktiver Link. Andererseits bedeutet das Ausbleiben dieser Meldung, dass man auf eine gültige Download-Adresse gestossen ist.</p>
+
+<pre>
+#!/bin/bash
+## Nur für lokale Demo-Zwecke. Dieses Skript auf einen fremden Server loszulassen, kann eine Straftat darstellen.
+
+start=`date +%s`
+log="/tmp/brute-force-seafile.log"
+echo "Brute-Force-Attack on Seafile Download-Links" > $log
+echo "---" >> $log
+
+for i in {a..f} {0..9};
+  do for j in {a..f} {0..9};
+    do for k in {a..f} {0..9};
+      do
+        gotcha=`curl --insecure --location --silent --url "https://10.37.102.7/seafile/d/$i$j$k" | grep "Sorry, but the requested"`
+        if [ -n "$gotcha" ]; then
+          echo "/seafile/d/$i$j$k = -";
+        else
+          echo "/seafile/d/$i$j$k = Treffer";
+        fi
+      done;
+    done;
+  done
+
+end=`date +%s`
+runtime=$((end-start))
+echo "Runtime was $runtime seconds."
+echo "--- finished ---"
+</pre>
+
+<p>Mit diesem Beispielskript konnten wir bei unseren Versuchen ungefähr 35 Kombinationen pro Sekunde abfragen. Dies mag im ersten Moment nicht viel erscheinen, da man bei dieser Geschwindigkeit ungefähr 1.000 Jahre benötigt, um die Billionen Kombinationen durchzuprobieren. Doch unsere bescheidenen Versuche sind genau das: Laienarbeit! Realistische Schlagzahlen bei orchestrierten Angriffen liegen um Größenordnungen darüber. Auch wenn unsere Stärke nicht im Hacking liegt, so fallen uns auf Anhieb mehrere Ansätze ein, mit denen sich ein Brute-Force-Angriff optimieren liesse:</p>
+
+<ul>
+  <li>Jede Anfrage lädt den kompletten Quellcode der Webseite herunter, der dann nach dem String &#8220;Sorry, &#8230;&#8221; durchsucht wird. Mit Sicherheit lässt sich anhand von intelligenteren Rückgabewerten eine effizientere Suche realisieren.</li>
+  <li>Jede Anfrage wird im Skript neu initialisiert. Curl bietet jedoch die Möglichkeit mit einer Sitzungsanfrage mehrere URLs anzufragen. So kann der Daten-Overhead reduziert werden.</li>
+  <li>Wir haben nur ein Skript verwendet. Es können aber nahezu beliebig viele Skriptläufe parallelisiert werden. Das erste Skript prüft sämtliche Links mit &#8220;a&#8221; am Anfang, das zweite Skript alle Links mit &#8220;b&#8221;, etc pp.</li>
+  <li>Bestimmt gibt es effizientere Wege als mit <i>curl</i> die Webseiteninhalte anzufragen.</li>
+</ul>
+
+<p>Gleichzeitig sollte man nicht vergessen, dass man auch nicht bis zum Abschluß des Angriffs warten muss. Sobald die erste gültige URL gefunden wurde, lassen sich die dahinterliegenden Inhalte herunterladen. Das Angriffsszenario &#8220;Brute-Force&#8221; auf Seafile Download-Links ist somit aus unserer Sicht ein durchaus valides Szenario. Gerade wenn die in Aussicht stehenden Daten attraktiv sind, können große Energien freigesetzt werden.</p>
+
+<p>Zum Glück lässt sich Seafile auf einfache Art und Weise gegen solche Angriffe abhärten. Das Programm Fail2ban steht dabei im Mittelpunkt. Davon handelt der Rest des Artikels. Wir fokussieren uns dabei auf die konkreten Maßnahmen zu Schutz von Seafile. Die Funktionsweise von Fail2ban haben wir bereits im Artikel <a href="/fail2ban-automatisches-system-zur-erkennung-und-verhinderung-von-systemeinbruechen/">Fail2ban: Automatisches System zur Erkennung und Verhinderung von Systemeinbrüchen</a> ausführlich beschrieben.</p>
+
+
+<h2>Absicherung des Seafile Logins mit Fail2ban</h2>
+<p>Zunächst einmal schauen wir uns Angriffe auf den Web-Login an. Nach dem dritten fehlerhaften Login-Versuch findet man folgende Logeinträge in der <i>seahub.log</i>:</p>
+
+<pre>
+2016-10-06 07:27:46,461 [WARNING] seahub.auth.views:197 login Login attempt limit reached, show Captcha, email/username: mr_x, ip: 192.168.7.200, attemps: 3
+2016-10-06 07:28:12,461 [WARNING] seahub.auth.views:197 login Login attempt limit reached, show Captcha, email/username: mr_x, ip: 192.168.7.200, attemps: 4
+</pre>
+
+<p>Diese lassen sich denkbar einfach mit Fail2ban abfangen. Zwei Schritte sind dazu notwendig: Die Anlage des Jails und die dazugehörige Definition des Filters.</p>
+
+<p>Kümmern wir uns zunächst um den <b>Jail</b>. In dieser Konfigurationsdatei wird mit dem Parameter <i>logpath</i> die zu durchsuchende Log-Datei sowie die zu überwachende Zeit (<i>findtime</i>) und die dazugehörige Sperrzeit (<i>bantime</i>) in Sekunden festgelegt. Über den Parameter <i>filter</i> wird auf den anzuwendenden Filter verwiesen, den wir anschließend definieren. Die nachfolgende Beispielkonfiguration für den Jail seafile-login arbeitet für das HTTP und HTTPS Protokoll, überwacht die seahub.log unter /home/seafile/logs/ und sperrt eine IP-Adresse für 600 Sekunden aus, wenn für diese die Filterregel seafile-login innerhalb von 3.600 Sekunden fünfmal trifft. Kopiere diese Konfiguration einfach in die Datei jail.local unter /etc/fail2ban/ und passe die Werte nach belieben an.</p>
+
+<pre>
+# Seafile-Login Einstellungen in jail.local
+[seafile-login]
+enabled = true
+port = http,https
+filter = seafile-login
+logpath = /home/seafile/logs/seahub.log
+maxretry = 5
+findtime = 3600
+bantime = 600
+</pre>
+
+<p>Im nächsten Schritt muss nun der Fail2ban Filter definiert werden, auf den im Jail verwiesen wurde und nach der die angegebene Log-Datei durchsucht werden soll. Kopiere diesen Filter in die Datei seafile-login.conf im Verzeichnis /etc/fail2ban/filter.d/.</p>
+
+<pre>
+# filter.d/seafile-login.conf
+[Definition]
+failregex = .*Login attempt limit reached.*ip: &lt;HOST>, att.*
+ignoreregex =
+# Author: Christoph Dyllick-Brenzinger (www.datamate.org)
+</pre>
+
+<p>Sobald man <a href="http://www.fail2ban.org/" target="_blank" rel="noopener noreferrer">Fail2ban</a> neu startet, sind sämtliche Logins per Webbrowser und per App geschützt. Teste die Einstellung nun. Tue dies aber zunächst mit einer geringen Bantime (z.B. bantime = 10), um Dich nicht für längere Zeit aus Deinem Server auszusperren.</p>
+
+
+<h2>Überwachung der Seafile Up- und Download-Links mit Fail2ban &#8211; Überwachung des Webservers nginx</h2>
+<p>Randomisiert erstellte Up- und Download-Links werden auch in anderen Software-Lösungen gerne genutzt, um Zugriffe von Unbefugten zu verhindern. Doch wie unser vorheriges Testskript gezeigt hat, können diese Links nicht als sicher angesehen werden. Ohne weitere Schutzmechanismen ist es nur eine Frage der Zeit, bis ein aktiver Link gefunden wird.</p>
+
+<p>Das Vorgehen zur Absicherung des Link-Zugriffs mit Fail2ban erfolgt analog der Absicherung des Logins: In einem Jail wird das Verhalten von Fail2ban festgelegt, in einem Filter wird die Ergebnissuche definiert. Im Fall der Absicherung der Links in aktuellen Seafile Versionen muss man mit dem Filter nach den folgenden Einträgen in der seahub.access.log scannen: </p>
+
+<pre>
+192.168.5.45 - - [18/Oct/2016:16:51:59 +0200] "GET /d/1234567345/ HTTP/1.1" 404 1690 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/53.0.2785.143 Chrome/53.0.2785.143 Safari/537.36"
+</pre>
+
+<p>Der Eintrag in der <i>jail.local</i> von Fail2ban und der dazugehörige Filter lauten dann wie folgt: </p>
+<pre>
+# Seafile-Links Einstellungen in jail.local
+[seafile-url]
+enabled = true
+port = http,https
+filter = seafile-url
+logpath = /var/log/nginx/seahub.access.log
+maxretry = 10
+findtime = 3600
+bantime = 600
+</pre>
+
+<pre>
+# filter.d/seafile-url.conf
+[Definition]
+failregex = &lt;HOST>.*GET /(d|u|f)/.* 404 .*
+ignoreregex =
+# Author: Christoph Dyllick-Brenzinger (www.datamate.org)
+</pre>
+
+<p>Mit diesem Filter sind sowohl Folder-Download, File-Download und Uploads geschützt &#8211; vorausgesetzt, dass Seafile bei Dir nicht über einen Subfolder aufgerufen wird. Haben bei Dir die Seafile URLs eine andere Struktur, dann ist der Filter natürlich entsprechend anzupassen.</p>
+
+
+<h2>Überwachung der Seafile Up- und Download-Links &#8211; Seafile Logs durch eigene Middleware</h2>
+<p>Die Analyse der Log-Dateien des Webservers funktioniert zuverlässig. Gerade bei leistungsschwachen Geräten wie z.B. einem Raspberry Pi, empfehlen wir jedoch eine andere abgewandelte Art der Überwachung. Die Analyse der Log-Dateien des Webservers, die schnell ein paar Megabyte groß werden können, verlangen sonst einen ungebührlichen Anteil der Systemressourcen. Mit ein bisschen Arbeit kann man den Ressourcenaufwand deutlich reduzieren. Hierzu schreiben wir in Seafile eine eigene Django-Middleware, welche ganz gezielt die passenden Log-Einträge bei fehlerhaften Zugriffsversuchen schreibt.</p>
+
+<p>Legen Sie die folgende Datei <i>/seahub/seahub/base/ionas.py</i> an:</p>
+<pre>
+import logging
+
+logger = logging.getLogger(__name__)
+
+class CustomLog(object):
+    def process_response(self, request, response):
+        if response.status_code == 404:
+            ip_address = request.META.get('REMOTE_ADDR')
+            url = request.META.get('PATH_INFO')
+            logger.warn('|| Code: 404, IP: %s, URL: %s' % (ip_address, url ))
+ 
+        return response
+</pre>
+
+<p>Wichtig: Achten Sie auf die richtige Einrückung der Zeilen, da diese nicht beliebig ist. 
+Nun müssen wir noch diese Middleware in Seafile bekannt machen, damit die Log-Dateien richtig geschrieben werden.</p>
+
+<p>Hierzu fügen wir in der <i>/seahub/seahub/settings.py</i> im Bereich <i>MIDDLEWARE_CLASSES</i> am Ende noch die folgende Zeile ein:</p>
+<pre>
+MIDDLEWARE_CLASSES = (
+    ...
+    'seahub.base.ionas.CustomLog',
+)
+</pre>
+
+<p>Zu guter Letzt wird Seafile noch neu gestartet und ab sofort wird jeder fehlerhafte Aufruf eines Up- oder Downloadslinks zu einer folgenden Fehlermeldung führen:</p>
+
+<pre>
+2016-10-06 07:23:16,281 [WARNING] seahub.base.ionas:10 process_response || Code: 404, IP: 192.168.7.200, URL: /u/d/114280491b
+</pre>
+
+<p>Diese Fehlermeldung kann man nun ganz einfach mit dem folgenden Filter abfangen und somit Brute-Force-Angriffe frühzeitig unterbinden.</p>
+
+<pre>
+# fail2ban filter configuration to protect the up-and downloadlinks of seafile against unlimited trial attempts
+[Definition]
+
+failregex = .*Code: 404, IP: &lt;HOST>, URL:.*
+ignoreregex =
+
+# Author: Christoph Dyllick-Brenzinger (www.datamate.org)
+</pre>
+
+<p>Auch wenn dieser Ansatz etwas komplizierter erscheint, so bietet er zwei Vorteile:</p>
+
+<h3>1. Eigene Middleware ist ressourcenschonender</h3>
+
+<p>Da Fail2ban die Log-Dateien konstant auslesen muss, spielt die Dateigröße der Log-Dateien eine wichtige Rolle in Bezug auf die Ressourcenauslastung. Dieser Unterschied mag bei einem ausgewachsenen Server vernachlässigbar sein, ist jedoch bei einem Einplatingensystem wie dem Raspberry Pi nicht zu vernachlässigen. </p>
+
+<h3>2. Die Log-Datei ist auch für Menschen einfacher zu lesen</h3>
+
+<p>Der zweite Aspekt ist ein Komfortaspekt. Bei der unüberschaubaren Log-Datei von nginx kann es passieren, dass man den Wald vor lauter Bäumen nicht mehr sieht. Bei einer Log-Datei, die fast nur relevante Einträge hat, findet sich das menschliche Auge viel schneller und einfacher zurecht. </p>
+
+<p>Einen Nachteil hat die eigene Middleware hingegen. Bei jedem Update von Seafile muss die Middleware neu integriert werden, da der Symlink <i>seafile-server-latest</i> auf ein neu hinzugekommenes Verzeichnis mit der neuesten Version zeigt.</p>
+
+<h2>Schützen Sie Ihr Seafile mit Fail2ban</h2>
+
+<p>Seafile bietet entgegen der kommerziellen Anbieter Dropbox und Google Drive die vollkommene Datenhoheit. Diese Hoheit verlangt jedoch, dass man sich mit der Sicherheit des Systems auseinandersetzt. Die Captchas von Seafile sind ein guter Grundschutz, sichern jedoch nicht alle Bereiche von Seafile zuverlässig. </p>
+
+<p>Natürlich ist und bleibt das größte Sicherheitsrisiko der Mensch selbst, welcher aus Bequemlichkeit unsichere Passwörter verwendet und diese leichtfertig weitergibt. Doch mit Fail2ban lässt sich mit geringem Aufwand Seafile zuverlässig gegen Brute-Force-Angriffe absichern, weshalb dies ein Standardfeature eines jeden datamate Servers ist. </p>

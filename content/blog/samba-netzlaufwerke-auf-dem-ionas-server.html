@@ -1,0 +1,105 @@
++++
+title = "Samba-Netzlaufwerke auf dem ionas-Server"
+titel_html = "Samba-Netzlaufwerke auf dem ionas-Server | datamate"
+ueberschrift = "Samba-Netzlaufwerke auf dem ionas-Server"
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/04/Netzlaufwerk_verbinden_Windows10.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/samba-netzlaufwerke-auf-dem-ionas-server/"
+canonical = "https://www.datamate.org/samba-netzlaufwerke-auf-dem-ionas-server/"
+veroeffentlicht = "2016-08-17T08:52:03+00:00"
+geaendert = "2025-02-21T08:10:50+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "4 Minuten"
+bild_breite = 708
+bild_hoehe = 593
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Samba-Netzlaufwerke auf dem ionas-Server", item = ""}]
+wortzahl = 856
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["uncategorized"]
+schlagwoerter = []
+wp_id = 4494
+slug = "samba-netzlaufwerke-auf-dem-ionas-server"
+url = "/samba-netzlaufwerke-auf-dem-ionas-server/"
+date = "2016-08-17T10:52:03"
+lastmod = "2025-02-21T09:10:50"
+datum_utc = "2016-08-17T08:52:03+00:00"
+geaendert_utc = "2025-02-21T08:10:50+00:00"
++++
+						<p>Die Software Suite <i>Samba</i> ist die Standard-Lösung, um Computernnutzern in homogenen und gemischten Netzwerken Dateien zur Verfügung zu stellen. Der große Vorteil des SMB-Protokolls, das Samba implementiert, ist seine weite Verbreitung und Plattformunabhängigkeit: Windows, Mac und Linux sprechen SMB bzw. das Microsoft-Aquivalent CIFS. Der Vorteil für die Nutzer ist offensichtlich: Ist auf einem Server der smbd-Daemon erstmal eingerichtet, dann ist clientseitig keine Konfiguration notwendig. Die Netzwerkdienste von Samba wie Datei- und Druckerfreigabe können sofort genutzt werden. Auf dem ionas-Server sind standardmässig Samba-Netzlaufwerke eingerichtet. Was deren Sinn ist und wie man weitere Netzlaufwerke anlegt, erklären wir in diesem Beitrag.</p>
+<span id="more-4494"></span>
+
+
+
+<h2>Samba auf den ionas-Server</h2>
+<p>Die Samba Suite ist auf allen ionas-Servern installiert. Hat man den Dienst über das ionas-Cockpit gestartet, dann stellt er im lokalen Netzwerk die folgenden fünf Netzlaufwerke zur Verfügung:</p>
+<ul style="padding-left: 20px;">
+<li>fileshare</li>
+<li>pictures</li>
+<li>playlists</li>
+<li>videos</li>
+<li>music</li>
+</ul>
+
+<img decoding="async" src="/wp-content/uploads/2018/04/Netzlaufwerk_verbinden_Windows10.png" style="float:right; margin-left: 10px;" alt="Netzlaufwerk in Windows 10 verbinden" width="400" class="alignnone size-full wp-image-866" />
+
+<p>Angenommen der ionas-Server hat im lokalen Netzwerk die IP-Adresse 192.168.2.5, dann erreicht man auf Windows-Systemen diese &#8220;Samba Shares&#8221; über den Netzwerkpfad</p>
+
+<pre>\\192.168.2.5\#share#</pre>
+
+<p>wobei #share# für den Namen der Netzwerkfreigabe steht und entsprechend ersetzt werden muss (siehe Abbildung).</p>
+
+<p>Auf unixoiden Betriebssystemen &#8211; also auch MacOS und Linux &#8211; kann man auf die Samba-Freigaben über die folgende URL zugreifen:</p>
+
+<pre>smb://192.168.2.5/#share#</pre>
+
+<p>Die vorkonfigurierten Netzlaufwerke auf dem ionas-Server wurden nicht beliebig gewählt. So dienen die Verzeichnisse anderen Diensten des ionas-Servers als Datenquelle. Die Ordner <i>Pictures, Playlists, Videos und Musik</i> werden von <i>ReadyMedia</i> und <i>mpd</i> genutzt, um Musik, Videos und Bilder im Netzwerk zu verteilen oder über einen Lautsprecher am ionas-Server abzuspielen. Das Verzeichnis <i>Fileshare</i> dient der Freigabe von Dateien an externe Personen, wobei wir die genaue Funktionsweise im Folgenden noch erklären werden.</p>
+
+<p>Wichtig ist, dass für alle Shares keine Zugriffsbeschränkungen und keine Größenbeschränkungen festgelegt sind. Jeder Nutzer im lokalen Netz kann auf die Samba-Freigaben zugreifen, Dateien ändern und auch löschen. Die Shares kommen erst an ihr Größenlimit, wenn die lokale Festplatte an ihr Limit kommt.</p>
+
+<h2>FileShare und die Samba-Freigabe fileshare</h2>
+<p>FileShare ist der Dienst auf dem ionas-Server, der das Teilen von Dateien mit Dritten über das Internet ermöglicht. FileShare erzeugt für die zu teilenden Dateien Download-Links. Mit diesen können auch nicht-registrierte Nutzer des ionas-Servers Daten vom ionas-Server herunterladen. Die Weboberfläche von FileShare erreicht man mit dem Browser über das Verzeichnis <i>fileshare</i> unter der lokalen IP des ionas-Servers. Bei dem Beispiel von oben bleibend (IP des ionas-Servers im Netzwerk 192.168.2.5), dann lautet die URL von FileShare:</p>
+
+<pre>https://192.168.2.5/fileshare</pre>
+
+<p>Damit die Dateien über FileShare an Dritte freigegeben werden können, müssen Sie zunächst in das Samba-Netzlaufwerk &#8216;fileshare&#8217; kopiert werden. Nur die Dateien unter diesem Pfad werden im Webinterface von FileShare als teilbare Daten angezeigt.</p>
+
+<h2>Weitere Samba-Laufwerke auf dem ionas-Server</h2>
+<p>Über die Konfiguration im ionas-Server Cockpit kann man mit wenig Aufwand weitere Samba-Shares anlegen. Die entsprechenden Konfigurationseinstellungen finden sich &#8211; wenig überraschend &#8211; in der Rubrik &#8216;Netzlaufwerke (Samba)&#8217;.</p>
+
+<p>Über das dort angebotene Textfeld lassen sich individuelle Ergänzungen zur Samba-Konfigurationsdatei hinzufügen. (Die smb.conf liegt auf dem ionas-Server im Verzeichnis /etc/samba/.) Die Erstellung eines neuen Netzlaufwerk, z.B. das Netzlaufwerk &#8216;Familie&#8217; erfolgt in 4 Schritten (siehe Abbildung unten):</p>
+<ol style="padding-left: 20px;">
+<li>Eintragung des Namens der neuen Freigaben (z.B. &#8220;familie&#8221;)</li>
+<li>Kopie der typischen Samba-Konfiguration in das darunterliegenden Textfeld</li>
+<li>Zweimaliges Ersetzen der Zeichenfolge &#8220;neues-netzlaufwerk&#8221; durch den Namen der neuen Freigaben (z.B. &#8220;familie&#8221;)</li>
+<li>Klick auf &#8216;Samba-Einstellungen speichern&#8217;</li>
+</ol>
+<p>Sind die Einstellungen gespeichert, dann erscheint in der Liste der aktuellen Netzlaufwerke das neue Netzlaufwerk (z.B. &#8220;familie&#8221;). Das Cockpit hat das dazugehörige Directory erstellt und die notwendigen Berechtigungseinstellungen vorgenommen.</p>
+
+<p>Wir empfehlen konsequente Kleinschreibung bei Samba. Der Freigabe-Name ist nicht case-sensitive, wohl aber die Linux-Verzeichnisstruktur. Konsequente Kleinschreibung vermeidet Probleme.</p>
+
+<img decoding="async" src="/wp-content/uploads/2018/04/Samba_Laufwerk_erstellen-1024x759.png" style="float:left; margin-top:20px; margin-bottom:20px" alt="Samba Laufwerk auf dem ionas-Server anlegen" width="1024"  />
+
+<p>Dieses Vorgehen mag unnötig kompliziert erscheinen. Ein einzelnes Feld &#8220;neues Netzlaufwerk anlegen&#8221; wäre ohne Zweifel einfacher. Die Erstellung eines neuen Samba-Shares wie beim ionas-Server umgesetzt erlaubt aber zahlreiche Freiheiten durch die individuelle Spezifikation der Parametereinstellungen.</p>
+
+<ul style="padding-left: 20px;">
+<li>path: Pfad des freigegebenen Verzeichnisses</li>
+<li>available: Aktivierung eines Shares (no: Zugriffe werden abgelehnt)</li>
+<li>browsable: Darstellung des Shares in der Netzwerkübersicht (no: kein Listing)</li>
+<li>writable: Schreibberechtigungen für das Share (no: read-only access)</li>
+<li>guest ok: Passwortgeschützter Zugriff auf das Share (no: kein Passwort nötig)</li>
+<li>create mask: Berechtigung von neuen Dateien in diesem Netzlaufwerk </li>
+<li>directory mask: Berechtigung von neuen Ordnern in diesem Netzlaufwerk</li>
+<li>force group: UNIX-Gruppenname der Default-Primärgruppe für alle sich verbindenden Nutzer</li>
+<li>force user: UNIX-Username des Default-Nutzers für alle sich sich verbindenden Nutzer</li>
+</ul>
+
+<p>Die vollständige Liste der Parameter, ihrer Bedeutung und Konfiguration findet man auf der <a href="https://www.samba.org/samba/docs/man/manpages/smb.conf.5.html">Webseite von Samba</a>.</p>
+
+<h2>Samba-Netzlaufwerke auf dem ionas-Server</h2>
+<p>Samba ist ein sehr vielseitiger Netzwerkdienst. Die Einstellungsmöglichkeiten oben sollen nur eine Idee vermitteln, inwieweit sich Samba individuell konfigurieren lässt. Das schöne an Samba ist die vergleichsweise simple Konfigurierbarkeit und die hervorragende Dokumentation &#8211; nicht zuletzt ein Grund für die weite Verbreitung von Samba.</p>
+
+<p>Wenn Sie weitere Hilfe bei der Konfiguration Ihrer Samba-Laufwerke auf dem ionas-Server benötigen, dann sind wir selbstverständlich für Sie da. Wenn Sie über diese Seite auf der Suche nach genereller Hilfe bei der Einrichtung von Samba gestolpert sind, da können wir auch Ihnen helfen. Rufen Sie einfach an &#8211; 7 Tage die Woche: +49 (0)6131 3270777.</p>

@@ -1,0 +1,97 @@
++++
+title = "Zugriff ins LAN trotz IPv6 und Dual Stack Lite"
+titel_html = "Zugriff ins LAN trotz IPv6 und Dual Stack Lite | datamate"
+ueberschrift = "Zugriff ins LAN trotz IPv6 und Dual Stack Lite"
+beschreibung = "Ein Dual Stack Lite Anschluss verhindert den einfachen Zugriff über das Internet ins Heimnetzwerk. Wir erklären Hintergründe und Lösungen."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2018/04/ipv6.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/zugriff-ins-lan-trotz-ipv6-und-dual-stack-lite/"
+canonical = "https://www.datamate.org/zugriff-ins-lan-trotz-ipv6-und-dual-stack-lite/"
+veroeffentlicht = "2015-05-29T08:23:05+00:00"
+geaendert = "2025-02-21T08:10:56+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "8 Minuten"
+bild_breite = 640
+bild_hoehe = 400
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Zugriff ins LAN trotz IPv6 und Dual Stack Lite", item = ""}]
+wortzahl = 1575
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["software"]
+schlagwoerter = ["Dual Stack Lite", "IPv4", "IPv6", "Portmapper"]
+wp_id = 4417
+slug = "zugriff-ins-lan-trotz-ipv6-und-dual-stack-lite"
+url = "/zugriff-ins-lan-trotz-ipv6-und-dual-stack-lite/"
+date = "2015-05-29T10:23:05"
+lastmod = "2025-02-21T09:10:56"
+datum_utc = "2015-05-29T08:23:05+00:00"
+geaendert_utc = "2025-02-21T08:10:56+00:00"
+lightbox = true
++++
+						<p>Heutige DSL-Anschlüsse sind so schnell, dass man problemlos Serverdienste von zu Hause anbieten kann oder schnell der Wunsch aufkommt auf Geräte oder private Daten über das Internet zugreifen zu können. Die Voraussetzung um auf Geräte im Heimnetzwerk (z.B. einen Homie oder Fellow von datamate oder eine Webcam) zugreifen und sinnvoll nutzen zu können, ist die Erreichbarkeit des Geräts über das Internet. Obwohl dies im ersten Moment wie eine Selbstverständlichkeit klingt, ist es dies nicht. Grund hierfür ist der zögerliche Wechsel von IPv4 zu IPv6 auf Seiten der Internet- und Handyprovider. Die Hürden sind höher als noch vor ein paar Jahren, sie sind aber überwindbar. In diesem Artikel erklären wir, wie Sie trotz IPv6 und Dual Stack Lite (DS-Lite) auf Dienste oder Geräte in Ihrem Netzwerk zugreifen können. </p>
+
+<span id="more-4417"></span>
+
+<p>Dieser Artikel beginnt mit ein paar Absätzen zu den verwendeten Internetprotokollen und -techniken. Sollten Sie mit diesen vertraut sein und die in den folgenden Überschriften genannten Begriffe kennen bzw. mit der Dual Stack Lite Problematik vertraut sein, können Sie gerne diese Absätze überspringen. Ansonsten lohnt es sich bestimmt, diese zu lesen. </p>
+
+<h2>Hintergrundwissen: Was ist IPv4?</h2>
+
+<p>Damit Computer im Internet oder in einem lokalen Netzwerk kommunizieren können, benötigen Sie eine eindeutige Adresse und eine zentrale Vermittlungseinheit, die diese eindeutigen Adressen kennt und verteilen kann. Diese Adressen &#8211; vergleichbar mit der Straße und Hausnummer in der realen Welt &#8211; sind die IP-Adressen von netzwerkfähigen Geräten. </p>
+
+<p>IPv4 Adressen bestehen aus 4 Zahlenblöcken. Jeder dieser Zahlenblöcke kann eine Zahl von 1-255 sein. 5.35.240.22 ist beispielsweise die IP-Adresse des Servers dieser Webseite. Wenn jedes Gerät eine eindeutige IPv4 Adresse hat, ist eine unkomplizierte und schnelle Kommunikation möglich.</p>
+
+<p>IPv4-Adressen werden jedoch ein zunehmend rares Gut. Insgesamt gibt es nur 4,3 Millionen eindeutige IPv4-Adressen, wie man sich per einfacher Multiplikation schnell errechnen kann, und damit deutlich weniger als netzwerkfähige Geräte auf diesem Planeten. Daher sind IPv4 Adressen heute nicht einzigartig. Lokale Netzwerke (wie z.B. Heimnetzwerke oder Firmennetzwerke) haben eigene Adressbereiche, sogenannte reservierte Adressräume. Die bekanntesten sind 192.168.x.x, 10.x.x.x oder 172.16.x.x, wobei x für eine beliebige Zahl von 1-255 steht. </p>
+
+<p>Alle Geräte im lokalen Netzwerk haben eine eigene IP und gleichzeitig eine gemeinsame externe IP. Der Router bildet den Zugang zum restlichen Internet und sorgt mit Hilfe der Network Address Translation (NAT)-Technik dafür, dass Daten trotzdem immer zuverlässig Ihr Ziel erreichen. Wie funktioniert das? </p>
+
+<p>Hier die Erklärung an einem Beispiel: Sie wohnen anonym in einem luxuriösem Apartmenthaus und schreiben Ihrem Freund Max einen Brief. Sie verschicken die Postkarte nicht selbst, sondern übergeben diese dem Portier Ihres Hauses für den Versand. Wenn Ihr Freund Max Ihnen nun an die Adresse des Hauses antworten, dann weiß der Portier, an welche Wohnung er die Antwort zustellen muss.
+Kommt Ihre Freundin Monika auf die Idee, Ihnen zu schreiben, muss der Portier genau wissen, an wen die Postkarte gehen soll. Ansonsten droht die Gefahr, dass die Postkarte ungelesen in den Müll geworfen wird. 
+Die Adresse des Hochhauses ist somit die externe IP. Das Stockwerk und die Apartmentnummer ist die interne IP. Der Portier ist der Router, der mittels NAT die Zustellung innerhalb des Hauses sicherstellt.</p>
+ 
+<h2>Hintergrundwissen: Was ändert sich mit IPv6 und was ist Dual Stack Lite?</h2>
+
+<p>IPv6-Adressen sind länger als IPv4-Adressen und nicht auf Zahlen zwischen 1-255 beschränkt, wodurch es ungefähr 340 Sextillionen mögliche IPv6-Adressen gibt. Das sind genug Adressen, um theoretisch jedem Sandkorn auf der Welt eine eigenen IP zu geben. Da es weniger netzwerkfähige Geräte als Sandkörner gibt, ist es durch IPv6 grundsätzlich möglich, jedem Gerät eine eindeutige IP-Adresse zuzuweisen. In einer Situation, wo jedes Gerät eine eindeutige Adresse besitzt, benötigt man NAT bzw. den Portier im obigen Beispiel nicht mehr. Man kann Geräte direkt ansprechen, ohne umständlich erst die Adresse des Hochhauses und dann die Stockwerks- und Apartmentnummer anzugeben. </p>
+
+<p>Leider ist der Umstieg von ipv4 auf ipv6 nicht so einfach und wird aktuell stiefmütterlich behandelt. Während <a href='http://www.heise.de/netze/meldung/IPv4-Adressen-gehen-in-Europa-zur-Neige-1698607.html' target='_blank' rel="noopener noreferrer">Heise noch 2012 berichtete, dass IPv4-Adressen zur Neige gingen und dringender Handlungsbedarf besteht</a>, hat sich die Situation in den letzten Monaten geändert, da sich Telekom, Unity Media und Kabel Deutschland und alle anderen großen Internetprovider durch einen Trick Zeit erkauft haben. Das Stichwort lautet an dieser Stelle Dual Stack Lite. Dual Stack Lite erlaubt, dass sich mehrere Netzwerke eine externe IP teilen. Übertragen auf das obige Beispiel bedeutet Dual Stack Lite, dass es neben dem Portier noch einen Wohnviertelvorsteher gibt, der sämtliche Post von den Portiers erhält bzw. an diese weiterleitet. Leider ist der Nachteil bei Dual Stack Lite, dass durch den Wohnviertelvorsteher jedes Hochhaus in seinem Viertel die gleiche Adresse, d.h. die gleiche externe IP-Adresse hat. </p>
+
+<p>Für das Versenden von Briefen (übertragen: Surfen im Internet) ist der Wohnviertelvorsteher unerheblich. Er macht es jedoch unmöglich, Briefe (übertragen: Datenpakete), die nicht vorher aus dem Wohnviertel (übertragen: lokales Netzwerk) angefragt wurden, richtig zuzustellen. Im Klartext: IPv4 ist einfach nicht für diese zusätzliche Logik gemacht worden. </p>
+
+<h2>Warum scheitert der Zugriff über das Internet mit Dual Stack Lite?</h2>
+
+<p>Im folgenden Schaubild sehen Sie, warum der Zugriff auf ein Gerät in ihrem privaten Netzwerk von einem Handy über das Mobilfunknetz scheitert. Ihr Handy schickt per IPv4 eine Anfrage an die externe IP Ihres Heimnetzwerkes. Diese landet beim vorgeschalteten Router Ihres Internetproviders, welcher die Anfragen verwirft, da er nicht weiß, an welches Heimnetzwerk er die Anfrage weiter vermitteln soll. Ein direkter Zugriff per IPv6 ist nicht möglich, da die deutschen Handynetze noch nicht flächendeckend die neue Protokollversion eingeführt haben.</p>
+
+<a href="/wp-content/uploads/2018/04/ipv6.png" data-slb-active="1" data-slb-asset="1382437696" data-slb-internal="0" data-slb-group="4417"><img decoding="async" src="/wp-content/uploads/2018/04/ipv6.png" alt="Probleme mit Dual Stack Lite" width="640" height="400" class="alignnone size-full wp-image-152" /></a>
+
+<p>Diese Situation treffen wir bei immer mehr Kunden an, da mittlerweile alle deutschen Internetprovider bei Vertragswechseln oder Neuverträgen für Privatkunden konsequent auf die Dual Stack Lite Technik setzen. Manche Provider wie Kabel Deutschland bieten Ihren Kunden die Möglichkeit, eine einzigartige IPv4-Adresse zu erhalten, jedoch ist dies häufig mit viel Überzeugungsarbeit an der Kundenhotline verbunden und eine Garantie auf Erfolg besteht nicht.</p>
+
+<h2>Welche Lösungen gibt es, wenn man einen Dual Stack Lite Vertrag hat?</h2>
+
+<p>Es gibt vier Möglichkeiten, um doch auf die internen Geräte zuzugreifen. Nicht jede dieser Möglichkeiten liegt jedoch im eigenen Einflussbereich. </p>
+
+<p><b>Lösung 1:</b> Die Handynetze werden auf IPv6 umgestellt. An diesem <a href='https://telekomhilft.telekom.de/t5/Frage-stellen/Ab-wann-gibt-es-IPv6-im-Mobilfunknetz/qaq-p/310514/search-sort-type-order/date'>Beitrag aus der Telekom hilft Community</a> erkannt man, dass die Telekom ihren ursprünglich geplanten Umstellungstermin in 2014 deutlich verfehlte. Mittlerweile hat im Mobilfunknetz der Deutschen Telekom die IPv6-Zeit Einzug gehalten. Wann die übrigen deutschen Handynetze nachziehen, ist weiterhin unklar, da weder Vodafone noch Telefonica eine verbindliche Aussage abgeben. (In <a href="/status-der-ipv6-implementierung-in-mobilfunknetzen-in-dach">diesem Artikel</a> berichten wir fortlaufend aktualisiert über den Status der IPv6-Implementierung in Mobilfunknetzen in Deutschland, Österreich und der Schweiz.)</p>
+
+<p><b>Lösung 2:</b> Sie überzeugen Ihren Internetprovider, dass er Ihnen einen vollwertigen IPv4-basierten Anschluss schaltet und Ihnen einen Router zur Verfügung stellt, der Portforwarding beherrscht. Wie bereits beschrieben, ist dies in den meisten Fällen wohl eine Hoffnung mit geringer Eintretenswahrscheinlichkeit.</p>
+
+<p><b>Lösung 3:</b> Sie wechseln den Provider bzw. wählen einen Vertrag mit einer festen IPv4 Adresse. Abgesehen von der Schwierigkeit, einen evtl. bestehenden Vertrag vor Ablauf der Laufzeit zu kündigen, ist ein Vertrag mit statischer IPv4-Adresse in der Regel auch teurer.</p>
+
+<p><b>Lösung 4:</b> Sie nutzen einen Dienst, der zwischen der IPv4- und der IPv6-Welt vermittelt und konfigurieren Ihre Systeme entsprechend.</p>
+
+<h2>Zugriff ins Heimnetzwerk per IPv6 vom IPv4-basierten Handynetz</h2>
+<p>Da die Knappheitssituation bei den IPv4-Adressen immer drastischere Ausmaße annimmt und die Kompletteinführung von IPv6 in den Mobilfunknetze &#8211; das Netz der Deutschen Telekom ausgenommen &#8211; nicht absehbar ist, stellt die Lösung 4 in den meisten Fällen den einzigen gangbare Weg dar.</p> 
+<p>Ein Dienst, wie er für die Vermittlung zwischen IPv4 und IPv6 benötigt wird, arbeitet wie folgt: Von Ihrem Handy aus initiieren Sie eine Verbindung mit dem Dienst über IPv4. Der Dienst nimmt die Anfrage auf Basis des alten Internet Protokolls entgegen, wandelt diese in eine IPv6-Anfrage um und schickt diese an das Gerät im heimischen Netzwerk. Da es sich nun um ein IPv6-Paket handelt, kann dieses Paket eindeutig einem Empfänger zugeordnet und entsprechend weitergeleitet werden. Ein bekannter Anbieter eines solchen auch Portmapper genannten Dienstes, ist die Webseite feste-ip.net. </p>
+
+<a href="/wp-content/uploads/2018/04/ipv6_2.png" data-slb-active="1" data-slb-asset="1067571280" data-slb-internal="0" data-slb-group="4417"><img decoding="async" loading="lazy" src="/wp-content/uploads/2018/04/ipv6_2.png" alt="Zugriff ins Heimnetzwerk trotz dual stack lite" width="640" height="400" class="alignnone size-full wp-image-153" /></a>
+
+<h2>Welche Voraussetzungen müssen erfüllt sein?</h2>
+<p>Im separate Blog-Artikel <a href="/aus-ipv4-in-ipv6-serverzugriff-aus-dem-mobilfunknetz">Aus einem IPv4 in ein IPv6-Netzwerk &#8211; Serverzugriff aus dem Mobilfunknetz</a> erklären wir ausführlich die Einrichtung eines solchen Dienstes. Die Voraussetzungen dafür sind:</p>
+<ol style="padding-left:3%;">
+<li style='padding-bottom: 10px;'>Ihr Gerät bzw. ein Dienst darauf ist so konfiguriert, dass er IPv6-Pakete akzeptiert</li>
+<li style='padding-bottom: 10px;'>Die Firewall Ihres Routers muss IPv6-Pakete, die an das Gerät/den Dienst adressiert sind, passieren lassen</li>
+<li style='padding-bottom: 10px;'>Sie benötigen einen Portmapper (<strong>Wichtig:</strong> Der Dienst von feste-ip.net ist die ersten 50 Tage kostenlos und kostet dann €4,95 pro Jahr.)</li>
+
+<a href="/wp-content/uploads/2018/04/feste-ip-screenshot.png" data-slb-active="1" data-slb-asset="647165500" data-slb-internal="0" data-slb-group="4417"><img decoding="async" src="/wp-content/uploads/2018/04/feste-ip-screenshot.png" alt="feste-ip-screenshot" width="1229" /></a>
+
+<p>Dual Stack Lite verhindert wirkungsvoll sämtliche Zugriffe per IPv4 aus dem Internet in Ihr Heimnetzwerk. Mit Hilfe eines kostenpflichtigen Dienstes wie <a href='http://www.feste-ip.net'>feste-ip.net</a> ist es jedoch trotzdem möglich, auf Geräte im internen Netzwerk zuzugreifen. Gerne unterstützen wir Sie bei der Konfiguration! Beim Kauf eines <a href="/homie">Home Servers Homie</a> oder eines <a href="/fellow">Small Business Servers Fellow</a> ist die Einrichtung des Zugriffs über einen Übersetzungsdient enthalten, sollten Sie einen Dual Stack Lite DSL- oder Kabel-Vertrag haben.</p>

@@ -1,0 +1,108 @@
++++
+title = "Seafile mit der eigenen Subdomain verbinden"
+titel_html = "Seafile mit der eigenen Subdomain verbinden | datamate"
+ueberschrift = "Seafile mit der eigenen Subdomain verbinden"
+beschreibung = "Verbinden Sie eine eigene Subdomain mit Ihrer Seafile-Installation um professionell aussehende Links für ihre private Cloud zu erzeugen."
+robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+og_bild = "https://www.datamate.org/wp-content/uploads/2017/10/seafile-subdomain.png"
+og_typ = "article"
+og_url = "https://www.datamate.org/seafile-mit-der-eigenen-subdomain-verbinden/"
+canonical = "https://www.datamate.org/seafile-mit-der-eigenen-subdomain-verbinden/"
+veroeffentlicht = "2016-10-11T14:15:35+00:00"
+geaendert = "2025-02-21T08:10:48+00:00"
+twitter_label1 = "Verfasst von"
+twitter_data1 = "Christoph Dyllick-Brenzinger"
+twitter_label2 = "Geschätzte Lesezeit"
+twitter_data2 = "7 Minuten"
+bild_breite = 339
+bild_hoehe = 154
+bild_beschriftung = "die private Cloud Software Seafile hinter einer eigenen Subdomain."
+brotkrumen = [{name = "Startseite", item = "https://www.datamate.org/"}, {name = "Seafile mit der eigenen Subdomain verbinden", item = ""}]
+wortzahl = 1396
+autor = "Christoph Dyllick-Brenzinger"
+autor_kurz = "admin"
+kategorien = ["seafile", "software"]
+schlagwoerter = ["Customizing", "Dropbox Alternative", "nginx", "private Cloud", "seafile", "Tutorial"]
+wp_id = 2949
+slug = "seafile-mit-der-eigenen-subdomain-verbinden"
+url = "/seafile-mit-der-eigenen-subdomain-verbinden/"
+date = "2016-10-11T16:15:35"
+lastmod = "2025-02-21T09:10:48"
+datum_utc = "2016-10-11T14:15:35+00:00"
+geaendert_utc = "2025-02-21T08:10:48+00:00"
+lightbox = true
++++
+						<a href="/wp-content/uploads/2017/10/seafile-subdomain.png" data-slb-active="1" data-slb-asset="3773712949" data-slb-internal="0" data-slb-group="2949"><img decoding="async" src="/wp-content/uploads/2017/10/seafile-subdomain.png" alt="die private Cloud Software Seafile hinter einer eigenen Subdomain" width="339" height="154" class="size-full wp-image-2953" srcset="/wp-content/uploads/2017/10/seafile-subdomain.png 339w, /wp-content/uploads/2017/10/seafile-subdomain-300x136.png 300w" sizes="(max-width: 339px) 100vw, 339px" /></a>
+
+<p>Mit der Open Source Software <a href="/seafile">Seafile</a> kann man sich ohne große Schwierigkeiten eine eigene private Cloud aufbauen. Somit steht Seafile in direkter Konkurrenz zu kommerziellen Lösungen wie Dropbox und OneDrive. Während diese Cloud-Speicher an Komfort nicht zu überbieten sind, punktet Seafile mit dem guten Gefühl der uneingeschränkten Datenhoheit und der Datensicherheit. </p>
+
+<p>Es wurden bereits viele Artikel über die Vor- und Nachteile von Seafile gegenüber Dropbox geschrieben, doch ein Aspekt, der nur selten aufgeführt wird, ist die Möglichkeit, Seafile mit der eigenen Domain bzw. Subdomain zu verbinden. Statt über Dropbox tauscht man Dateien mit Dritten über die eigene Domain aus. Ein Download-Link <i>https://cloud.meine-firma.de/d/4u578je3</i> sieht doch alle mal professioneller aus als <i>https://www.dropbox.com/sh/2n358z1y863sh79/AADrwTQLYfumtn0rvqizZab9a?dl=0</i> &#8211; ein typischer Dropbox-Download Link.</p>
+
+<p>In diesem Artikel erfahren Sie alles über die Hintergründe und wie Sie diese Verknüpfung in der Realität umsetzen. Am Ende wird es für Sie ein leichtes sein, Ihre Seafile-Installation mit einer Subdomain Ihrer Wahl zu verbinden.</p>
+
+<span id="more-2949"></span>
+
+<h2>Welche Voraussetzungen werden für Seafile hinter einer Subdomain benötigt?</h2>
+<p>Wenn Sie diesen Artikel lesen, haben Sie wahrscheinlich bereits einen Seafile-Server bei sich installiert. Dabei spielt es keine Rolle, ob es sich um eine Seafile-Installation auf einem Raspberry Pi, einem NAS-Speicher oder einem Home-Server handelt. Die erste Voraussetzung haben Sie damit bereits erfüllt. Wenn nicht, dann wissen Sie, was zu tun ist.</p>
+
+<p>Neben Seafile benötigen Sie noch eine beliebige Domain, für die Sie einen CNAME-Eintrag anlegen können. Diese Einstellungen befindet sich normalerweise im Bereich <i>Nameserver</i> oder <i>DNS</i> der Webadministration Ihres Providers und ist mittlerweile bei fast allen Web-Paketen enthalten.</p>
+
+<p>Als letztes Voraussetzung muss Ihr Router noch die Möglichkeit einer Portweiterleitung bieten. Es ist sehr wahrscheinlich, dass Sie diese Anforderung ohne weiteres Zutun erfüllen. Praktisch jeder handelsübliche Router (z.B. Fritzbox, Speedport, etc) bringt das heutzutage mit.</p>
+
+<p>Wenn diese Voraussetzungen erfüllt sind, kann es losgehen.</p>
+
+<h2>Wie funktioniert die Verknüpfung von Seafile und Subdomain?</h2>
+
+<p>Wenn Sie in Ihrem Browser <a href="https://www.seafile.com" target="_blank" rel="noopener">www.seafile.com</a> eingeben, wird diese für Menschen gut lesbare URL in eine IP-Adresse umgewandelt und die Inhalte zu dieser IP-Adresse abgefragt. Diese Übersetzungsarbeit erfolgt durch sogennante Domain Name Server (DNS). </p>
+
+<p>Um nun Ihre private Seafile-Installation über das Internet erreichbar zu machen, müssen Sie den DNS-Servern mitteilen, unter welcher IP-Adresse Ihr Seafile zu erreichen ist. Dies machen Sie über einen sogenannten A-Record zum Verweis auf die öffentliche IP-Adresse bzw. einen CNAME-Eintrag zum Verweis auf eine andere URL. Wie schon gesagt, erfolgt dies üblicherweise über die Webadministration Ihres Webproviders.</p>
+
+<p>Eine weitere Schwierigkeit ist, dass sich bei den meisten DSL-Anschlüsse von Privatpersonen die IP-Adresse regelmäßig ändert. Eine URL kann also nicht fest mit einer IP &#8220;verdrahtet&#8221; werden. Doch auch hier gibt es eine ganz einfache Lösung. Anstatt zu versuchen, auf die wechselnde IP-Adresse zu verweisen, können Sie den kostenlosen DynDNS-Dienst <a href="http://www.spdyn.de" target="_blank" rel="noopener">spdyn.de</a> nutzen. Mit diesem Dienst können Sie Ihrer wechselnde IP-Adresse einen festen Namen zuweisen. Voilà.</p>
+
+<p>Die vielen Fachausdrücke sollten Sie nicht verwirren oder beunruhigen. Wie gesagt geht es am Ende nur darum, dass Sie Ihrem Domainprovider mitteilen, dass eine von Ihnen gewählte Subdomain wie z.B. <i>https://cloud.ionas.com</i> nicht auf Ihren Webspace bei diesem Provider zeigen soll, sondern eben auf eine DynDNS-Adresse bei spdyn, die wiederum auf Ihre wechselnde private IP-Adresse bei Ihnen zu Hause zeigt. So können Sie Ihr Seafile, welches Sie z.B. auf einem Raspberry Pi installiert haben, jederzeit über Ihre Subdomain erreichen. Richtig professionell wird der ganze Aufbau, wenn Sie Ihre Subdomain noch mit einem <a href="/mit-lets-encrypt-zum-https-zertifikat-fuer-den-virtuellen-server/">Let&#8217;s Encrypt Zertifikat ausstatten</a>, so dass verschlüsselte Aufrufe der https-Seite nicht mit einem Sicherheitshinweis beantwortet werden.</p>
+
+<p>Wenn Ihr Internetanschluss eine statische IP hat, dann besteht natürlich kein Grund, den DynDNS-Dienst zu nutzen. Ob Sie eine dynamische oder statische IP haben, geht aus Ihrem Anschlussvertrag hervor.</p>
+
+<h2>Verknüpfung von Seafile mit Ihrer Subdomain</h2>
+<p>Nach der grauen Theorie kommen wir nun zur praktischen Umsetzung: Im folgenden Beispiel wird ein lokal installierter Seafile-Server mit der Subdomain <i>https://cloud.ionas.com</i> verbunden. Dabei werden wir uns von hinten nach vorne arbeiten, d.h. genau gegenteilig dazu, wie die spätere Datenanfrage erfolgen wird. Dieser umgekehrte Ablauf ermöglicht es, nach jedem Schritt die Funktion zu überprüfen, bevor man zum nächsten Schritt weitergeht.</p>
+
+<h3>1. Portweiterleitung im Router</h3>
+<p>Aufgrund der Vielzahl an Routern ist es schwer eine pauschale Anleitung für die Einrichtung einer Portweiterleitung zu schreiben. Ermitteln Sie die genaue Bezeichnung Ihres Routers und suchen Sie bei Google nach &#8216;#Routername# Portweiterleitung&#8217;, wobei Sie #Routername# mit der Modelbezeichnung Ihres Routers ersetzen müssen. Mit Sicherheit werden Sie so fündig. </p>
+
+<p>Legen Sie eine Portweiterleitung für den Port 443 (HTTPS) auf die interne IP-Adresse Ihrer Seafile-Installation an. </p>
+
+<p>Sie können Testen, ob diese Weiterleitung funktioniert, indem Sie mit Ihrem Handy <i>https://ihre-öffentliche IP-Adresse</i> eingeben. Ihre öffentliche IP-Adresse erfahren Sie, indem Sie z.B. die Seite <a href="http://www.wieistmeineip.de/">www.wieistmeineip.de</a> aufrufen. Bitte deaktivieren Sie vor dem Aufruf mit dem Handy zuerst das WLAN um sicherzustellen, dass die Anfrage wirklich über das Internet erfolgt und nicht über das interne WLAN.</p>
+
+<h3>2. Einrichtung eines DynDNS-Dienstes</h3>
+
+<p>Als nächstes kommt die Anlage eines DynDNS-Accounts bei spdyn.de. Dieser Schritt kann übersprungen werden, wenn man bereits einen DynDNS-Account (wie z.B. MyFritz) oder sogar eine feste IP-Adresse hat. Rufen Sie die Seite spdyn.de auf und registrieren Sie sich mit einer E-Mailadresse und einem Passwort. Nach erfolgreicher Bestätigung der Registrierungs-E-Mail können Sie einen sogenannten <i>Host</i> anlegen. Wählen Sie einen beliebigen Hostnamen wie z.B.: <i>seafile.spdns.org</i>. Dieser verweist sofort auf Ihre aktuelle IP-Adresse.</p>
+
+<p>Für die Funktionsprüfung des Hostnames genügt ein einfacher Ping-Befehl. Öffnen Sie die Konsole (bei Windows die Eingabeaufforderung oder ein Terminal unter Linux und MacOS) und tippen Sie dann <strong>ping #Hostname#</strong> ein. Um das Beispiel von oben also fortzuführen:</p>
+
+<p><strong>ping seafile.spdns.org </strong></p>
+
+<p>Wenn daraufhin der Hostname in Ihre öffentliche IP-Adresse aufgelöst wird, dann ist die DynDNS-Adresse richtig eingerichtet. Sollte nicht Ihre öffentliche IP-Adresse angezeigt werden, müssen Sie ggf. ein paar Minuten warten.</p>
+
+<h3>3. Regelmäßige Aktualisierung des DynDNS-Dienstes</h3>
+
+<p>Wenn sich Ihre IP-Adresse regelmäßig ändert, müssen Sie den Dienst <i>spdyn</i> ebenso regelmäßig mit der neuen IP Ihres Anschlusses versorgen. Hierfür gibt es diverse Tool für die verschiedenen Betriebssysteme. Am Besten Sie installieren auf dem Server, auf dem auch Seafile installiert ist, einen DynDNS-Updater wie z.B. <i>ddclient</i>. Dieser sorgt dafür, dass beim Wechsel Ihrer Anschluss-IP diese neue Adresse an <i>spdyn</i> übermittelt wird. So zeigt Ihr DynDNS-Eintrag immer auf die richtige IP-Adresse zeigt.</p>
+
+<p>Es gibt auch solche Internetanschlüsse, die sich eine IPv4-Adresse teilen. Dual-Stack Lite ist das Stichwort. In diesen Fällen ist die Konfiguration zwar immer noch möglich, aber leider nicht mehr ganz so einfach und geht mit zusätzlichen Kosten einher. In diesem <a href="/zugriff-ins-lan-trotz-ipv6-und-dual-stack-lite/">Beitrag</a> erläutern wir die Problematik und beschreiben die Lösung.</p>
+
+<h3>4. C-NAME Eintrag anlegen</h3>
+
+<div id="attachment_2951" style="width: 437px" class="wp-caption alignleft"><a href="/wp-content/uploads/2017/10/cname-eintrag.png" data-slb-active="1" data-slb-asset="3356288324" data-slb-internal="0" data-slb-group="2949"><img aria-describedby="caption-attachment-2951" decoding="async" loading="lazy" src="/wp-content/uploads/2017/10/cname-eintrag.png" alt="" width="427" height="205" class="size-full wp-image-2951" srcset="/wp-content/uploads/2017/10/cname-eintrag.png 427w, /wp-content/uploads/2017/10/cname-eintrag-300x144.png 300w" sizes="(max-width: 427px) 100vw, 427px" /></a><p id="caption-attachment-2951" class="wp-caption-text">CNAME-Eintrag bei Host-Europe</p></div>
+
+<p>Loggen Sie sich nun in die Webadministration Ihres Domainproviders ein. Wenn Ihr Paket die Anlage von eigenen DNS-Einträgen erlaubt, können Sie dort einen CNAME-Eintrag anlegen. Für unser Beispiel müsste der Eintrag lauten:</p>
+
+<p><strong>cloud.ionas.com.  ->  CNAME  ->  seafile.spdns.org.</strong></p>
+
+<p>Auf dem Screenshot sehen Sie, wie diese Anlage eines CNAME-Eintrags mit Plesk bei Host-Europe aussieht.</p>
+
+<p>Der Erfolg dieser Aktion lässt sich wiederum testen. Geben Sie in der Konsole den Befehl <strong>ping #CNAME-Eintrag#</strong> ein. Auch dieser Aufruf sollte wieder in die öffentliche IP Ihres Anschlusses aufgelöst werden. Wenn es nicht unmittelbar funktioniert, warten Sie ein paar Minuten ab und probieren Sie es erneut. Wenn es dann immer noch nicht funktioniert, überprüfen Sie alle Einstellungen.</p>
+
+<h2>Ihre private Dropbox-Alternative</h2>
+
+<p>Die Verknüpfung des eigenen Seafile-Servers mit der eigenen Domain wirkt ganz anders als ein anonymer Dropbox-Link. Gerade im Business-Umfeld sind solche Details ein wichtiges Qualitätssignal und hinterlassen einen professionellen Eindruck &#8211; gerade wenn die <a href="/seafile-individuell-default-logo-durch-das-eigene-ersetzen/">Seafile-Oberfläche mit dem eigenen Logo</a> versehen und evtl. sogar komplett ans Corporate Design angepasst wurde.</p>
+
+<p>Nicht umsonst ist diese Konfigurationsmöglichkeit von Seafile als <a href="/dropbox-alternative">private Dropbox-Alternative</a> ein fester Bestandteil eines jedes ionas-Servers. Haben Sie bereits einen Seafile-Server im Einsatz, dann können wir natürlich auch diesen customizen. Rufen Sie einfach an: +49 (0)6131 3270777.</p>

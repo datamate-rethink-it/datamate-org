@@ -1,0 +1,220 @@
+[
+  {
+    "eltern": "",
+    "kinder": [],
+    "mit": [
+      "alles-ueber-die-cloud"
+    ],
+    "name": "Alles über die Cloud",
+    "pfad": "/category/alles-ueber-die-cloud/",
+    "slug": "alles-ueber-die-cloud"
+  },
+  {
+    "eltern": "",
+    "kinder": [
+      {
+        "eltern": "anleitungen",
+        "kinder": [],
+        "mit": [
+          "hardware"
+        ],
+        "name": "HARDWARE",
+        "pfad": "/category/anleitungen/hardware/",
+        "slug": "hardware"
+      },
+      {
+        "eltern": "anleitungen",
+        "kinder": [],
+        "mit": [
+          "software"
+        ],
+        "name": "SOFTWARE",
+        "pfad": "/category/anleitungen/software/",
+        "slug": "software"
+      }
+    ],
+    "mit": [
+      "anleitungen",
+      "hardware",
+      "software"
+    ],
+    "name": "ANLEITUNGEN",
+    "pfad": "/category/anleitungen/",
+    "slug": "anleitungen"
+  },
+  {
+    "eltern": "",
+    "kinder": [
+      {
+        "eltern": "datamate",
+        "kinder": [],
+        "mit": [
+          "aus-dem-leben-eines-startups"
+        ],
+        "name": "AUS DEM LEBEN EINES STARTUPS",
+        "pfad": "/category/datamate/aus-dem-leben-eines-startups/",
+        "slug": "aus-dem-leben-eines-startups"
+      },
+      {
+        "eltern": "datamate",
+        "kinder": [],
+        "mit": [
+          "unsere-produkte"
+        ],
+        "name": "UNSERE PRODUKTE",
+        "pfad": "/category/datamate/unsere-produkte/",
+        "slug": "unsere-produkte"
+      }
+    ],
+    "mit": [
+      "datamate",
+      "aus-dem-leben-eines-startups",
+      "unsere-produkte"
+    ],
+    "name": "DATAMATE",
+    "pfad": "/category/datamate/",
+    "slug": "datamate"
+  },
+  {
+    "eltern": "",
+    "kinder": [
+      {
+        "eltern": "kunden",
+        "kinder": [],
+        "mit": [
+          "erfolgsgeschichten"
+        ],
+        "name": "ERFOLGSGESCHICHTEN",
+        "pfad": "/category/kunden/erfolgsgeschichten/",
+        "slug": "erfolgsgeschichten"
+      },
+      {
+        "eltern": "kunden",
+        "kinder": [],
+        "mit": [
+          "praktische-anwendungsfaelle"
+        ],
+        "name": "PRAKTISCHE ANWENDUNGSFÄLLE",
+        "pfad": "/category/kunden/praktische-anwendungsfaelle/",
+        "slug": "praktische-anwendungsfaelle"
+      }
+    ],
+    "mit": [
+      "kunden",
+      "erfolgsgeschichten",
+      "praktische-anwendungsfaelle"
+    ],
+    "name": "KUNDEN",
+    "pfad": "/category/kunden/",
+    "slug": "kunden"
+  },
+  {
+    "eltern": "",
+    "kinder": [
+      {
+        "eltern": "loesungen",
+        "kinder": [],
+        "mit": [
+          "3cx"
+        ],
+        "name": "3CX",
+        "pfad": "/category/loesungen/3cx/",
+        "slug": "3cx"
+      },
+      {
+        "eltern": "loesungen",
+        "kinder": [],
+        "mit": [
+          "friendica"
+        ],
+        "name": "Friendica",
+        "pfad": "/category/loesungen/friendica/",
+        "slug": "friendica"
+      },
+      {
+        "eltern": "loesungen",
+        "kinder": [],
+        "mit": [
+          "odoo"
+        ],
+        "name": "ODOO",
+        "pfad": "/category/loesungen/odoo/",
+        "slug": "odoo"
+      },
+      {
+        "eltern": "loesungen",
+        "kinder": [],
+        "mit": [
+          "seafile"
+        ],
+        "name": "SEAFILE",
+        "pfad": "/category/loesungen/seafile/",
+        "slug": "seafile"
+      },
+      {
+        "eltern": "loesungen",
+        "kinder": [],
+        "mit": [
+          "wordpress"
+        ],
+        "name": "WORDPRESS",
+        "pfad": "/category/loesungen/wordpress/",
+        "slug": "wordpress"
+      }
+    ],
+    "mit": [
+      "loesungen",
+      "3cx",
+      "friendica",
+      "odoo",
+      "seafile",
+      "wordpress"
+    ],
+    "name": "LÖSUNGEN",
+    "pfad": "/category/loesungen/",
+    "slug": "loesungen"
+  },
+  {
+    "eltern": "",
+    "kinder": [
+      {
+        "eltern": "tests",
+        "kinder": [],
+        "mit": [
+          "hardware-tests"
+        ],
+        "name": "HARDWARE",
+        "pfad": "/category/tests/hardware-tests/",
+        "slug": "hardware-tests"
+      },
+      {
+        "eltern": "tests",
+        "kinder": [],
+        "mit": [
+          "software-tests"
+        ],
+        "name": "SOFTWARE",
+        "pfad": "/category/tests/software-tests/",
+        "slug": "software-tests"
+      }
+    ],
+    "mit": [
+      "tests",
+      "hardware-tests",
+      "software-tests"
+    ],
+    "name": "TESTS",
+    "pfad": "/category/tests/",
+    "slug": "tests"
+  },
+  {
+    "eltern": "",
+    "kinder": [],
+    "mit": [
+      "uncategorized"
+    ],
+    "name": "Uncategorized",
+    "pfad": "/category/uncategorized/",
+    "slug": "uncategorized"
+  }
+]
