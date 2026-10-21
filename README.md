@@ -334,23 +334,34 @@ Dazu zwei Bilder, die in keiner Fassung des Themes existieren:
 
 ## Neu aufsetzen
 
-`_build/wporig/` – der entpackte WordPress-Dateibestand – ist nicht im
-Repo: 533 MB, und darin steckt `wp-config.php` mit den
-Datenbank-Zugangsdaten. Gebraucht wird er nur von
-`_build/gen_static.py`. Aus dem Archiv:
+**Das Quellarchiv gibt es nicht mehr.** `datamate-org.tar.gz` (1,9 GB, der
+Dateibestand der WordPress-Installation) ist am 21.10.2026 gelöscht
+worden, nachdem der Umzug abgeschlossen und an der Live-Seite geprüft war.
+Mit ihm sind `downloads/firmware`, `downloads/manuals` und `seafcss/`
+endgültig weg – die drei Verzeichnisse, die bewusst nicht mitkommen
+sollten.
 
-```bash
-mkdir -p _build/wporig
-tar xzf datamate-org.tar.gz -C _build/wporig \
-  --exclude='wordpress/wp-admin' --exclude='wordpress/wp-includes/[a-z]*' \
-  --exclude='wordpress/wp-content/languages' \
-  --exclude='wordpress/wp-content/upgrade' \
-  --exclude='wordpress/wp-content/cache' \
-  --exclude='wordpress/wp-content/aiowps_backups' \
-  --exclude='wordpress/downloads/firmware' \
-  --exclude='wordpress/downloads/manuals' \
-  --exclude='wordpress/seafcss'
-```
+Was das für die Arbeit am Repo bedeutet:
+
+* **`webroot/` ist jetzt der Dateibestand.** Die 969 Dateien im Repo sind
+  alles, was die Seite braucht, und die einzige Kopie im Zugriff. Sie
+  lassen sich nicht neu erzeugen.
+* **`_build/gen_static.py` braucht `_build/wporig/`** – den entpackten
+  alten Dateibestand, 646 MB, nicht im Repo (dort steckt auch
+  `wp-config.php` mit Datenbank-Zugangsdaten). Das Verzeichnis liegt noch
+  auf dem Rechner, auf dem die Migration lief; neu anlegen lässt es sich
+  nicht mehr. Ohne es ist das Skript Dokumentation des Vorgehens, kein
+  benutzbares Werkzeug.
+* **Ein Bild aus einem alten Beitrag nachträglich einbinden** geht
+  deshalb nur, wenn die Datei schon in `webroot/` liegt. Die unbenutzten
+  Zwischengrößen, die WordPress angelegt hatte, sind nicht dabei.
+
+Nicht davon betroffen sind die Prüfungen: `verify.py`, `verify_blog.py`
+und `linkcheck.py` arbeiten mit `_build/reference/` und `_build/wp/`, und
+die liegen im Repo. **Beide nicht wegwerfen** – `_build/reference/` ist
+der Schnappschuss der alten Seite über 245 Adressen, `_build/wp/` die
+letzte maschinenlesbare Kopie der WordPress-Daten (Seiten, Beiträge,
+Kategorien, Schlagwörter, Autoren, Medien).
 
 Die Werkzeuge in `_build/`, in der Reihenfolge, in der sie liefen:
 
@@ -362,10 +373,6 @@ Die Werkzeuge in `_build/`, in der Reihenfolge, in der sie liefen:
 | `gen_static.py` | erzeugt `webroot/` aus den tatsächlichen Verweisen der **gebauten** Seite |
 | `gen_redirects.py` | erzeugt `deploy/redirects.caddy` und `weiterleitungen.json` |
 | `verify.py`, `verify_blog.py`, `linkcheck.py` | die Prüfungen |
-
-`_build/wp/` ist die letzte maschinenlesbare Kopie der WordPress-Daten:
-Seiten, Beiträge, Kategorien, Schlagwörter, Autoren, Medien – **nicht
-wegwerfen.** `_build/reference/` ebenso.
 
 ### Zwei Fallen der REST-API
 
