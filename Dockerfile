@@ -15,11 +15,23 @@ ARG HUGO_VERSION=0.168.0
 ARG PAGEFIND_VERSION=1.4.0
 ARG CADDY_VERSION=2.11.7
 
+# Was Pagefind *nicht* indizieren soll: Kopfleiste, Fussleiste und die
+# Seitenleiste mit Suchfeld und Kategorieliste. Die stehen auf jeder
+# Seite - ohne den Ausschluss traefe "Erfolgsgeschichten" 179 von 211
+# Seiten statt 2. Der uebliche Weg dafuer waere data-pagefind-body im
+# Layout; das verbietet sich hier, weil _build/verify.py den Seitenrumpf
+# zeichenweise mit dem WordPress-Stand vergleicht. Darum von aussen.
+# Ohne Raute, damit der Wert nicht wie ein Kommentar aussieht - header
+# und footer gibt es je genau einmal, die Inhalte benutzen die Elemente
+# nicht. .github/workflows/build.yml liest diese Zeile - Format behalten.
+ARG PAGEFIND_EXCLUDE=header,footer,.col-sm-4.bottommargin-sm
+
 # ---------------------------------------------------------------- Build
 FROM debian:trixie-slim AS builder
 
 ARG HUGO_VERSION
 ARG PAGEFIND_VERSION
+ARG PAGEFIND_EXCLUDE
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends ca-certificates curl \
@@ -47,11 +59,12 @@ COPY . /src
 # auf, die _build/verify.py nachweist.
 RUN set -eux; \
     hugo --gc --destination /src/public; \
-    pagefind --site /src/public; \
+    pagefind --site /src/public --exclude-selectors "${PAGEFIND_EXCLUDE}"; \
     test -f /src/public/a-plus-rating-nginx-lets-encrypt/index.html; \
     test -f /src/public/seafile/architektur/index.html; \
     test -f /src/public/feed/index.xml; \
     test -f /src/public/pagefind/pagefind-ui.js; \
+    test -f /src/public/pagefind/pagefind-ui.css; \
     test ! -e /src/public/hero; \
     test ! -e /src/public/hilfe; \
     cp -al /src/public /src/site; \

@@ -11,7 +11,7 @@
 
             <div class="row clearfix">
 
-                <div class="col-sm-8">
+                <div class="col-sm-8" data-pagefind-ignore>
         {{ range $p.Pages }}{{ partial "beitragsliste.html" (dict "seite" . "stil" "lang") }}
 
         {{ end }}

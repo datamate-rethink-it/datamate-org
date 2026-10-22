@@ -38,6 +38,12 @@ jobs:
                     echo "${v,,}=$wert" >> "$GITHUB_OUTPUT"
                     echo "${v} = $wert"
                   done
+                  # Dieselbe Quelle fuer die Auswahl, die Pagefind beim
+                  # Indizieren ueberspringt.
+                  ausschluss=$(grep -oP "^ARG PAGEFIND_EXCLUDE=\K.*" Dockerfile)
+                  if [ -z "$ausschluss" ]; then echo "::error::ARG PAGEFIND_EXCLUDE fehlt im Dockerfile"; exit 1; fi
+                  echo "pagefind_exclude=$ausschluss" >> "$GITHUB_OUTPUT"
+                  echo "PAGEFIND_EXCLUDE = $ausschluss"
 
             - name: Hugo und Pagefind installieren
               env:
@@ -55,9 +61,11 @@ jobs:
                   pagefind --version
 
             - name: Seite bauen
+              env:
+                  PAGEFIND_EXCLUDE: ${{ steps.versionen.outputs.pagefind_exclude }}
               run: |
                   hugo --gc
-                  pagefind --site public
+                  pagefind --site public --exclude-selectors "$PAGEFIND_EXCLUDE"
 
             # Die drei Prüfungen sind das Sicherheitsnetz der Migration: sie
             # vergleichen die Ausgabe mit dem Stand, den die alte Seite
