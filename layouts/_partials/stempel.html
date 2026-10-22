@@ -1,0 +1,16 @@
+{{- /*
+  Inhaltsstempel fuer eine eigene Datei, als Anhaengsel an ihre Adresse:
+
+      /eigen/js/suche.js?v=a1b2c3d4
+
+  Die Dateien unter /eigen/ werden einen Monat lang zwischengespeichert
+  (deploy/Caddyfile.container). Ihr Name aendert sich dabei nie - ohne
+  Stempel bekaeme, wer die Seite schon einmal besucht hat, einen Monat
+  lang die alte Fassung. Genau das ist am 22.10.2026 passiert: die
+  reparierte suche.js lag auf dem Server, im Browser lief die kaputte
+  weiter.
+
+  Uebergeben wird der Pfad im Repository, nicht die ausgelieferte
+  Adresse - webroot-eigen/ wird von Hugo unter / gemischt.
+*/ -}}
+{{- substr (sha256 (readFile .)) 0 8 -}}

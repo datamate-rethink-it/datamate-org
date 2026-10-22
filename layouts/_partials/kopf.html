@@ -88,7 +88,7 @@
 	<link rel="alternate" type="application/rss+xml" title="datamate &raquo; Feed" href="/feed/" />
 	<link rel="stylesheet" href="/wp-includes/css/classic-themes.min.css" type="text/css" media="all" />
 {{- if .Params.lightbox }}
-	<link rel="stylesheet" href="/eigen/css/lightbox.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="/eigen/css/lightbox.css?v={{ partial "stempel.html" "webroot-eigen/eigen/css/lightbox.css" }}" type="text/css" media="all" />
 {{- end }}
 {{- if .Params.suche }}
 	<link rel="stylesheet" href="/pagefind/pagefind-ui.css" type="text/css" media="all" />

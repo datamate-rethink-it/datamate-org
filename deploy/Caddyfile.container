@@ -54,11 +54,25 @@
 		respond "410 Gone - diese Seite gibt es nicht mehr." 410
 	}
 
-	# Lange Cache-Zeiten fuer Medien, kurze fuer die Seiten selbst.
-	@medien path /wp-content/* /wp-includes/* /eigen/* /downloads/* /css/* /img/* /pagefind/*
-	@seiten not path /wp-content/* /wp-includes/* /eigen/* /downloads/* /css/* /img/* /pagefind/*
-	header @medien Cache-Control "public, max-age=2592000"
-	header @seiten Cache-Control "public, max-age=300"
+	# Lange Cache-Zeiten fuer Dateien, deren Adresse sich mit ihrem
+	# Inhalt aendert, kurze fuer alles andere.
+	#
+	# Von Pagefind gehoert nur ein Teil in die lange Gruppe: die
+	# Index- und Fragmentdateien und die .pf_meta tragen einen
+	# Inhaltsstempel im Namen. pagefind-entry.json dagegen heisst immer
+	# gleich und verweist auf die jeweils aktuelle .pf_meta - eine
+	# zwischengespeicherte Fassung zeigt nach der naechsten Aenderung am
+	# Inhalt auf eine Datei, die es nicht mehr gibt, und die Suche
+	# bliebe fuer diesen Browser kaputt. Dasselbe gilt fuer die
+	# Pagefind-Skripte, die sich mit der Programmfassung aendern.
+	#
+	# Unsere eigenen Dateien unter /eigen/ bleiben lange gespeichert;
+	# ihre Adresse traegt einen Stempel aus dem Dateiinhalt (siehe
+	# layouts/_partials/stempel.html).
+	@lange path /wp-content/* /wp-includes/* /eigen/* /downloads/* /css/* /img/* /pagefind/fragment/* /pagefind/index/* /pagefind/*.pf_meta
+	@kurze not path /wp-content/* /wp-includes/* /eigen/* /downloads/* /css/* /img/* /pagefind/fragment/* /pagefind/index/* /pagefind/*.pf_meta
+	header @lange Cache-Control "public, max-age=2592000"
+	header @kurze Cache-Control "public, max-age=300"
 
 	log {
 		output stdout

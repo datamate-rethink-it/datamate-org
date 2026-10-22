@@ -65,7 +65,7 @@
 <div id="gotoTop" class="icon-angle-up"></div>
 <script src="/wp-content/themes/datamate-theme/js/canvas.js"></script>
 <script src="/wp-content/themes/datamate-theme/datamate-theme.js"></script>
-{{ if .Params.lightbox }}<script src="/eigen/js/lightbox.js" defer></script>
-{{ end }}{{ if .Params.suche }}<script src="/eigen/js/suche.js" type="module"></script>
+{{ if .Params.lightbox }}<script src="/eigen/js/lightbox.js?v={{ partial "stempel.html" "webroot-eigen/eigen/js/lightbox.js" }}" defer></script>
+{{ end }}{{ if .Params.suche }}<script src="/eigen/js/suche.js?v={{ partial "stempel.html" "webroot-eigen/eigen/js/suche.js" }}" type="module"></script>
 {{ end }}</body>
 </html>
