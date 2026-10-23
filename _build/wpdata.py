@@ -27,7 +27,9 @@ FORT_SEITEN = {
     '/odoo/',
     '/consulting/',
     '/roadmap/',            # Roadmap von 2018
-    '/seafile/seamate/',    # PHP-Generator, liefert live schon HTTP 500
+    '/seafile/seamate/',    # PHP-Generator, lieferte live schon HTTP 500.
+                            # Die Adresse leitet weiter, siehe EXTERN
+                            # in _build/gen_redirects.py.
 }
 FORT_BEITRAEGE = {
     # Haengt vollstaendig an downloads/firmware und downloads/manuals,
@@ -188,9 +190,13 @@ def kopf(html):
 
 # Bereiche, die es nach dem Umzug nicht mehr gibt. Verweise darauf werden
 # aufgeloest: der Linktext bleibt stehen, das <a> faellt weg.
+#
+# /seafile/seamate und /seamate stehen hier mit Absicht NICHT, obwohl die
+# Seite wegfaellt: die Adressen leiten auf die Seafile-Admin-Doku weiter
+# (EXTERN in _build/gen_redirects.py), der Verweis darf also bleiben.
 TOTE_ZIELE = (
     '/hero', '/hilfe', '/3cx', '/voip', '/odoo', '/consulting',
-    '/roadmap', '/goldenrosskaserne', '/seafile/seamate', '/seamate',
+    '/roadmap', '/goldenrosskaserne',
     '/downloads/firmware', '/downloads/manuals',
     '/voip-ip-telefone-firmware-handbuecher-und-standard-passwoerter',
 )
@@ -285,13 +291,15 @@ HANDAENDERUNGEN = {
     '/seafile/': [(
         """\t\t\t\t\t\t\t<p>Es ist kinderleicht das Seafile-Logo durch eine eigene Grafik zu ersetzen. Mit Seamate, dem Webcustomizer von datamate, kann man auch die gesamte Farbgebung von Seafile austauschen um das System ganz individuell an das eigenen Corporate Design anzupassen. Es ist keine Programmierung erforderlich, da lediglich ein von Seamate erzeugter CSS-Code hinterlegt werden muss.
 \t\t\t\t\t\t\t</p>
-\t\t\t\t\t\t\t<p> Mehr über Seamate erfahren</p>""",
-        """\t\t\t\t\t\t\t<p>Es ist kinderleicht das Seafile-Logo durch eine eigene Grafik zu ersetzen. Auch die gesamte Farbgebung von Seafile lässt sich austauschen, um das System ganz individuell an das eigene Corporate Design anzupassen. Eine Programmierung ist dafür nicht erforderlich, es genügt hinterlegtes CSS.
+\t\t\t\t\t\t\t<p><a href="/seafile/seamate" class="button button-3d"> Mehr über Seamate erfahren</a></p>""",
+        """\t\t\t\t\t\t\t<p>Es ist kinderleicht das Seafile-Logo durch eine eigene Grafik zu ersetzen. Auch die gesamte Farbgebung von Seafile lässt sich austauschen, um das System ganz individuell an das eigene Corporate Design anzupassen. Eine Programmierung ist dafür nicht erforderlich: Ein Farbwähler erzeugt den CSS-Code, der nur noch hinterlegt werden muss.
 \t\t\t\t\t\t\t</p>
-\t\t\t\t\t\t\t<p><a href="/seafile/customizing/" class="button button-3d"> Mehr über das Customizing erfahren</a></p>""",
-        'Der Absatz versprach den Seamate-Generator und verwies auf ihn. '
-        'Der Generator faellt weg; der Text nennt jetzt nur noch, was '
-        'bleibt, und verweist auf /seafile/customizing/.',
+\t\t\t\t\t\t\t<p><a href="/seafile/seamate" class="button button-3d"> Mehr über Seamate erfahren</a> <a href="/seafile/customizing/" class="button button-3d"> Mehr über das Customizing erfahren</a></p>""",
+        'Der Absatz nannte Seamate einen Webcustomizer von datamate. Den '
+        'Generator gibt es nicht mehr; den Farbwaehler, der den CSS-Code '
+        'erzeugt, gibt es weiter in der Seafile-Admin-Doku. Der Verweis '
+        'auf /seafile/seamate bleibt und leitet dorthin; dazu kommt der '
+        'Verweis auf /seafile/customizing/.',
     )],
     '/deutsche-seafile-webseite-veroeffentlicht/': [(
         'href="www.seafile.com"',

@@ -31,6 +31,17 @@ import wpdata as w
 ZIEL_CADDY = os.path.join(w.WURZEL, 'deploy', 'redirects.caddy')
 ZIEL_JSON = os.path.join(w.BASIS, 'weiterleitungen.json')
 
+# Adressen, die auf eine fremde Seite weiterleiten. Die Seite dazu gibt es
+# bei uns nicht mehr (sie steht in wpdata.FORT_SEITEN), der Inhalt aber
+# woanders weiter. Darum eine Weiterleitung statt 410: die Adresse ist von
+# aussen verlinkt, und das Ziel beantwortet dieselbe Frage.
+_SEAMATE = ('https://datamate-rethink-it.github.io/'
+            'seafile-admin-docs/customization/main-color/')
+EXTERN = {
+    '/seafile/seamate': _SEAMATE,
+    '/seamate': _SEAMATE,       # nackte Adresse, von WordPress umgeleitet
+}
+
 
 def medien():
     """Alle Mediendateien als {(Beitrags-Slug, Anhang-Slug): Adresse}."""
@@ -161,14 +172,16 @@ def main():
     tabelle.update(kind_bleibt)
     tabelle.update(anhang)
     tabelle.update(geraten)
+    tabelle.update(EXTERN)
 
     a('# --- 1. Adressen mit festem Ziel -------------------------------')
-    a('# Zusammengefasst aus vier Quellen:')
+    a('# Zusammengefasst aus fuenf Quellen:')
     a('#   * gepflegte Regeln des Plugins Redirection (ohne Platzhalter)')
     a('#   * nackte Adressen der Unterseiten: /architektur/ ->')
     a('#     /seafile/architektur/, von WordPress selbst umgeleitet')
     a('#   * Anhangseiten -> Bilddatei, von Yoast SEO umgeleitet')
     a('#   * Adressen, die WordPress aus einem Teil des Slugs erraten hat')
+    a('#   * Adressen, deren Inhalt jetzt auf einer fremden Seite steht')
     a('map {path} {ziel} {')
     for q, zl in sorted(tabelle.items()):
         muster_q = '~^' + re.escape(q.rstrip('/')).replace('/', '/') + '/?$'
@@ -274,6 +287,12 @@ def main():
     gone.append('/wp-content/uploads/2019/04/'
                 '3CX_Installation_Bestellformular-1.pdf')
 
+    # Was auf eine fremde Seite weiterleitet, antwortet nicht mit 410.
+    # Regel 1 steht vorher und wuerde ohnehin gewinnen; hier faellt die
+    # Adresse heraus, damit die Absicht an einer Stelle steht.
+    extern_pfade = {q.rstrip('/') for q in EXTERN}
+    gone = [g for g in gone if g.rstrip('/*') not in extern_pfade]
+
     a('@entfallen path %s' % ' '.join(sorted(set(gone))))
     a('handle @entfallen {')
     a('\terror 410')
@@ -291,6 +310,7 @@ def main():
     karte.update(kind_bleibt)
     karte.update(anhang)
     karte.update(geraten)
+    karte.update(EXTERN)
     for q, zl in muster:
         karte[q.replace('^', '').replace('(.*?)', '')] = zl.replace('$1', '')
     for g in gone:
@@ -309,6 +329,7 @@ def main():
     print('  nackte Unterseiten-Adressen   %3d' % len(kind_bleibt))
     print('  Anhangseiten                  %3d' % len(anhang))
     print('  erratene Adressen             %3d' % len(geraten))
+    print('  Ziel auf fremder Seite        %3d' % len(EXTERN))
     print('  410 Gone (Pfadmuster)         %3d' % len(set(gone)))
     print('  verfallene Plugin-Regeln      %3d  (Ziel faellt weg -> 410)'
           % len(verfallen))

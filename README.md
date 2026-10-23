@@ -184,7 +184,7 @@ nginx-Konfiguration, Zertifikatspfade prüfen.
 | Gravity Forms installiert | weg – auf keiner der 60 Seiten eingebunden |
 | OIDC-, SAML- und miniOrange-Login installiert | weg – kein geschützter Bereich auf der Seite |
 | `/blog/page/8/` bis `/blog/page/15/` lieferten eine leere Seite mit Status 200 | `/blog/page/8/` bis `/blog/page/14/` haben Inhalt, `/blog/page/15/` liefert 404 |
-| `/seafile/seamate/` lieferte HTTP 500 | 410 Gone, der Bereich ist eingestellt |
+| `/seafile/seamate/` lieferte HTTP 500 | 301 auf die Seafile-Admin-Doku, die dasselbe erklärt – ebenso `/seamate/` |
 | `/sitemap.xml` lieferte 301 auf `/sitemap_index.xml` | unverändert |
 | 14 422 Dateien, 1,9 GB | 969 Dateien, 100 MB. Image 306 MB, davon 92 MB Bilder in einer eigenen Schicht |
 
@@ -222,7 +222,6 @@ absichtlich weg ist, und räumt sie schneller aus dem Index.
 | `/hilfe/*` | 6 | Hilfe-Bereich, Stand 2019–2020 |
 | `/voip/`, `/3cx/`, `/goldenrosskaserne/` | 3 | Telefonie eingestellt, siehe `/systemwerk/` |
 | `/odoo/`, `/consulting/`, `/roadmap/` | 3 | eingestellt bzw. Roadmap von 2018 |
-| `/seafile/seamate/`, `/seamate/` | 2 | PHP-Generator für Seafile-CSS, lieferte live schon HTTP 500 |
 | `/downloads/firmware/*`, `/downloads/manuals/*` | 87 Dateien | Firmware und Handbücher für VoIP-Telefone (Snom, Yealink, Gigaset, Grandstream), 1,4 GB |
 | `/manuals/*`, `/firmware/*` | – | alte Pfade derselben Dateien, zwei Plugin-Regeln |
 | `/voip-ip-telefone-firmware-handbuecher-und-standard-passwoerter/` | 1 Beitrag | hing mit 93 Verweisen vollständig an diesen Dateien |
@@ -232,7 +231,8 @@ absichtlich weg ist, und räumt sie schneller aus dem Index.
 Die Beiträge zu eingestellten Produktlinien **bleiben** – ein Blog ist ein
 Archiv mit Datum, keine Verkaufsseite. Verweise aus den Texten auf
 gelöschte Seiten sind aufgelöst: der Linktext steht noch da, der Verweis
-ist weg (33 Stellen).
+ist weg (32 Stellen). Ausnahme ist der Verweis auf `/seafile/seamate` –
+die Adresse leitet weiter, der Verweis bleibt also ein Verweis.
 
 `/buddy/`, `/homie/`, `/fellow/` und `/presse/` bleiben.
 
@@ -263,6 +263,18 @@ Dazu kommt, was WordPress aus einem Teil des Slugs **erraten** hat
 `/openproject-6-0-…`, `/datenschutz` → `/datenschutzerklaerung/`. Erraten
 lässt sich das nicht nachbauen; aufgenommen sind die fünf Adressen, die
 aus den Inhalten heraus verlinkt sind.
+
+Und schließlich die Adressen, deren **Inhalt jetzt auf einer fremden Seite
+steht**. Sie stehen als `EXTERN` in `_build/gen_redirects.py` – bisher
+`/seafile/seamate` und die nackte Adresse `/seamate`, beide auf die
+Farbanpassung in der
+[Seafile-Admin-Doku](https://datamate-rethink-it.github.io/seafile-admin-docs/customization/main-color/).
+Eine Weiterleitung ist hier besser als 410: die Adressen sind von außen
+verlinkt, und das Ziel beantwortet dieselbe Frage – der Farbwähler dort
+erzeugt denselben CSS-Code wie früher der SeaMate-Generator. Darum stehen
+die beiden Adressen auch **nicht** in `TOTE_ZIELE`: der Verweis von
+`/seafile/` auf `/seafile/seamate` bleibt stehen, statt aufgelöst zu
+werden.
 
 **Gelernt:** Die `redir`-Zeilen brauchen den Matcher `*`. Ohne ihn liest
 Caddy das Ziel, weil es mit `/` beginnt, als Pfadmuster – und leitet

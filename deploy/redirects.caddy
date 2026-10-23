@@ -8,12 +8,13 @@
 # Ziel, weil es mit / beginnt, als Pfadmuster und leitet nicht um.
 
 # --- 1. Adressen mit festem Ziel -------------------------------
-# Zusammengefasst aus vier Quellen:
+# Zusammengefasst aus fuenf Quellen:
 #   * gepflegte Regeln des Plugins Redirection (ohne Platzhalter)
 #   * nackte Adressen der Unterseiten: /architektur/ ->
 #     /seafile/architektur/, von WordPress selbst umgeleitet
 #   * Anhangseiten -> Bilddatei, von Yoast SEO umgeleitet
 #   * Adressen, die WordPress aus einem Teil des Slugs erraten hat
+#   * Adressen, deren Inhalt jetzt auf einer fremden Seite steht
 map {path} {ziel} {
 	~^/architektur/?$                                                              /seafile/architektur/
 	~^/aus\-ipv4\-in\-ipv6\-serverzugriff\-aus\-dem\-mobilfunknetz/nat\-loopback\-oder\-wie\-dyndns\-fuers\-interne\-netzwerk\-fit\-gemacht\-werden\-kann/?$ /nat-loopback-oder-wie-dyndns-fuers-interne-netzwerk-fit-gemacht-werden-kann/
@@ -54,6 +55,8 @@ map {path} {ziel} {
 	~^/seafile\-alternativen/?$                                                    /seafile/seafile-alternativen/
 	~^/seafile\-einfaches\-dokumentenmanagementsystem/(\||%7C)$                    /seafile-einfaches-dokumentenmanagementsystem/
 	~^/seafile\-neu/?$                                                             /seafile/
+	~^/seafile/seamate/?$                                                          https://datamate-rethink-it.github.io/seafile-admin-docs/customization/main-color/
+	~^/seamate/?$                                                                  https://datamate-rethink-it.github.io/seafile-admin-docs/customization/main-color/
 	~^/server\-plattformen/?$                                                      /seafile/server-plattformen/
 	~^/sicherheit/?$                                                               /dropbox-alternative/sicherheit/
 	~^/sitemap\.xml/?$                                                             /sitemap_index.xml
@@ -144,7 +147,7 @@ handle @suche {
 # --- 10. Eingestellte Bereiche: 410 Gone -----------------------
 # Entscheidung vom 21.10.2026, siehe README. 410 statt 404, damit
 # Suchmaschinen die Adressen zuegig aus dem Index nehmen.
-@entfallen path /3cx /3cx/ /antivirus /antivirus/ /avira-rescue /avira-rescue/ /benutzer /benutzer/ /clonezilla /clonezilla/ /consulting /consulting/ /dienste /dienste/ /dienstprogramme /dienstprogramme/ /downloads/firmware /downloads/firmware/* /downloads/manuals /downloads/manuals/* /firmware /firmware/* /goldenrosskaserne /goldenrosskaserne/ /hero /hero/* /hilfe /hilfe/* /kaspersky-rescue /kaspersky-rescue/ /konfiguration /konfiguration/ /linux /linux/ /manuals /manuals/* /odoo /odoo/ /roadmap /roadmap/ /seafile/seamate /seafile/seamate/ /seamate /seamate/ /software/roadmap /software/roadmap/ /start /start/ /ubuntu-desktop /ubuntu-desktop/ /ubuntu-server /ubuntu-server/ /uebersicht /uebersicht/ /voip /voip-ip-telefone-firmware-handbuecher-und-standard-passwoerter /voip-ip-telefone-firmware-handbuecher-und-standard-passwoerter/ /voip/ /wartung /wartung/ /windows /windows/ /windows10 /windows10/ /windows7 /windows7/ /windows8 /windows8/ /wp-content/uploads/2018/12/datamate_Auftragsformular_3CXInstallation.pdf /wp-content/uploads/2019/04/3CX_Installation_Bestellformular-1.pdf
+@entfallen path /3cx /3cx/ /antivirus /antivirus/ /avira-rescue /avira-rescue/ /benutzer /benutzer/ /clonezilla /clonezilla/ /consulting /consulting/ /dienste /dienste/ /dienstprogramme /dienstprogramme/ /downloads/firmware /downloads/firmware/* /downloads/manuals /downloads/manuals/* /firmware /firmware/* /goldenrosskaserne /goldenrosskaserne/ /hero /hero/* /hilfe /hilfe/* /kaspersky-rescue /kaspersky-rescue/ /konfiguration /konfiguration/ /linux /linux/ /manuals /manuals/* /odoo /odoo/ /roadmap /roadmap/ /software/roadmap /software/roadmap/ /start /start/ /ubuntu-desktop /ubuntu-desktop/ /ubuntu-server /ubuntu-server/ /uebersicht /uebersicht/ /voip /voip-ip-telefone-firmware-handbuecher-und-standard-passwoerter /voip-ip-telefone-firmware-handbuecher-und-standard-passwoerter/ /voip/ /wartung /wartung/ /windows /windows/ /windows10 /windows10/ /windows7 /windows7/ /windows8 /windows8/ /wp-content/uploads/2018/12/datamate_Auftragsformular_3CXInstallation.pdf /wp-content/uploads/2019/04/3CX_Installation_Bestellformular-1.pdf
 handle @entfallen {
 	error 410
 }
